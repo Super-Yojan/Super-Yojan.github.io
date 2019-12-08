@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Yojan Gautam</title>
+        <link rel="stylesheet" type="text/css" href="./static/style.css">
+    </head>
+
+    
+        <div class="frame">
+           
+            <aside class="side" id="navbar">
+                <figure>
+                    <img src="./static/profilepic1.jpg" class="profilepic">
+                    <figcaption>Yojan Gautam</figcaption>
+                </figure>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="./templates/aboutme.html" >About Me</a></li>
+                        <li><a href="#home" >Contact Me</a></li>
+                    </ul>
+                </nav>
+                
+            </aside>
+        <div class="content" id="main">
+            <div class="cover">
+                <img src="./static/alexandre-debieve-FO7JIlwjOtU-unsplash.jpg" style="width:100%;min-height:350px;max-height:500px;">               
+                <div class="heading">My Portfolio</div>
+                <div class="menuicon" onclick="openNav()" >&#9776;</div>
+            </div>
+        </div>
+        <div class="container">
+                <h1>developer</h1>
+                Hello My Name is Yojan Gautam. I am a full stack developer.<br>
+                I love coding. I am a Junior in Highschool<br>
+                <br>
+                <br>
+                <br>
+                How are you guys doing?
+            </div>
+    </div>
+
+        <script>
+            function openNav(){
+                if(document.getElementById("navbar").style.visibility === "visible"){
+                    document.getElementById("navbar").style.visibility="hidden";
+                    document.getElementById("main").style.width="100%";
+                }
+                else{
+                   document.getElementById("navbar").style.visibility="visible";
+                   document.getElementById("main").style.width="84%";
+                   document.getElementsByClassName("menuicon").style.left="0";
+
+                }
+            }
+        </script>
+
+
+
+</html>

@@ -12,6 +12,8 @@
 body, html{
     margin: 0px;
     padding: 0px;
+    scroll-behavior: smooth;
+    scrollbar-base-color: black;
 }
 aside{
     visibility: hidden;
@@ -29,7 +31,7 @@ ul{
     list-style-type: none;
     position: relative;
     left: 0px;
-    
+    height: max-content;
     padding: 0px;
     width: 100%;
     background-color:rgba(255, 255, 255, 0.35);
@@ -72,11 +74,11 @@ figcaption{
 
 .heading{
     position: absolute;
-    font-size: 60px;
-    left:45%;
-    top:10%;
+    font-size: 90px;
+    text-align: center;
+    top:50%;
     color:white;
-    width: fit-content;
+    width: 100%;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -89,10 +91,7 @@ figcaption{
     
 }
 
-.frame{
-    width: 100%;
-    position: fixed;
-}
+
 
 .container{
     background-color:gray;
@@ -100,6 +99,7 @@ figcaption{
     width: 100%;
     margin-top: 0px;
     font-size: 20px;
+    float: left;
     
 
 }

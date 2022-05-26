@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Meta CTF on Yojan's Blog</title><link>/tags/meta-ctf/</link><description>Recent content in Meta CTF on Yojan's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Dec 2021 14:45:23 -0500</lastBuildDate><atom:link href="/tags/meta-ctf/index.xml" rel="self" type="application/rss+xml"/><item><title>Hacking Electron App - Web Inspection - MetaCTF</title><link>/p/hacking-electron-app-web-inspection-metactf/</link><pubDate>Mon, 06 Dec 2021 14:45:23 -0500</pubDate><guid>/p/hacking-electron-app-web-inspection-metactf/</guid><description>&lt;p>&lt;strong>Challenge Descrption:&lt;/strong>&lt;/p>
+&lt;p>We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.&lt;/p>
+&lt;p>Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.&lt;/p>
+&lt;p>&lt;strong>Web Exploitation&lt;/strong> 375&lt;/p>
+&lt;hr>
+&lt;p>Web Inspection was a challenge where we had to basically reverse engineer the code. The challenge description wanted us to hook it up to a debugger and that should give us the flag.&lt;/p>
+&lt;h1 id="analyzing">Analyzing&lt;/h1>
+&lt;p>Below is the tree of the source provided.&lt;/p>
+&lt;pre tabindex="0">&lt;code>├── blink_image_resources_200_percent.pak
+├── content_resources_200_percent.pak
+├── content_shell.pak
+├── icudtl.dat
+├── libffmpeg.so
+├── libnode.so
+├── LICENSE
+├── LICENSES.chromium.html
+├── meta-quick-hash
+├── natives_blob.bin
+├── resources
+│   ├── app.asar
+│   └── electron.asar
+├── ui_resources_200_percent.pak
+├── v8_context_snapshot.bin
+├── version
+└── views_resources_200_percent.pak
+&lt;/code>&lt;/pre>&lt;p>I started out by running the &lt;code>meta-quick-hash&lt;/code>&lt;/p>
+&lt;p>&lt;img src="/webinspection/first.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>It looks like it just returns hashes of the input provided. They said that it was an electron app, so I tried to open &lt;code>Chromium Dev&lt;/code> tools. It didn&amp;rsquo;t work.&lt;/p>
+&lt;p>&lt;img src="https://c.tenor.com/09Lfmqt2FGAAAAAC/where-is-it-frantic.gif"
+loading="lazy"
+>&lt;/p>
+&lt;p>I tried bunch of stuffs, nothing happened.&lt;/p>
+&lt;p>I tried to open it up with electron inspector by using the command&lt;/p>
+&lt;pre tabindex="0">&lt;code>electron --inspect=5858 meta-quick-hash
+&lt;/code>&lt;/pre>&lt;p>I got bunch of errors and nothing more&lt;/p>
+&lt;p>&lt;img src="/webinspection/second.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>There&amp;rsquo;s nothing we can get out of the app, let&amp;rsquo;s look at what else we have.&lt;/p>
+&lt;h3 id="resources">Resources&lt;/h3>
+&lt;p>There are two files inside &lt;code>resources&lt;/code>&lt;/p>
+&lt;pre tabindex="0">&lt;code>resources
+├── app.asar
+└── electron.asar
+&lt;/code>&lt;/pre>&lt;p>After opening up &lt;code>app.asar&lt;/code>, I found out that it has all the source file contained in it.&lt;/p>
+&lt;pre tabindex="0">&lt;code>{&amp;#34;files&amp;#34;:{&amp;#34;app.js&amp;#34;:{&amp;#34;size&amp;#34;:1961,&amp;#34;offset&amp;#34;:&amp;#34;0&amp;#34;},&amp;#34;index.html&amp;#34;:{&amp;#34;size&amp;#34;:1774,&amp;#34;offset&amp;#34;:&amp;#34;1961&amp;#34;},&amp;#34;LICENSE&amp;#34;:{&amp;#34;size&amp;#34;:1065,&amp;#34;offset&amp;#34;:&amp;#34;3735&amp;#34;},&amp;#34;node_modules&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;@bitdisaster&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@electron&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@malept&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@sindresorhus&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@szmarczak&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@types&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;electron-log&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;LICENSE&amp;#34;:{&amp;#34;size&amp;#34;:1082,&amp;#34;offset&amp;#34;:&amp;#34;4800&amp;#34;},&amp;#34;package.json&amp;#34;:{&amp;#34;size&amp;#34;:2260,&amp;#34;offset&amp;#34;:&amp;#34;5882&amp;#34;},&amp;#34;README.md&amp;#34;:{&amp;#34;size&amp;#34;:5464,&amp;#34;offset&amp;#34;:&amp;#34;8142&amp;#34;},&amp;#34;src&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;__specs__&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;catchErrors.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1047,&amp;#34;offset&amp;#34;:&amp;#34;13606&amp;#34;},&amp;#34;index.d.test.ts&amp;#34;:{&amp;#34;size&amp;#34;:285,&amp;#34;offset&amp;#34;:&amp;#34;14653&amp;#34;},&amp;#34;index.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1068,&amp;#34;offset&amp;#34;:&amp;#34;14938&amp;#34;},&amp;#34;log.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:3272,&amp;#34;offset&amp;#34;:&amp;#34;16006&amp;#34;},&amp;#34;scope.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1462,&amp;#34;offset&amp;#34;:&amp;#34;19278&amp;#34;},&amp;#34;utils&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;fsHelpers.js&amp;#34;:{&amp;#34;size&amp;#34;:552,&amp;#34;offset&amp;#34;:&amp;#34;20740&amp;#34;},&amp;#34;TestLogReader.js&amp;#34;:{&amp;#34;size&amp;#34;:2589,&amp;#34;offset&amp;#34;:&amp;#34;21292&amp;#34;}}}}},&amp;#34;catchErrors.js&amp;#34;:{&amp;#34;size&amp;#34;:2405,&amp;#34;offset&amp;#34;:&amp;#34;23881&amp;#34;},&amp;#34;electronApi.js&amp;#34;:{&amp;#34;size&amp;#34;:4807,&amp;#34;offset&amp;#34;:&amp;#34;26286&amp;#34;},&amp;#34;index.d.ts&amp;#34;:{&amp;#34;size&amp;#34;:10549,&amp;#34;offset&amp;#34;:&amp;#34;31093&amp;#34;},&amp;#34;index.js&amp;#34;:{&amp;#34;size&amp;#34;:2212,&amp;#34;offset&amp;#34;:&amp;#34;41642&amp;#34;},&amp;#34;log.js&amp;#34;:{&amp;#34;size&amp;#34;:1576,&amp;#34;offset&amp;#34;:&amp;#34;43854&amp;#34;},&amp;#34;scope.js&amp;#34;:{&amp;#34;size&amp;#34;:1302,&amp;#34;offset&amp;#34;:&amp;#34;45430&amp;#34;},&amp;#34;transform&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;__specs__&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;index.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:951,&amp;#34;offset&amp;#34;:&amp;#34;46732&amp;#34;},&amp;#34;object.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1645,&amp;#34;offset&amp;#34;:&amp;#34;47683&amp;#34;},&amp;#34;style.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1111,&amp;#34;offset&amp;#34;:&amp;#34;49328&amp;#34;},&amp;#34;template.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:2992,&amp;#34;offset&amp;#34;:&amp;#34;50439&amp;#34;}}},&amp;#34;index.js&amp;#34;:{&amp;#34;size&amp;#34;:1544,&amp;#34;offset&amp;#34;:&amp;#34;53431&amp;#34;},&amp;#34;object.js&amp;#34;:{&amp;#34;size&amp;#34;:2781,&amp;#34;offset&amp;#34;:&amp;#34;54975&amp;#34;},&amp;#34;style.js&amp;#34;:{&amp;#34;size&amp;#34;:1600,&amp;#34;offset&amp;#34;:&amp;#34;57756&amp;#34;},&amp;#34;template.js&amp;#34;:{&amp;#34;size&amp;#34;:3998,&amp;#34;offset&amp;#34;:&amp;#34;59356&amp;#34;}}},&amp;#34;transports&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;__specs__&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;console.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:5347,&amp;#34;offset&amp;#34;:&amp;#34;63354&amp;#34;}}},&amp;#34;console.js&amp;#34;:{&amp;#34;size&amp;#34;:3034,&amp;#34;offset&amp;#34;:&amp;#34;68701&amp;#34;},&amp;#34;file&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;__specs__&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;file.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:5129,&amp;#34;offset&amp;#34;:&amp;#34;71735&amp;#34;},&amp;#34;index.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:4660,&amp;#34;offset&amp;#34;:&amp;#34;76864&amp;#34;},&amp;#34;makeTmpDir.js&amp;#34;:{&amp;#34;size&amp;#34;:546,&amp;#34;offset&amp;#34;:&amp;#34;81524&amp;#34;},&amp;#34;packageJson.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:871,&amp;#34;offset&amp;#34;:&amp;#34;82070&amp;#34;},&amp;#34;variables.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:4530,&amp;#34;offset&amp;#34;:&amp;#34;82941&amp;#34;}}},&amp;#34;file.js&amp;#34;:{&amp;#34;size&amp;#34;:6994,&amp;#34;offset&amp;#34;:&amp;#34;87471&amp;#34;},&amp;#34;index.js&amp;#34;:{&amp;#34;size&amp;#34;:5079,&amp;#34;offset&amp;#34;:&amp;#34;94465&amp;#34;},&amp;#34;packageJson.js&amp;#34;:{&amp;#34;size&amp;#34;:1713,&amp;#34;offset&amp;#34;:&amp;#34;99544&amp;#34;},&amp;#34;variables.js&amp;#34;:{&amp;#34;size&amp;#34;:2687,&amp;#34;offset&amp;#34;:&amp;#34;101257&amp;#34;}}},&amp;#34;ipc.js&amp;#34;:{&amp;#34;size&amp;#34;:1098,&amp;#34;offset&amp;#34;:&amp;#34;103944&amp;#34;},&amp;#34;remote.js&amp;#34;:{&amp;#34;size&amp;#34;:2172,&amp;#34;offset&amp;#34;:&amp;#34;105042&amp;#34;}}}}}}}}},&amp;#34;package.json&amp;#34;:{&amp;#34;size&amp;#34;:431,&amp;#34;offset&amp;#34;:&amp;#34;107214&amp;#34;},&amp;#34;README.md&amp;#34;:{&amp;#34;size&amp;#34;:773,&amp;#34;offset&amp;#34;:&amp;#34;107645&amp;#34;},&amp;#34;styles.css&amp;#34;:{&amp;#34;size&amp;#34;:261,&amp;#34;offset&amp;#34;:&amp;#34;108418&amp;#34;},&amp;#34;window.js&amp;#34;:{&amp;#34;size&amp;#34;:650,&amp;#34;offset&amp;#34;:&amp;#34;108679&amp;#34;}}}�const https = require(&amp;#39;https&amp;#39;)
+&lt;/code>&lt;/pre>&lt;p>The information about where the file starts and where it ends is stored on the first line of the file.&lt;/p>
+&lt;p>Next thing I tried was&lt;/p>
+&lt;pre tabindex="0">&lt;code>electron --inspect=5858 app.asar
+&lt;/code>&lt;/pre>&lt;p>With this I was able to open up the &lt;code>Chromium dev-tools&lt;/code>&lt;/p>
+&lt;p>&lt;img src="/webinspection/fourth.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>There were errors in the code.
+Well I tried to edit the app.asar to fix the error, but it didn&amp;rsquo;t work. If I wanted to change anything in the app.asar source, I would have to go to the top of the file and change the offset and the size.&lt;/p>
+&lt;p>After doing some research on asar I found out that:&lt;/p>
+&lt;p>Asar is a simple extensive archive format, according to this Github read me &lt;a class="link" href="https://github.com/electron/asar" target="_blank" rel="noopener"
+>https://github.com/electron/asar&lt;/a>&lt;/p>
+&lt;h1 id="extracting-the-source-code">Extracting the source code&lt;/h1>
+&lt;pre tabindex="0">&lt;code>asar extract app.asar source
+&lt;/code>&lt;/pre>&lt;pre tabindex="0">&lt;code>source
+├── app.js
+├── index.html
+├── LICENSE
+├── package.json
+├── README.md
+├── styles.css
+└── window.js
+&lt;/code>&lt;/pre>&lt;p>It extracted the original source code.
+&lt;img src="https://c.tenor.com/1KA_cOIDsf0AAAAC/what-am-i-supposed-to-do-token-black.gif"
+loading="lazy"
+>&lt;/p>
+&lt;p>My instinct was to run &lt;code>npm start&lt;/code>&lt;/p>
+&lt;p>It worked but it gave me the same error as when I ran it with electron.&lt;/p>
+&lt;pre tabindex="0">&lt;code> &amp;lt;script&amp;gt;
+delete module.exports
+&amp;lt;/scrip&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>There was this code inside the index.html. I went ahead and removed it.&lt;/p>
+&lt;p>It got rid of one of the error.&lt;/p>
+&lt;p>There were jquery errors, so I changed the CDN to import the latest version of jQuery.&lt;/p>
+&lt;pre tabindex="0">&lt;code>&amp;lt;script src=&amp;#34;https://code.jquery.com/jquery-3.6.0.js&amp;#34; integrity=&amp;#34;sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=&amp;#34; crossorigin=&amp;#34;anonymous&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code>&lt;/pre>&lt;p>These got rid of the errors.&lt;/p>
+&lt;p>Now I tried to open the app.js with electron inspect&lt;/p>
+&lt;p>&lt;img src="/webinspection/third.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>Got some errors.&lt;/p>
+&lt;p>&lt;img src="https://c.tenor.com/fvqEfiBtv3oAAAAd/this-isnt-how-its-supposed-to-happen-randy-marsh.gif"
+loading="lazy"
+>&lt;/p>
+&lt;p>Looking inside the app.js I found this GET request.&lt;/p>
+&lt;pre tabindex="0">&lt;code> window.once(&amp;#39;ready-to-show&amp;#39;, () =&amp;gt; {
+window.show();
+var inspect_bool = inspector.url();
+if(inspect_bool) {
+const options = {
+hostname: &amp;#39;metaproblems.com&amp;#39;,
+port: 443,
+path: &amp;#39;/858cdff94bcf63e59aafeebebb7bc304/&amp;#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&amp;#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&amp;#39;, &amp;#39;base64&amp;#39;).toString())),inspect_bool.substring(0,20) + window.webContents.history[0].split(&amp;#34;&amp;#34;).reverse().join(&amp;#34;&amp;#34;).substring(0,8)) + &amp;#39;.html&amp;#39;,
+method: &amp;#39;GET&amp;#39;
+};
+const req = https.request(options, res =&amp;gt; { res.on(&amp;#39;data&amp;#39;, d =&amp;gt; {})});
+req.end();
+}
+&lt;/code>&lt;/pre>&lt;p>It sends get request only when the &lt;code>inspector_bool is not undefined&lt;/code>&lt;/p>
+&lt;p>As a regular programmer, I did what I was supposed to do.&lt;/p>
+&lt;p>&lt;code>console.log(&amp;quot;I am here&amp;quot;)&lt;/code>&lt;/p>
+&lt;p>So the if statement isn&amp;rsquo;t working. Time to print the inspector.url();&lt;/p>
+&lt;p>&lt;code>Inspector.url&lt;/code> only works when we run the app in debug mode.&lt;/p>
+&lt;p>I think all we have to do now is print the data from the get request.&lt;/p>
+&lt;p>It&amp;rsquo;s not so simple.&lt;/p>
+&lt;p>Playing around with the code a little bit, I found out that &lt;code>window.webContents.history[0]&lt;/code> returns &lt;code>undefined.&lt;/code>&lt;/p>
+&lt;pre tabindex="0">&lt;code> window.loadURL(url.format({
+pathname: path.join(__dirname, &amp;#39;index.html&amp;#39;),
+protocol: &amp;#39;file:&amp;#39;,
+slashes: true
+}))
+&lt;/code>&lt;/pre>&lt;p>This is the code that is supposed to add something to the history.&lt;/p>
+&lt;p>I found two ways to solve this problem.&lt;/p>
+&lt;ul>
+&lt;li>Do the debugging stuffs from VS code that will execute the loadURL&lt;/li>
+&lt;li>Out smart them by replacing the history thing&lt;/li>
+&lt;/ul>
+&lt;p>I went with option 2, just cause it seemed like something that the creator don&amp;rsquo;t want us to do.&lt;/p>
+&lt;p>So the loadURL is loading the directory path, for this challenge to work they can&amp;rsquo;t expect everyone to have same local directory structure. They will have to use a constant. Which is the index.html&lt;/p>
+&lt;p>Looking at the &lt;code>window.webContents.history[0].split(&amp;quot;&amp;quot;).reverse().join(&amp;quot;&amp;quot;).substring(0,8))&lt;/code>. We can see that it only takes the last 8 characters of the file path. Which is dex.html&lt;/p>
+&lt;p>So I reversed the dex.html which is &lt;code>lmth.xed&lt;/code>&lt;/p>
+&lt;p>Then I replaced the it in the code.&lt;/p>
+&lt;pre tabindex="0">&lt;code> window.once(&amp;#39;ready-to-show&amp;#39;, () =&amp;gt; {
+window.show();
+var inspect_bool = inspector.url();
+if(inspect_bool) {
+console.log(&amp;#34;I am here&amp;#34;);
+const options = {
+hostname: &amp;#39;metaproblems.com&amp;#39;,
+port: 443,
+path: &amp;#39;/858cdff94bcf63e59aafeebebb7bc304/&amp;#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&amp;#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&amp;#39;, &amp;#39;base64&amp;#39;).toString())),inspect_bool.substring(0,20) + &amp;#39;lmth.xed&amp;#39;) + &amp;#39;.html&amp;#39;,
+// path: &amp;#39;/858cdff94bcf63e59aafeebebb7bc304/&amp;#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&amp;#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&amp;#39;, &amp;#39;base64&amp;#39;).toString())),inspect_bool.substring(0,20) + window.webContents.history[0].split(&amp;#34;&amp;#34;).reverse().join(&amp;#34;&amp;#34;).substring(0,8)) + &amp;#39;.html&amp;#39;,
+method: &amp;#39;GET&amp;#39;
+};
+var str = &amp;#34;&amp;#34;
+const req = https.request(options, res =&amp;gt; { res.on(&amp;#39;data&amp;#39;, d =&amp;gt; { console.log(str+=d)})});
+req.end();
+console.log(str);
+}
+})
+&lt;/code>&lt;/pre>&lt;p>Here my new code&lt;/p>
+&lt;p>Finally running&lt;/p>
+&lt;pre tabindex="0">&lt;code>electron --inspect app.js
+&lt;/code>&lt;/pre>&lt;p>Gives the following output&lt;/p>
+&lt;p>&lt;img src="/webinspection/tty.gif"
+loading="lazy"
+>&lt;/p>
+&lt;pre tabindex="0">&lt;code>MetaCTF{aint_no_javascript_ever_gonna_stop_a_hacker}
+&lt;/code>&lt;/pre></description></item></channel></rss>

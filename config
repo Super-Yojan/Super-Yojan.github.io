@@ -3,6 +3,3 @@
 	filemode = true
 	bare = false
 	logallrefupdates = true
-[submodule "themes/even"]
-	url = https://github.com/olOwOlo/hugo-theme-even
-	active = true

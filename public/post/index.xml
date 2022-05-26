@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Yojan&#39;s Blog</title>
+    <link>/post/</link>
+    <description>Recent content in Posts on Yojan&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 06 Mar 2022 19:12:41 -0500</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UMDCTF: Block ChainV2 - Chungus Coin</title>
+      <link>/p/umdctf-block-chainv2-chungus-coin/</link>
+      <pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate>
+      
+      <guid>/p/umdctf-block-chainv2-chungus-coin/</guid>
+      <description>For this challenge we were provided with the server.py with stuffs redacted.
+They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
+As usual, starting the challenge out by analyzing the code that was provided.   There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.</description>
+    </item>
+    
+    <item>
+      <title>UMDCTF: Customer Support</title>
+      <link>/p/umdctf-customer-support/</link>
+      <pubDate>Sun, 06 Mar 2022 19:09:57 -0500</pubDate>
+      
+      <guid>/p/umdctf-customer-support/</guid>
+      <description>For this challenge we were given   So I stared out by opening the Dockerfile   In the docker file we can see the starting command is npm run startall   Looking at the package.json we can see two service being started with start all script.
+  In app.js inside microservice we can see two path that returns token.   This microservice is running in port 3001.</description>
+    </item>
+    
+    <item>
+      <title>Hacking Electron App - Web Inspection - MetaCTF</title>
+      <link>/p/hacking-electron-app-web-inspection-metactf/</link>
+      <pubDate>Mon, 06 Dec 2021 14:45:23 -0500</pubDate>
+      
+      <guid>/p/hacking-electron-app-web-inspection-metactf/</guid>
+      <description>Challenge Descrption:
+We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.
+Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.</description>
+    </item>
+    
+    <item>
+      <title>HTB UNI CTF : Web Slippy</title>
+      <link>/p/htb-uni-ctf-web-slippy/</link>
+      <pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate>
+      
+      <guid>/p/htb-uni-ctf-web-slippy/</guid>
+      <description>Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.
+ 
+The directory tree of the source code as follow.
+./challenge ├── application │ ├── blueprints │ │ └── routes.py │ ├── config.py │ ├── main.py │ ├── static │ │ ├── archives │ │ ├── css │ │ │ ├── bootstrap.</description>
+    </item>
+    
+    <item>
+      <title>HTB UNI CTF : Light The Way</title>
+      <link>/p/htb-uni-ctf-light-the-way/</link>
+      <pubDate>Sun, 21 Nov 2021 23:22:26 -0500</pubDate>
+      
+      <guid>/p/htb-uni-ctf-light-the-way/</guid>
+      <description>Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.
+ 
+SCADA Supervisory control and data acquisition is a system that allows industrial organizations to:
+* Conrtol processes * Monitor * Interact with devices * Record events  For more information on SCADA</description>
+    </item>
+    
+    <item>
+      <title>Integrity Check</title>
+      <link>/p/integrity-check/</link>
+      <pubDate>Mon, 15 Nov 2021 15:38:22 -0500</pubDate>
+      
+      <guid>/p/integrity-check/</guid>
+      <description>Attachment: File
+Solution I started out by running the file.
+java -jar IntegrityCheck.jar  Test 
+We can see that something is wrong in the function name.
+Looking at the hint, we all can say that we have to use some sort of Java Bytecode modifying tool. So I searched up online and found quite a few.
+The one that I found useful was the recaf
+Opening the IntegrityCheck.</description>
+    </item>
+    
+    <item>
+      <title>Why everyone shouldn&#39;t use linux?</title>
+      <link>/p/why-everyone-shouldnt-use-linux/</link>
+      <pubDate>Tue, 02 Nov 2021 16:48:55 -0400</pubDate>
+      
+      <guid>/p/why-everyone-shouldnt-use-linux/</guid>
+      <description>A few days ago, while talking to a Computer Science major in my college, I figured out that not everyone should use Linux.
+A disclaimer, when I say Linux I mean Linux Desktop. What I say here doesn&amp;rsquo;t apply to Linux servers.
+Linux Linux is an open-source software developed by a guy named Linus Torvalds. Now countless many people are contributing to the code. Open source means that the software is free, and anyone with enough knowledge can change the code.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Challenge Descrption:
+We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.
+Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.'><title>Hacking Electron App - Web Inspection - MetaCTF</title>
+
+<link rel='canonical' href='/p/hacking-electron-app-web-inspection-metactf/'>
+
+<link rel="stylesheet" href="/scss/style.min.63c512f9679a4af0b0a047e206183b4ca51e14499deb80ad27e2fcc1419df316.css"><meta property='og:title' content='Hacking Electron App - Web Inspection - MetaCTF'>
+<meta property='og:description' content='Challenge Descrption:
+We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.
+Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.'>
+<meta property='og:url' content='/p/hacking-electron-app-web-inspection-metactf/'>
+<meta property='og:site_name' content='Yojan&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Meta CTF' /><meta property='article:published_time' content='2021-12-06T14:45:23-05:00'/><meta property='article:modified_time' content='2021-12-06T14:45:23-05:00'/><meta property='og:image' content='/avatar.png' />
+<meta name="twitter:site" content="@https://twitter.com/GautamYojan">
+    <meta name="twitter:creator" content="@https://twitter.com/GautamYojan"><meta name="twitter:title" content="Hacking Electron App - Web Inspection - MetaCTF">
+<meta name="twitter:description" content="Challenge Descrption:
+We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.
+Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='/avatar.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/p/hacking-electron-app-web-inspection-metactf/">Hacking Electron App - Web Inspection - MetaCTF</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 06, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    5 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p><strong>Challenge Descrption:</strong></p>
+<p>We&rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&rsquo;s available on both Windows and Linux.</p>
+<p>Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&rsquo;ll be a flag waiting.</p>
+<p><strong>Web Exploitation</strong> 375</p>
+<hr>
+<p>Web Inspection was a challenge where we had to basically reverse engineer the code. The challenge description wanted us to hook it up to a debugger and that should give us the flag.</p>
+<h1 id="analyzing">Analyzing</h1>
+<p>Below is the tree of the source provided.</p>
+<pre tabindex="0"><code>├── blink_image_resources_200_percent.pak
+├── content_resources_200_percent.pak
+├── content_shell.pak
+├── icudtl.dat
+├── libffmpeg.so
+├── libnode.so
+├── LICENSE
+├── LICENSES.chromium.html
+├── meta-quick-hash
+├── natives_blob.bin
+├── resources
+│   ├── app.asar
+│   └── electron.asar
+├── ui_resources_200_percent.pak
+├── v8_context_snapshot.bin
+├── version
+└── views_resources_200_percent.pak
+</code></pre><p>I started out by running the <code>meta-quick-hash</code></p>
+<p><figure 
+	>
+	<a href="/webinspection/first.png" >
+		<img src="/webinspection/first.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>It looks like it just returns hashes of the input provided. They said that it was an electron app, so I tried to open <code>Chromium Dev</code> tools. It didn&rsquo;t work.</p>
+<p><figure 
+	>
+	<a href="https://c.tenor.com/09Lfmqt2FGAAAAAC/where-is-it-frantic.gif" >
+		<img src="https://c.tenor.com/09Lfmqt2FGAAAAAC/where-is-it-frantic.gif"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>I tried bunch of stuffs, nothing happened.</p>
+<p>I tried to open it up with electron inspector by using the command</p>
+<pre tabindex="0"><code>electron --inspect=5858 meta-quick-hash
+</code></pre><p>I got bunch of errors and nothing more</p>
+<p><figure 
+	>
+	<a href="/webinspection/second.png" >
+		<img src="/webinspection/second.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>There&rsquo;s nothing we can get out of the app, let&rsquo;s look at what else we have.</p>
+<h3 id="resources">Resources</h3>
+<p>There are two files inside <code>resources</code></p>
+<pre tabindex="0"><code>resources
+├── app.asar
+└── electron.asar
+</code></pre><p>After opening up <code>app.asar</code>, I found out that it has all the source file contained in it.</p>
+<pre tabindex="0"><code>{&#34;files&#34;:{&#34;app.js&#34;:{&#34;size&#34;:1961,&#34;offset&#34;:&#34;0&#34;},&#34;index.html&#34;:{&#34;size&#34;:1774,&#34;offset&#34;:&#34;1961&#34;},&#34;LICENSE&#34;:{&#34;size&#34;:1065,&#34;offset&#34;:&#34;3735&#34;},&#34;node_modules&#34;:{&#34;files&#34;:{&#34;@bitdisaster&#34;:{&#34;files&#34;:{}},&#34;@electron&#34;:{&#34;files&#34;:{}},&#34;@malept&#34;:{&#34;files&#34;:{}},&#34;@sindresorhus&#34;:{&#34;files&#34;:{}},&#34;@szmarczak&#34;:{&#34;files&#34;:{}},&#34;@types&#34;:{&#34;files&#34;:{}},&#34;electron-log&#34;:{&#34;files&#34;:{&#34;LICENSE&#34;:{&#34;size&#34;:1082,&#34;offset&#34;:&#34;4800&#34;},&#34;package.json&#34;:{&#34;size&#34;:2260,&#34;offset&#34;:&#34;5882&#34;},&#34;README.md&#34;:{&#34;size&#34;:5464,&#34;offset&#34;:&#34;8142&#34;},&#34;src&#34;:{&#34;files&#34;:{&#34;__specs__&#34;:{&#34;files&#34;:{&#34;catchErrors.spec.js&#34;:{&#34;size&#34;:1047,&#34;offset&#34;:&#34;13606&#34;},&#34;index.d.test.ts&#34;:{&#34;size&#34;:285,&#34;offset&#34;:&#34;14653&#34;},&#34;index.spec.js&#34;:{&#34;size&#34;:1068,&#34;offset&#34;:&#34;14938&#34;},&#34;log.spec.js&#34;:{&#34;size&#34;:3272,&#34;offset&#34;:&#34;16006&#34;},&#34;scope.spec.js&#34;:{&#34;size&#34;:1462,&#34;offset&#34;:&#34;19278&#34;},&#34;utils&#34;:{&#34;files&#34;:{&#34;fsHelpers.js&#34;:{&#34;size&#34;:552,&#34;offset&#34;:&#34;20740&#34;},&#34;TestLogReader.js&#34;:{&#34;size&#34;:2589,&#34;offset&#34;:&#34;21292&#34;}}}}},&#34;catchErrors.js&#34;:{&#34;size&#34;:2405,&#34;offset&#34;:&#34;23881&#34;},&#34;electronApi.js&#34;:{&#34;size&#34;:4807,&#34;offset&#34;:&#34;26286&#34;},&#34;index.d.ts&#34;:{&#34;size&#34;:10549,&#34;offset&#34;:&#34;31093&#34;},&#34;index.js&#34;:{&#34;size&#34;:2212,&#34;offset&#34;:&#34;41642&#34;},&#34;log.js&#34;:{&#34;size&#34;:1576,&#34;offset&#34;:&#34;43854&#34;},&#34;scope.js&#34;:{&#34;size&#34;:1302,&#34;offset&#34;:&#34;45430&#34;},&#34;transform&#34;:{&#34;files&#34;:{&#34;__specs__&#34;:{&#34;files&#34;:{&#34;index.spec.js&#34;:{&#34;size&#34;:951,&#34;offset&#34;:&#34;46732&#34;},&#34;object.spec.js&#34;:{&#34;size&#34;:1645,&#34;offset&#34;:&#34;47683&#34;},&#34;style.spec.js&#34;:{&#34;size&#34;:1111,&#34;offset&#34;:&#34;49328&#34;},&#34;template.spec.js&#34;:{&#34;size&#34;:2992,&#34;offset&#34;:&#34;50439&#34;}}},&#34;index.js&#34;:{&#34;size&#34;:1544,&#34;offset&#34;:&#34;53431&#34;},&#34;object.js&#34;:{&#34;size&#34;:2781,&#34;offset&#34;:&#34;54975&#34;},&#34;style.js&#34;:{&#34;size&#34;:1600,&#34;offset&#34;:&#34;57756&#34;},&#34;template.js&#34;:{&#34;size&#34;:3998,&#34;offset&#34;:&#34;59356&#34;}}},&#34;transports&#34;:{&#34;files&#34;:{&#34;__specs__&#34;:{&#34;files&#34;:{&#34;console.spec.js&#34;:{&#34;size&#34;:5347,&#34;offset&#34;:&#34;63354&#34;}}},&#34;console.js&#34;:{&#34;size&#34;:3034,&#34;offset&#34;:&#34;68701&#34;},&#34;file&#34;:{&#34;files&#34;:{&#34;__specs__&#34;:{&#34;files&#34;:{&#34;file.spec.js&#34;:{&#34;size&#34;:5129,&#34;offset&#34;:&#34;71735&#34;},&#34;index.spec.js&#34;:{&#34;size&#34;:4660,&#34;offset&#34;:&#34;76864&#34;},&#34;makeTmpDir.js&#34;:{&#34;size&#34;:546,&#34;offset&#34;:&#34;81524&#34;},&#34;packageJson.spec.js&#34;:{&#34;size&#34;:871,&#34;offset&#34;:&#34;82070&#34;},&#34;variables.spec.js&#34;:{&#34;size&#34;:4530,&#34;offset&#34;:&#34;82941&#34;}}},&#34;file.js&#34;:{&#34;size&#34;:6994,&#34;offset&#34;:&#34;87471&#34;},&#34;index.js&#34;:{&#34;size&#34;:5079,&#34;offset&#34;:&#34;94465&#34;},&#34;packageJson.js&#34;:{&#34;size&#34;:1713,&#34;offset&#34;:&#34;99544&#34;},&#34;variables.js&#34;:{&#34;size&#34;:2687,&#34;offset&#34;:&#34;101257&#34;}}},&#34;ipc.js&#34;:{&#34;size&#34;:1098,&#34;offset&#34;:&#34;103944&#34;},&#34;remote.js&#34;:{&#34;size&#34;:2172,&#34;offset&#34;:&#34;105042&#34;}}}}}}}}},&#34;package.json&#34;:{&#34;size&#34;:431,&#34;offset&#34;:&#34;107214&#34;},&#34;README.md&#34;:{&#34;size&#34;:773,&#34;offset&#34;:&#34;107645&#34;},&#34;styles.css&#34;:{&#34;size&#34;:261,&#34;offset&#34;:&#34;108418&#34;},&#34;window.js&#34;:{&#34;size&#34;:650,&#34;offset&#34;:&#34;108679&#34;}}} const https = require(&#39;https&#39;)
+</code></pre><p>The information about where the file starts and where it ends is stored on the first line of the file.</p>
+<p>Next thing I tried was</p>
+<pre tabindex="0"><code>electron --inspect=5858 app.asar
+</code></pre><p>With this I was able to open up the <code>Chromium dev-tools</code></p>
+<p><figure 
+	>
+	<a href="/webinspection/fourth.png" >
+		<img src="/webinspection/fourth.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>There were errors in the code.
+Well I tried to edit the app.asar to fix the error, but it didn&rsquo;t work. If I wanted to change anything in the app.asar source, I would have to go to the top of the file and change the offset and the size.</p>
+<p>After doing some research on asar I found out that:</p>
+<p>Asar is a simple extensive archive format, according to this Github read me <a class="link" href="https://github.com/electron/asar"  target="_blank" rel="noopener"
+    >https://github.com/electron/asar</a></p>
+<h1 id="extracting-the-source-code">Extracting the source code</h1>
+<pre tabindex="0"><code>asar extract app.asar source
+</code></pre><pre tabindex="0"><code>source
+├── app.js
+├── index.html
+├── LICENSE
+├── package.json
+├── README.md
+├── styles.css
+└── window.js
+</code></pre><p>It extracted the original source code.
+<figure 
+	>
+	<a href="https://c.tenor.com/1KA_cOIDsf0AAAAC/what-am-i-supposed-to-do-token-black.gif" >
+		<img src="https://c.tenor.com/1KA_cOIDsf0AAAAC/what-am-i-supposed-to-do-token-black.gif"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>My instinct was to run <code>npm start</code></p>
+<p>It worked but it gave me the same error as when I ran it with electron.</p>
+<pre tabindex="0"><code>  &lt;script&gt;
+    delete module.exports
+  &lt;/scrip&gt;
+</code></pre><p>There was this code inside the index.html. I went ahead and removed it.</p>
+<p>It got rid of one of the error.</p>
+<p>There were jquery errors, so I changed the CDN to import the latest version of jQuery.</p>
+<pre tabindex="0"><code>&lt;script src=&#34;https://code.jquery.com/jquery-3.6.0.js&#34; integrity=&#34;sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=&#34; crossorigin=&#34;anonymous&#34;&gt;&lt;/script&gt;
+</code></pre><p>These got rid of the errors.</p>
+<p>Now I tried to open the app.js with electron inspect</p>
+<p><figure 
+	>
+	<a href="/webinspection/third.png" >
+		<img src="/webinspection/third.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>Got some errors.</p>
+<p><figure 
+	>
+	<a href="https://c.tenor.com/fvqEfiBtv3oAAAAd/this-isnt-how-its-supposed-to-happen-randy-marsh.gif" >
+		<img src="https://c.tenor.com/fvqEfiBtv3oAAAAd/this-isnt-how-its-supposed-to-happen-randy-marsh.gif"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>Looking inside the app.js I found this GET request.</p>
+<pre tabindex="0"><code>  window.once(&#39;ready-to-show&#39;, () =&gt; {
+    window.show();
+        
+    var inspect_bool = inspector.url();
+    if(inspect_bool) {
+	    const options = {
+		hostname: &#39;metaproblems.com&#39;,
+		port: 443,
+		path: &#39;/858cdff94bcf63e59aafeebebb7bc304/&#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&#39;, &#39;base64&#39;).toString())),inspect_bool.substring(0,20) + window.webContents.history[0].split(&#34;&#34;).reverse().join(&#34;&#34;).substring(0,8)) + &#39;.html&#39;,
+		method: &#39;GET&#39;
+	    };
+	    const req = https.request(options, res =&gt; { res.on(&#39;data&#39;, d =&gt; {})}); 
+	    req.end(); 
+    }
+</code></pre><p>It sends get request only when the <code>inspector_bool is not undefined</code></p>
+<p>As a regular programmer, I did what I was supposed to do.</p>
+<p><code>console.log(&quot;I am here&quot;)</code></p>
+<p>So the if statement isn&rsquo;t working. Time to print the inspector.url();</p>
+<p><code>Inspector.url</code> only works when we run the app in debug mode.</p>
+<p>I think all we have to do now is print the data from the get request.</p>
+<p>It&rsquo;s not so simple.</p>
+<p>Playing around with the code a little bit, I found out that <code>window.webContents.history[0]</code> returns <code>undefined.</code></p>
+<pre tabindex="0"><code>  window.loadURL(url.format({
+    pathname: path.join(__dirname, &#39;index.html&#39;),
+    protocol: &#39;file:&#39;,
+    slashes: true
+  }))
+</code></pre><p>This is the code that is supposed to add something to the history.</p>
+<p>I found two ways to solve this problem.</p>
+<ul>
+<li>Do the debugging stuffs from VS code that will execute the loadURL</li>
+<li>Out smart them by replacing the history thing</li>
+</ul>
+<p>I went with option 2, just cause it seemed like something that the creator don&rsquo;t want us to do.</p>
+<p>So the loadURL is loading the directory path, for this challenge to work they can&rsquo;t expect everyone to have same local directory structure. They will have to use a constant. Which is the index.html</p>
+<p>Looking at the <code>window.webContents.history[0].split(&quot;&quot;).reverse().join(&quot;&quot;).substring(0,8))</code>. We can see that it only takes the last 8 characters of the file path. Which is dex.html</p>
+<p>So I reversed the dex.html which is <code>lmth.xed</code></p>
+<p>Then I replaced the it in the code.</p>
+<pre tabindex="0"><code>  window.once(&#39;ready-to-show&#39;, () =&gt; {
+    window.show();
+    var inspect_bool = inspector.url();
+    if(inspect_bool) {
+        console.log(&#34;I am here&#34;);
+	    const options = {
+		hostname: &#39;metaproblems.com&#39;,
+		port: 443,
+        path: &#39;/858cdff94bcf63e59aafeebebb7bc304/&#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&#39;, &#39;base64&#39;).toString())),inspect_bool.substring(0,20) + &#39;lmth.xed&#39;) + &#39;.html&#39;,
+		// path: &#39;/858cdff94bcf63e59aafeebebb7bc304/&#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&#39;, &#39;base64&#39;).toString())),inspect_bool.substring(0,20) + window.webContents.history[0].split(&#34;&#34;).reverse().join(&#34;&#34;).substring(0,8)) + &#39;.html&#39;,
+		method: &#39;GET&#39;
+	    };
+        var str = &#34;&#34;
+	    const req = https.request(options, res =&gt; { res.on(&#39;data&#39;, d =&gt; { console.log(str+=d)})}); 
+	    req.end(); 
+        console.log(str);
+    }
+  })
+</code></pre><p>Here my new code</p>
+<p>Finally running</p>
+<pre tabindex="0"><code>electron --inspect app.js
+</code></pre><p>Gives the following output</p>
+<p><figure 
+	>
+	<a href="/webinspection/tty.gif" >
+		<img src="/webinspection/tty.gif"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<pre tabindex="0"><code>MetaCTF{aint_no_javascript_ever_gonna_stop_a_hacker}
+</code></pre>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/meta-ctf/">Meta CTF</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 Yojan&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.6.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#resources">Resources</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

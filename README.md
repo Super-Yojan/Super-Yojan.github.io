@@ -1,7 +1,2 @@
-# Super-Yojan.github.io
+# Blog
 
-
-Hello welcome, This is my portfolio...
-
-
-# Under developement

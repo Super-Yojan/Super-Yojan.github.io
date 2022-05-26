@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>UMDCTF on Yojan&#39;s Blog</title>
+    <link>/tags/umdctf/</link>
+    <description>Recent content in UMDCTF on Yojan&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 06 Mar 2022 19:12:41 -0500</lastBuildDate><atom:link href="/tags/umdctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UMDCTF: Block ChainV2 - Chungus Coin</title>
+      <link>/p/umdctf-block-chainv2-chungus-coin/</link>
+      <pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate>
+      
+      <guid>/p/umdctf-block-chainv2-chungus-coin/</guid>
+      <description>For this challenge we were provided with the server.py with stuffs redacted.
+They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
+As usual, starting the challenge out by analyzing the code that was provided.   There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.</description>
+    </item>
+    
+    <item>
+      <title>UMDCTF: Customer Support</title>
+      <link>/p/umdctf-customer-support/</link>
+      <pubDate>Sun, 06 Mar 2022 19:09:57 -0500</pubDate>
+      
+      <guid>/p/umdctf-customer-support/</guid>
+      <description>For this challenge we were given   So I stared out by opening the Dockerfile   In the docker file we can see the starting command is npm run startall   Looking at the package.json we can see two service being started with start all script.
+  In app.js inside microservice we can see two path that returns token.   This microservice is running in port 3001.</description>
+    </item>
+    
+  </channel>
+</rss>

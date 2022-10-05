@@ -6,11 +6,129 @@ and disadvantages.&lt;/p>
 of lists used by many programming languages. While it may seem easy to use and work with this types of list
 aren&amp;rsquo;t very efficient. Let&amp;rsquo;s look at how Dymanic Array works.&lt;/p>
 &lt;p>To make a Dymanic Array we start with a regular array with some default initial size. I will start with a
-list of size 2. Code for it could look something like.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-rust" data-lang="rust">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">let&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">mut&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">array&lt;/span>: &lt;span class="p">[&lt;/span>&lt;span class="kt">i32&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">];&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For this I will try to use rust to implement a Dymanic array.&lt;/p></description></item><item><title>Algorithm Analysis</title><link>/p/algorithm-analysis/</link><pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate><guid>/p/algorithm-analysis/</guid><description>&lt;h1 id="analyzing-algorithm">Analyzing Algorithm&lt;/h1>
+list of size 2. As we add more value to the array list the size of array will double every time it&amp;rsquo;s full.
+The following picture shows how it works.&lt;/p>
+&lt;p>&lt;img src="/lists/figure1.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>This type of data structure is easy to implement but it&amp;rsquo;s efficiency isn&amp;rsquo;t really good.
+When we add a new value to the array and it&amp;rsquo;s full, we would
+need to make a new array and copy it over.&lt;/p>
+&lt;p>&lt;img src="/lists/figure2.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>The time complexity of making a new array and copying old
+values to the new one is O(n).&lt;/p>
+&lt;h4 id="o-notations-for-dymanic-array">O notations for Dymanic Array&lt;/h4>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Data Structure&lt;/th>
+&lt;th>Get/Set&lt;/th>
+&lt;th>Add/Remove End&lt;/th>
+&lt;th>Insert/Remove Front&lt;/th>
+&lt;th>Insert/ Remove Middle&lt;/th>
+&lt;th>Search&lt;/th>
+&lt;th>Easy to grow?&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Dymanic Array&lt;/td>
+&lt;td>1&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>Not really&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>The above it the worst case for the Dynamic Array, but as
+discussed above Dynamic array only copies when it&amp;rsquo;s full.
+The average time complexity can be computed using something
+called &lt;strong>amortized analysis&lt;/strong> where we find the efficiency by dividing worst case by sequence of M operations.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Data Structure&lt;/th>
+&lt;th>Get/Set&lt;/th>
+&lt;th>Add/Remove End&lt;/th>
+&lt;th>Insert/Remove Front&lt;/th>
+&lt;th>Insert/ Remove Middle&lt;/th>
+&lt;th>Search&lt;/th>
+&lt;th>Easy to grow?&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Dymanic Array&lt;/td>
+&lt;td>1&lt;/td>
+&lt;td>&lt;em>1&lt;/em>*&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>Not really&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>We can see that the Add averages to O(1).&lt;/p>
+&lt;h2 id="linked-list">Linked List&lt;/h2>
+&lt;p>Linked list are list based on linked nodes. Nodes are object that holds
+the value and points to the next node.&lt;/p>
+&lt;p>There are two different types of linked list.&lt;/p>
+&lt;ul>
+&lt;li>Singly-Linked Lists&lt;/li>
+&lt;li>Doubly-Linked Lists&lt;/li>
+&lt;/ul>
+&lt;h3 id="singly-linked-list">Singly Linked List&lt;/h3>
+&lt;p>A singly linked list has one data field and one filed for the next node.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;(&lt;/span>&lt;span class="n">T&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>This is a node in java for singly linked list.&lt;/p>
+&lt;p>A visual representation of node would look something like.&lt;/p>
+&lt;p>&lt;img src="/lists/figure3.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>A linked list is basically chains of these nodes. Which would look like.&lt;/p>
+&lt;p>&lt;img src="/lists/figure4.png"
+loading="lazy"
+>&lt;/p>
+&lt;p>The first node in the list is called head, and the last is called the tail. The tail
+will point to null. While iterating over a linked list we know that we reached the end
+when tail.next equals null.&lt;/p>
+&lt;h3 id="doubly-linked">Doubly-Linked&lt;/h3>
+&lt;p>A Doubly-Linked list is basically the same as singly other than we can move both forward
+and backwards.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">class&lt;/span> &lt;span class="nc">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">prev&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;(){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;(&lt;/span>&lt;span class="n">T&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">){&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">value&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>We just need to add a prev field, that will store reference to the previous node.
+A visual representation of doubly linked list would look something like.&lt;/p>
+&lt;p>&lt;img src="/lists/figure5.png"
+loading="lazy"
+>&lt;/p></description></item><item><title>Algorithm Analysis</title><link>/p/algorithm-analysis/</link><pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate><guid>/p/algorithm-analysis/</guid><description>&lt;h1 id="analyzing-algorithm">Analyzing Algorithm&lt;/h1>
 &lt;p>An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?&lt;/p>
-&lt;p>Algorithm allows one to define how certain function works. For example, we want to add a value to a [[Data structure]]. We would need to find the most efficient way to add it to the data structure. Algorithm analysis allows us to figure out how efficient an algorithm is.&lt;/p>
+&lt;p>Algorithm allows one to define how certain function works. For example, we want to add a value to a &lt;strong>Data structure&lt;/strong>. We would need to find the most efficient way to add it to the data structure. Algorithm analysis allows us to figure out how efficient an algorithm is.&lt;/p>
 &lt;h2 id="complexities">Complexities&lt;/h2>
 &lt;p>For a given algorithm, there are three types of complexities:&lt;/p>
 &lt;ul>

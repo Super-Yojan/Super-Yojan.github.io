@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Yojan's Blog</title><link>/post/</link><description>Recent content in Posts on Yojan's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 04 Oct 2022 19:45:01 -0400</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Algorithm Analysis</title><link>/p/algorithm-analysis/</link><pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate><guid>/p/algorithm-analysis/</guid><description>&lt;h1 id="analyzing-algorithm">Analyzing Algorithm&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Yojan's Blog</title><link>/post/</link><description>Recent content in Posts on Yojan's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 04 Oct 2022 20:10:23 -0400</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml"/><item><title>Lists</title><link>/p/lists/</link><pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate><guid>/p/lists/</guid><description>&lt;h1 id="lists">Lists&lt;/h1>
+&lt;p>Two of the most common lists are Dymanic Array List and Linked List. Both of them have their own advantages
+and disadvantages.&lt;/p>
+&lt;h2 id="dymanic-array-list">Dymanic Array List&lt;/h2>
+&lt;p>Dymanic Array List is a list that grows as more items are added onto the list. These are the most common types
+of lists used by many programming languages. While it may seem easy to use and work with this types of list
+aren&amp;rsquo;t very efficient. Let&amp;rsquo;s look at how Dymanic Array works.&lt;/p>
+&lt;p>To make a Dymanic Array we start with a regular array with some default initial size. I will start with a
+list of size 2. Code for it could look something like.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-rust" data-lang="rust">&lt;span class="line">&lt;span class="cl">&lt;span class="kd">let&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">mut&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">array&lt;/span>: &lt;span class="p">[&lt;/span>&lt;span class="kt">i32&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">];&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>For this I will try to use rust to implement a Dymanic array.&lt;/p></description></item><item><title>Algorithm Analysis</title><link>/p/algorithm-analysis/</link><pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate><guid>/p/algorithm-analysis/</guid><description>&lt;h1 id="analyzing-algorithm">Analyzing Algorithm&lt;/h1>
 &lt;p>An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?&lt;/p>
 &lt;p>Algorithm allows one to define how certain function works. For example, we want to add a value to a [[Data structure]]. We would need to find the most efficient way to add it to the data structure. Algorithm analysis allows us to figure out how efficient an algorithm is.&lt;/p>
 &lt;h2 id="complexities">Complexities&lt;/h2>
@@ -54,7 +64,42 @@ There are two lines inside which will run &lt;code>n&lt;/code> number of times, 
 &lt;/ul>
 &lt;p>Adding them all up, we get the time complexity of
 T(n) = 3n+5&lt;/p>
-&lt;p>Now that we have the specific time complexity for it, we can simplify the bounding function by keeping the most dominant factor. For this example it is 3n, then we can remove any constant and get the Big-O notation. Which will be O(n).&lt;/p></description></item><item><title>UMDCTF: Block ChainV2 - Chungus Coin</title><link>/p/umdctf-block-chainv2-chungus-coin/</link><pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate><guid>/p/umdctf-block-chainv2-chungus-coin/</guid><description>&lt;img src="/UMDCTF/UMDCTF.png" alt="Featured image of post UMDCTF: Block ChainV2 - Chungus Coin" />&lt;p>&lt;img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png"
+&lt;p>Now that we have the specific time complexity for it, we can simplify the bounding function by keeping the most dominant factor. For this example it is 3n, then we can remove any constant and get the Big-O notation. Which will be O(n).&lt;/p>
+&lt;h2 id="quick-reference-for-big-o">Quick reference for Big O&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Big O&lt;/th>
+&lt;th>Reason&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>O(1)&lt;/td>
+&lt;td>Something that takes a fixed ammount of time&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>O(lg n)&lt;/td>
+&lt;td>When divided in half every time and work on only one half&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>O(n)&lt;/td>
+&lt;td>Perfoming a task to each elemnt&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>O(n lg n)&lt;/td>
+&lt;td>When divided in half every time and need to work on both half&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>O(n^2)&lt;/td>
+&lt;td>nested loops&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>O(n^3)&lt;/td>
+&lt;td>three nested loops&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>UMDCTF: Block ChainV2 - Chungus Coin</title><link>/p/umdctf-block-chainv2-chungus-coin/</link><pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate><guid>/p/umdctf-block-chainv2-chungus-coin/</guid><description>&lt;img src="/UMDCTF/UMDCTF.png" alt="Featured image of post UMDCTF: Block ChainV2 - Chungus Coin" />&lt;p>&lt;img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png"
 loading="lazy"
 >
 For this challenge we were provided with the server.py with stuffs redacted.&lt;/p>

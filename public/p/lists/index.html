@@ -245,7 +245,7 @@ Dymanic Array List Dymanic Array List is a list that grows as more items are add
 
 
                 <time class="article-time--reading">
-                    1 minute read
+                    3 minute read
                 </time>
             </div>
         
@@ -267,9 +267,152 @@ and disadvantages.</p>
 of lists used by many programming languages. While it may seem easy to use and work with this types of list
 aren&rsquo;t very efficient. Let&rsquo;s look at how Dymanic Array works.</p>
 <p>To make a Dymanic Array we start with a regular array with some default initial size. I will start with a
-list of size 2. Code for it could look something like.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">array</span>: <span class="p">[</span><span class="kt">i32</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="mi">3</span><span class="p">];</span><span class="w">
-</span></span></span></code></pre></div><p>For this I will try to use rust to implement a Dymanic array.</p>
+list of size 2. As we add more value to the array list the size of array will double every time it&rsquo;s full.
+The following picture shows how it works.</p>
+<p><img src="/lists/figure1.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>This type of data structure is easy to implement but it&rsquo;s efficiency isn&rsquo;t really good.
+When we add a new value to the array and it&rsquo;s full, we would
+need to make a new array and copy it over.</p>
+<p><img src="/lists/figure2.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>The time complexity of making a new array and copying old
+values to the new one is O(n).</p>
+<h4 id="o-notations-for-dymanic-array">O notations for Dymanic Array</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Data Structure</th>
+<th>Get/Set</th>
+<th>Add/Remove End</th>
+<th>Insert/Remove Front</th>
+<th>Insert/ Remove Middle</th>
+<th>Search</th>
+<th>Easy to grow?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dymanic Array</td>
+<td>1</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>Not really</td>
+</tr>
+</tbody>
+</table></div>
+<p>The above it the worst case for the Dynamic Array, but as
+discussed above Dynamic array only copies when it&rsquo;s full.
+The average time complexity can be computed using something
+called <strong>amortized analysis</strong> where we find the efficiency by dividing worst case by sequence of M operations.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Data Structure</th>
+<th>Get/Set</th>
+<th>Add/Remove End</th>
+<th>Insert/Remove Front</th>
+<th>Insert/ Remove Middle</th>
+<th>Search</th>
+<th>Easy to grow?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dymanic Array</td>
+<td>1</td>
+<td><em>1</em>*</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+<td>Not really</td>
+</tr>
+</tbody>
+</table></div>
+<p>We can see that the Add averages to O(1).</p>
+<h2 id="linked-list">Linked List</h2>
+<p>Linked list are list based on linked nodes. Nodes are object that holds
+the value and points to the next node.</p>
+<p>There are two different types of linked list.</p>
+<ul>
+<li>Singly-Linked Lists</li>
+<li>Doubly-Linked Lists</li>
+</ul>
+<h3 id="singly-linked-list">Singly Linked List</h3>
+<p>A singly linked list has one data field and one filed for the next node.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">T</span> <span class="n">value</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(){</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="n">T</span> <span class="n">value</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">       <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>This is a node in java for singly linked list.</p>
+<p>A visual representation of node would look something like.</p>
+<p><img src="/lists/figure3.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>A linked list is basically chains of these nodes. Which would look like.</p>
+<p><img src="/lists/figure4.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>The first node in the list is called head, and the last is called the tail. The tail
+will point to null. While iterating over a linked list we know that we reached the end
+when tail.next equals null.</p>
+<h3 id="doubly-linked">Doubly-Linked</h3>
+<p>A Doubly-Linked list is basically the same as singly other than we can move both forward
+and backwards.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">T</span> <span class="n">value</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">next</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">prev</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(){</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="n">Node</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;(</span><span class="n">T</span> <span class="n">value</span><span class="o">){</span>
+</span></span><span class="line"><span class="cl">       <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">     <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>We just need to add a prev field, that will store reference to the previous node.
+A visual representation of doubly linked list would look something like.</p>
+<p><img src="/lists/figure5.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
 
 </section>
 

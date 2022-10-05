@@ -8,7 +8,7 @@ draft: false
 
 An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?
 
-Algorithm allows one to define how certain function works. For example, we want to add a value to a [[Data structure]]. We would need to find the most efficient way to add it to the data structure. Algorithm analysis allows us to figure out how efficient an algorithm is.
+Algorithm allows one to define how certain function works. For example, we want to add a value to a **Data structure**. We would need to find the most efficient way to add it to the data structure. Algorithm analysis allows us to figure out how efficient an algorithm is.
 
 ## Complexities 
 For a given algorithm, there are three types of complexities:

@@ -316,6 +316,41 @@ There are two lines inside which will run <code>n</code> number of times, and th
 <p>Adding them all up, we get the time complexity of
 T(n) = 3n+5</p>
 <p>Now that we have the specific time complexity for it, we can simplify the bounding function by keeping the most dominant factor. For this example it is 3n, then we can remove any constant and get the Big-O notation. Which will be O(n).</p>
+<h2 id="quick-reference-for-big-o">Quick reference for Big O</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Big O</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>O(1)</td>
+<td>Something that takes a fixed ammount of time</td>
+</tr>
+<tr>
+<td>O(lg n)</td>
+<td>When divided in half every time and work on only one half</td>
+</tr>
+<tr>
+<td>O(n)</td>
+<td>Perfoming a task to each elemnt</td>
+</tr>
+<tr>
+<td>O(n lg n)</td>
+<td>When divided in half every time and need to work on both half</td>
+</tr>
+<tr>
+<td>O(n^2)</td>
+<td>nested loops</td>
+</tr>
+<tr>
+<td>O(n^3)</td>
+<td>three nested loops</td>
+</tr>
+</tbody>
+</table></div>
 
 </section>
 

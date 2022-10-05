@@ -6,7 +6,26 @@
         <description>Recent content on Yojan&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 04 Oct 2022 19:45:01 -0400</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 04 Oct 2022 20:10:23 -0400</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Lists</title>
+        <link>/p/lists/</link>
+        <pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate>
+        
+        <guid>/p/lists/</guid>
+        <description>&lt;h1 id=&#34;lists&#34;&gt;Lists&lt;/h1&gt;
+&lt;p&gt;Two of the most common lists are Dymanic Array List and Linked List. Both of them have their own advantages
+and disadvantages.&lt;/p&gt;
+&lt;h2 id=&#34;dymanic-array-list&#34;&gt;Dymanic Array List&lt;/h2&gt;
+&lt;p&gt;Dymanic Array List is a list that grows as more items are added onto the list. These are the most common types
+of lists used by many programming languages. While it may seem easy to use and work with this types of list
+aren&amp;rsquo;t very efficient. Let&amp;rsquo;s look at how Dymanic Array works.&lt;/p&gt;
+&lt;p&gt;To make a Dymanic Array we start with a regular array with some default initial size. I will start with a
+list of size 2. Code for it could look something like.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-rust&#34; data-lang=&#34;rust&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;let&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;k&#34;&gt;mut&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;n&#34;&gt;array&lt;/span&gt;: &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;i32&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;];&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For this I will try to use rust to implement a Dymanic array.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Algorithm Analysis</title>
         <link>/p/algorithm-analysis/</link>
         <pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate>
@@ -69,6 +88,41 @@ There are two lines inside which will run &lt;code&gt;n&lt;/code&gt; number of t
 &lt;p&gt;Adding them all up, we get the time complexity of
 T(n) = 3n+5&lt;/p&gt;
 &lt;p&gt;Now that we have the specific time complexity for it, we can simplify the bounding function by keeping the most dominant factor. For this example it is 3n, then we can remove any constant and get the Big-O notation. Which will be O(n).&lt;/p&gt;
+&lt;h2 id=&#34;quick-reference-for-big-o&#34;&gt;Quick reference for Big O&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Big O&lt;/th&gt;
+&lt;th&gt;Reason&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;O(1)&lt;/td&gt;
+&lt;td&gt;Something that takes a fixed ammount of time&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(lg n)&lt;/td&gt;
+&lt;td&gt;When divided in half every time and work on only one half&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(n)&lt;/td&gt;
+&lt;td&gt;Perfoming a task to each elemnt&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(n lg n)&lt;/td&gt;
+&lt;td&gt;When divided in half every time and need to work on both half&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(n^2)&lt;/td&gt;
+&lt;td&gt;nested loops&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;O(n^3)&lt;/td&gt;
+&lt;td&gt;three nested loops&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 </description>
         </item>
         <item>

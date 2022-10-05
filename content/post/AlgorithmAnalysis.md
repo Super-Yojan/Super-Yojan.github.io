@@ -80,3 +80,15 @@ T(n) = 3n+5
 
 Now that we have the specific time complexity for it, we can simplify the bounding function by keeping the most dominant factor. For this example it is 3n, then we can remove any constant and get the Big-O notation. Which will be O(n).
 
+## Quick reference for Big O 
+
+
+| Big O  | Reason |
+|-------------- |-------------- |
+| O(1)| Something that takes a fixed ammount of time|
+| O(lg n) | When divided in half every time and work on only one half | 
+| O(n) | Perfoming a task to each elemnt|
+| O(n lg n) | When divided in half every time and need to work on both half |
+| O(n^2) | nested loops|
+| O(n^3) | three nested loops|
+

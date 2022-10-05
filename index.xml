@@ -1,4 +1,45 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yojan's Blog</title><link>/</link><description>Recent content on Yojan's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 04 Oct 2022 20:10:23 -0400</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Lists</title><link>/p/lists/</link><pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate><guid>/p/lists/</guid><description>&lt;h1 id="lists">Lists&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Yojan's Blog</title><link>/</link><description>Recent content on Yojan's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 04 Oct 2022 23:16:28 -0400</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Hashing</title><link>/p/hashing/</link><pubDate>Tue, 04 Oct 2022 23:16:28 -0400</pubDate><guid>/p/hashing/</guid><description>&lt;p>Let&amp;rsquo;s say we want a data structure that can perform add, remove, and search in a
+&lt;strong>constant&lt;/strong> time. How can we do it?&lt;/p>
+&lt;p>If we use an array we can add in a constant time, but to delete and search it will take a
+long time.
+That&amp;rsquo;s where hasing comes in. Hashing allows us to reduce the time complexity by a lot.&lt;/p>
+&lt;h3 id="terminology">Terminology&lt;/h3>
+&lt;ul>
+&lt;li>Hash code
+&lt;ul>
+&lt;li>It&amp;rsquo;s an integer value computed for a given object which will be used as the index&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Hash function
+&lt;ul>
+&lt;li>A function that computes a hash code for an object&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Hash table
+&lt;ul>
+&lt;li>Place where we store object based on hash code.&lt;/li>
+&lt;li>Mostly arrays&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="hash-table">Hash Table&lt;/h2>
+&lt;p>Hash table stores object in an array where the index of a given object is the
+hash code.
+Few things that we need to keep in mind while creating hash table is how to
+compute the hash code? What to do when hash code collides for two objects.&lt;/p>
+&lt;h4 id="computing-hash-code">Computing hash code&lt;/h4>
+&lt;p>We need to adhere to Hash Contract while making our own hash function. Hash Contract
+basically says that if two object are equal they must return same hash code. We need to
+distribute different object failry, in order to reduce collision. Hash function should be
+fairly quick to compute.&lt;/p>
+&lt;p>If the hash code for a given object is high and we don&amp;rsquo;t have the index for it, then we
+find a smaller integer. For example,&lt;/p>
+&lt;p>If the hash code is 798, and the length of array is 10. We can use modolus operator to find
+a index within the array size. 798%10 = 8 then 789 will be stored at index 8 of the array.&lt;/p>
+&lt;h4 id="separate-chaining">Separate Chaining&lt;/h4>
+&lt;p>If there is something already in the given index, then we can use create a linked list
+at that given index to add more values. Load for a hash table is calculate by
+dividing the Total item count by the length of hash table.&lt;/p></description></item><item><title>Lists</title><link>/p/lists/</link><pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate><guid>/p/lists/</guid><description>&lt;h1 id="lists">Lists&lt;/h1>
 &lt;p>Two of the most common lists are Dymanic Array List and Linked List. Both of them have their own advantages
 and disadvantages.&lt;/p>
 &lt;h2 id="dymanic-array-list">Dymanic Array List&lt;/h2>
@@ -126,7 +167,50 @@ and backwards.&lt;/p>
 A visual representation of doubly linked list would look something like.&lt;/p>
 &lt;p>&lt;img src="/lists/figure5.png"
 loading="lazy"
->&lt;/p></description></item><item><title>Algorithm Analysis</title><link>/p/algorithm-analysis/</link><pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate><guid>/p/algorithm-analysis/</guid><description>&lt;h1 id="analyzing-algorithm">Analyzing Algorithm&lt;/h1>
+>&lt;/p>
+&lt;h2 id="o-notation-summary">O notation summary&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Data Structure&lt;/th>
+&lt;th>Get/Set&lt;/th>
+&lt;th>Add/Remove End&lt;/th>
+&lt;th>Insert/Remove Front&lt;/th>
+&lt;th>Insert/ Remove Middle&lt;/th>
+&lt;th>Search&lt;/th>
+&lt;th>Easy to grow?&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Dymanic Array&lt;/td>
+&lt;td>1&lt;/td>
+&lt;td>&lt;em>1&lt;/em>*&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>Not really&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Singly-Linked List&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>1,N&lt;/td>
+&lt;td>1&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>yes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Doubly-Linked List&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>1&lt;/td>
+&lt;td>1&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>N&lt;/td>
+&lt;td>yes&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table></description></item><item><title>Algorithm Analysis</title><link>/p/algorithm-analysis/</link><pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate><guid>/p/algorithm-analysis/</guid><description>&lt;h1 id="analyzing-algorithm">Analyzing Algorithm&lt;/h1>
 &lt;p>An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?&lt;/p>
 &lt;p>Algorithm allows one to define how certain function works. For example, we want to add a value to a &lt;strong>Data structure&lt;/strong>. We would need to find the most efficient way to add it to the data structure. Algorithm analysis allows us to figure out how efficient an algorithm is.&lt;/p>
 &lt;h2 id="complexities">Complexities&lt;/h2>

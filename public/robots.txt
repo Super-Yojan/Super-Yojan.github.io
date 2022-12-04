@@ -1,2 +1,3 @@
 User-agent: *
-Sitemap: https://blog.drmoscovium.net/sitemap.xml
+Disallow:
+Sitemap: https://git.drmoscovium.xyz/sitemap.xml

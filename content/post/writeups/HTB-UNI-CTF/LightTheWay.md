@@ -1,7 +1,11 @@
 ---
 title: "HTB UNI CTF : Light The Way"
 date: 2021-11-21T23:22:26-05:00
-image: /hackthebox/unictf.png
+cover:
+  image: "/hackthebox/unictf.png"
+  alt: "UNI CTF" # alt text
+  relative: false # when using page bundles set this to true
+  hidden: false # only hide on current single page
 tags:
    - Hack The Box
 ---

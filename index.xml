@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Blog</title>
-    <link>https://git.drmoscovium.xyz/</link>
-    <description>Recent content on Blog</description>
+    <title>drMoscovium</title>
+    <link>https://drmoscovium.xyz/</link>
+    <description>Recent content on drMoscovium</description>
     <image>
-      <url>https://git.drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://git.drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 25 Nov 2022 12:04:54 -0500</lastBuildDate><atom:link href="https://git.drmoscovium.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Nov 2022 12:04:54 -0500</lastBuildDate><atom:link href="https://drmoscovium.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DrMoscoVIM</title>
-      <link>https://git.drmoscovium.xyz/projects/drmoscovium/</link>
+      <link>https://drmoscovium.xyz/projects/drmoscovium/</link>
       <pubDate>Fri, 25 Nov 2022 12:04:54 -0500</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/projects/drmoscovium/</guid>
+      <guid>https://drmoscovium.xyz/projects/drmoscovium/</guid>
       <description>drMoscoVIM is a neovim configuration that is feature rich, and fast. It&amp;rsquo;s a small project that I am working on. There is still a lot that I need to do.
 TODOs Make a easy install script Add support to more languages Write a better documentation for how to use it </description>
     </item>
     
     <item>
       <title>Hashing</title>
-      <link>https://git.drmoscovium.xyz/post/hashing/</link>
+      <link>https://drmoscovium.xyz/post/hashing/</link>
       <pubDate>Tue, 04 Oct 2022 23:16:28 -0400</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/hashing/</guid>
+      <guid>https://drmoscovium.xyz/post/hashing/</guid>
       <description>Let&amp;rsquo;s say we want a data structure that can perform add, remove, and search in a constant time. How can we do it?
 If we use an array we can add in a constant time, but to delete and search it will take a long time. That&amp;rsquo;s where hasing comes in. Hashing allows us to reduce the time complexity by a lot.
 Terminology Hash code It&amp;rsquo;s an integer value computed for a given object which will be used as the index Hash function A function that computes a hash code for an object Hash table Place where we store object based on hash code.</description>
@@ -33,30 +33,30 @@ Terminology Hash code It&amp;rsquo;s an integer value computed for a given objec
     
     <item>
       <title>Lists</title>
-      <link>https://git.drmoscovium.xyz/post/list/</link>
+      <link>https://drmoscovium.xyz/post/list/</link>
       <pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/list/</guid>
+      <guid>https://drmoscovium.xyz/post/list/</guid>
       <description>Lists Two of the most common lists are Dymanic Array List and Linked List. Both of them have their own advantages and disadvantages.
 Dymanic Array List Dymanic Array List is a list that grows as more items are added onto the list. These are the most common types of lists used by many programming languages. While it may seem easy to use and work with this types of list aren&amp;rsquo;t very efficient.</description>
     </item>
     
     <item>
       <title>Algorithm Analysis</title>
-      <link>https://git.drmoscovium.xyz/post/algorithmanalysis/</link>
+      <link>https://drmoscovium.xyz/post/algorithmanalysis/</link>
       <pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/algorithmanalysis/</guid>
+      <guid>https://drmoscovium.xyz/post/algorithmanalysis/</guid>
       <description>Analyzing Algorithm An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?
 Algorithm allows one to define how certain function works. For example, we want to add a value to a Data structure. We would need to find the most efficient way to add it to the data structure.</description>
     </item>
     
     <item>
       <title>UMDCTF: Block ChainV2 - Chungus Coin</title>
-      <link>https://git.drmoscovium.xyz/post/writeups/umdctf/blockchainchunguscoin/</link>
+      <link>https://drmoscovium.xyz/post/writeups/umdctf/blockchainchunguscoin/</link>
       <pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/writeups/umdctf/blockchainchunguscoin/</guid>
+      <guid>https://drmoscovium.xyz/post/writeups/umdctf/blockchainchunguscoin/</guid>
       <description>For this challenge we were provided with the server.py with stuffs redacted.
 They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
 As usual, starting the challenge out by analyzing the code that was provided. There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.</description>
@@ -64,20 +64,20 @@ As usual, starting the challenge out by analyzing the code that was provided. Th
     
     <item>
       <title>UMDCTF: Customer Support</title>
-      <link>https://git.drmoscovium.xyz/post/writeups/umdctf/customersupport/</link>
+      <link>https://drmoscovium.xyz/post/writeups/umdctf/customersupport/</link>
       <pubDate>Sun, 06 Mar 2022 19:09:57 -0500</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/writeups/umdctf/customersupport/</guid>
+      <guid>https://drmoscovium.xyz/post/writeups/umdctf/customersupport/</guid>
       <description>For this challenge we were given So I stared out by opening the Dockerfile In the docker file we can see the starting command is npm run startall Looking at the package.json we can see two service being started with start all script.
 In app.js inside microservice we can see two path that returns token. This microservice is running in port 3001. The first thing that I tried to do was open that port, but i couldn&amp;rsquo;t access it.</description>
     </item>
     
     <item>
       <title>Hacking Electron App - Web Inspection - MetaCTF</title>
-      <link>https://git.drmoscovium.xyz/post/writeups/metactf/web-inspection/</link>
+      <link>https://drmoscovium.xyz/post/writeups/metactf/web-inspection/</link>
       <pubDate>Mon, 06 Dec 2021 14:45:23 -0500</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/writeups/metactf/web-inspection/</guid>
+      <guid>https://drmoscovium.xyz/post/writeups/metactf/web-inspection/</guid>
       <description>Challenge Descrption:
 We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.
 Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.</description>
@@ -85,10 +85,10 @@ Get down in the weeds and see if you can understand how it works. You may want g
     
     <item>
       <title>HTB UNI CTF : Web Slippy</title>
-      <link>https://git.drmoscovium.xyz/post/writeups/htb-uni-ctf/web-slippy/</link>
+      <link>https://drmoscovium.xyz/post/writeups/htb-uni-ctf/web-slippy/</link>
       <pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/writeups/htb-uni-ctf/web-slippy/</guid>
+      <guid>https://drmoscovium.xyz/post/writeups/htb-uni-ctf/web-slippy/</guid>
       <description>Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.
 The directory tree of the source code as follow.
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 ./challenge ├── application │ ├── blueprints │ │ └── routes.</description>
@@ -96,10 +96,10 @@ The directory tree of the source code as follow.
     
     <item>
       <title>HTB UNI CTF : Light The Way</title>
-      <link>https://git.drmoscovium.xyz/post/writeups/htb-uni-ctf/lighttheway/</link>
+      <link>https://drmoscovium.xyz/post/writeups/htb-uni-ctf/lighttheway/</link>
       <pubDate>Sun, 21 Nov 2021 23:22:26 -0500</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/writeups/htb-uni-ctf/lighttheway/</guid>
+      <guid>https://drmoscovium.xyz/post/writeups/htb-uni-ctf/lighttheway/</guid>
       <description>Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.
 SCADA Supervisory control and data acquisition is a system that allows industrial organizations to:
 * Conrtol processes * Monitor * Interact with devices * Record events For more information on SCADA</description>
@@ -107,10 +107,10 @@ SCADA Supervisory control and data acquisition is a system that allows industria
     
     <item>
       <title>Integrity Check</title>
-      <link>https://git.drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</link>
+      <link>https://drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</link>
       <pubDate>Mon, 15 Nov 2021 15:38:22 -0500</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</guid>
+      <guid>https://drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</guid>
       <description>Attachment: File
 Solution I started out by running the file.
 1 java -jar IntegrityCheck.jar We can see that something is wrong in the function name.
@@ -121,10 +121,10 @@ Opening the IntegrityCheck.jar file The class name looks really wrong.</descript
     
     <item>
       <title>Why everyone shouldn&#39;t use linux?</title>
-      <link>https://git.drmoscovium.xyz/post/post2/</link>
+      <link>https://drmoscovium.xyz/post/post2/</link>
       <pubDate>Tue, 02 Nov 2021 16:48:55 -0400</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/post2/</guid>
+      <guid>https://drmoscovium.xyz/post/post2/</guid>
       <description>A few days ago, while talking to a Computer Science major in my college, I figured out that not everyone should use Linux.
 A disclaimer, when I say Linux I mean Linux Desktop. What I say here doesn&amp;rsquo;t apply to Linux servers.
 Linux Linux is an open-source software developed by a guy named Linus Torvalds. Now countless many people are contributing to the code. Open source means that the software is free, and anyone with enough knowledge can change the code.</description>

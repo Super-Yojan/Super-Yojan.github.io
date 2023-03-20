@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Kernel CTF on Blog</title>
-    <link>https://git.drmoscovium.xyz/tags/kernel-ctf/</link>
-    <description>Recent content in Kernel CTF on Blog</description>
+    <title>Kernel CTF on drMoscovium</title>
+    <link>https://drmoscovium.xyz/tags/kernel-ctf/</link>
+    <description>Recent content in Kernel CTF on drMoscovium</description>
     <image>
-      <url>https://git.drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://git.drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Mon, 15 Nov 2021 15:38:22 -0500</lastBuildDate><atom:link href="https://git.drmoscovium.xyz/tags/kernel-ctf/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Nov 2021 15:38:22 -0500</lastBuildDate><atom:link href="https://drmoscovium.xyz/tags/kernel-ctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Integrity Check</title>
-      <link>https://git.drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</link>
+      <link>https://drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</link>
       <pubDate>Mon, 15 Nov 2021 15:38:22 -0500</pubDate>
       
-      <guid>https://git.drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</guid>
+      <guid>https://drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</guid>
       <description>Attachment: File
 Solution I started out by running the file.
 1 java -jar IntegrityCheck.jar We can see that something is wrong in the function name.

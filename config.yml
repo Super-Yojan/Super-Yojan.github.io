@@ -1,5 +1,5 @@
-baseURL: "https://git.drmoscovium.xyz/"
-title: Blog
+baseURL: "https://drmoscovium.xyz/"
+title: drMoscovium 
 paginate: 5
 theme: PaperMod
 
@@ -16,10 +16,10 @@ minify:
 
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
-  title: drMoscovium's Blog 
-  description: "My Blog"
+  title: drMoscovium
+  description: "I am drMoscovium, nice to meet you."
   keywords: [Blog, Portfolio, PaperMod]
-  author: Me
+  author: drMoscovium
   # author: ["Me", "You"] # multiple authors
   images: ["<link or path of image for opengraph, twitter-cards>"]
   DateFormat: "January 2, 2006"
@@ -59,8 +59,8 @@ params:
   # profile-mode
   profileMode:
     enabled: true # needs to be explicitly set
-    title: drMoscovium's Blog 
-    subtitle: "Welcome to my blog!"
+    title: drMoscovium 
+    #    subtitle: "I am drMoscovium, nice to meet you."
     imageUrl: "avatar.png"
     imageWidth: 200
     imageHeight: 200 
@@ -81,6 +81,8 @@ params:
       url: "https://twitter.com/DrMoscovium"
     - name: github
       url: "https://github.com/Super-Yojan"
+    - name: ko-fi
+      url: "https://www.buymeacoffee.com/drMoscovium"
 
   analytics:
     google:
@@ -91,7 +93,7 @@ params:
       SiteVerificationTag: "XYZabc"
 
   cover:
-    hidden: true # hide everywhere but not in structured data
+    hidden: false # hide everywhere but not in structured data
     hiddenInList: true # hide on list pages and home
     hiddenInSingle: true # hide on single page
 

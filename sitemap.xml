@@ -2,19 +2,22 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://drmoscovium.xyz/projects/drmoscovium/</loc>
-    <lastmod>2022-11-25T12:04:54-05:00</lastmod>
+    <loc>https://drmoscovium.xyz/post/maac/</loc>
+    <lastmod>2023-06-04T20:07:50-04:00</lastmod>
   </url><url>
     <loc>https://drmoscovium.xyz/</loc>
+    <lastmod>2023-06-04T20:07:50-04:00</lastmod>
+  </url><url>
+    <loc>https://drmoscovium.xyz/post/</loc>
+    <lastmod>2023-06-04T20:07:50-04:00</lastmod>
+  </url><url>
+    <loc>https://drmoscovium.xyz/projects/drmoscovium/</loc>
     <lastmod>2022-11-25T12:04:54-05:00</lastmod>
   </url><url>
     <loc>https://drmoscovium.xyz/projects/</loc>
     <lastmod>2022-11-25T12:04:54-05:00</lastmod>
   </url><url>
     <loc>https://drmoscovium.xyz/post/hashing/</loc>
-    <lastmod>2022-10-04T23:16:28-04:00</lastmod>
-  </url><url>
-    <loc>https://drmoscovium.xyz/post/</loc>
     <lastmod>2022-10-04T23:16:28-04:00</lastmod>
   </url><url>
     <loc>https://drmoscovium.xyz/post/list/</loc>

@@ -9,16 +9,26 @@
       <link>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 04 Oct 2022 23:16:28 -0400</lastBuildDate><atom:link href="https://drmoscovium.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <language>en</language>
+    <lastBuildDate>Sun, 04 Jun 2023 20:07:50 -0400</lastBuildDate><atom:link href="https://drmoscovium.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Centralized Learning and Decentralized execution using Multi-Agent Actor-Critic(MAAC) </title>
+      <link>https://drmoscovium.xyz/post/maac/</link>
+      <pubDate>Sun, 04 Jun 2023 20:07:50 -0400</pubDate>
+      
+      <guid>https://drmoscovium.xyz/post/maac/</guid>
+      <description>When we think of Artificial General Intelligence (AGI) as depicted in Hollywood, we often envision either the Terminator or Star Trek. While there have been many recent improvements in Artificial Intelligence, most of them lack one of the main factors that make us human: the ability to cooperate with others to overcome tasks. Cooperation is something we excel at, and to achieve AGI, we would need algorithms that allow machines to easily engage in cooperation.</description>
+    </item>
+    
     <item>
       <title>Hashing</title>
       <link>https://drmoscovium.xyz/post/hashing/</link>
       <pubDate>Tue, 04 Oct 2022 23:16:28 -0400</pubDate>
       
       <guid>https://drmoscovium.xyz/post/hashing/</guid>
-      <description>Let&amp;rsquo;s say we want a data structure that can perform add, remove, and search in a constant time. How can we do it?
-If we use an array we can add in a constant time, but to delete and search it will take a long time. That&amp;rsquo;s where hasing comes in. Hashing allows us to reduce the time complexity by a lot.
-Terminology Hash code It&amp;rsquo;s an integer value computed for a given object which will be used as the index Hash function A function that computes a hash code for an object Hash table Place where we store object based on hash code.</description>
+      <description>When we require a data structure that can perform add, remove, and search operations in constant time, we can turn to the concept of hashing. While using an array allows for constant-time addition, searching and removal operations can be time-consuming. Hashing offers a solution by significantly reducing the time complexity involved.
+Terminology Before diving into the details of hash tables, let&amp;rsquo;s clarify some key terms:
+Hash code: An integer value computed for a given object, which serves as the index in the hash table.</description>
     </item>
     
     <item>
@@ -27,8 +37,8 @@ Terminology Hash code It&amp;rsquo;s an integer value computed for a given objec
       <pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate>
       
       <guid>https://drmoscovium.xyz/post/list/</guid>
-      <description>Lists Two of the most common lists are Dymanic Array List and Linked List. Both of them have their own advantages and disadvantages.
-Dymanic Array List Dymanic Array List is a list that grows as more items are added onto the list. These are the most common types of lists used by many programming languages. While it may seem easy to use and work with this types of list aren&amp;rsquo;t very efficient.</description>
+      <description>Lists Two of the most common types of lists are Dynamic Array Lists and Linked Lists. Each of these lists has its own advantages and disadvantages.
+Dynamic Array List A Dynamic Array List is a list that grows as more items are added to it. It is a widely used list implementation in many programming languages. While it is easy to use, it may not be the most efficient. Let&amp;rsquo;s take a closer look at how a Dynamic Array List works.</description>
     </item>
     
     <item>

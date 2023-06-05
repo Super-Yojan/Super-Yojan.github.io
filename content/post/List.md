@@ -3,97 +3,82 @@ title: "Lists"
 date: 2022-10-04T20:10:23-04:00
 draft: false
 ---
-
 # Lists
 
-Two of the most common lists are Dymanic Array List and Linked List. Both of them have their own advantages 
-and disadvantages. 
+Two of the most common types of lists are Dynamic Array Lists and Linked Lists. Each of these lists has its own advantages and disadvantages.
+
+## Dynamic Array List
+
+A Dynamic Array List is a list that grows as more items are added to it. It is a widely used list implementation in many programming languages. While it is easy to use, it may not be the most efficient. Let's take a closer look at how a Dynamic Array List works.
+
+To create a Dynamic Array List, we start with a regular array of a default initial size, such as 2. As we add more values to the list, the size of the underlying array doubles every time it becomes full. The following diagram illustrates this process:
 
 
-## Dymanic Array List
+![](/lists/figure1.png)
 
-Dymanic Array List is a list that grows as more items are added onto the list. These are the most common types
-of lists used by many programming languages. While it may seem easy to use and work with this types of list 
-aren't very efficient. Let's look at how Dymanic Array works.
 
-To make a Dymanic Array we start with a regular array with some default initial size. I will start with a 
-list of size 2. As we add more value to the array list the size of array will double every time it's full.
-The following picture shows how it works.
 
-![](lists/figure1.png)
+This type of data structure is easy to implement but may not be very efficient. When we add a new value to the array and it becomes full, we need to create a new array and copy the old values to the new one. This process of creating a new array and copying values has a time complexity of O(n).
 
-This type of data structure is easy to implement but it's efficiency isn't really good.
-When we add a new value to the array and it's full, we would
-need to make a new array and copy it over. 
+![](/lists/figure2.png)
 
-![](lists/figure2.png)
+#### Big O Notation for Dynamic Array List
 
-The time complexity of making a new array and copying old 
-values to the new one is O(n).
+| Data Structure    | Get/Set | Add/Remove End | Insert/Remove Front | Insert/Remove Middle | Search | Easy to grow? |
+|-------------------|---------|----------------|---------------------|----------------------|--------|---------------|
+| Dynamic Array     | O(1)    | O(n)           | O(n)                | O(n)                 | O(n)   | Not really    |
 
-#### O notations for Dymanic Array
+The table above shows the worst-case time complexity for the Dynamic Array List. However, since the Dynamic Array only needs to copy values when it becomes full, the average time complexity can be analyzed using amortized analysis. This analysis considers the efficiency over a sequence of M operations.
 
-| Data Structure | Get/Set | Add/Remove End | Insert/Remove Front | Insert/ Remove Middle | Search | Easy to grow? |
-| ------ | ----- | ------ | ------ | ----- | ---- | ---- |
-Dymanic Array | 1 | N | N | N | N | Not really |
+| Data Structure    | Get/Set | Add/Remove End | Insert/Remove Front | Insert/Remove Middle | Search | Easy to grow? |
+|-------------------|---------|----------------|---------------------|----------------------|--------|---------------|
+| Dynamic Array     | O(1)    | O(1)*          | O(n)                | O(n)                 | O(n)   | Not really    |
 
-The above it the worst case for the Dynamic Array, but as 
-discussed above Dynamic array only copies when it's full. 
-The average time complexity can be computed using something 
-called **amortized analysis** where we find the efficiency by dividing worst case by sequence of M operations.
-
-| Data Structure | Get/Set | Add/Remove End | Insert/Remove Front | Insert/ Remove Middle | Search | Easy to grow? |
-| ------ | ----- | ------ | ------ | ----- | ---- | ---- |
-Dymanic Array | 1 | *1** | N | N | N | Not really |
-
-We can see that the Add averages to O(1).
+We can see that the average time complexity for adding an item to the Dynamic Array List is O(1).
 
 ## Linked List
 
-Linked list are list based on linked nodes. Nodes are object that holds 
-the value and points to the next node. 
+Linked Lists are lists based on linked nodes. Each node holds a value and a reference to the next node.
 
-There are two different types of linked list. 
-* Singly-Linked Lists 
-* Doubly-Linked Lists 
+There are two different types of Linked Lists:
+- Singly-Linked Lists
+- Doubly-Linked Lists
 
+### Singly-Linked List
 
-### Singly Linked List
-A singly linked list has one data field and one filed for the next node.
+A Singly-Linked List has one data field and one field for the next node.
 
 ```java
-class Node<T>{
+class Node<T> {
     public T value;
     public Node<T> next;
 
-    public Node<T>(){
-        
+    public Node() {
+
     }
-    public Node<T>(T value){
+
+    public Node(T value) {
        this.value = value;
-     }
+    }
 }
 ```
 
-This is a node in java for singly linked list.
+This is a Node class in Java for Singly-Linked List.
 
 A visual representation of node would look something like. 
 
-![](lists/figure3.png)
+![](/lists/figure3.png)
 
-A linked list is basically chains of these nodes. Which would look like.
+A linked list is essentially a chain of these nodes, as shown below:
 
-![](lists/figure4.png)
+![](/lists/figure4.png)
 
-The first node in the list is called head, and the last is called the tail. The tail 
-will point to null. While iterating over a linked list we know that we reached the end 
-when tail.next equals null.
+The first node in the list is called the head, and the last node is called the tail. The tail node points to null. When iterating over a linked list, we know we have reached the end when tail.next equals null.
 
+### Doubly-Linked List
 
-### Doubly-Linked
+A Doubly-Linked List is similar to a Singly-Linked List, but each node has a reference to the previous node as well.
 
-A Doubly-Linked list is basically the same as singly other than we can move both forward 
-and backwards. 
 
 ```java
 class Node<T>{
@@ -110,10 +95,9 @@ class Node<T>{
      }
 }
 ```
-We just need to add a prev field, that will store reference to the previous node.
-A visual representation of doubly linked list would look something like. 
+We just need to add a prev field to store a reference to the previous node. A visual representation of a Doubly-Linked List would look something like this:
 
-![](lists/figure5.png)
+![](/lists/figure5.png)
 
 
 

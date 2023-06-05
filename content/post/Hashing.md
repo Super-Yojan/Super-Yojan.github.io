@@ -3,45 +3,30 @@ title: "Hashing"
 date: 2022-10-04T23:16:28-04:00
 draft: false
 ---
+When we require a data structure that can perform add, remove, and search operations in constant time, we can turn to the concept of hashing. While using an array allows for constant-time addition, searching and removal operations can be time-consuming. Hashing offers a solution by significantly reducing the time complexity involved.
 
-Let's say we want a data structure that can perform add, remove, and search in a 
-**constant** time. How can we do it? 
+## Terminology
 
-If we use an array we can add in a constant time, but to delete and search it will take a 
-long time.
-That's where hasing comes in. Hashing allows us to reduce the time complexity by a lot. 
+Before diving into the details of hash tables, let's clarify some key terms:
 
-### Terminology
-* Hash code 
-  - It's an integer value computed for a given object which will be used as the index 
-* Hash function
-  - A function that computes a hash code for an object 
-* Hash table 
-  - Place where we store object based on hash code.
-  - Mostly arrays
+* Hash code: An integer value computed for a given object, which serves as the index in the hash table.
+* Hash function: A function that calculates the hash code for an object.
+* Hash table: A data structure that stores objects based on their hash codes, typically using an array.
 
-## Hash Table 
-Hash table stores object in an array where the index of a given object is the 
-hash code.
-Few things that we need to keep in mind while creating hash table is how to 
-compute the hash code? What to do when hash code collides for two objects.
+# Hash Table
 
+A hash table stores objects in an array, using the object's hash code as the index. To achieve constant-time operations, we need to address two important aspects: computing the hash code and handling collisions.
 
-#### Computing hash code 
-We need to adhere to Hash Contract while making our own hash function. Hash Contract
-basically says that if two object are equal they must return same hash code. We need to 
-distribute different object failry, in order to reduce collision. Hash function should be 
-fairly quick to compute.
+**Computing the hash code**
 
-If the hash code for a given object is high and we don't have the index for it, then we 
-find a smaller integer. For example, 
+To ensure fairness and reduce collisions, the hash function must adhere to the Hash Contract. According to the contract, if two objects are equal, they must produce the same hash code. Additionally, the hash function should be efficient in its computation.
 
-If the hash code is 798, and the length of array is 10. We can use modolus operator to find 
-a index within the array size. 798%10 = 8 then 789 will be stored at index 8 of the array.
+When the hash code for an object is larger than the array size, we need to map it to a valid index within the array. This can be achieved by using the modulus operator. For example, if the hash code is 798 and the length of the array is 10, the index can be calculated as 798 % 10 = 8. Thus, the object will be stored at index 8 of the array.
 
+**Handling collisions**
 
-#### Separate Chaining
-If there is something already in the given index, then we can use create a linked list 
-at that given index to add more values.  Load for a hash table is calculate by 
-dividing the Total item count by the length of hash table.
+Collisions occur when two or more objects produce the same hash code and need to be stored at the same index. One common approach to handle collisions is called Separate Chaining. In this method, if an index already has an object stored, we create a linked list at that index to accommodate multiple values.
 
+To evaluate the performance of a hash table, we calculate the load factor by dividing the total item count by the length of the hash table. Maintaining an appropriate load factor is crucial for the efficient operation of the hash table.
+
+Hash tables provide an efficient solution for achieving constant-time operations for add, remove, and search tasks. By properly computing hash codes and handling collisions, we can leverage the power of hashing to address these requirements effectively.

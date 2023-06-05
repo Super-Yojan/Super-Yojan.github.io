@@ -31,7 +31,7 @@ MAAC's actor-critic architecture and centralized training approach make it more 
 ### Scalability
 MAAC is scalable to environments with a large number of agents. Since each agent maintains its own actor and critic networks, the computation and memory requirements scale linearly with the number of agents. This scalability makes MAAC suitable for complex real-world applications involving numerous interacting agents.
 
-Multi-Agent Actor-Critic (MAAC) algorithms provide a powerful framework for addressing the challenges of mixed cooperative-competitive environments in multi-agent reinforcement learning. By combining the actor-critic architecture with centralized training and decentralized execution, MAAC enables agents to strike a balance between cooperation and competition. The ability to learn effective joint policies while adapting to dynamic environments makes MA
+Multi-Agent Actor-Critic (MAAC) algorithms provide a powerful framework for addressing the challenges of mixed cooperative-competitive environments in multi-agent reinforcement learning. By combining the actor-critic architecture with centralized training and decentralized execution, MAAC enables agents to strike a balance between cooperation and competition. The ability to learn effective joint policies while adapting to dynamic environments makes MAAC a promising approach for tackling complex real-world scenarios with multiple interacting agents.
 
 
 

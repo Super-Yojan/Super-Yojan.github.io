@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on drMoscovium</title>
-    <link>https://drmoscovium.xyz/post/</link>
+    <link>https://drmoscovium.dev/post/</link>
     <description>Recent content in Posts on drMoscovium</description>
     <image>
-      <url>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>https://drmoscovium.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://drmoscovium.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 04 Jun 2023 20:07:50 -0400</lastBuildDate><atom:link href="https://drmoscovium.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Jun 2023 20:07:50 -0400</lastBuildDate><atom:link href="https://drmoscovium.dev/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Centralized Learning and Decentralized execution using Multi-Agent Actor-Critic(MAAC) </title>
-      <link>https://drmoscovium.xyz/post/maac/</link>
+      <link>https://drmoscovium.dev/post/maac/</link>
       <pubDate>Sun, 04 Jun 2023 20:07:50 -0400</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/maac/</guid>
+      <guid>https://drmoscovium.dev/post/maac/</guid>
       <description>When we think of Artificial General Intelligence (AGI) as depicted in Hollywood, we often envision either the Terminator or Star Trek. While there have been many recent improvements in Artificial Intelligence, most of them lack one of the main factors that make us human: the ability to cooperate with others to overcome tasks. Cooperation is something we excel at, and to achieve AGI, we would need algorithms that allow machines to easily engage in cooperation.</description>
     </item>
     
     <item>
       <title>Hashing</title>
-      <link>https://drmoscovium.xyz/post/hashing/</link>
+      <link>https://drmoscovium.dev/post/hashing/</link>
       <pubDate>Tue, 04 Oct 2022 23:16:28 -0400</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/hashing/</guid>
+      <guid>https://drmoscovium.dev/post/hashing/</guid>
       <description>When we require a data structure that can perform add, remove, and search operations in constant time, we can turn to the concept of hashing. While using an array allows for constant-time addition, searching and removal operations can be time-consuming. Hashing offers a solution by significantly reducing the time complexity involved.
 Terminology Before diving into the details of hash tables, let&amp;rsquo;s clarify some key terms:
 Hash code: An integer value computed for a given object, which serves as the index in the hash table.</description>
@@ -33,30 +33,30 @@ Hash code: An integer value computed for a given object, which serves as the ind
     
     <item>
       <title>Lists</title>
-      <link>https://drmoscovium.xyz/post/list/</link>
+      <link>https://drmoscovium.dev/post/list/</link>
       <pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/list/</guid>
+      <guid>https://drmoscovium.dev/post/list/</guid>
       <description>Lists Two of the most common types of lists are Dynamic Array Lists and Linked Lists. Each of these lists has its own advantages and disadvantages.
 Dynamic Array List A Dynamic Array List is a list that grows as more items are added to it. It is a widely used list implementation in many programming languages. While it is easy to use, it may not be the most efficient. Let&amp;rsquo;s take a closer look at how a Dynamic Array List works.</description>
     </item>
     
     <item>
       <title>Algorithm Analysis</title>
-      <link>https://drmoscovium.xyz/post/algorithmanalysis/</link>
+      <link>https://drmoscovium.dev/post/algorithmanalysis/</link>
       <pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/algorithmanalysis/</guid>
+      <guid>https://drmoscovium.dev/post/algorithmanalysis/</guid>
       <description>Analyzing Algorithm An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?
 Algorithm allows one to define how certain function works. For example, we want to add a value to a Data structure. We would need to find the most efficient way to add it to the data structure.</description>
     </item>
     
     <item>
       <title>UMDCTF: Block ChainV2 - Chungus Coin</title>
-      <link>https://drmoscovium.xyz/post/writeups/umdctf/blockchainchunguscoin/</link>
+      <link>https://drmoscovium.dev/post/writeups/umdctf/blockchainchunguscoin/</link>
       <pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/writeups/umdctf/blockchainchunguscoin/</guid>
+      <guid>https://drmoscovium.dev/post/writeups/umdctf/blockchainchunguscoin/</guid>
       <description>For this challenge we were provided with the server.py with stuffs redacted.
 They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
 As usual, starting the challenge out by analyzing the code that was provided. There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.</description>
@@ -64,20 +64,20 @@ As usual, starting the challenge out by analyzing the code that was provided. Th
     
     <item>
       <title>UMDCTF: Customer Support</title>
-      <link>https://drmoscovium.xyz/post/writeups/umdctf/customersupport/</link>
+      <link>https://drmoscovium.dev/post/writeups/umdctf/customersupport/</link>
       <pubDate>Sun, 06 Mar 2022 19:09:57 -0500</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/writeups/umdctf/customersupport/</guid>
+      <guid>https://drmoscovium.dev/post/writeups/umdctf/customersupport/</guid>
       <description>For this challenge we were given So I stared out by opening the Dockerfile In the docker file we can see the starting command is npm run startall Looking at the package.json we can see two service being started with start all script.
 In app.js inside microservice we can see two path that returns token. This microservice is running in port 3001. The first thing that I tried to do was open that port, but i couldn&amp;rsquo;t access it.</description>
     </item>
     
     <item>
       <title>Hacking Electron App - Web Inspection - MetaCTF</title>
-      <link>https://drmoscovium.xyz/post/writeups/metactf/web-inspection/</link>
+      <link>https://drmoscovium.dev/post/writeups/metactf/web-inspection/</link>
       <pubDate>Mon, 06 Dec 2021 14:45:23 -0500</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/writeups/metactf/web-inspection/</guid>
+      <guid>https://drmoscovium.dev/post/writeups/metactf/web-inspection/</guid>
       <description>Challenge Descrption:
 We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.
 Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.</description>
@@ -85,10 +85,10 @@ Get down in the weeds and see if you can understand how it works. You may want g
     
     <item>
       <title>HTB UNI CTF : Web Slippy</title>
-      <link>https://drmoscovium.xyz/post/writeups/htb-uni-ctf/web-slippy/</link>
+      <link>https://drmoscovium.dev/post/writeups/htb-uni-ctf/web-slippy/</link>
       <pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/writeups/htb-uni-ctf/web-slippy/</guid>
+      <guid>https://drmoscovium.dev/post/writeups/htb-uni-ctf/web-slippy/</guid>
       <description>Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.
 The directory tree of the source code as follow.
 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 ./challenge ├── application │ ├── blueprints │ │ └── routes.</description>
@@ -96,10 +96,10 @@ The directory tree of the source code as follow.
     
     <item>
       <title>HTB UNI CTF : Light The Way</title>
-      <link>https://drmoscovium.xyz/post/writeups/htb-uni-ctf/lighttheway/</link>
+      <link>https://drmoscovium.dev/post/writeups/htb-uni-ctf/lighttheway/</link>
       <pubDate>Sun, 21 Nov 2021 23:22:26 -0500</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/writeups/htb-uni-ctf/lighttheway/</guid>
+      <guid>https://drmoscovium.dev/post/writeups/htb-uni-ctf/lighttheway/</guid>
       <description>Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.
 SCADA Supervisory control and data acquisition is a system that allows industrial organizations to:
 * Conrtol processes * Monitor * Interact with devices * Record events For more information on SCADA</description>
@@ -107,10 +107,10 @@ SCADA Supervisory control and data acquisition is a system that allows industria
     
     <item>
       <title>Integrity Check</title>
-      <link>https://drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</link>
+      <link>https://drmoscovium.dev/post/writeups/k3rn3lctf/integrity-check/</link>
       <pubDate>Mon, 15 Nov 2021 15:38:22 -0500</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/writeups/k3rn3lctf/integrity-check/</guid>
+      <guid>https://drmoscovium.dev/post/writeups/k3rn3lctf/integrity-check/</guid>
       <description>Attachment: File
 Solution I started out by running the file.
 1 java -jar IntegrityCheck.jar We can see that something is wrong in the function name.
@@ -121,10 +121,10 @@ Opening the IntegrityCheck.jar file The class name looks really wrong.</descript
     
     <item>
       <title>Why everyone shouldn&#39;t use linux?</title>
-      <link>https://drmoscovium.xyz/post/post2/</link>
+      <link>https://drmoscovium.dev/post/post2/</link>
       <pubDate>Tue, 02 Nov 2021 16:48:55 -0400</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/post2/</guid>
+      <guid>https://drmoscovium.dev/post/post2/</guid>
       <description>A few days ago, while talking to a Computer Science major in my college, I figured out that not everyone should use Linux.
 A disclaimer, when I say Linux I mean Linux Desktop. What I say here doesn&amp;rsquo;t apply to Linux servers.
 Linux Linux is an open-source software developed by a guy named Linus Torvalds. Now countless many people are contributing to the code. Open source means that the software is free, and anyone with enough knowledge can change the code.</description>

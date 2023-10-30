@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Meta CTF on drMoscovium</title>
-    <link>https://drmoscovium.xyz/tags/meta-ctf/</link>
+    <link>https://drmoscovium.dev/tags/meta-ctf/</link>
     <description>Recent content in Meta CTF on drMoscovium</description>
     <image>
-      <url>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>https://drmoscovium.xyz/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>https://drmoscovium.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://drmoscovium.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 06 Dec 2021 14:45:23 -0500</lastBuildDate><atom:link href="https://drmoscovium.xyz/tags/meta-ctf/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 06 Dec 2021 14:45:23 -0500</lastBuildDate><atom:link href="https://drmoscovium.dev/tags/meta-ctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Hacking Electron App - Web Inspection - MetaCTF</title>
-      <link>https://drmoscovium.xyz/post/writeups/metactf/web-inspection/</link>
+      <link>https://drmoscovium.dev/post/writeups/metactf/web-inspection/</link>
       <pubDate>Mon, 06 Dec 2021 14:45:23 -0500</pubDate>
       
-      <guid>https://drmoscovium.xyz/post/writeups/metactf/web-inspection/</guid>
+      <guid>https://drmoscovium.dev/post/writeups/metactf/web-inspection/</guid>
       <description>Challenge Descrption:
 We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.
 Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.</description>

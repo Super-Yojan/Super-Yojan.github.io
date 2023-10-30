@@ -1,4 +1,4 @@
-baseURL: "https://drmoscovium.xyz/"
+baseURL: "https://drmoscovium.dev/"
 title: drMoscovium 
 paginate: 5
 theme: PaperMod
@@ -123,8 +123,8 @@ menu:
       url: /tags/
       weight: 20
     - identifier: Blog 
-      name: drmoscovium.xyz
-      url: https://git.drmoscovium.xyz
+      name: drmoscovium.dev
+      url: https://drmoscovium.dev
       weight: 30
 # Read: https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#using-hugos-syntax-highlighter-chroma
 pygmentsUseClasses: true

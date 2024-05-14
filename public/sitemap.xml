@@ -2,66 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://drmoscovium.dev/post/maac/</loc>
+    <loc>/</loc>
     <lastmod>2023-06-04T20:07:50-04:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/</loc>
+    <loc>/posts/maac/</loc>
     <lastmod>2023-06-04T20:07:50-04:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/</loc>
+    <loc>/posts/</loc>
     <lastmod>2023-06-04T20:07:50-04:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/projects/drmoscovium/</loc>
+    <loc>/projects/drmoscovium/</loc>
     <lastmod>2022-11-25T12:04:54-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/projects/</loc>
+    <loc>/projects/</loc>
     <lastmod>2022-11-25T12:04:54-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/hashing/</loc>
+    <loc>/posts/hashing/</loc>
     <lastmod>2022-10-04T23:16:28-04:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/list/</loc>
+    <loc>/posts/list/</loc>
     <lastmod>2022-10-04T20:10:23-04:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/algorithmanalysis/</loc>
+    <loc>/posts/algorithmanalysis/</loc>
     <lastmod>2022-10-04T19:45:01-04:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/tags/</loc>
+    <loc>/posts/writeups/umdctf/blockchainchunguscoin/</loc>
     <lastmod>2022-03-06T19:12:41-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/tags/umdctf/</loc>
-    <lastmod>2022-03-06T19:12:41-05:00</lastmod>
-  </url><url>
-    <loc>https://drmoscovium.dev/post/writeups/umdctf/blockchainchunguscoin/</loc>
-    <lastmod>2022-03-06T19:12:41-05:00</lastmod>
-  </url><url>
-    <loc>https://drmoscovium.dev/post/writeups/umdctf/customersupport/</loc>
+    <loc>/posts/writeups/umdctf/customersupport/</loc>
     <lastmod>2022-03-06T19:09:57-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/writeups/metactf/web-inspection/</loc>
+    <loc>/posts/writeups/metactf/web-inspection/</loc>
     <lastmod>2021-12-06T14:45:23-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/tags/meta-ctf/</loc>
+    <loc>/tags/meta-ctf/</loc>
     <lastmod>2021-12-06T14:45:23-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/tags/hack-the-box/</loc>
+    <loc>/tags/</loc>
+    <lastmod>2021-12-06T14:45:23-05:00</lastmod>
+  </url><url>
+    <loc>/tags/ctf-writeups/</loc>
     <lastmod>2021-11-22T15:16:32-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/writeups/htb-uni-ctf/web-slippy/</loc>
+    <loc>/posts/writeups/htb-uni-ctf/web-slippy/</loc>
     <lastmod>2021-11-22T15:16:32-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/writeups/htb-uni-ctf/lighttheway/</loc>
+    <loc>/categories/</loc>
     <lastmod>2021-11-21T23:22:26-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/writeups/k3rn3lctf/integrity-check/</loc>
+    <loc>/categories/ctf/</loc>
+    <lastmod>2021-11-21T23:22:26-05:00</lastmod>
+  </url><url>
+    <loc>/posts/writeups/htb-uni-ctf/lighttheway/</loc>
+    <lastmod>2021-11-21T23:22:26-05:00</lastmod>
+  </url><url>
+    <loc>/posts/writeups/k3rn3lctf/integrity-check/</loc>
     <lastmod>2021-11-15T15:38:22-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/tags/kernel-ctf/</loc>
+    <loc>/tags/kernel-ctf/</loc>
     <lastmod>2021-11-15T15:38:22-05:00</lastmod>
   </url><url>
-    <loc>https://drmoscovium.dev/post/post2/</loc>
+    <loc>/posts/post2/</loc>
     <lastmod>2021-11-02T16:48:55-04:00</lastmod>
-  </url><url>
-    <loc>https://drmoscovium.dev/categories/</loc>
   </url>
 </urlset>

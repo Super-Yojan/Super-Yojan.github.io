@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CTF-Writeups on </title>
+    <link>/tags/ctf-writeups/</link>
+    <description>Recent content in CTF-Writeups on </description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <lastBuildDate>Mon, 22 Nov 2021 15:16:32 -0500</lastBuildDate>
+    <atom:link href="/tags/ctf-writeups/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HTB UNI CTF : Web Slippy</title>
+      <link>/posts/writeups/htb-uni-ctf/web-slippy/</link>
+      <pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate>
+      <guid>/posts/writeups/htb-uni-ctf/web-slippy/</guid>
+      <description>Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.&#xA;The directory tree of the source code as follow.&#xA;./challenge ├── application │ ├── blueprints │ │ └── routes.py │ ├── config.py │ ├── main.py │ ├── static │ │ ├── archives │ │ ├── css │ │ │ ├── bootstrap.</description>
+    </item>
+  </channel>
+</rss>

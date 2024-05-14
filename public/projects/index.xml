@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Projects on </title>
-    <link>/projects/</link>
-    <description>Recent content in Projects on </description>
-    <generator>Hugo</generator>
+    <title>Projects on drMoscovium Blog</title>
+    <link>https://drMoscovium.dev/projects/</link>
+    <description>Recent content in Projects on drMoscovium Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Fri, 25 Nov 2022 12:04:54 -0500</lastBuildDate>
-    <atom:link href="/projects/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>DrMoscoVIM</title>
-      <link>/projects/drmoscovium/</link>
-      <pubDate>Fri, 25 Nov 2022 12:04:54 -0500</pubDate>
-      <guid>/projects/drmoscovium/</guid>
-      <description>drMoscoVIM is a neovim configuration that is feature rich, and fast. It&amp;rsquo;s a small project that I am working on. There is still a lot that I need to do.&#xA;TODOs Make a easy install script Add support to more languages Write a better documentation for how to use it </description>
-    </item>
+    <managingEditor>gautamyojan0@gmail.com (Yojan Gautam)</managingEditor>
+    <webMaster>gautamyojan0@gmail.com (Yojan Gautam)</webMaster>
+    <lastBuildDate>Fri, 25 Nov 2022 12:04:54 -0500</lastBuildDate><atom:link href="https://drMoscovium.dev/projects/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

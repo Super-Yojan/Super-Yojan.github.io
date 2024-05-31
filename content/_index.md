@@ -6,6 +6,8 @@ This blog started out writing write-ups for CTF(Capture The Flag) challenges. Wh
 How I solved the given challenges. A Capture The Flag challenges is basically a hacking competition, 
 where whoever can crack the most system wins the game.
 
+I want this blog to be a place where I talk about all the various project that I have worked on. 
+I hope you will learn something from this blog.
 
 --- 
 ### Here are some of the project that I have worked on 

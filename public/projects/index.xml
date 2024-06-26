@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Projects on drMoscovium</title>
-    <link>http://localhost:1313/projects/</link>
+    <link>https://drmoscovium.dev/projects/</link>
     <description>Recent content in Projects on drMoscovium</description>
     <image>
       <title>drMoscovium</title>
-      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
-      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+      <url>https://drmoscovium.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>https://drmoscovium.dev/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
     </image>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
     <lastBuildDate>Fri, 25 Nov 2022 12:04:54 -0500</lastBuildDate>
-    <atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://drmoscovium.dev/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>DrMoscoVIM</title>
-      <link>http://localhost:1313/projects/drmoscovium/</link>
+      <link>https://drmoscovium.dev/projects/drmoscovium/</link>
       <pubDate>Fri, 25 Nov 2022 12:04:54 -0500</pubDate>
-      <guid>http://localhost:1313/projects/drmoscovium/</guid>
+      <guid>https://drmoscovium.dev/projects/drmoscovium/</guid>
       <description>drMoscoVIM is a neovim configuration that is feature rich, and fast. It&amp;rsquo;s a small project that I am working on. There is still a lot that I need to do.
 TODOs Make a easy install script Add support to more languages Write a better documentation for how to use it </description>
     </item>

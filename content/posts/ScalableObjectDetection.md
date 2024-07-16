@@ -1,10 +1,11 @@
-#+hugo_base_dir: ./
-#+hugo_publishdate: 2024-07-16
++++
+title = "Scalable Object Detection"
+author = ["DTR"]
+publishDate = 2024-07-16
+tags = ["Embedded", "Vision"]
+draft = false
++++
 
-* Scalable Object Detection :Embedded:Vision:
-:PROPERTIES:
-:export_file_name: ScalableObjectDetection
-:END:
 As the world increasingly relies on machine learning, IoT devices must
 adapt to keep up with this trend. IoT devices are typically small and
 lack substantial computing power. A popular approach for IoT devices
@@ -20,14 +21,18 @@ which ruled out heavy and powerful processors. Therefore, the compact
 and affordable ESP32-CAM was the ideal choice.
 
 The functionalities I aimed to achieve were:
-1. Receiving camera frames via TCP, detecting objects in the given
-   frame, and returning the coordinates.
-2. Handling multiple concurrent requests.
-3. Ensuring the system is as fast and lightweight as possible.
-** Making the base server
+
+1.  Receiving camera frames via TCP, detecting objects in the given
+    frame, and returning the coordinates.
+2.  Handling multiple concurrent requests.
+3.  Ensuring the system is as fast and lightweight as possible.
+
+
+## Making the base server {#making-the-base-server}
+
 The object detection code was fairly simple as I was using YOLOv8
 
-#+begin_src python
+```python
 
 HOST = "0.0.0.0"
 PORT = 4000
@@ -38,13 +43,13 @@ s.listen()
 
 frameSize = 0
 model = YOLO('model/best.pt')
-#+end_src
+```
 
 Starting with simple socket initialization and importing the model. If
 you want to learn more about how to train your own custom model, refer
-to [[https://blog.roboflow.com/how-to-train-yolov8-on-a-custom-dataset/][this guide]].
+to [this guide](https://blog.roboflow.com/how-to-train-yolov8-on-a-custom-dataset/).
 
-#+begin_src python
+```python
 def on_new_client(conn, addr):
     while True:
         header = conn.recv(4)
@@ -72,16 +77,18 @@ def on_new_client(conn, addr):
                 largets = get_largest(results)
 
             if largets:
-                sendstr = str(largets)[1:len(str(largets))-1] 
+                sendstr = str(largets)[1:len(str(largets))-1]
                 conn.send(sendstr.encode('utf-8'))
             else:
                 conn.send("0,0,0,0,0,0#".encode('utf-8'))
-#+end_src
+```
+
 Here is the code that receives the image frame from the ESP32-CAM and
 processes the object detections. The server can also filter out a
 specific object based on a requested ID, returning the largest
 matching object in the frame.
-#+begin_src python
+
+```python
 """
 Returns the largets detection from the detection list
 """
@@ -122,13 +129,14 @@ def filter_detection(class_list,detections):
                 largets = bounding
 
     return largets
-  
-#+end_src
+```
 
-** Containarizing it
+
+## Containarizing it {#containarizing-it}
+
 Now that we have our base server let's take a look at how we can use docker to containarize it.
 
-#+begin_src docker
+```docker
 FROM python
 
 
@@ -141,15 +149,14 @@ WORKDIR /home/
 COPY . .
 EXPOSE 8000
 CMD [ "python3", "src/main.py" ]
-#+end_src
-
+```
 
 Now we can run this script with docker compose
 
-#+begin_src yaml
+```yaml
 version: "3.9"
 services:
-  vision: 
+  vision:
     build: .
     deploy:
       resources:
@@ -168,19 +175,17 @@ services:
       - vision
     ports:
       - "4000:4000"
-#+end_src
-
+```
 
 Running the shell script will run scalable server.
-#+begin_src shell
+
+```shell
 sudo docker compose up --scale vision=5 -d
-#+end_src
+```
 
 
+## Architecture at a glance {#architecture-at-a-glance}
 
-** Architecture at a glance
 Here is what the architecture looks like.
 
-#+caption: Server Architecture
-[[/scalableobj/ServerArchitecture.png]]
-
+{{< figure src="/scalableobj/ServerArchitecture.png" caption="<span class=\"figure-number\">Figure 1: </span>Server Architecture" >}}

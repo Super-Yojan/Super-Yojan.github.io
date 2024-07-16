@@ -3,12 +3,20 @@ title: drMoscovium
 paginate: 5
 theme: PaperMod
 
+
 enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
 
 googleAnalytics: UA-123-45
+
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
 
 minify:
   disableXML: true

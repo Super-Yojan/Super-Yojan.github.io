@@ -11,8 +11,16 @@
     </image>
     <generator>Hugo -- 0.125.7</generator>
     <language>en</language>
-    <lastBuildDate>Sun, 04 Jun 2023 20:07:50 -0400</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jul 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="https://drmoscovium.dev/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Scalable Object Detection</title>
+      <link>https://drmoscovium.dev/posts/scalableobjectdetection/</link>
+      <pubDate>Tue, 16 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://drmoscovium.dev/posts/scalableobjectdetection/</guid>
+      <description>As the world increasingly relies on machine learning, IoT devices must adapt to keep up with this trend. IoT devices are typically small and lack substantial computing power. A popular approach for IoT devices leveraging machine learning is to send data for off-board processing.
+Let&amp;rsquo;s explore how to build a simple object detection microservice to run object detection tasks on a base station using an ESP32-CAM as our IoT device. The inspiration for this project came from the desire to create a small, autonomous blimp.</description>
+    </item>
     <item>
       <title>Centralized Learning and Decentralized execution using Multi-Agent Actor-Critic(MAAC) </title>
       <link>https://drmoscovium.dev/posts/maac/</link>

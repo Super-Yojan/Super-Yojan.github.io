@@ -1,0 +1,30 @@
+# The URL the site will be built for
+base_url = "https://drmoscovium.dev"
+
+# Whether to automatically compile all Sass files in the sass directory
+compile_sass = true
+
+# Whether to build a search index to be used later on by a JavaScript library
+build_search_index = false
+
+theme="apollo"
+
+taxonomies = [
+{name = "tags", feed = true}, # each tag will have its own feed
+#       {name = "tags"}, # you can have taxonomies with the same name in multiple languages
+#       {name = "categories", paginate_by = 5},  # 5 items per page for a term
+#       {name = "authors"}, # Basic definition: no feed or pagination
+]
+
+[markdown]
+# Whether to do syntax highlighting
+# Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
+highlight_code = false
+
+
+[extra]
+them="auto"
+menu=[
+{name="Posts", url = "/posts", weight=2}
+]
+# Put all your custom variables here

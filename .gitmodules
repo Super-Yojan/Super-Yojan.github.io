@@ -4,3 +4,9 @@
 [submodule "themes/PaperMod"]
 	path = themes/PaperMod
 	url = https://github.com/adityatelange/hugo-PaperMod.git
+[submodule "themes/duckquill"]
+	path = themes/duckquill
+	url = https://codeberg.org/daudix/duckquill.git
+[submodule "themes/apollo"]
+	path = themes/apollo
+	url = https://github.com/not-matthias/apollo

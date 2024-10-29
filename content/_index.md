@@ -1,8 +1,8 @@
 +++
-title= "Apollo Theme"
+title= "Yojan's Blog"
 template = "homepage.html"
 +++
 
-Thanks for checking out this theme!
+Hello guys welcome to my blog!
 
-Checkout all the [options you can configure](./posts/configuration) and the [example pages](./tags/example/).
+[Post]([./posts/_index.md]) [Projects]([./posts/_index.md])

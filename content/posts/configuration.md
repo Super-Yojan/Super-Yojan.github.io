@@ -2,6 +2,8 @@
 title = "Configuring Apollo"
 date = "2024-07-09"
 
+draft=true
+
 [taxonomies]
 tags=["documentation"]
 

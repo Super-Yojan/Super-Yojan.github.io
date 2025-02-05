@@ -5,4 +5,4 @@ template = "homepage.html"
 
 Hello guys welcome to my blog!
 
-[Post]([./posts/_index.md]) [Projects]([./posts/_index.md])
+[Post](posts) [Projects](projects)

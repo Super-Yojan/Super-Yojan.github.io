@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SLAM on Yojan Gautam - Portfolio</title>
+    <link>http://example.org/tags/slam/</link>
+    <description>Recent content in SLAM on Yojan Gautam - Portfolio</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 20 Dec 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://example.org/tags/slam/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Building Autonomous Systems: Lessons from ROS and SLAM</title>
+      <link>http://example.org/posts/building-autonomous-systems/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://example.org/posts/building-autonomous-systems/</guid>
+      <description>&lt;p&gt;Making a robot navigate autonomously is harder than it looks. Way harder.&lt;/p&gt;&#xA;&lt;p&gt;On paper, SLAM (Simultaneous Localization and Mapping) sounds straightforward: the robot builds a map of its environment while tracking its own position within that map. In practice, it&amp;rsquo;s a beautiful nightmare of sensor fusion, probabilistic algorithms, and edge cases.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-problem-space&#34;&gt;The Problem Space&lt;/h2&gt;&#xA;&lt;p&gt;Imagine you&amp;rsquo;re blindfolded in an unknown room. You can:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Sense walls when you touch them (LIDAR)&lt;/li&gt;&#xA;&lt;li&gt;Measure your steps (odometry)&lt;/li&gt;&#xA;&lt;li&gt;Occasionally glimpse landmarks (visual features)&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Now navigate the room, build a mental map, and know where you are at all times. That&amp;rsquo;s SLAM.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

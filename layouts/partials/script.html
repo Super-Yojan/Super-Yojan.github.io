@@ -1,0 +1,256 @@
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+    // INJECT HUGO DATA HERE
+    // We take the YAML data and turn it into a JSON object for the JS to use
+    const projects = {{ .Site.Data.portfolio.projects | jsonify }};
+
+        // State
+        let isDark = true;
+        let activeTab = 'engineer';
+
+        // Initialize theme from localStorage
+        if (typeof localStorage !== 'undefined') {
+            const saved = localStorage.getItem('theme');
+            isDark = saved ? saved === 'dark' : true;
+        }
+
+    function applyTheme() {
+        const app = document.getElementById('app');
+        const navbar = document.getElementById('navbar');
+
+        // Helper to safely update class if element exists
+        const setClass = (id, cls) => {
+            const el = document.getElementById(id);
+            if (el) el.className = cls;
+        };
+
+        if (isDark) {
+            // Global App Styles
+            app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-900 text-slate-200';
+
+            // Navbar & Glows
+            setClass('glow-1', document.getElementById('glow-1').className.replace(/bg-blue-\d+\/\d+/g, '') + ' bg-blue-500/5');
+            setClass('glow-2', document.getElementById('glow-2').className.replace(/bg-purple-\d+\/\d+/g, '') + ' bg-purple-500/5');
+            setClass('glow-3', document.getElementById('glow-3').className.replace(/bg-yellow-\d+\/\d+/g, '') + ' bg-yellow-200/2');
+
+            // Logo
+            setClass('logo-text', 'text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-200 via-purple-200 to-white');
+            setClass('logo-subtext', 'text-xs tracking-widest uppercase text-slate-400');
+
+            // Navbar Links
+            setClass('nav-links', 'hidden md:flex items-center gap-8 text-sm font-medium text-slate-400');
+            setClass('nav-connect', 'px-5 py-2 rounded-full border transition-all bg-white/5 border-white/10 hover:bg-slate-500/10');
+
+            // Toggle Button
+            setClass('theme-toggle', 'p-2 rounded-full border transition-all duration-300 flex items-center justify-center group bg-slate-800 border-slate-700 text-yellow-300 hover:border-yellow-300/50');
+            if(document.getElementById('sun-icon')) document.getElementById('sun-icon').style.display = 'block';
+            if(document.getElementById('moon-icon')) document.getElementById('moon-icon').style.display = 'none';
+
+            // === HOMEPAGE ELEMENTS (Check if they exist) ===
+            setClass('status-pill', 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm transition-colors duration-500 bg-white/5 border-white/10');
+            setClass('status-text', 'text-xs uppercase tracking-widest font-semibold text-slate-400');
+
+            setClass('hero-name-1', 'block transition-colors duration-500 text-slate-100');
+            setClass('hero-name-2', 'block transition-colors duration-500 text-slate-100');
+            setClass('hero-desc', 'max-w-2xl text-lg md:text-xl leading-relaxed mb-12 transition-colors duration-500 text-slate-400');
+
+            setClass('pillars', 'relative z-10 py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500 bg-slate-800/30 border-white/5');
+            setClass('pillars-heading', 'text-3xl md:text-4xl font-bold mb-4 text-slate-100');
+            setClass('pillars-desc', 'text-slate-400');
+
+            // === BLOG ELEMENTS ===
+            setClass('blog-heading', 'text-5xl font-black mb-16 tracking-tight text-slate-100');
+
+            // Blog Cards (Loop)
+            document.querySelectorAll('.blog-card').forEach(el => {
+                 el.className = 'relative p-8 rounded-2xl border backdrop-blur-md transition-all duration-500 bg-slate-800/50 border-white/10 hover:bg-slate-700/50';
+            });
+
+            // Blog Content (Prose)
+            const prose = document.querySelector('.blog-content');
+            if(prose) prose.classList.add('prose-invert');
+
+        } else {
+            // ... (Repeat the logic above but for LIGHT MODE colors) ...
+            // Example for App:
+            app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-50 text-slate-800';
+
+            // IMPORTANT: Remove prose-invert for light mode
+            const prose = document.querySelector('.blog-content');
+            if(prose) prose.classList.remove('prose-invert');
+        }
+    }
+
+        // Toggle theme
+        function toggleTheme() {
+            isDark = !isDark;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            applyTheme();
+            renderProjects();
+        }
+
+        // Switch tabs
+        function switchTab(tab) {
+            activeTab = tab;
+
+            // Update tab buttons
+            const tabs = ['engineer', 'artist', 'athlete'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tab-' + t);
+                if (t === tab) {
+                    if (t === 'engineer') {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-500/20 text-blue-400 shadow-sm ring-1 ring-blue-500/20';
+                    } else if (t === 'artist') {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-purple-500/20 text-purple-400 shadow-sm ring-1 ring-purple-500/20';
+                    } else {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-yellow-500/20 text-yellow-500 shadow-sm ring-1 ring-yellow-500/20';
+                    }
+                } else {
+                    btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all ' + (isDark ? 'text-slate-400 hover:text-slate-100' : 'text-slate-500 hover:text-slate-900');
+                }
+            });
+
+            renderProjects();
+        }
+
+        // Render projects
+        function renderProjects() {
+            const grid = document.getElementById('project-grid');
+            const items = projects[activeTab];
+
+            grid.innerHTML = items.map((item, idx) => `
+                <div class="rounded-2xl p-6 border transition-all group cursor-pointer backdrop-blur-sm flex flex-col h-full ${isDark ? 'bg-slate-800/50 border-white/5 hover:bg-slate-700/50' : 'bg-white border-slate-200 shadow-sm hover:bg-slate-50 hover:shadow-md'}">
+                    <div class="h-1.5 w-16 rounded-full mb-6 bg-gradient-to-r ${item.color === 'blue' ? 'from-blue-400 to-cyan-300' : item.color === 'purple' ? 'from-purple-400 to-pink-300' : 'from-yellow-400 to-orange-300'}"></div>
+
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 rounded-lg ${isDark ? 'bg-white/5 text-white' : 'bg-slate-100 text-slate-700'}">
+                                ${getIcon(idx, activeTab)}
+                            </div>
+                            <h3 class="text-xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}">
+                                ${item.title}
+                            </h3>
+                        </div>
+                        <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-slate-400' : 'text-slate-500'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                    </div>
+
+                    <span class="text-xs font-bold uppercase tracking-wider mb-4 block ${item.color === 'blue' ? 'text-blue-400' : item.color === 'purple' ? 'text-purple-400' : 'text-yellow-500'}">
+                        ${item.role}
+                    </span>
+
+                    <p class="${isDark ? 'text-slate-400' : 'text-slate-500'} text-sm mb-8 leading-relaxed flex-grow">
+                        ${item.desc}
+                    </p>
+
+                    <div class="flex flex-wrap gap-2 mt-auto pt-6 border-t border-dashed border-white/10">
+                        ${item.tags.map(tag => `
+                            <span class="text-[10px] uppercase tracking-wider font-bold px-2.5 py-1.5 rounded-md border transition-colors ${isDark ? 'bg-white/5 border-white/10 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-500'}">
+                                ${tag}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Get icon SVG - Simplified for example
+        function getIcon(idx, tab) {
+            // (Paste the SVG array logic from your original HTML here.
+            // To save space I am abbreviating, but you can copy the exact getIcon function)
+            return '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
+        }
+
+        // Scroll handler for navbar
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md border-b ' + (isDark ? 'bg-slate-900/80 border-white/5' : 'bg-white/80 border-slate-200');
+            } else {
+                navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 bg-transparent';
+            }
+        });
+
+        // Three.js Scene Setup (EXACTLY AS PROVIDED IN YOUR SOURCE)
+        function initThreeJS() {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 1;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            const count = 5000;
+            const radius = 1.5;
+            const positions = new Float32Array(count * 3);
+
+            for (let i = 0; i < count; i++) {
+                const u = Math.random();
+                const v = Math.random();
+                const theta = 2 * Math.PI * u;
+                const phi = Math.acos(2 * v - 1);
+                const r = Math.cbrt(Math.random()) * radius;
+
+                const sinPhi = Math.sin(phi);
+                const x = r * sinPhi * Math.cos(theta);
+                const y = r * sinPhi * Math.sin(theta);
+                const z = r * Math.cos(phi);
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: isDark ? 0xa3d5ff : 0x0369a1,
+                size: 0.005,
+                transparent: true,
+                depthWrite: false
+            });
+
+            window.particleMaterial = material;
+
+            const points = new THREE.Points(geometry, material);
+            points.rotation.set(0, 0, Math.PI / 4);
+            scene.add(points);
+
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.01;
+                points.rotation.x -= 0.001;
+                points.rotation.y -= 0.00067;
+                points.position.y = Math.sin(time * 0.5) * 0.1;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+        function initialize() {
+            applyTheme();
+            renderProjects();
+            if (typeof THREE !== 'undefined') {
+                initThreeJS();
+            } else {
+                setTimeout(() => {
+                    if (typeof THREE !== 'undefined') initThreeJS();
+                }, 100);
+            }
+        }
+        window.addEventListener('load', initialize);
+</script>

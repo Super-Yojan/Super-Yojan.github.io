@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.152.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=60073&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yojan Gautam - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @keyframes ping {
+
+            75%,
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .animate-ping {
+            animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .5;
+            }
+        }
+
+        * {
+            scroll-behavior: smooth;
+        }
+
+        .selection\:bg-purple-500\/30::selection {
+            background-color: rgba(168, 85, 247, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div id="app" class="min-h-screen selection:bg-purple-500/30 transition-colors duration-500 relative overflow-x-hidden">
+        
+        <div id="canvas-container" class="fixed inset-0 z-0 h-screen w-full opacity-60 pointer-events-none"></div>
+        <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden transition-opacity duration-1000">
+            <div id="glow-1" class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full blur-[120px] animate-pulse transition-colors duration-500"></div>
+            <div id="glow-2" class="absolute top-[20%] right-[-10%] w-[30vw] h-[30vw] rounded-full blur-[100px] transition-colors duration-500"></div>
+            <div id="glow-3" class="absolute bottom-[-10%] left-[20%] w-[50vw] h-[50vw] rounded-full blur-[120px] transition-colors duration-500"></div>
+        </div>
+
+        <div id="nav-links" class="hidden md:flex items-center gap-8 text-sm font-medium">
+    <a href="/" class="transition-colors hover:text-blue-400">Home</a>
+    <a href="/posts" class="transition-colors hover:text-blue-400">Blog</a>
+    <a href="/#work" class="transition-colors hover:text-blue-400">Projects</a>
+</div>
+
+
+        <main class="relative z-10 min-h-screen">
+             
+
+    <header class="pt-44 pb-24 px-6 max-w-4xl mx-auto flex flex-col items-center text-center">
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1]">
+            <span id="hero-name-1" class="block transition-colors duration-500">Yojan</span>
+            <span id="hero-name-2" class="block transition-colors duration-500">Gautam</span>
+        </h1>
+        </header>
+
+    <section id="pillars" class="py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500">
+        </section>
+
+    <section id="work" class="py-24 px-6 max-w-6xl mx-auto">
+        </section>
+
+        </main>
+
+        <footer id="contact"
+    class="relative z-10 border-t pt-24 pb-12 px-6 transition-colors duration-500 bg-slate-900 border-white/5">
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 id="footer-heading" class="text-4xl md:text-5xl font-black mb-8 tracking-tight text-slate-100">Ready to
+            Collaborate?</h2>
+        <p id="footer-desc" class="text-lg mb-12 max-w-xl mx-auto leading-relaxed text-slate-400">
+            Whether it's engineering robust systems, producing sonic landscapes, or optimizing human performance, I'm
+            always open to new challenges.
+        </p>
+
+        <a href="mailto:hello@example.com" id="contact-btn"
+            class="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold transition-all hover:scale-105 shadow-xl mb-16 bg-white text-slate-950 hover:bg-slate-200">
+            <span>Start a Conversation</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+            </svg>
+        </a>
+
+        <div class="flex items-center justify-center gap-8 mb-12">
+            <a href="#" id="social-github"
+                class="transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-blue-500"
+                aria-label="GitHub">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+            </a>
+            <a href="#" id="social-linkedin"
+                class="transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-blue-600"
+                aria-label="LinkedIn">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                </svg>
+            </a>
+            <a href="#" id="social-instagram"
+                class="transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-purple-500"
+                aria-label="Instagram">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg>
+            </a>
+        </div>
+
+        <p id="footer-copy" class="text-sm font-medium text-slate-400">
+            &copy; 2025 Yojan Gautam.
+            All rights reserved.
+        </p>
+    </div>
+</footer>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+<script>
+    
+    
+    const projects = "{\"artist\":[{\"color\":\"purple\",\"desc\":\"5-track instrumental hip-hop EP fusing traditional Nepali samples with modern trap percussion.\",\"role\":\"Producer\",\"tags\":[\"Logic Pro\",\"Production\"],\"title\":\"Neon Horizon EP\"}],\"athlete\":[{\"color\":\"yellow\",\"desc\":\"A Python script that analyzes 3 years of workout logs to optimize volume.\",\"role\":\"Analyst\",\"tags\":[\"Data Viz\",\"Fitness\",\"Python\"],\"title\":\"Hypertrophy Data Analysis\"}],\"engineer\":[{\"color\":\"blue\",\"desc\":\"Engineered fail-safe bootloader logic (U-boot) for network/SD card failover. Architected a full-stack web relay system.\",\"role\":\"IoT Engineering Intern\",\"tags\":[\"Rust\",\"Go\",\"React\",\"U-boot\"],\"title\":\"Databuoy Embedded Systems\"},{\"color\":\"blue\",\"desc\":\"Built custom drone hardware and developed proprietary data labeling tools.\",\"role\":\"Databuoy\",\"tags\":[\"Hardware\",\"Data Ops\",\"Embedded\"],\"title\":\"Drone Tracking Infrastructure\"}]}";
+
+        
+        let isDark = true;
+        let activeTab = 'engineer';
+
+        
+        if (typeof localStorage !== 'undefined') {
+            const saved = localStorage.getItem('theme');
+            isDark = saved ? saved === 'dark' : true;
+        }
+
+    function applyTheme() {
+        const app = document.getElementById('app');
+        const navbar = document.getElementById('navbar');
+
+        
+        const setClass = (id, cls) => {
+            const el = document.getElementById(id);
+            if (el) el.className = cls;
+        };
+
+        if (isDark) {
+            
+            app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-900 text-slate-200';
+
+            
+            setClass('glow-1', document.getElementById('glow-1').className.replace(/bg-blue-\d+\/\d+/g, '') + ' bg-blue-500/5');
+            setClass('glow-2', document.getElementById('glow-2').className.replace(/bg-purple-\d+\/\d+/g, '') + ' bg-purple-500/5');
+            setClass('glow-3', document.getElementById('glow-3').className.replace(/bg-yellow-\d+\/\d+/g, '') + ' bg-yellow-200/2');
+
+            
+            setClass('logo-text', 'text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-200 via-purple-200 to-white');
+            setClass('logo-subtext', 'text-xs tracking-widest uppercase text-slate-400');
+
+            
+            setClass('nav-links', 'hidden md:flex items-center gap-8 text-sm font-medium text-slate-400');
+            setClass('nav-connect', 'px-5 py-2 rounded-full border transition-all bg-white/5 border-white/10 hover:bg-slate-500/10');
+
+            
+            setClass('theme-toggle', 'p-2 rounded-full border transition-all duration-300 flex items-center justify-center group bg-slate-800 border-slate-700 text-yellow-300 hover:border-yellow-300/50');
+            if(document.getElementById('sun-icon')) document.getElementById('sun-icon').style.display = 'block';
+            if(document.getElementById('moon-icon')) document.getElementById('moon-icon').style.display = 'none';
+
+            
+            setClass('status-pill', 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm transition-colors duration-500 bg-white/5 border-white/10');
+            setClass('status-text', 'text-xs uppercase tracking-widest font-semibold text-slate-400');
+
+            setClass('hero-name-1', 'block transition-colors duration-500 text-slate-100');
+            setClass('hero-name-2', 'block transition-colors duration-500 text-slate-100');
+            setClass('hero-desc', 'max-w-2xl text-lg md:text-xl leading-relaxed mb-12 transition-colors duration-500 text-slate-400');
+
+            setClass('pillars', 'relative z-10 py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500 bg-slate-800/30 border-white/5');
+            setClass('pillars-heading', 'text-3xl md:text-4xl font-bold mb-4 text-slate-100');
+            setClass('pillars-desc', 'text-slate-400');
+
+            
+            setClass('blog-heading', 'text-5xl font-black mb-16 tracking-tight text-slate-100');
+
+            
+            document.querySelectorAll('.blog-card').forEach(el => {
+                 el.className = 'relative p-8 rounded-2xl border backdrop-blur-md transition-all duration-500 bg-slate-800/50 border-white/10 hover:bg-slate-700/50';
+            });
+
+            
+            const prose = document.querySelector('.blog-content');
+            if(prose) prose.classList.add('prose-invert');
+
+        } else {
+            
+            
+            app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-50 text-slate-800';
+
+            
+            const prose = document.querySelector('.blog-content');
+            if(prose) prose.classList.remove('prose-invert');
+        }
+    }
+
+        
+        function toggleTheme() {
+            isDark = !isDark;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            applyTheme();
+            renderProjects();
+        }
+
+        
+        function switchTab(tab) {
+            activeTab = tab;
+
+            
+            const tabs = ['engineer', 'artist', 'athlete'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tab-' + t);
+                if (t === tab) {
+                    if (t === 'engineer') {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-500/20 text-blue-400 shadow-sm ring-1 ring-blue-500/20';
+                    } else if (t === 'artist') {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-purple-500/20 text-purple-400 shadow-sm ring-1 ring-purple-500/20';
+                    } else {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-yellow-500/20 text-yellow-500 shadow-sm ring-1 ring-yellow-500/20';
+                    }
+                } else {
+                    btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all ' + (isDark ? 'text-slate-400 hover:text-slate-100' : 'text-slate-500 hover:text-slate-900');
+                }
+            });
+
+            renderProjects();
+        }
+
+        
+        function renderProjects() {
+            const grid = document.getElementById('project-grid');
+            const items = projects[activeTab];
+
+            grid.innerHTML = items.map((item, idx) => `
+                <div class="rounded-2xl p-6 border transition-all group cursor-pointer backdrop-blur-sm flex flex-col h-full ${isDark ? 'bg-slate-800/50 border-white/5 hover:bg-slate-700/50' : 'bg-white border-slate-200 shadow-sm hover:bg-slate-50 hover:shadow-md'}">
+                    <div class="h-1.5 w-16 rounded-full mb-6 bg-gradient-to-r ${item.color === 'blue' ? 'from-blue-400 to-cyan-300' : item.color === 'purple' ? 'from-purple-400 to-pink-300' : 'from-yellow-400 to-orange-300'}"></div>
+
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 rounded-lg ${isDark ? 'bg-white/5 text-white' : 'bg-slate-100 text-slate-700'}">
+                                ${getIcon(idx, activeTab)}
+                            </div>
+                            <h3 class="text-xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}">
+                                ${item.title}
+                            </h3>
+                        </div>
+                        <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-slate-400' : 'text-slate-500'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                    </div>
+
+                    <span class="text-xs font-bold uppercase tracking-wider mb-4 block ${item.color === 'blue' ? 'text-blue-400' : item.color === 'purple' ? 'text-purple-400' : 'text-yellow-500'}">
+                        ${item.role}
+                    </span>
+
+                    <p class="${isDark ? 'text-slate-400' : 'text-slate-500'} text-sm mb-8 leading-relaxed flex-grow">
+                        ${item.desc}
+                    </p>
+
+                    <div class="flex flex-wrap gap-2 mt-auto pt-6 border-t border-dashed border-white/10">
+                        ${item.tags.map(tag => `
+                            <span class="text-[10px] uppercase tracking-wider font-bold px-2.5 py-1.5 rounded-md border transition-colors ${isDark ? 'bg-white/5 border-white/10 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-500'}">
+                                ${tag}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        
+        function getIcon(idx, tab) {
+            
+            
+            return '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
+        }
+
+        
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md border-b ' + (isDark ? 'bg-slate-900/80 border-white/5' : 'bg-white/80 border-slate-200');
+            } else {
+                navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 bg-transparent';
+            }
+        });
+
+        
+        function initThreeJS() {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 1;
+
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            const count = 5000;
+            const radius = 1.5;
+            const positions = new Float32Array(count * 3);
+
+            for (let i = 0; i < count; i++) {
+                const u = Math.random();
+                const v = Math.random();
+                const theta = 2 * Math.PI * u;
+                const phi = Math.acos(2 * v - 1);
+                const r = Math.cbrt(Math.random()) * radius;
+
+                const sinPhi = Math.sin(phi);
+                const x = r * sinPhi * Math.cos(theta);
+                const y = r * sinPhi * Math.sin(theta);
+                const z = r * Math.cos(phi);
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: isDark ? 0xa3d5ff : 0x0369a1,
+                size: 0.005,
+                transparent: true,
+                depthWrite: false
+            });
+
+            window.particleMaterial = material;
+
+            const points = new THREE.Points(geometry, material);
+            points.rotation.set(0, 0, Math.PI / 4);
+            scene.add(points);
+
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.01;
+                points.rotation.x -= 0.001;
+                points.rotation.y -= 0.00067;
+                points.position.y = Math.sin(time * 0.5) * 0.1;
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+        function initialize() {
+            applyTheme();
+            renderProjects();
+            if (typeof THREE !== 'undefined') {
+                initThreeJS();
+            } else {
+                setTimeout(() => {
+                    if (typeof THREE !== 'undefined') initThreeJS();
+                }, 100);
+            }
+        }
+        window.addEventListener('load', initialize);
+</script>
+
+</body>
+</html>

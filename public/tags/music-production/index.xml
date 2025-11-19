@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Music Production on Yojan Gautam - Portfolio</title>
+    <link>http://example.org/tags/music-production/</link>
+    <description>Recent content in Music Production on Yojan Gautam - Portfolio</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 10 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://example.org/tags/music-production/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Producing Music with a Coder&#39;s Mindset</title>
+      <link>http://example.org/posts/producing-music-with-code-mindset/</link>
+      <pubDate>Fri, 10 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/posts/producing-music-with-code-mindset/</guid>
+      <description>&lt;p&gt;There&amp;rsquo;s a strange symmetry between writing code and producing music. Both are creative processes constrained by logic. Both require pattern recognition, iteration, and debugging. And both can achieve flow state when everything clicks.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-algorithm-of-sound&#34;&gt;The Algorithm of Sound&lt;/h2&gt;&#xA;&lt;p&gt;When I first opened Logic Pro, I approached it like a new programming language. What are the primitives? What are the constraints? How do I compose complexity from simple elements?&lt;/p&gt;&#xA;&lt;p&gt;A beat is essentially a loop—a recurring pattern with variations. Sound like anything familiar to programmers?&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,50 @@
+hero:
+  status: "System Online"
+  first_name: "Yojan"
+  last_name: "Gautam"
+  description: "Computer Engineer. Producer. Athlete.<br/>Synthesizing <span class='text-blue-400 font-semibold'>Embedded Systems</span>, <span class='text-purple-400 font-semibold'>AI</span>, and <span class='text-yellow-500 font-semibold'>Creative Logic</span> to maximize potential."
+  button_text: "View Projects"
+  github_url: "https://github.com/Super-Yojan"
+
+pillars:
+  - title: "The Engineer"
+    icon_type: "engineer" # Used to map SVG in logic
+    desc: "IoT sensor engineering and autonomous systems. Building the logic that drives machines using Rust, C++, and ROS."
+    tags: ["Rust", "Embedded"]
+    color_class: "blue"
+  - title: "The Artist"
+    icon_type: "artist"
+    desc: "Finding the rhythm in chaos. Producing beats and lyrics that bridge cultural heritage with futuristic soundscapes."
+    tags: ["Logic Pro", "Flow"]
+    color_class: "purple"
+  - title: "The Athlete"
+    icon_type: "athlete"
+    desc: "The body is the hardware. Rigorous discipline, hypertrophy training, and nutritional data analysis to maximize output."
+    tags: ["Hypertrophy", "Data"]
+    color_class: "yellow"
+
+# This structure feeds the JavaScript automatically
+projects:
+  engineer:
+    - title: "Databuoy Embedded Systems"
+      role: "IoT Engineering Intern"
+      desc: "Engineered fail-safe bootloader logic (U-boot) for network/SD card failover. Architected a full-stack web relay system."
+      tags: ["Rust", "Go", "React", "U-boot"]
+      color: "blue"
+    - title: "Drone Tracking Infrastructure"
+      role: "Databuoy"
+      desc: "Built custom drone hardware and developed proprietary data labeling tools."
+      tags: ["Hardware", "Data Ops", "Embedded"]
+      color: "blue"
+  artist:
+    - title: "Neon Horizon EP"
+      role: "Producer"
+      desc: "5-track instrumental hip-hop EP fusing traditional Nepali samples with modern trap percussion."
+      tags: ["Logic Pro", "Production"]
+      color: "purple"
+  athlete:
+    - title: "Hypertrophy Data Analysis"
+      role: "Analyst"
+      desc: "A Python script that analyzes 3 years of workout logs to optimize volume."
+      tags: ["Data Viz", "Fitness", "Python"]
+      color: "yellow"

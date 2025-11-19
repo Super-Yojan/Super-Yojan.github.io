@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Growth on Yojan Gautam - Portfolio</title>
+    <link>http://example.org/tags/growth/</link>
+    <description>Recent content in Growth on Yojan Gautam - Portfolio</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://example.org/tags/growth/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Three Pillars: Why I Engineer, Create, and Train</title>
+      <link>http://example.org/posts/three-pillars-philosophy/</link>
+      <pubDate>Mon, 20 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/posts/three-pillars-philosophy/</guid>
+      <description>&lt;p&gt;Most people talk about &amp;ldquo;work-life balance&amp;rdquo; like it&amp;rsquo;s a scale you&amp;rsquo;re supposed to keep level. I think that&amp;rsquo;s backwards.&lt;/p&gt;&#xA;&lt;p&gt;Balance implies trade-offs. It suggests that gaining in one area means losing in another. But what if the areas aren&amp;rsquo;t competing—they&amp;rsquo;re compounding?&lt;/p&gt;&#xA;&lt;p&gt;That&amp;rsquo;s the philosophy behind my Three Pillars: &lt;strong&gt;Engineer. Artist. Athlete.&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-engineer-building-systems&#34;&gt;The Engineer: Building Systems&lt;/h2&gt;&#xA;&lt;p&gt;Engineering isn&amp;rsquo;t just my profession—it&amp;rsquo;s how I think.&lt;/p&gt;&#xA;&lt;p&gt;I see the world as systems: inputs, processes, outputs, feedback loops. Whether I&amp;rsquo;m writing Rust code for embedded systems or planning my week, I&amp;rsquo;m optimizing for efficiency and robustness.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

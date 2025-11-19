@@ -1,0 +1,15 @@
+{{ define "main" }} {{ $data := .Site.Data.portfolio }}
+
+    <header class="pt-44 pb-24 px-6 max-w-4xl mx-auto flex flex-col items-center text-center">
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1]">
+            <span id="hero-name-1" class="block transition-colors duration-500">{{ $data.hero.first_name }}</span>
+            <span id="hero-name-2" class="block transition-colors duration-500">{{ $data.hero.last_name }}</span>
+        </h1>
+        </header>
+
+    <section id="pillars" class="py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500">
+        </section>
+
+    <section id="work" class="py-24 px-6 max-w-6xl mx-auto">
+        </section>
+{{ end }}

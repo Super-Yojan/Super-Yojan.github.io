@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Yojan Gautam - Portfolio</title>
+    <link>http://example.org/tags/</link>
+    <description>Recent content in Tags on Yojan Gautam - Portfolio</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 20 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://example.org/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Growth</title>
+      <link>http://example.org/tags/growth/</link>
+      <pubDate>Mon, 20 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/growth/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Personal</title>
+      <link>http://example.org/tags/personal/</link>
+      <pubDate>Mon, 20 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/personal/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Philosophy</title>
+      <link>http://example.org/tags/philosophy/</link>
+      <pubDate>Mon, 20 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/philosophy/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Embedded Systems</title>
+      <link>http://example.org/tags/embedded-systems/</link>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/embedded-systems/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Engineering</title>
+      <link>http://example.org/tags/engineering/</link>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/engineering/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>IoT</title>
+      <link>http://example.org/tags/iot/</link>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/iot/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rust</title>
+      <link>http://example.org/tags/rust/</link>
+      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/rust/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Art</title>
+      <link>http://example.org/tags/art/</link>
+      <pubDate>Fri, 10 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/art/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Creativity</title>
+      <link>http://example.org/tags/creativity/</link>
+      <pubDate>Fri, 10 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/creativity/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Logic Pro</title>
+      <link>http://example.org/tags/logic-pro/</link>
+      <pubDate>Fri, 10 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/logic-pro/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Music Production</title>
+      <link>http://example.org/tags/music-production/</link>
+      <pubDate>Fri, 10 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/music-production/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Analytics</title>
+      <link>http://example.org/tags/analytics/</link>
+      <pubDate>Sun, 05 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/analytics/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Data Science</title>
+      <link>http://example.org/tags/data-science/</link>
+      <pubDate>Sun, 05 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/data-science/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Fitness</title>
+      <link>http://example.org/tags/fitness/</link>
+      <pubDate>Sun, 05 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/fitness/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>http://example.org/tags/python/</link>
+      <pubDate>Sun, 05 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Autonomous Systems</title>
+      <link>http://example.org/tags/autonomous-systems/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/autonomous-systems/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Robotics</title>
+      <link>http://example.org/tags/robotics/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/robotics/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>ROS</title>
+      <link>http://example.org/tags/ros/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/ros/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>SLAM</title>
+      <link>http://example.org/tags/slam/</link>
+      <pubDate>Fri, 20 Dec 2024 00:00:00 +0000</pubDate>
+      <guid>http://example.org/tags/slam/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

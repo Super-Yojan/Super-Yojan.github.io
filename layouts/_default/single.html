@@ -1,0 +1,18 @@
+{{ define "main" }}
+<article class="max-w-3xl mx-auto pt-44 px-6 pb-24">
+    <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm bg-white/5 border-white/10">
+            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+            <span class="text-xs uppercase tracking-widest font-semibold opacity-70">Log Entry</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight">{{ .Title }}</h1>
+        <time class="text-sm font-mono opacity-60">{{ .Date.Format "2006-01-02 15:04:05" }}</time>
+    </div>
+
+    <div class="prose prose-lg prose-invert mx-auto 
+                prose-headings:font-bold prose-a:text-blue-400 prose-img:rounded-2xl
+                blog-content">
+        {{ .Content }}
+    </div>
+</article>
+{{ end }}

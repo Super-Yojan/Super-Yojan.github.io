@@ -1,0 +1,26 @@
+{{ define "main" }}
+<div class="max-w-4xl mx-auto pt-44 px-6">
+    <h1 class="text-5xl font-black mb-16 tracking-tight" id="blog-heading">Transmission Log</h1>
+
+    <div class="grid gap-8">
+        {{ range .Pages }}
+        <a href="{{ .RelPermalink }}" class="group relative block">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="relative p-8 rounded-2xl border backdrop-blur-md transition-all duration-500
+                        {{ if eq (site.Params.mode) "dark" }}bg-slate-800/50 border-white/10 hover:bg-slate-700/50{{ else }}bg-white/80 border-slate-200 hover:bg-white{{ end }}
+                        blog-card">
+                
+                <div class="flex items-center gap-4 mb-4 text-xs font-bold uppercase tracking-widest opacity-60">
+                    <time>{{ .Date.Format "Jan 02, 2006" }}</time>
+                    <span>/</span>
+                    <span>{{ .Params.tags | default "Update" }}</span>
+                </div>
+                
+                <h2 class="text-3xl font-bold mb-4 group-hover:text-blue-400 transition-colors">{{ .Title }}</h2>
+                <p class="opacity-80 leading-relaxed">{{ .Description }}</p>
+            </div>
+        </a>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

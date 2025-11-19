@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Fitness on Yojan Gautam - Portfolio</title>
+    <link>http://example.org/tags/fitness/</link>
+    <description>Recent content in Fitness on Yojan Gautam - Portfolio</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 05 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://example.org/tags/fitness/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data-Driven Hypertrophy: Analyzing 3 Years of Training Logs</title>
+      <link>http://example.org/posts/data-driven-training/</link>
+      <pubDate>Sun, 05 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://example.org/posts/data-driven-training/</guid>
+      <description>&lt;p&gt;The body is hardware. Training is programming. Nutrition is fuel. And data is the debugger that tells you what&amp;rsquo;s actually working.&lt;/p&gt;&#xA;&lt;p&gt;After three years of logging every workout, every set, every rep, I finally had enough data to answer the question: &lt;strong&gt;What actually drives hypertrophy?&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-dataset&#34;&gt;The Dataset&lt;/h2&gt;&#xA;&lt;p&gt;3 years. 1,095 days. ~800 logged workouts. Tracking:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Exercise name&lt;/li&gt;&#xA;&lt;li&gt;Sets, reps, weight&lt;/li&gt;&#xA;&lt;li&gt;Rest periods&lt;/li&gt;&#xA;&lt;li&gt;Subjective difficulty (RPE)&lt;/li&gt;&#xA;&lt;li&gt;Body weight and measurements&lt;/li&gt;&#xA;&lt;li&gt;Sleep and recovery metrics&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;All stored in structured CSV files because, well, I&amp;rsquo;m an engineer.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

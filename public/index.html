@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta name="generator" content="Hugo 0.152.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=60073&amp;path=livereload" data-no-instant defer></script>
+	<meta name="generator" content="Hugo 0.152.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yojan Gautam - Portfolio</title>
@@ -56,28 +56,378 @@
             <div id="glow-3" class="absolute bottom-[-10%] left-[20%] w-[50vw] h-[50vw] rounded-full blur-[120px] transition-colors duration-500"></div>
         </div>
 
-        <div id="nav-links" class="hidden md:flex items-center gap-8 text-sm font-medium">
-    <a href="/" class="transition-colors hover:text-blue-400">Home</a>
-    <a href="/posts" class="transition-colors hover:text-blue-400">Blog</a>
-    <a href="/#work" class="transition-colors hover:text-blue-400">Projects</a>
-</div>
+        <nav
+    id="navbar"
+    class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent"
+>
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div
+            class="flex items-center gap-3 cursor-pointer group"
+            onclick="window.location.href='/'"
+        >
+            <div
+                class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-300 via-purple-300 to-yellow-200 flex items-center justify-center text-slate-900 shadow-lg group-hover:scale-105 transition-transform"
+            >
+                <svg
+                    class="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        d="M22 12h-4l-3 9L9 3l-3 9H2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+            <div class="flex flex-col leading-none">
+                <span
+                    id="logo-text"
+                    class="text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r"
+                    >HUMAN</span
+                >
+                <span
+                    id="logo-subtext"
+                    class="text-xs tracking-widest uppercase"
+                    >Augmentation</span
+                >
+            </div>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div
+                id="nav-links"
+                class="hidden md:flex items-center gap-8 text-sm font-medium"
+            >
+                <a href="/#pillars" class="transition-colors">Pillars</a>
+                <a href="/#work" class="transition-colors">Projects</a>
+                <a href="/posts" class="transition-colors">Blog</a>
+                <a
+                    href="/#contact"
+                    id="nav-connect"
+                    class="px-5 py-2 rounded-full border transition-all"
+                    >Connect</a
+                >
+            </div>
+
+            <button
+                id="theme-toggle"
+                class="p-2 rounded-full border transition-all duration-300 flex items-center justify-center group"
+                aria-label="Toggle Theme"
+            >
+                <svg
+                    id="sun-icon"
+                    class="w-4 h-4 group-hover:rotate-45 transition-transform duration-500"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                    style="display: none"
+                >
+                    <circle cx="12" cy="12" r="5" />
+                    <line x1="12" y1="1" x2="12" y2="3" />
+                    <line x1="12" y1="21" x2="12" y2="23" />
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                    <line x1="1" y1="12" x2="3" y2="12" />
+                    <line x1="21" y1="12" x2="23" y2="12" />
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+                <svg
+                    id="moon-icon"
+                    class="w-4 h-4 group-hover:-rotate-12 transition-transform duration-500"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
 
 
         <main class="relative z-10 min-h-screen">
              
 
-    <header class="pt-44 pb-24 px-6 max-w-4xl mx-auto flex flex-col items-center text-center">
-        <h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1]">
-            <span id="hero-name-1" class="block transition-colors duration-500">Yojan</span>
-            <span id="hero-name-2" class="block transition-colors duration-500">Gautam</span>
-        </h1>
-        </header>
+<header
+    class="relative z-10 pt-44 pb-24 px-6 max-w-4xl mx-auto flex flex-col items-center text-center"
+>
+    <div
+        id="status-pill"
+        class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm transition-colors duration-500"
+    >
+        <span class="relative flex h-2 w-2">
+            <span
+                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
+            ></span>
+            <span
+                class="relative inline-flex rounded-full h-2 w-2 bg-green-500"
+            ></span>
+        </span>
+        <span
+            id="status-text"
+            class="text-xs uppercase tracking-widest font-semibold"
+            >System Online</span
+        >
+    </div>
 
-    <section id="pillars" class="py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500">
-        </section>
+    <h1
+        class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tight mb-8 leading-[1.1]"
+    >
+        <span id="hero-name-1" class="block transition-colors duration-500"
+            >Yojan</span
+        >
+        <span id="hero-name-2" class="block transition-colors duration-500"
+            >Gautam</span
+        >
+    </h1>
 
-    <section id="work" class="py-24 px-6 max-w-6xl mx-auto">
-        </section>
+    <p
+        id="hero-desc"
+        class="max-w-2xl text-lg md:text-xl leading-relaxed mb-12 transition-colors duration-500"
+    >
+        Computer Engineer. Producer. Athlete.<br/>Synthesizing <span class='text-blue-400 font-semibold'>Embedded Systems</span>, <span class='text-purple-400 font-semibold'>AI</span>, and <span class='text-yellow-500 font-semibold'>Creative Logic</span> to maximize potential.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+        <button
+            onclick="document.getElementById('work').scrollIntoView({behavior: 'smooth'})"
+            class="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold hover:opacity-90 transition-opacity shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2"
+        >
+            View Projects
+            <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+            >
+                <polyline points="6 9 12 15 18 9" />
+            </svg>
+        </button>
+        <a
+            href="https://github.com/Super-Yojan"
+            target="_blank"
+            id="github-btn"
+            class="px-8 py-4 rounded-xl border transition-colors flex items-center justify-center gap-2 font-medium"
+        >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                />
+            </svg>
+            GitHub Profile
+        </a>
+    </div>
+</header>
+
+<section
+    id="pillars"
+    class="relative z-10 py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500"
+>
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2
+                id="pillars-heading"
+                class="text-3xl md:text-4xl font-bold mb-4"
+            >
+                The Three Pillars
+            </h2>
+            <p id="pillars-desc">
+                The intersection of disciplines where innovation happens.
+            </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            
+            <div
+                id="engineer-card"
+                class="group relative p-8 rounded-3xl bg-gradient-to-b border transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+            >
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"
+                ></div>
+                <div class="relative z-10">
+                    <div
+                        id="engineer-icon"
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg bg-blue-500/20 text-blue-400"
+                    >
+                        <span class="font-bold text-xl uppercase"
+                            >E</span
+                        >
+                    </div>
+                    <h3
+                        id="engineer-title"
+                        class="text-2xl font-bold mb-3"
+                    >
+                        The Engineer
+                    </h3>
+                    <p
+                        id="engineer-desc"
+                        class="leading-relaxed text-sm"
+                    >
+                        IoT sensor engineering and autonomous systems. Building the logic that drives machines using Rust, C&#43;&#43;, and ROS.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-2">
+                        
+                        <span
+                            class="text-xs font-medium px-2.5 py-1 rounded-md border"
+                            >Rust</span
+                        >
+                        
+                        <span
+                            class="text-xs font-medium px-2.5 py-1 rounded-md border"
+                            >Embedded</span
+                        >
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div
+                id="artist-card"
+                class="group relative p-8 rounded-3xl bg-gradient-to-b border transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+            >
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"
+                ></div>
+                <div class="relative z-10">
+                    <div
+                        id="artist-icon"
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg bg-purple-500/20 text-purple-400"
+                    >
+                        <span class="font-bold text-xl uppercase"
+                            >A</span
+                        >
+                    </div>
+                    <h3
+                        id="artist-title"
+                        class="text-2xl font-bold mb-3"
+                    >
+                        The Artist
+                    </h3>
+                    <p
+                        id="artist-desc"
+                        class="leading-relaxed text-sm"
+                    >
+                        Finding the rhythm in chaos. Producing beats and lyrics that bridge cultural heritage with futuristic soundscapes.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-2">
+                        
+                        <span
+                            class="text-xs font-medium px-2.5 py-1 rounded-md border"
+                            >Logic Pro</span
+                        >
+                        
+                        <span
+                            class="text-xs font-medium px-2.5 py-1 rounded-md border"
+                            >Flow</span
+                        >
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <div
+                id="athlete-card"
+                class="group relative p-8 rounded-3xl bg-gradient-to-b border transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+            >
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110"
+                ></div>
+                <div class="relative z-10">
+                    <div
+                        id="athlete-icon"
+                        class="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-lg bg-yellow-500/20 text-yellow-400"
+                    >
+                        <span class="font-bold text-xl uppercase"
+                            >A</span
+                        >
+                    </div>
+                    <h3
+                        id="athlete-title"
+                        class="text-2xl font-bold mb-3"
+                    >
+                        The Athlete
+                    </h3>
+                    <p
+                        id="athlete-desc"
+                        class="leading-relaxed text-sm"
+                    >
+                        The body is the hardware. Rigorous discipline, hypertrophy training, and nutritional data analysis to maximize output.
+                    </p>
+                    <div class="mt-8 flex flex-wrap gap-2">
+                        
+                        <span
+                            class="text-xs font-medium px-2.5 py-1 rounded-md border"
+                            >Hypertrophy</span
+                        >
+                        
+                        <span
+                            class="text-xs font-medium px-2.5 py-1 rounded-md border"
+                            >Data</span
+                        >
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<section id="work" class="relative z-10 py-24 px-6 max-w-6xl mx-auto">
+    <div
+        class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
+    >
+        <div>
+            <h2 id="work-heading" class="text-4xl font-bold mb-2">
+                Selected Works
+            </h2>
+            <p id="work-desc">
+                A curation of code, composition, and conditioning.
+            </p>
+        </div>
+
+        <div
+            id="tab-switcher"
+            class="p-1.5 rounded-xl border inline-flex transition-colors duration-500"
+        >
+            <button
+                onclick="switchTab('engineer')"
+                id="tab-engineer"
+                class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-500/20 text-blue-400 shadow-sm ring-1 ring-blue-500/20"
+            >
+                Engineering
+            </button>
+            <button
+                onclick="switchTab('artist')"
+                id="tab-artist"
+                class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all"
+            >
+                Artistry
+            </button>
+            <button
+                onclick="switchTab('athlete')"
+                id="tab-athlete"
+                class="px-5 py-2.5 rounded-lg text-sm font-medium transition-all"
+            >
+                Athletics
+            </button>
+        </div>
+    </div>
+
+    <div
+        id="project-grid"
+        class="grid md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+    ></div>
+</section>
 
         </main>
 
@@ -134,11 +484,10 @@
 </footer>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-<script>
+    <script>
     
     
-    const projects = "{\"artist\":[{\"color\":\"purple\",\"desc\":\"5-track instrumental hip-hop EP fusing traditional Nepali samples with modern trap percussion.\",\"role\":\"Producer\",\"tags\":[\"Logic Pro\",\"Production\"],\"title\":\"Neon Horizon EP\"}],\"athlete\":[{\"color\":\"yellow\",\"desc\":\"A Python script that analyzes 3 years of workout logs to optimize volume.\",\"role\":\"Analyst\",\"tags\":[\"Data Viz\",\"Fitness\",\"Python\"],\"title\":\"Hypertrophy Data Analysis\"}],\"engineer\":[{\"color\":\"blue\",\"desc\":\"Engineered fail-safe bootloader logic (U-boot) for network/SD card failover. Architected a full-stack web relay system.\",\"role\":\"IoT Engineering Intern\",\"tags\":[\"Rust\",\"Go\",\"React\",\"U-boot\"],\"title\":\"Databuoy Embedded Systems\"},{\"color\":\"blue\",\"desc\":\"Built custom drone hardware and developed proprietary data labeling tools.\",\"role\":\"Databuoy\",\"tags\":[\"Hardware\",\"Data Ops\",\"Embedded\"],\"title\":\"Drone Tracking Infrastructure\"}]}";
+    const projects = JSON.parse("{\"artist\":[{\"color\":\"purple\",\"desc\":\"5-track instrumental hip-hop EP fusing traditional Nepali samples with modern trap percussion.\",\"role\":\"Producer\",\"tags\":[\"Logic Pro\",\"Production\"],\"title\":\"Neon Horizon EP\"}],\"athlete\":[{\"color\":\"yellow\",\"desc\":\"A Python script that analyzes 3 years of workout logs to optimize volume.\",\"role\":\"Analyst\",\"tags\":[\"Data Viz\",\"Fitness\",\"Python\"],\"title\":\"Hypertrophy Data Analysis\"}],\"engineer\":[{\"color\":\"blue\",\"desc\":\"Engineered fail-safe bootloader logic (U-boot) for network/SD card failover. Architected a full-stack web relay system.\",\"role\":\"IoT Engineering Intern\",\"tags\":[\"Rust\",\"Go\",\"React\",\"U-boot\"],\"title\":\"Databuoy Embedded Systems\"},{\"color\":\"blue\",\"desc\":\"Built custom drone hardware and developed proprietary data labeling tools.\",\"role\":\"Databuoy\",\"tags\":[\"Hardware\",\"Data Ops\",\"Embedded\"],\"title\":\"Drone Tracking Infrastructure\"}]}");
 
         
         let isDark = true;
@@ -252,6 +601,8 @@
         
         function renderProjects() {
             const grid = document.getElementById('project-grid');
+            if (!grid) return; 
+
             const items = projects[activeTab];
 
             grid.innerHTML = items.map((item, idx) => `
@@ -357,13 +708,34 @@
             points.rotation.set(0, 0, Math.PI / 4);
             scene.add(points);
 
+            
+            const mouse = { x: 0, y: 0 };
+            const targetRotation = { x: 0, y: 0 };
+
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+                targetRotation.x = mouse.y * 0.3;
+                targetRotation.y = mouse.x * 0.3;
+            });
+
             let time = 0;
             function animate() {
                 requestAnimationFrame(animate);
                 time += 0.01;
-                points.rotation.x -= 0.001;
-                points.rotation.y -= 0.00067;
+
+                
+                points.rotation.x += (targetRotation.x - points.rotation.x) * 0.05;
+                points.rotation.y += (targetRotation.y - points.rotation.y) * 0.05;
+
+                
+                points.rotation.x -= 0.0005;
+                points.rotation.y -= 0.00033;
+
+                
                 points.position.y = Math.sin(time * 0.5) * 0.1;
+
                 renderer.render(scene, camera);
             }
             animate();
@@ -375,8 +747,6 @@
             });
         }
 
-        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-
         function initialize() {
             applyTheme();
             renderProjects();
@@ -387,7 +757,14 @@
                     if (typeof THREE !== 'undefined') initThreeJS();
                 }, 100);
             }
+
+            
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
         }
+
         window.addEventListener('load', initialize);
 </script>
 

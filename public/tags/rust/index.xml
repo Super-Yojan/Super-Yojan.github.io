@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rust on Yojan Gautam - Portfolio</title>
-    <link>http://example.org/tags/rust/</link>
+    <link>http://localhost:1313/tags/rust/</link>
     <description>Recent content in Rust on Yojan Gautam - Portfolio</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Jan 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://example.org/tags/rust/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 25 Jan 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/rust/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>My Journey into Embedded Systems: From Arduino to Production IoT</title>
-      <link>http://example.org/posts/embedded-systems-journey/</link>
-      <pubDate>Wed, 15 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://example.org/posts/embedded-systems-journey/</guid>
-      <description>&lt;p&gt;The path to embedded systems engineering isn&amp;rsquo;t always linear. Mine started with a simple Arduino Uno and an LED blink sketch, but it evolved into architecting fail-safe bootloaders for production IoT devices.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-beginning-curiosity-and-leds&#34;&gt;The Beginning: Curiosity and LEDs&lt;/h2&gt;&#xA;&lt;p&gt;Like many engineers, my first &amp;ldquo;embedded system&amp;rdquo; was making an LED blink. Simple, right? But that tiny victory sparked something deeper—a fascination with the intersection of hardware and software, where every CPU cycle matters and memory is measured in kilobytes, not gigabytes.&lt;/p&gt;</description>
+      <title>Why Rust is the Future of Embedded Systems</title>
+      <link>http://localhost:1313/posts/rust-for-embedded/</link>
+      <pubDate>Sat, 25 Jan 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/rust-for-embedded/</guid>
+      <description>&lt;p&gt;C has dominated embedded systems for decades. But there&amp;rsquo;s a new language that&amp;rsquo;s challenging that dominance—and for good reason.&lt;/p&gt;&#xA;&lt;p&gt;Rust brings memory safety to embedded systems without the overhead of a garbage collector. In a domain where every byte and every cycle matters, that&amp;rsquo;s revolutionary.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-problem-with-c&#34;&gt;The Problem with C&lt;/h2&gt;&#xA;&lt;p&gt;Don&amp;rsquo;t get me wrong—C is amazing. It&amp;rsquo;s fast, minimal, and gives you complete control. But that control comes with a price:&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>

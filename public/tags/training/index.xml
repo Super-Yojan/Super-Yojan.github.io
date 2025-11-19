@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Fitness on Yojan Gautam - Portfolio</title>
-    <link>http://localhost:1313/tags/fitness/</link>
-    <description>Recent content in Fitness on Yojan Gautam - Portfolio</description>
+    <title>Training on Yojan Gautam - Portfolio</title>
+    <link>http://localhost:1313/tags/training/</link>
+    <description>Recent content in Training on Yojan Gautam - Portfolio</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 28 Dec 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/fitness/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/training/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Progressive Overload: The Algorithm Behind Muscle Growth</title>
       <link>http://localhost:1313/posts/progressive-overload/</link>

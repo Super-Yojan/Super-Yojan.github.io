@@ -153,30 +153,177 @@
 
         <main class="relative z-10 min-h-screen">
             
-<div class="max-w-4xl mx-auto pt-44 px-6">
-    <h1 class="text-5xl font-black mb-16 tracking-tight" id="blog-heading">Transmission Log</h1>
-
-    <div class="grid gap-8">
-        
-        <a href="/posts/rust-for-embedded/" class="group relative block">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div class="relative p-8 rounded-2xl border backdrop-blur-md transition-all duration-500
-                        bg-white/80 border-slate-200 hover:bg-white
-                        blog-card">
-                
-                <div class="flex items-center gap-4 mb-4 text-xs font-bold uppercase tracking-widest opacity-60">
-                    <time>Jan 25, 2025</time>
-                    <span>/</span>
-                    <span>[Rust Embedded Systems Programming Safety]</span>
-                </div>
-                
-                <h2 class="text-3xl font-bold mb-4 group-hover:text-blue-400 transition-colors">Why Rust is the Future of Embedded Systems</h2>
-                <p class="opacity-80 leading-relaxed">Memory safety without garbage collection—why Rust is changing embedded development forever.</p>
-            </div>
-        </a>
-        
+<article class="max-w-3xl mx-auto pt-44 px-6 pb-24">
+    <div class="text-center mb-16">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm bg-white/5 border-white/10">
+            <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+            <span class="text-xs uppercase tracking-widest font-semibold opacity-70">Log Entry</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight">Why Rust is the Future of Embedded Systems</h1>
+        <time class="text-sm font-mono opacity-60">2025-01-25 00:00:00</time>
     </div>
-</div>
+
+    <div class="prose prose-lg prose-invert mx-auto 
+                prose-headings:font-bold prose-a:text-blue-400 prose-img:rounded-2xl
+                blog-content">
+        <p>C has dominated embedded systems for decades. But there&rsquo;s a new language that&rsquo;s challenging that dominance—and for good reason.</p>
+<p>Rust brings memory safety to embedded systems without the overhead of a garbage collector. In a domain where every byte and every cycle matters, that&rsquo;s revolutionary.</p>
+<h2 id="the-problem-with-c">The Problem with C</h2>
+<p>Don&rsquo;t get me wrong—C is amazing. It&rsquo;s fast, minimal, and gives you complete control. But that control comes with a price:</p>
+<p><strong>Memory unsafety.</strong></p>
+<p>In embedded systems, common C bugs include:</p>
+<ul>
+<li><strong>Buffer overflows</strong> - Writing past array bounds</li>
+<li><strong>Use-after-free</strong> - Accessing memory that&rsquo;s been freed</li>
+<li><strong>Null pointer dereferences</strong> - The billion-dollar mistake</li>
+<li><strong>Data races</strong> - Concurrent access without synchronization</li>
+</ul>
+<p>These aren&rsquo;t just theoretical problems. They&rsquo;re the source of most embedded system crashes and security vulnerabilities.</p>
+<h2 id="enter-rust">Enter Rust</h2>
+<p>Rust&rsquo;s ownership system catches these bugs <em>at compile time</em>. Not at runtime. Not in production. During compilation.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> data <span style="color:#f92672">=</span> <span style="color:#a6e22e">vec!</span>[<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> reference <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>data[<span style="color:#ae81ff">0</span>];
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    drop(data); <span style="color:#75715e">// Compiler error: cannot move out of `data` because it is borrowed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">println!</span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, reference);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This code won&rsquo;t compile. The compiler knows you&rsquo;re trying to use freed memory and stops you.</p>
+<p>In C, this compiles fine. It crashes at runtime. Maybe. If you&rsquo;re lucky. Or it corrupts memory silently and crashes later in a completely unrelated part of your code.</p>
+<h2 id="real-world-embedded-rust">Real-World Embedded Rust</h2>
+<p>Here&rsquo;s a simple example of embedded Rust for a microcontroller:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#![no_std]</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#![no_main]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> cortex_m_rt::entry;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> stm32f4xx_hal::{prelude::<span style="color:#f92672">*</span>, stm32};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#[entry]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() -&gt; <span style="color:#f92672">!</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> peripherals <span style="color:#f92672">=</span> stm32::Peripherals::take().unwrap();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> gpioa <span style="color:#f92672">=</span> peripherals.<span style="color:#66d9ef">GPIOA</span>.split();
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> led <span style="color:#f92672">=</span> gpioa.pa5.into_push_pull_output();
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">loop</span> {
+</span></span><span style="display:flex;"><span>        led.set_high();
+</span></span><span style="display:flex;"><span>        cortex_m::asm::delay(<span style="color:#ae81ff">1_000_000</span>);
+</span></span><span style="display:flex;"><span>        led.set_low();
+</span></span><span style="display:flex;"><span>        cortex_m::asm::delay(<span style="color:#ae81ff">1_000_000</span>);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#[panic_handler]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">panic</span>(_info: <span style="color:#66d9ef">&amp;</span><span style="color:#a6e22e">core</span>::panic::PanicInfo) -&gt; <span style="color:#f92672">!</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">loop</span> {}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This is bare-metal Rust. No operating system. No standard library. Just you and the hardware.</p>
+<p>Notice:</p>
+<ul>
+<li><strong>Type safety</strong> - The HAL (Hardware Abstraction Layer) ensures you can&rsquo;t misuse GPIO pins</li>
+<li><strong>No malloc</strong> - Stack allocation only, predictable memory usage</li>
+<li><strong>Zero cost abstractions</strong> - This compiles to the same assembly as equivalent C</li>
+</ul>
+<h2 id="the-ownership-model">The Ownership Model</h2>
+<p>Rust&rsquo;s killer feature for embedded: <strong>ownership without garbage collection</strong>.</p>
+<p>Every value has exactly one owner. When the owner goes out of scope, the value is automatically dropped. No manual <code>free()</code>. No garbage collector pauses.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> buffer <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span><span style="color:#66d9ef">u8</span>; <span style="color:#ae81ff">1024</span>]; <span style="color:#75715e">// Allocated on stack
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    do_something(<span style="color:#f92672">&amp;</span>buffer);
+</span></span><span style="display:flex;"><span>} <span style="color:#75715e">// buffer automatically dropped here
+</span></span></span></code></pre></div><p>The compiler tracks lifetimes. You can&rsquo;t accidentally keep a reference to freed memory. You can&rsquo;t have data races between interrupts.</p>
+<h2 id="zero-cost-abstractions">Zero-Cost Abstractions</h2>
+<p>In C, abstractions often mean performance overhead. Function pointers, vtables, indirection.</p>
+<p>In Rust, abstractions compile away:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// High-level iterator code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> sum: <span style="color:#66d9ef">u32</span> <span style="color:#f92672">=</span> data.iter()
+</span></span><span style="display:flex;"><span>    .filter(<span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> <span style="color:#f92672">**</span>x <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>    .map(<span style="color:#f92672">|</span>x<span style="color:#f92672">|</span> x <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    .sum();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// Compiles to tight loop, same as hand-written C
+</span></span></span></code></pre></div><p>The Rust compiler performs aggressive optimization. Iterator chains become simple loops. Generics become monomorphized (no runtime dispatch). Traits resolve at compile time.</p>
+<h2 id="embedded-async">Embedded Async</h2>
+<p>Rust&rsquo;s async/await works on embedded systems. No heap allocation required.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">#[embassy_executor::main]</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">async</span> <span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>(spawner: <span style="color:#a6e22e">Spawner</span>) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> button <span style="color:#f92672">=</span> Input::new(p.<span style="color:#66d9ef">PIN_0</span>, Pull::Up);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> led <span style="color:#f92672">=</span> Output::new(p.<span style="color:#66d9ef">PIN_1</span>, Level::Low);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">loop</span> {
+</span></span><span style="display:flex;"><span>        button.wait_for_low().<span style="color:#66d9ef">await</span>;
+</span></span><span style="display:flex;"><span>        led.set_high();
+</span></span><span style="display:flex;"><span>        Timer::after(Duration::from_millis(<span style="color:#ae81ff">500</span>)).<span style="color:#66d9ef">await</span>;
+</span></span><span style="display:flex;"><span>        led.set_low();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This is cooperative multitasking with zero overhead. The async runtime is compiled away. No RTOS needed for simple concurrent tasks.</p>
+<h2 id="the-ecosystem">The Ecosystem</h2>
+<p>Rust&rsquo;s embedded ecosystem is growing fast:</p>
+<ul>
+<li><strong>embedded-hal</strong> - Hardware abstraction traits</li>
+<li><strong>Embassy</strong> - Modern async embedded framework</li>
+<li><strong>RTIC</strong> - Real-Time Interrupt-driven Concurrency</li>
+<li><strong>probe-rs</strong> - Debugging and flashing tools</li>
+<li><strong>defmt</strong> - Efficient logging for embedded</li>
+</ul>
+<p>Plus support for ARM Cortex-M, RISC-V, AVR, ESP32, and more.</p>
+<h2 id="challenges">Challenges</h2>
+<p>Rust for embedded isn&rsquo;t perfect:</p>
+<ol>
+<li><strong>Learning curve</strong> - Ownership takes time to internalize</li>
+<li><strong>Compile times</strong> - Slower than C (but improving)</li>
+<li><strong>Ecosystem gaps</strong> - Some chip vendors still lack Rust support</li>
+<li><strong>Binary size</strong> - Can be larger than hand-optimized C (but often comparable)</li>
+<li><strong>Debugging</strong> - DWARF debug info is verbose</li>
+</ol>
+<p>But these are engineering trade-offs, not fundamental blockers.</p>
+<h2 id="when-to-use-rust">When to Use Rust</h2>
+<p>Use Rust for embedded when:</p>
+<ul>
+<li><strong>Safety matters</strong> - Medical devices, automotive, aerospace</li>
+<li><strong>Complexity is high</strong> - Large codebases benefit from compiler checks</li>
+<li><strong>Concurrency is required</strong> - Fearless concurrency is real</li>
+<li><strong>Long-term maintenance</strong> - Type safety prevents regressions</li>
+</ul>
+<p>Stick with C when:</p>
+<ul>
+<li><strong>Legacy integration</strong> - Massive existing C codebases</li>
+<li><strong>Extreme size constraints</strong> - &lt;4KB flash (though Rust can fit)</li>
+<li><strong>Team expertise</strong> - If your team knows C and not Rust</li>
+<li><strong>Vendor tools</strong> - Some vendors only provide C SDKs</li>
+</ul>
+<h2 id="the-future">The Future</h2>
+<p>Major companies are adopting Rust for embedded:</p>
+<ul>
+<li><strong>Google</strong> - Rust in Android firmware</li>
+<li><strong>Microsoft</strong> - Rust in Windows drivers</li>
+<li><strong>Amazon</strong> - Rust in AWS embedded systems</li>
+<li><strong>Meta</strong> - Rust in data center infrastructure</li>
+</ul>
+<p>The Linux kernel now supports Rust modules. Firmware is next.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Want to try embedded Rust?</p>
+<ol>
+<li><strong>Install Rust</strong> - <code>rustup target add thumbv7em-none-eabihf</code></li>
+<li><strong>Get hardware</strong> - STM32 Nucleo, ESP32, Raspberry Pi Pico</li>
+<li><strong>Read the book</strong> - <a href="https://rust-embedded.github.io/book/">The Embedded Rust Book</a></li>
+<li><strong>Join the community</strong> - #rust-embedded on Matrix</li>
+</ol>
+<p>Start with blinky. Move to interrupts. Build a real project.</p>
+<h2 id="my-experience">My Experience</h2>
+<p>At Databuoy, switching to Rust for our bootloader logic eliminated an entire class of bugs. The U-boot integration required unsafe code, but we isolated it to a tiny surface area.</p>
+<p>The result: <strong>zero memory corruption bugs in production</strong>. The type system caught errors during development that would have been nightmares to debug in the field.</p>
+<p>Compile time went up. Development time went down. Reliability went way up.</p>
+<h2 id="the-bottom-line">The Bottom Line</h2>
+<p>Rust isn&rsquo;t replacing C overnight. But for new embedded projects where safety and reliability matter, it&rsquo;s increasingly the right choice.</p>
+<p>Memory safety without garbage collection. Zero-cost abstractions. Fearless concurrency.</p>
+<p>The future of embedded systems is safe. And it&rsquo;s written in Rust.</p>
+<p><strong>Are you using Rust for embedded?</strong> I&rsquo;d love to hear about your experience. Reach out.</p>
+
+    </div>
+</article>
 
         </main>
 

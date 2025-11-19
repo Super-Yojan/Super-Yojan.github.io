@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yojan Gautam - Portfolio</title>
@@ -154,174 +154,19 @@
         <main class="relative z-10 min-h-screen">
             
 <article class="max-w-3xl mx-auto pt-44 px-6 pb-24">
-    <div class="mb-16">
+    <div class="text-center mb-16">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm bg-white/5 border-white/10">
             <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
             <span class="text-xs uppercase tracking-widest font-semibold opacity-70">Log Entry</span>
         </div>
-
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-6 leading-tight" id="post-title">Building Autonomous Systems: Lessons from ROS and SLAM</h1>
-
-        <div class="flex flex-wrap items-center gap-4 text-sm opacity-70 mb-8">
-            <time datetime="2024-12-20" class="font-mono">December 20, 2024</time>
-            
-            <span>•</span>
-            <div class="flex flex-wrap gap-2">
-                
-                <span class="px-3 py-1 rounded-full border text-xs font-semibold bg-blue-500/10 border-blue-500/20 text-blue-400">#Robotics</span>
-                
-                <span class="px-3 py-1 rounded-full border text-xs font-semibold bg-blue-500/10 border-blue-500/20 text-blue-400">#ROS</span>
-                
-                <span class="px-3 py-1 rounded-full border text-xs font-semibold bg-blue-500/10 border-blue-500/20 text-blue-400">#SLAM</span>
-                
-                <span class="px-3 py-1 rounded-full border text-xs font-semibold bg-blue-500/10 border-blue-500/20 text-blue-400">#Autonomous Systems</span>
-                
-            </div>
-            
-        </div>
-
-        
-        <p class="text-xl leading-relaxed opacity-80 border-l-4 border-blue-500 pl-6 mb-8" id="post-description">What I learned implementing SLAM algorithms for autonomous robot navigation.</p>
-        
+        <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight"></h1>
+        <time class="text-sm font-mono opacity-60">0001-01-01 00:00:00</time>
     </div>
 
-    <div class="prose prose-lg max-w-none
-                prose-headings:font-bold prose-headings:tracking-tight
-                prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
-                prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4
-                prose-p:leading-relaxed prose-p:mb-6
-                prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline
-                prose-strong:font-bold
-                prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:bg-slate-800 prose-code:text-blue-300 prose-code:font-mono prose-code:text-sm
-                prose-pre:bg-slate-900 prose-pre:border prose-pre:border-white/10 prose-pre:rounded-xl prose-pre:p-6
-                prose-img:rounded-2xl prose-img:shadow-2xl
-                prose-ul:my-6 prose-li:my-2
-                prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:pl-6 prose-blockquote:italic
+    <div class="prose prose-lg prose-invert mx-auto 
+                prose-headings:font-bold prose-a:text-blue-400 prose-img:rounded-2xl
                 blog-content">
-        <p>Making a robot navigate autonomously is harder than it looks. Way harder.</p>
-<p>On paper, SLAM (Simultaneous Localization and Mapping) sounds straightforward: the robot builds a map of its environment while tracking its own position within that map. In practice, it&rsquo;s a beautiful nightmare of sensor fusion, probabilistic algorithms, and edge cases.</p>
-<h2 id="the-problem-space">The Problem Space</h2>
-<p>Imagine you&rsquo;re blindfolded in an unknown room. You can:</p>
-<ul>
-<li>Sense walls when you touch them (LIDAR)</li>
-<li>Measure your steps (odometry)</li>
-<li>Occasionally glimpse landmarks (visual features)</li>
-</ul>
-<p>Now navigate the room, build a mental map, and know where you are at all times. That&rsquo;s SLAM.</p>
-<h2 id="why-its-hard">Why It&rsquo;s Hard</h2>
-<h3 id="1-sensor-noise">1. Sensor Noise</h3>
-<p>Every sensor lies. LIDAR drifts. Wheel encoders slip. IMUs accumulate error.</p>
-<p>Your robot thinks it moved 1 meter. It actually moved 0.97 meters. Over time, this compounds into &ldquo;I have no idea where I am.&rdquo;</p>
-<h3 id="2-loop-closure">2. Loop Closure</h3>
-<p>The robot explores, builds a map, then returns to a previously visited location. Does it recognize it? If not, you get duplicate map features. If yes, how do you correct the accumulated error?</p>
-<p>This is the loop closure problem, and it&rsquo;s critical for long-term autonomy.</p>
-<h3 id="3-computational-constraints">3. Computational Constraints</h3>
-<p>Real-time SLAM means processing sensor data at 10-30 Hz. On a resource-constrained robot. While running navigation, path planning, and control loops.</p>
-<p>Optimization is essential.</p>
-<h2 id="my-implementation-ros--gmapping">My Implementation: ROS + GMapping</h2>
-<p>I used the Robot Operating System (ROS) framework with the GMapping algorithm for 2D SLAM.</p>
-<h3 id="architecture">Architecture</h3>
-<pre tabindex="0"><code>┌─────────────┐
-│   LIDAR     │──→ /scan topic
-└─────────────┘
-                    ↓
-┌─────────────┐   ┌──────────────┐
-│  Odometry   │──→│   GMapping   │──→ /map topic
-└─────────────┘   │     Node     │
-                  └──────────────┘
-                         ↓
-                  ┌──────────────┐
-                  │  Navigation  │
-                  │    Stack     │
-                  └──────────────┘
-</code></pre><h3 id="key-components">Key Components</h3>
-<p><strong>1. Sensor Processing</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">lidarCallback</span>(<span style="color:#66d9ef">const</span> sensor_msgs<span style="color:#f92672">::</span>LaserScan<span style="color:#f92672">::</span>ConstPtr<span style="color:#f92672">&amp;</span> scan) {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Filter noise and outliers
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">auto</span> filtered <span style="color:#f92672">=</span> filterScan(scan);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Convert to point cloud
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">auto</span> cloud <span style="color:#f92672">=</span> scanToPointCloud(filtered);
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// Publish for SLAM
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    pointcloud_pub.publish(cloud);
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>2. Particle Filter for Localization</strong></p>
-<p>GMapping uses a Rao-Blackwellized particle filter. Each particle represents a possible robot pose and map hypothesis.</p>
-<p>The algorithm:</p>
-<ol>
-<li>Predict new pose based on odometry</li>
-<li>Update particle weights based on LIDAR measurements</li>
-<li>Resample particles (keep likely hypotheses)</li>
-<li>Update map based on weighted particles</li>
-</ol>
-<p><strong>3. Occupancy Grid Mapping</strong></p>
-<p>The environment is represented as a 2D grid. Each cell has a probability:</p>
-<ul>
-<li>0.0 = definitely free space</li>
-<li>0.5 = unknown</li>
-<li>1.0 = definitely occupied</li>
-</ul>
-<h2 id="challenges-i-faced">Challenges I Faced</h2>
-<h3 id="challenge-1-dynamic-environments">Challenge 1: Dynamic Environments</h3>
-<p>People walking through the map. Doors opening and closing. Moving furniture.</p>
-<p><strong>Solution</strong>: Implement a temporal filter to distinguish static obstacles from dynamic objects. Update the map only based on persistent features.</p>
-<h3 id="challenge-2-computational-load">Challenge 2: Computational Load</h3>
-<p>GMapping was consuming 80% CPU on the onboard Raspberry Pi.</p>
-<p><strong>Solution</strong>:</p>
-<ul>
-<li>Reduce LIDAR scan rate from 30Hz to 10Hz</li>
-<li>Decrease particle count from 100 to 30</li>
-<li>Optimize map update frequency</li>
-</ul>
-<p>Trade-off: Slightly less accurate map, but real-time performance.</p>
-<h3 id="challenge-3-initial-localization">Challenge 3: Initial Localization</h3>
-<p>When the robot starts, it doesn&rsquo;t know where it is. How do you bootstrap SLAM?</p>
-<p><strong>Solution</strong>: Start with a small, known area. Let the robot build confidence in its initial pose before expanding the map.</p>
-<h2 id="performance-metrics">Performance Metrics</h2>
-<p>After optimization:</p>
-<ul>
-<li><strong>Mapping accuracy</strong>: ±5cm over 50m trajectory</li>
-<li><strong>CPU usage</strong>: 35% average</li>
-<li><strong>Loop closure success rate</strong>: 87%</li>
-<li><strong>Real-time factor</strong>: 1.2x (processes data faster than real-time)</li>
-</ul>
-<h2 id="lessons-learned">Lessons Learned</h2>
-<ol>
-<li><strong>Probabilistic thinking is essential</strong> - Everything is uncertain. Embrace it.</li>
-<li><strong>Sensor fusion is powerful</strong> - Combine LIDAR, odometry, IMU for robustness.</li>
-<li><strong>Tune, tune, tune</strong> - SLAM has many parameters. They matter. A lot.</li>
-<li><strong>Edge cases will destroy you</strong> - Test in corridors, open spaces, cluttered rooms.</li>
-<li><strong>Visualization is debugging</strong> - Use RViz to see what the robot &ldquo;thinks&rdquo; is happening.</li>
-</ol>
-<h2 id="whats-next">What&rsquo;s Next</h2>
-<p>I&rsquo;m exploring:</p>
-<ul>
-<li><strong>3D SLAM</strong> using depth cameras</li>
-<li><strong>Visual SLAM</strong> with ORB-SLAM</li>
-<li><strong>Multi-robot SLAM</strong> for collaborative mapping</li>
-<li><strong>Semantic SLAM</strong> (not just geometry, but object recognition)</li>
-</ul>
-<p>Autonomous navigation is a solved problem for controlled environments. For real-world chaos? We&rsquo;re still figuring it out.</p>
-<h2 id="resources">Resources</h2>
-<p>If you&rsquo;re getting into SLAM:</p>
-<ul>
-<li><strong>Book</strong>: &ldquo;Probabilistic Robotics&rdquo; by Thrun, Burgard, Fox</li>
-<li><strong>Framework</strong>: ROS (Robot Operating System)</li>
-<li><strong>Simulator</strong>: Gazebo for testing before hardware</li>
-<li><strong>Hardware</strong>: Start with Turtlebot 3. Cheap, well-supported.</li>
-</ul>
-<p><strong>Building robots?</strong> Let&rsquo;s connect. I&rsquo;d love to hear what you&rsquo;re working on.</p>
-
-    </div>
-
-    <div class="mt-16 pt-8 border-t border-white/10">
-        <a href="/posts" class="inline-flex items-center gap-2 text-blue-400 hover:gap-4 transition-all font-medium">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-            <span>Back to all posts</span>
-        </a>
+        
     </div>
 </article>
 
@@ -382,47 +227,37 @@
 
     <script>
     
-    const projects = "{\"artist\":[{\"color\":\"purple\",\"desc\":\"5-track instrumental hip-hop EP fusing traditional Nepali samples with modern trap percussion and 808 basslines.\",\"role\":\"Producer\",\"tags\":[\"Logic Pro\",\"Production\"],\"title\":\"Neon Horizon EP\"},{\"color\":\"purple\",\"desc\":\"Experimental beat tape exploring the intersection of ambient soundscapes and hard-hitting drums.\",\"role\":\"Beat Tape\",\"tags\":[\"Ableton\",\"Sound Design\"],\"title\":\"Sonic Architecture Vol. 1\"},{\"color\":\"purple\",\"desc\":\"A collection of tracks blending South Asian classical instruments with contemporary electronic production techniques.\",\"role\":\"Audio Project\",\"tags\":[\"World Music\",\"Electronic\"],\"title\":\"Cultural Synthesis Series\"},{\"color\":\"purple\",\"desc\":\"Writing introspective verses that bridge technical concepts with human experience and philosophical exploration.\",\"role\":\"Songwriter\",\"tags\":[\"Lyricism\",\"Poetry\"],\"title\":\"Lyrical Engineering\"}],\"athlete\":[{\"color\":\"yellow\",\"desc\":\"Python-based analysis of 3+ years of training data to optimize volume, frequency, and progressive overload strategies.\",\"role\":\"Personal Analytics\",\"tags\":[\"Data Viz\",\"Fitness\",\"Python\"],\"title\":\"Hypertrophy Data Analysis\"},{\"color\":\"yellow\",\"desc\":\"Custom macro and micronutrient tracking application with ML-based meal recommendations for performance optimization.\",\"role\":\"Health Tech\",\"tags\":[\"Nutrition\",\"Data Science\"],\"title\":\"Nutrition Tracking System\"},{\"color\":\"yellow\",\"desc\":\"Real-time dashboard tracking strength metrics, recovery indicators, and body composition trends over time.\",\"role\":\"Fitness Analytics\",\"tags\":[\"Analytics\",\"Visualization\"],\"title\":\"Performance Metrics Dashboard\"},{\"color\":\"yellow\",\"desc\":\"Algorithm that generates periodized training programs based on individual recovery capacity and strength goals.\",\"role\":\"Algorithm Design\",\"tags\":[\"Algorithms\",\"Training\"],\"title\":\"Training Program Optimizer\"}],\"engineer\":[{\"color\":\"blue\",\"desc\":\"Engineered fail-safe bootloader logic (U-boot) for network/SD card failover. Architected a full-stack web relay system for real-time sensor data processing.\",\"role\":\"IoT Engineering Intern\",\"tags\":[\"Rust\",\"Go\",\"React\",\"U-boot\"],\"title\":\"Databuoy Embedded Systems\"},{\"color\":\"blue\",\"desc\":\"Built custom drone hardware and developed proprietary data labeling tools for computer vision training datasets.\",\"role\":\"Databuoy\",\"tags\":[\"Hardware\",\"Data Ops\",\"Embedded\"],\"title\":\"Drone Tracking Infrastructure\"},{\"color\":\"blue\",\"desc\":\"Developed a distributed IoT sensor network using MQTT protocol for environmental monitoring across multiple nodes.\",\"role\":\"Personal Project\",\"tags\":[\"MQTT\",\"Python\",\"Arduino\"],\"title\":\"Real-Time Sensor Network\"},{\"color\":\"blue\",\"desc\":\"Implemented SLAM algorithms in ROS for autonomous mobile robot navigation in indoor environments.\",\"role\":\"Research Project\",\"tags\":[\"ROS\",\"C++\",\"SLAM\"],\"title\":\"Autonomous Navigation System\"},{\"color\":\"blue\",\"desc\":\"Built end-to-end ML pipeline for sensor anomaly detection using PyTorch and deployed on edge devices.\",\"role\":\"AI Developer\",\"tags\":[\"PyTorch\",\"Edge AI\",\"Python\"],\"title\":\"Machine Learning Pipeline\"},{\"color\":\"blue\",\"desc\":\"Designed and programmed PLC-based automation system for manufacturing process control with HMI interface.\",\"role\":\"Freelance\",\"tags\":[\"PLC\",\"Industrial\",\"Automation\"],\"title\":\"Industrial Automation Controller\"}]}" || {engineer: [], artist: [], athlete: []};
-
     
-    let isDark = true;
-    let activeTab = 'engineer';
+    const projects = JSON.parse("{\"artist\":[{\"color\":\"purple\",\"desc\":\"5-track instrumental hip-hop EP fusing traditional Nepali samples with modern trap percussion.\",\"role\":\"Producer\",\"tags\":[\"Logic Pro\",\"Production\"],\"title\":\"Neon Horizon EP\"}],\"athlete\":[{\"color\":\"yellow\",\"desc\":\"A Python script that analyzes 3 years of workout logs to optimize volume.\",\"role\":\"Analyst\",\"tags\":[\"Data Viz\",\"Fitness\",\"Python\"],\"title\":\"Hypertrophy Data Analysis\"}],\"engineer\":[{\"color\":\"blue\",\"desc\":\"Engineered fail-safe bootloader logic (U-boot) for network/SD card failover. Architected a full-stack web relay system.\",\"role\":\"IoT Engineering Intern\",\"tags\":[\"Rust\",\"Go\",\"React\",\"U-boot\"],\"title\":\"Databuoy Embedded Systems\"},{\"color\":\"blue\",\"desc\":\"Built custom drone hardware and developed proprietary data labeling tools.\",\"role\":\"Databuoy\",\"tags\":[\"Hardware\",\"Data Ops\",\"Embedded\"],\"title\":\"Drone Tracking Infrastructure\"}]}");
 
-    
-    if (typeof localStorage !== 'undefined') {
-        const saved = localStorage.getItem('theme');
-        isDark = saved ? saved === 'dark' : true;
-    }
+        
+        let isDark = true;
+        let activeTab = 'engineer';
 
-    
-    const setClass = (id, cls) => {
-        const el = document.getElementById(id);
-        if (el) el.className = cls;
-    };
+        
+        if (typeof localStorage !== 'undefined') {
+            const saved = localStorage.getItem('theme');
+            isDark = saved ? saved === 'dark' : true;
+        }
 
-    
-    const setStyle = (id, prop, value) => {
-        const el = document.getElementById(id);
-        if (el) el.style[prop] = value;
-    };
-
-    
     function applyTheme() {
         const app = document.getElementById('app');
+        const navbar = document.getElementById('navbar');
+
+        
+        const setClass = (id, cls) => {
+            const el = document.getElementById(id);
+            if (el) el.className = cls;
+        };
 
         if (isDark) {
             
-            if (app) {
-                app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-900 text-slate-200';
-            }
+            app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-900 text-slate-200';
 
             
-            const glow1 = document.getElementById('glow-1');
-            if (glow1) glow1.className = glow1.className.replace(/bg-\w+-\d+\/\d+/g, '') + ' bg-blue-500/5';
-            const glow2 = document.getElementById('glow-2');
-            if (glow2) glow2.className = glow2.className.replace(/bg-\w+-\d+\/\d+/g, '') + ' bg-purple-500/5';
-            const glow3 = document.getElementById('glow-3');
-            if (glow3) glow3.className = glow3.className.replace(/bg-\w+-\d+\/\d+/g, '') + ' bg-yellow-200/2';
+            setClass('glow-1', document.getElementById('glow-1').className.replace(/bg-blue-\d+\/\d+/g, '') + ' bg-blue-500/5');
+            setClass('glow-2', document.getElementById('glow-2').className.replace(/bg-purple-\d+\/\d+/g, '') + ' bg-purple-500/5');
+            setClass('glow-3', document.getElementById('glow-3').className.replace(/bg-yellow-\d+\/\d+/g, '') + ' bg-yellow-200/2');
 
             
             setClass('logo-text', 'text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-200 via-purple-200 to-white');
@@ -431,295 +266,247 @@
             
             setClass('nav-links', 'hidden md:flex items-center gap-8 text-sm font-medium text-slate-400');
             setClass('nav-connect', 'px-5 py-2 rounded-full border transition-all bg-white/5 border-white/10 hover:bg-slate-500/10');
-            setClass('theme-toggle', 'p-2 rounded-full border transition-all duration-300 flex items-center justify-center group bg-slate-800 border-slate-700 text-yellow-300 hover:border-yellow-300/50');
 
-            setStyle('sun-icon', 'display', 'block');
-            setStyle('moon-icon', 'display', 'none');
+            
+            setClass('theme-toggle', 'p-2 rounded-full border transition-all duration-300 flex items-center justify-center group bg-slate-800 border-slate-700 text-yellow-300 hover:border-yellow-300/50');
+            if(document.getElementById('sun-icon')) document.getElementById('sun-icon').style.display = 'block';
+            if(document.getElementById('moon-icon')) document.getElementById('moon-icon').style.display = 'none';
 
             
             setClass('status-pill', 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm transition-colors duration-500 bg-white/5 border-white/10');
             setClass('status-text', 'text-xs uppercase tracking-widest font-semibold text-slate-400');
+
             setClass('hero-name-1', 'block transition-colors duration-500 text-slate-100');
             setClass('hero-name-2', 'block transition-colors duration-500 text-slate-100');
             setClass('hero-desc', 'max-w-2xl text-lg md:text-xl leading-relaxed mb-12 transition-colors duration-500 text-slate-400');
-            setClass('github-btn', 'px-8 py-4 rounded-xl border transition-colors flex items-center justify-center gap-2 font-medium bg-slate-800 border-slate-700 text-slate-300 hover:border-slate-500');
 
-            
             setClass('pillars', 'relative z-10 py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500 bg-slate-800/30 border-white/5');
             setClass('pillars-heading', 'text-3xl md:text-4xl font-bold mb-4 text-slate-100');
             setClass('pillars-desc', 'text-slate-400');
 
             
-            document.querySelectorAll('[id$="-card"]').forEach(el => {
-                el.className = el.className.replace(/from-white/g, 'from-slate-800').replace(/to-slate-50/g, 'to-slate-900').replace(/border-slate-200/g, 'border-white/5');
-            });
-            document.querySelectorAll('[id$="-title"]').forEach(el => {
-                el.className = 'text-2xl font-bold mb-3 text-slate-100';
-            });
-            document.querySelectorAll('[id$="-desc"]').forEach(el => {
-                el.className = 'leading-relaxed text-sm text-slate-400';
+            setClass('blog-heading', 'text-5xl font-black mb-16 tracking-tight text-slate-100');
+
+            
+            document.querySelectorAll('.blog-card').forEach(el => {
+                 el.className = 'relative p-8 rounded-2xl border backdrop-blur-md transition-all duration-500 bg-slate-800/50 border-white/10 hover:bg-slate-700/50';
             });
 
             
-            setClass('work-heading', 'text-4xl font-bold mb-2 text-slate-100');
-            setClass('work-desc', 'text-slate-400');
-            setClass('tab-switcher', 'p-1.5 rounded-xl border inline-flex transition-colors duration-500 bg-slate-900 border-white/10');
+            const prose = document.querySelector('.blog-content');
+            if(prose) prose.classList.add('prose-invert');
 
-            
-            setClass('contact', 'relative z-10 border-t pt-24 pb-12 px-6 transition-colors duration-500 bg-slate-900 border-white/5');
-            setClass('footer-heading', 'text-4xl md:text-5xl font-black mb-8 tracking-tight text-slate-100');
-            setClass('footer-desc', 'text-lg mb-12 max-w-xl mx-auto leading-relaxed text-slate-400');
-            setClass('contact-btn', 'inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold transition-all hover:scale-105 shadow-xl mb-16 bg-white text-slate-950 hover:bg-slate-200');
-            setClass('footer-copy', 'text-sm font-medium text-slate-400');
-            setClass('social-github', 'transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-blue-500');
-            setClass('social-linkedin', 'transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-blue-600');
-            setClass('social-instagram', 'transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-purple-500');
         } else {
             
-            if (app) {
-                app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-50 text-slate-800';
-            }
+            
+            app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-50 text-slate-800';
 
-            const glow1 = document.getElementById('glow-1');
-            if (glow1) glow1.className = glow1.className.replace(/bg-\w+-\d+\/\d+/g, '') + ' bg-blue-400/10';
-            const glow2 = document.getElementById('glow-2');
-            if (glow2) glow2.className = glow2.className.replace(/bg-\w+-\d+\/\d+/g, '') + ' bg-purple-400/10';
-            const glow3 = document.getElementById('glow-3');
-            if (glow3) glow3.className = glow3.className.replace(/bg-\w+-\d+\/\d+/g, '') + ' bg-yellow-400/5';
+            
+            const prose = document.querySelector('.blog-content');
+            if(prose) prose.classList.remove('prose-invert');
+        }
+    }
 
-            setClass('logo-text', 'text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-purple-600 to-slate-800');
-            setClass('logo-subtext', 'text-xs tracking-widest uppercase text-slate-500');
-
-            setClass('nav-links', 'hidden md:flex items-center gap-8 text-sm font-medium text-slate-500');
-            setClass('nav-connect', 'px-5 py-2 rounded-full border transition-all bg-slate-100 border-slate-200 hover:bg-slate-500/10');
-            setClass('theme-toggle', 'p-2 rounded-full border transition-all duration-300 flex items-center justify-center group bg-white border-slate-200 text-slate-600 hover:border-blue-400/50');
-
-            setStyle('sun-icon', 'display', 'none');
-            setStyle('moon-icon', 'display', 'block');
-
-            setClass('status-pill', 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm transition-colors duration-500 bg-slate-100 border-slate-200');
-            setClass('status-text', 'text-xs uppercase tracking-widest font-semibold text-slate-500');
-            setClass('hero-name-1', 'block transition-colors duration-500 text-slate-900');
-            setClass('hero-name-2', 'block transition-colors duration-500 text-slate-900');
-            setClass('hero-desc', 'max-w-2xl text-lg md:text-xl leading-relaxed mb-12 transition-colors duration-500 text-slate-500');
-            setClass('github-btn', 'px-8 py-4 rounded-xl border transition-colors flex items-center justify-center gap-2 font-medium bg-white border-slate-300 text-slate-700 hover:bg-slate-50');
-
-            setClass('pillars', 'relative z-10 py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500 bg-slate-100/50 border-slate-200');
-            setClass('pillars-heading', 'text-3xl md:text-4xl font-bold mb-4 text-slate-900');
-            setClass('pillars-desc', 'text-slate-500');
-
-            document.querySelectorAll('[id$="-card"]').forEach(el => {
-                el.className = el.className.replace(/from-slate-800/g, 'from-white').replace(/to-slate-900/g, 'to-slate-50').replace(/border-white\/5/g, 'border-slate-200');
-            });
-            document.querySelectorAll('[id$="-title"]').forEach(el => {
-                el.className = 'text-2xl font-bold mb-3 text-slate-900';
-            });
-            document.querySelectorAll('[id$="-desc"]').forEach(el => {
-                el.className = 'leading-relaxed text-sm text-slate-500';
-            });
-
-            setClass('work-heading', 'text-4xl font-bold mb-2 text-slate-900');
-            setClass('work-desc', 'text-slate-500');
-            setClass('tab-switcher', 'p-1.5 rounded-xl border inline-flex transition-colors duration-500 bg-slate-100 border-slate-200');
-
-            setClass('contact', 'relative z-10 border-t pt-24 pb-12 px-6 transition-colors duration-500 bg-slate-100 border-slate-200');
-            setClass('footer-heading', 'text-4xl md:text-5xl font-black mb-8 tracking-tight text-slate-900');
-            setClass('footer-desc', 'text-lg mb-12 max-w-xl mx-auto leading-relaxed text-slate-500');
-            setClass('contact-btn', 'inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold transition-all hover:scale-105 shadow-xl mb-16 bg-slate-900 text-white hover:bg-slate-700');
-            setClass('footer-copy', 'text-sm font-medium text-slate-500');
-            setClass('social-github', 'transition-colors transform hover:-translate-y-1 text-slate-500 hover:text-blue-500');
-            setClass('social-linkedin', 'transition-colors transform hover:-translate-y-1 text-slate-500 hover:text-blue-600');
-            setClass('social-instagram', 'transition-colors transform hover:-translate-y-1 text-slate-500 hover:text-purple-500');
+        
+        function toggleTheme() {
+            isDark = !isDark;
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            applyTheme();
+            renderProjects();
         }
 
         
-        if (window.particleMaterial) {
-            window.particleMaterial.color.setHex(isDark ? 0xa3d5ff : 0x0369a1);
-        }
-    }
+        function switchTab(tab) {
+            activeTab = tab;
 
-    
-    function toggleTheme() {
-        isDark = !isDark;
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        applyTheme();
-        renderProjects();
-    }
-
-    
-    function switchTab(tab) {
-        activeTab = tab;
-
-        const tabs = ['engineer', 'artist', 'athlete'];
-        tabs.forEach(t => {
-            const btn = document.getElementById('tab-' + t);
-            if (!btn) return;
-
-            if (t === tab) {
-                if (t === 'engineer') {
-                    btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-500/20 text-blue-400 shadow-sm ring-1 ring-blue-500/20';
-                } else if (t === 'artist') {
-                    btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-purple-500/20 text-purple-400 shadow-sm ring-1 ring-purple-500/20';
+            
+            const tabs = ['engineer', 'artist', 'athlete'];
+            tabs.forEach(t => {
+                const btn = document.getElementById('tab-' + t);
+                if (t === tab) {
+                    if (t === 'engineer') {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-500/20 text-blue-400 shadow-sm ring-1 ring-blue-500/20';
+                    } else if (t === 'artist') {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-purple-500/20 text-purple-400 shadow-sm ring-1 ring-purple-500/20';
+                    } else {
+                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-yellow-500/20 text-yellow-500 shadow-sm ring-1 ring-yellow-500/20';
+                    }
                 } else {
-                    btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-yellow-500/20 text-yellow-500 shadow-sm ring-1 ring-yellow-500/20';
+                    btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all ' + (isDark ? 'text-slate-400 hover:text-slate-100' : 'text-slate-500 hover:text-slate-900');
                 }
+            });
+
+            renderProjects();
+        }
+
+        
+        function renderProjects() {
+            const grid = document.getElementById('project-grid');
+            if (!grid) return; 
+
+            const items = projects[activeTab];
+
+            grid.innerHTML = items.map((item, idx) => `
+                <div class="rounded-2xl p-6 border transition-all group cursor-pointer backdrop-blur-sm flex flex-col h-full ${isDark ? 'bg-slate-800/50 border-white/5 hover:bg-slate-700/50' : 'bg-white border-slate-200 shadow-sm hover:bg-slate-50 hover:shadow-md'}">
+                    <div class="h-1.5 w-16 rounded-full mb-6 bg-gradient-to-r ${item.color === 'blue' ? 'from-blue-400 to-cyan-300' : item.color === 'purple' ? 'from-purple-400 to-pink-300' : 'from-yellow-400 to-orange-300'}"></div>
+
+                    <div class="flex justify-between items-start mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="p-2 rounded-lg ${isDark ? 'bg-white/5 text-white' : 'bg-slate-100 text-slate-700'}">
+                                ${getIcon(idx, activeTab)}
+                            </div>
+                            <h3 class="text-xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}">
+                                ${item.title}
+                            </h3>
+                        </div>
+                        <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-slate-400' : 'text-slate-500'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                    </div>
+
+                    <span class="text-xs font-bold uppercase tracking-wider mb-4 block ${item.color === 'blue' ? 'text-blue-400' : item.color === 'purple' ? 'text-purple-400' : 'text-yellow-500'}">
+                        ${item.role}
+                    </span>
+
+                    <p class="${isDark ? 'text-slate-400' : 'text-slate-500'} text-sm mb-8 leading-relaxed flex-grow">
+                        ${item.desc}
+                    </p>
+
+                    <div class="flex flex-wrap gap-2 mt-auto pt-6 border-t border-dashed border-white/10">
+                        ${item.tags.map(tag => `
+                            <span class="text-[10px] uppercase tracking-wider font-bold px-2.5 py-1.5 rounded-md border transition-colors ${isDark ? 'bg-white/5 border-white/10 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-500'}">
+                                ${tag}
+                            </span>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        
+        function getIcon(idx, tab) {
+            
+            
+            return '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
+        }
+
+        
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md border-b ' + (isDark ? 'bg-slate-900/80 border-white/5' : 'bg-white/80 border-slate-200');
             } else {
-                btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all ' + (isDark ? 'text-slate-400 hover:text-slate-100' : 'text-slate-500 hover:text-slate-900');
+                navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 bg-transparent';
             }
         });
 
-        renderProjects();
-    }
+        
+        function initThreeJS() {
+            const container = document.getElementById('canvas-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 1;
 
-    
-    function renderProjects() {
-        const grid = document.getElementById('project-grid');
-        if (!grid) return;
-
-        const items = projects[activeTab] || [];
-
-        grid.innerHTML = items.map((item, idx) => `
-            <div class="rounded-2xl p-6 border transition-all group cursor-pointer backdrop-blur-sm flex flex-col h-full ${isDark ? 'bg-slate-800/50 border-white/5 hover:bg-slate-700/50' : 'bg-white border-slate-200 shadow-sm hover:bg-slate-50 hover:shadow-md'}">
-                <div class="h-1.5 w-16 rounded-full mb-6 bg-gradient-to-r ${item.color === 'blue' ? 'from-blue-400 to-cyan-300' : item.color === 'purple' ? 'from-purple-400 to-pink-300' : 'from-yellow-400 to-orange-300'}"></div>
-
-                <div class="flex justify-between items-start mb-3">
-                    <div class="flex items-center gap-3">
-                        <div class="p-2 rounded-lg ${isDark ? 'bg-white/5 text-white' : 'bg-slate-100 text-slate-700'}">
-                            ${getIcon(idx, activeTab)}
-                        </div>
-                        <h3 class="text-xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}">
-                            ${item.title}
-                        </h3>
-                    </div>
-                    <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-slate-400' : 'text-slate-500'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                </div>
-
-                <span class="text-xs font-bold uppercase tracking-wider mb-4 block ${item.color === 'blue' ? 'text-blue-400' : item.color === 'purple' ? 'text-purple-400' : 'text-yellow-500'}">
-                    ${item.role}
-                </span>
-
-                <p class="${isDark ? 'text-slate-400' : 'text-slate-500'} text-sm mb-8 leading-relaxed flex-grow">
-                    ${item.desc}
-                </p>
-
-                <div class="flex flex-wrap gap-2 mt-auto pt-6 border-t border-dashed border-white/10">
-                    ${item.tags.map(tag => `
-                        <span class="text-[10px] uppercase tracking-wider font-bold px-2.5 py-1.5 rounded-md border transition-colors ${isDark ? 'bg-white/5 border-white/10 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-500'}">
-                            ${tag}
-                        </span>
-                    `).join('')}
-                </div>
-            </div>
-        `).join('');
-    }
-
-    
-    function getIcon(idx, tab) {
-        return '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
-    }
-
-    
-    window.addEventListener('scroll', () => {
-        const navbar = document.getElementById('navbar');
-        if (!navbar) return;
-
-        if (window.scrollY > 50) {
-            navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md border-b ' + (isDark ? 'bg-slate-900/80 border-white/5' : 'bg-white/80 border-slate-200');
-        } else {
-            navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 bg-transparent';
-        }
-    });
-
-    
-    function initThreeJS() {
-        const container = document.getElementById('canvas-container');
-        if (!container || typeof THREE === 'undefined') return;
-
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 1;
-
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        container.appendChild(renderer.domElement);
-
-        const count = 5000;
-        const radius = 1.5;
-        const positions = new Float32Array(count * 3);
-
-        for (let i = 0; i < count; i++) {
-            const u = Math.random();
-            const v = Math.random();
-            const theta = 2 * Math.PI * u;
-            const phi = Math.acos(2 * v - 1);
-            const r = Math.cbrt(Math.random()) * radius;
-
-            const sinPhi = Math.sin(phi);
-            const x = r * sinPhi * Math.cos(theta);
-            const y = r * sinPhi * Math.sin(theta);
-            const z = r * Math.cos(phi);
-
-            positions[i * 3] = x;
-            positions[i * 3 + 1] = y;
-            positions[i * 3 + 2] = z;
-        }
-
-        const geometry = new THREE.BufferGeometry();
-        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-        const material = new THREE.PointsMaterial({
-            color: isDark ? 0xa3d5ff : 0x0369a1,
-            size: 0.005,
-            transparent: true,
-            depthWrite: false
-        });
-
-        window.particleMaterial = material;
-
-        const points = new THREE.Points(geometry, material);
-        points.rotation.set(0, 0, Math.PI / 4);
-        scene.add(points);
-
-        let time = 0;
-        function animate() {
-            requestAnimationFrame(animate);
-            time += 0.01;
-            points.rotation.x -= 0.001;
-            points.rotation.y -= 0.00067;
-            points.position.y = Math.sin(time * 0.5) * 0.1;
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    }
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
 
-    
-    function initialize() {
-        applyTheme();
-        renderProjects();
-        initThreeJS();
-    }
+            const count = 5000;
+            const radius = 1.5;
+            const positions = new Float32Array(count * 3);
 
-    
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', toggleTheme);
-    }
+            for (let i = 0; i < count; i++) {
+                const u = Math.random();
+                const v = Math.random();
+                const theta = 2 * Math.PI * u;
+                const phi = Math.acos(2 * v - 1);
+                const r = Math.cbrt(Math.random()) * radius;
 
-    
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initialize);
-    } else {
-        initialize();
-    }
+                const sinPhi = Math.sin(phi);
+                const x = r * sinPhi * Math.cos(theta);
+                const y = r * sinPhi * Math.sin(theta);
+                const z = r * Math.cos(phi);
+
+                positions[i * 3] = x;
+                positions[i * 3 + 1] = y;
+                positions[i * 3 + 2] = z;
+            }
+
+            const geometry = new THREE.BufferGeometry();
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: isDark ? 0xa3d5ff : 0x0369a1,
+                size: 0.005,
+                transparent: true,
+                depthWrite: false
+            });
+
+            window.particleMaterial = material;
+
+            const points = new THREE.Points(geometry, material);
+            points.rotation.set(0, 0, Math.PI / 4);
+            scene.add(points);
+
+            
+            const mouse = { x: 0, y: 0 };
+            const targetRotation = { x: 0, y: 0 };
+
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+                targetRotation.x = mouse.y * 0.3;
+                targetRotation.y = mouse.x * 0.3;
+            });
+
+            let time = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                time += 0.01;
+
+                
+                points.rotation.x += (targetRotation.x - points.rotation.x) * 0.05;
+                points.rotation.y += (targetRotation.y - points.rotation.y) * 0.05;
+
+                
+                points.rotation.x -= 0.0005;
+                points.rotation.y -= 0.00033;
+
+                
+                points.position.y = Math.sin(time * 0.5) * 0.1;
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        function initialize() {
+            applyTheme();
+            renderProjects();
+            if (typeof THREE !== 'undefined') {
+                initThreeJS();
+            } else {
+                setTimeout(() => {
+                    if (typeof THREE !== 'undefined') initThreeJS();
+                }, 100);
+            }
+
+            
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
+        }
+
+        window.addEventListener('load', initialize);
 </script>
 
 </body>

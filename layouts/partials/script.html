@@ -1,8 +1,7 @@
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script>
     // INJECT HUGO DATA HERE
     // We take the YAML data and turn it into a JSON object for the JS to use
-    const projects = {{ .Site.Data.portfolio.projects | jsonify }};
+    const projects = JSON.parse({{ .Site.Data.portfolio.projects | jsonify }});
 
         // State
         let isDark = true;
@@ -116,6 +115,8 @@
         // Render projects
         function renderProjects() {
             const grid = document.getElementById('project-grid');
+            if (!grid) return; // Exit if not on homepage
+
             const items = projects[activeTab];
 
             grid.innerHTML = items.map((item, idx) => `
@@ -221,13 +222,34 @@
             points.rotation.set(0, 0, Math.PI / 4);
             scene.add(points);
 
+            // Mouse tracking
+            const mouse = { x: 0, y: 0 };
+            const targetRotation = { x: 0, y: 0 };
+
+            window.addEventListener('mousemove', (event) => {
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+                targetRotation.x = mouse.y * 0.3;
+                targetRotation.y = mouse.x * 0.3;
+            });
+
             let time = 0;
             function animate() {
                 requestAnimationFrame(animate);
                 time += 0.01;
-                points.rotation.x -= 0.001;
-                points.rotation.y -= 0.00067;
+
+                // Smooth rotation following mouse
+                points.rotation.x += (targetRotation.x - points.rotation.x) * 0.05;
+                points.rotation.y += (targetRotation.y - points.rotation.y) * 0.05;
+
+                // Add subtle constant rotation
+                points.rotation.x -= 0.0005;
+                points.rotation.y -= 0.00033;
+
+                // Breathing motion
                 points.position.y = Math.sin(time * 0.5) * 0.1;
+
                 renderer.render(scene, camera);
             }
             animate();
@@ -239,8 +261,6 @@
             });
         }
 
-        document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-
         function initialize() {
             applyTheme();
             renderProjects();
@@ -251,6 +271,13 @@
                     if (typeof THREE !== 'undefined') initThreeJS();
                 }, 100);
             }
+
+            // Setup event listeners after DOM is ready
+            const themeToggle = document.getElementById('theme-toggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', toggleTheme);
+            }
         }
+
         window.addEventListener('load', initialize);
 </script>

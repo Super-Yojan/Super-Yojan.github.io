@@ -1,4 +1,4 @@
-baseURL = 'http://example.org/'
+baseURL = 'http://drmoscovium.dev/'
 languageCode = 'en-us'
 title = 'Yojan Gautam - Portfolio'
-theme = [] 
+theme = []

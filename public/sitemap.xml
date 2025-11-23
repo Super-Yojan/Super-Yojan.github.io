@@ -2,70 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://drmoscovium.dev/posts/</loc>
     <lastmod>2025-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/embedded-systems/</loc>
+    <loc>https://drmoscovium.dev/tags/embedded-systems/</loc>
     <lastmod>2025-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/programming/</loc>
+    <loc>https://drmoscovium.dev/tags/programming/</loc>
     <lastmod>2025-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/rust/</loc>
+    <loc>https://drmoscovium.dev/tags/rust/</loc>
     <lastmod>2025-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/safety/</loc>
+    <loc>https://drmoscovium.dev/tags/safety/</loc>
     <lastmod>2025-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://drmoscovium.dev/tags/</loc>
     <lastmod>2025-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/rust-for-embedded/</loc>
+    <loc>https://drmoscovium.dev/posts/rust-for-embedded/</loc>
     <lastmod>2025-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://drmoscovium.dev/</loc>
     <lastmod>2025-01-25T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/sampling-techniques/</loc>
+    <loc>https://drmoscovium.dev/posts/sampling-techniques/</loc>
     <lastmod>2025-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/logic-pro/</loc>
+    <loc>https://drmoscovium.dev/tags/logic-pro/</loc>
     <lastmod>2025-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/music-production/</loc>
+    <loc>https://drmoscovium.dev/tags/music-production/</loc>
     <lastmod>2025-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/sampling/</loc>
+    <loc>https://drmoscovium.dev/tags/sampling/</loc>
     <lastmod>2025-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/sound-design/</loc>
+    <loc>https://drmoscovium.dev/tags/sound-design/</loc>
     <lastmod>2025-01-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/fitness/</loc>
+    <loc>https://drmoscovium.dev/tags/fitness/</loc>
     <lastmod>2024-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/progressive-overload/</loc>
+    <loc>https://drmoscovium.dev/posts/progressive-overload/</loc>
     <lastmod>2024-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/science/</loc>
+    <loc>https://drmoscovium.dev/tags/science/</loc>
     <lastmod>2024-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/strength/</loc>
+    <loc>https://drmoscovium.dev/tags/strength/</loc>
     <lastmod>2024-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/training/</loc>
+    <loc>https://drmoscovium.dev/tags/training/</loc>
     <lastmod>2024-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/building-autonomous-systems/</loc>
+    <loc>https://drmoscovium.dev/posts/building-autonomous-systems/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/data-driven-training/</loc>
+    <loc>https://drmoscovium.dev/posts/data-driven-training/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/embedded-systems-journey/</loc>
+    <loc>https://drmoscovium.dev/posts/embedded-systems-journey/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/producing-music-with-code-mindset/</loc>
+    <loc>https://drmoscovium.dev/posts/producing-music-with-code-mindset/</loc>
   </url><url>
-    <loc>http://localhost:1313/posts/three-pillars-philosophy/</loc>
+    <loc>https://drmoscovium.dev/posts/three-pillars-philosophy/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://drmoscovium.dev/categories/</loc>
   </url>
 </urlset>

@@ -1,4 +1,18 @@
-baseURL = 'http://drmoscovium.dev/'
+baseURL = 'https://drmoscovium.dev/'
 languageCode = 'en-us'
 title = 'Yojan Gautam - Portfolio'
 theme = []
+
+[markup]
+  [markup.highlight]
+    anchorLineNos = false
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    lineNumbersInTable = false
+    noClasses = false
+    style = 'monokai'
+    tabWidth = 4
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

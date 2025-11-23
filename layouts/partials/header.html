@@ -1,94 +1,94 @@
 <nav
     id="navbar"
-    class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent"
+    class="fixed left-0 top-0 h-screen w-20 z-50 transition-all duration-500 border-r border-black/5 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-xl saturate-150 flex flex-col items-center py-8"
 >
-    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    <div class="cursor-pointer group mb-12" onclick="window.location.href='/'">
         <div
-            class="flex items-center gap-3 cursor-pointer group"
-            onclick="window.location.href='/'"
+            class="w-12 h-12 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center group-hover:rounded-xl transition-all duration-500"
         >
-            <div
-                class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-300 via-purple-300 to-yellow-200 flex items-center justify-center text-slate-900 shadow-lg group-hover:scale-105 transition-transform"
+            <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
             >
-                <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        d="M22 12h-4l-3 9L9 3l-3 9H2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </div>
-            <div class="flex flex-col leading-none">
-                <span
-                    id="logo-text"
-                    class="text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r"
-                    >HUMAN</span
-                >
-                <span
-                    id="logo-subtext"
-                    class="text-xs tracking-widest uppercase"
-                    >Augmentation</span
-                >
-            </div>
+                <path
+                    d="M22 12h-4l-3 9L9 3l-3 9H2"
+                    stroke-linecap="square"
+                    stroke-linejoin="miter"
+                />
+            </svg>
         </div>
+    </div>
 
-        <div class="flex items-center gap-6">
-            <div
-                id="nav-links"
-                class="hidden md:flex items-center gap-8 text-sm font-medium"
-            >
-                <a href="/#pillars" class="transition-colors">Pillars</a>
-                <a href="/#work" class="transition-colors">Projects</a>
-                <a href="/posts" class="transition-colors">Blog</a>
-                <a
-                    href="/#contact"
-                    id="nav-connect"
-                    class="px-5 py-2 rounded-full border transition-all"
-                    >Connect</a
-                >
-            </div>
+    <div
+        id="nav-links"
+        class="flex flex-col items-center gap-8 flex-1 text-sm font-medium"
+    >
+        <a
+            href="/#pillars"
+            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
+            title="Pillars"
+            >Pillars</a
+        >
+        <a
+            href="/#work"
+            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
+            title="Projects"
+            >Projects</a
+        >
+        <a
+            href="/posts"
+            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
+            title="Blog"
+            >Blog</a
+        >
+    </div>
 
-            <button
-                id="theme-toggle"
-                class="p-2 rounded-full border transition-all duration-300 flex items-center justify-center group"
-                aria-label="Toggle Theme"
+    <div class="flex flex-col items-center gap-6 mt-auto">
+        <button
+            id="theme-toggle"
+            class="w-12 h-12 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 flex items-center justify-center text-gray-600 dark:text-gray-300"
+            aria-label="Toggle Theme"
+        >
+            <svg
+                id="sun-icon"
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                style="display: none"
             >
-                <svg
-                    id="sun-icon"
-                    class="w-4 h-4 group-hover:rotate-45 transition-transform duration-500"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    style="display: none"
-                >
-                    <circle cx="12" cy="12" r="5" />
-                    <line x1="12" y1="1" x2="12" y2="3" />
-                    <line x1="12" y1="21" x2="12" y2="23" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="1" y1="12" x2="3" y2="12" />
-                    <line x1="21" y1="12" x2="23" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-                <svg
-                    id="moon-icon"
-                    class="w-4 h-4 group-hover:-rotate-12 transition-transform duration-500"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-            </button>
-        </div>
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg
+                id="moon-icon"
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+            >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+        </button>
+
+        <a
+            href="/#contact"
+            id="nav-connect"
+            class="writing-mode-vertical transform rotate-180 px-3 py-6 rounded-full bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300"
+            title="Connect"
+            >Connect</a
+        >
     </div>
 </nav>

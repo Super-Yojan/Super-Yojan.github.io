@@ -2,94 +2,94 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Yojan Gautam - Portfolio</title>
-    <link>http://localhost:1313/tags/</link>
+    <link>https://drmoscovium.dev/tags/</link>
     <description>Recent content in Tags on Yojan Gautam - Portfolio</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 25 Jan 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://drmoscovium.dev/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Embedded Systems</title>
-      <link>http://localhost:1313/tags/embedded-systems/</link>
+      <link>https://drmoscovium.dev/tags/embedded-systems/</link>
       <pubDate>Sat, 25 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/embedded-systems/</guid>
+      <guid>https://drmoscovium.dev/tags/embedded-systems/</guid>
       <description></description>
     </item>
     <item>
       <title>Programming</title>
-      <link>http://localhost:1313/tags/programming/</link>
+      <link>https://drmoscovium.dev/tags/programming/</link>
       <pubDate>Sat, 25 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/programming/</guid>
+      <guid>https://drmoscovium.dev/tags/programming/</guid>
       <description></description>
     </item>
     <item>
       <title>Rust</title>
-      <link>http://localhost:1313/tags/rust/</link>
+      <link>https://drmoscovium.dev/tags/rust/</link>
       <pubDate>Sat, 25 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/rust/</guid>
+      <guid>https://drmoscovium.dev/tags/rust/</guid>
       <description></description>
     </item>
     <item>
       <title>Safety</title>
-      <link>http://localhost:1313/tags/safety/</link>
+      <link>https://drmoscovium.dev/tags/safety/</link>
       <pubDate>Sat, 25 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/safety/</guid>
+      <guid>https://drmoscovium.dev/tags/safety/</guid>
       <description></description>
     </item>
     <item>
       <title>Logic Pro</title>
-      <link>http://localhost:1313/tags/logic-pro/</link>
+      <link>https://drmoscovium.dev/tags/logic-pro/</link>
       <pubDate>Sun, 12 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/logic-pro/</guid>
+      <guid>https://drmoscovium.dev/tags/logic-pro/</guid>
       <description></description>
     </item>
     <item>
       <title>Music Production</title>
-      <link>http://localhost:1313/tags/music-production/</link>
+      <link>https://drmoscovium.dev/tags/music-production/</link>
       <pubDate>Sun, 12 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/music-production/</guid>
+      <guid>https://drmoscovium.dev/tags/music-production/</guid>
       <description></description>
     </item>
     <item>
       <title>Sampling</title>
-      <link>http://localhost:1313/tags/sampling/</link>
+      <link>https://drmoscovium.dev/tags/sampling/</link>
       <pubDate>Sun, 12 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/sampling/</guid>
+      <guid>https://drmoscovium.dev/tags/sampling/</guid>
       <description></description>
     </item>
     <item>
       <title>Sound Design</title>
-      <link>http://localhost:1313/tags/sound-design/</link>
+      <link>https://drmoscovium.dev/tags/sound-design/</link>
       <pubDate>Sun, 12 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/sound-design/</guid>
+      <guid>https://drmoscovium.dev/tags/sound-design/</guid>
       <description></description>
     </item>
     <item>
       <title>Fitness</title>
-      <link>http://localhost:1313/tags/fitness/</link>
+      <link>https://drmoscovium.dev/tags/fitness/</link>
       <pubDate>Sat, 28 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/fitness/</guid>
+      <guid>https://drmoscovium.dev/tags/fitness/</guid>
       <description></description>
     </item>
     <item>
       <title>Science</title>
-      <link>http://localhost:1313/tags/science/</link>
+      <link>https://drmoscovium.dev/tags/science/</link>
       <pubDate>Sat, 28 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/science/</guid>
+      <guid>https://drmoscovium.dev/tags/science/</guid>
       <description></description>
     </item>
     <item>
       <title>Strength</title>
-      <link>http://localhost:1313/tags/strength/</link>
+      <link>https://drmoscovium.dev/tags/strength/</link>
       <pubDate>Sat, 28 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/strength/</guid>
+      <guid>https://drmoscovium.dev/tags/strength/</guid>
       <description></description>
     </item>
     <item>
       <title>Training</title>
-      <link>http://localhost:1313/tags/training/</link>
+      <link>https://drmoscovium.dev/tags/training/</link>
       <pubDate>Sat, 28 Dec 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/training/</guid>
+      <guid>https://drmoscovium.dev/tags/training/</guid>
       <description></description>
     </item>
   </channel>

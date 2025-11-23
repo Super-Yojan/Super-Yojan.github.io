@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Logic Pro on Yojan Gautam - Portfolio</title>
-    <link>http://localhost:1313/tags/logic-pro/</link>
+    <link>https://drmoscovium.dev/tags/logic-pro/</link>
     <description>Recent content in Logic Pro on Yojan Gautam - Portfolio</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 12 Jan 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/logic-pro/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://drmoscovium.dev/tags/logic-pro/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Advanced Sampling Techniques: From Vinyl to Digital</title>
-      <link>http://localhost:1313/posts/sampling-techniques/</link>
+      <link>https://drmoscovium.dev/posts/sampling-techniques/</link>
       <pubDate>Sun, 12 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/posts/sampling-techniques/</guid>
+      <guid>https://drmoscovium.dev/posts/sampling-techniques/</guid>
       <description>&lt;p&gt;Sampling is an art form. It&amp;rsquo;s not just about finding a cool loop—it&amp;rsquo;s about transformation, context, and creating something entirely new from existing material.&lt;/p&gt;&#xA;&lt;p&gt;Here&amp;rsquo;s how I approach sampling in my productions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;the-philosophy-of-sampling&#34;&gt;The Philosophy of Sampling&lt;/h2&gt;&#xA;&lt;p&gt;Sampling is &lt;strong&gt;data transformation in the sonic domain&lt;/strong&gt;.&lt;/p&gt;&#xA;&lt;p&gt;You take source material (input), apply processing (transformation), and create something new (output). Just like code.&lt;/p&gt;&#xA;&lt;p&gt;The best samples are unrecognizable. If listeners can immediately identify the source, you haven&amp;rsquo;t transformed it enough.&lt;/p&gt;</description>
     </item>
   </channel>

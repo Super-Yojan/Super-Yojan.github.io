@@ -1,45 +1,331 @@
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ .Site.Title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class", // We control this manually in JS
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"], // Clean, geometric
+                        mono: ["JetBrains Mono", "monospace"], // Technical, precise
+                    },
+                    letterSpacing: {
+                        tightest: "-.075em",
+                        tighter: "-.05em",
+                        widest: ".25em", // For those uppercase labels
+                    },
+                },
+            },
+        };
+    </script>
+
     <style>
-        @keyframes ping {
-
-            75%,
-            100% {
-                transform: scale(2);
-                opacity: 0;
-            }
-        }
-
-        .animate-ping {
-            animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-
-        .animate-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: .5;
-            }
-        }
-
-        * {
+        /* Smooth Scrolling */
+        html {
             scroll-behavior: smooth;
         }
 
-        .selection\:bg-purple-500\/30::selection {
-            background-color: rgba(168, 85, 247, 0.3);
+        /* Selection Color:
+           Instead of purple, we use Stark Black/White for high contrast luxury.
+        */
+        ::selection {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* Dark mode selection override */
+        .dark ::selection {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Scrollbar:
+           Make it thin and minimal (Mac OS style) to avoid visual clutter.
+        */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(156, 163, 175, 0.5);
+            border-radius: 20px;
+            border: 3px solid transparent;
+            background-clip: content-box;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(156, 163, 175, 0.8);
+        }
+
+        /* Utility:
+           Hide scrollbar but allow functionality (for horizontal scrolling areas)
+        */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Vertical writing mode for navigation */
+        .writing-mode-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        /* Code block styling */
+        pre {
+            @apply rounded-lg border border-black/10 dark:border-white/10;
+            @apply bg-gray-50 dark:bg-white/5;
+            @apply p-6 overflow-x-auto;
+            @apply text-sm leading-relaxed;
+        }
+
+        pre code {
+            @apply bg-transparent px-0 py-0;
+            @apply text-gray-800 dark:text-gray-200;
+            @apply font-mono;
+        }
+
+        /* Inline code */
+        :not(pre)>code {
+            @apply font-mono text-[0.9em] font-medium;
+            @apply bg-gray-100 dark:bg-white/10;
+            @apply px-1.5 py-0.5 rounded-md;
+            @apply text-black dark:text-white;
+        }
+
+        /* Better code highlighting */
+        .highlight {
+            @apply rounded-lg overflow-hidden mb-6;
+        }
+
+        .highlight pre {
+            @apply m-0;
+        }
+
+        /* Syntax highlighting - custom dark/light theme */
+        .dark .highlight .chroma {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight .chroma {
+            background-color: rgb(249, 250, 251);
+        }
+
+        .chroma .k,
+        .chroma .kd,
+        .chroma .kn,
+        .chroma .kp,
+        .chroma .kr,
+        .chroma .kt {
+            color: #f92672;
+            font-weight: bold;
+        }
+
+        /* Keywords */
+        .dark .chroma .k,
+        .dark .chroma .kd,
+        .dark .chroma .kn,
+        .dark .chroma .kp,
+        .dark .chroma .kr,
+        .dark .chroma .kt {
+            color: #ff6b9d;
+        }
+
+        .chroma .s,
+        .chroma .s1,
+        .chroma .s2,
+        .chroma .sa,
+        .chroma .sb,
+        .chroma .sc,
+        .chroma .dl,
+        .chroma .sd,
+        .chroma .se,
+        .chroma .sh,
+        .chroma .si,
+        .chroma .sx,
+        .chroma .sr,
+        .chroma .ss {
+            color: #16a34a;
+        }
+
+        /* Strings */
+        .dark .chroma .s,
+        .dark .chroma .s1,
+        .dark .chroma .s2,
+        .dark .chroma .sa,
+        .dark .chroma .sb,
+        .dark .chroma .sc,
+        .dark .chroma .dl,
+        .dark .chroma .sd,
+        .dark .chroma .se,
+        .dark .chroma .sh,
+        .dark .chroma .si,
+        .dark .chroma .sx,
+        .dark .chroma .sr,
+        .dark .chroma .ss {
+            color: #a7f3d0;
+        }
+
+        .chroma .c,
+        .chroma .c1,
+        .chroma .ch,
+        .chroma .cm,
+        .chroma .cp,
+        .chroma .cpf,
+        .chroma .cs {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+        /* Comments */
+        .dark .chroma .c,
+        .dark .chroma .c1,
+        .dark .chroma .ch,
+        .dark .chroma .cm,
+        .dark .chroma .cp,
+        .dark .chroma .cpf,
+        .dark .chroma .cs {
+            color: #9ca3af;
+        }
+
+        .chroma .m,
+        .chroma .mb,
+        .chroma .mf,
+        .chroma .mh,
+        .chroma .mi,
+        .chroma .il,
+        .chroma .mo {
+            color: #9333ea;
+        }
+
+        /* Numbers */
+        .dark .chroma .m,
+        .dark .chroma .mb,
+        .dark .chroma .mf,
+        .dark .chroma .mh,
+        .dark .chroma .mi,
+        .dark .chroma .il,
+        .dark .chroma .mo {
+            color: #c084fc;
+        }
+
+        .chroma .n,
+        .chroma .na,
+        .chroma .nb,
+        .chroma .nc,
+        .chroma .no,
+        .chroma .nd,
+        .chroma .ni,
+        .chroma .ne,
+        .chroma .nf,
+        .chroma .nl,
+        .chroma .nn,
+        .chroma .nx,
+        .chroma .py,
+        .chroma .nt,
+        .chroma .nv,
+        .chroma .vc,
+        .chroma .vg,
+        .chroma .vi,
+        .chroma .vm {
+            color: #1f2937;
+        }
+
+        /* Names */
+        .dark .chroma .n,
+        .dark .chroma .na,
+        .dark .chroma .nb,
+        .dark .chroma .nc,
+        .dark .chroma .no,
+        .dark .chroma .nd,
+        .dark .chroma .ni,
+        .dark .chroma .ne,
+        .dark .chroma .nf,
+        .dark .chroma .nl,
+        .dark .chroma .nn,
+        .dark .chroma .nx,
+        .dark .chroma .py,
+        .dark .chroma .nt,
+        .dark .chroma .nv,
+        .dark .chroma .vc,
+        .dark .chroma .vg,
+        .dark .chroma .vi,
+        .dark .chroma .vm {
+            color: #e5e7eb;
+        }
+
+        .chroma .nf {
+            color: #2563eb;
+        }
+
+        /* Function names */
+        .dark .chroma .nf {
+            color: #60a5fa;
+        }
+
+        .chroma .o,
+        .chroma .ow {
+            color: #f92672;
+        }
+
+        /* Operators */
+        .dark .chroma .o,
+        .dark .chroma .ow {
+            color: #ff6b9d;
+        }
+    </style>
+    <style>
+        /* Code Block Window Styling */
+        .code-window {
+            position: relative;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark .code-window {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Copy Button Animation */
+        .code-window button:active {
+            transform: scale(0.95);
+        }
+
+        /* Scrollbar for code blocks */
+        .code-window pre::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .code-window pre::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .code-window pre::-webkit-scrollbar-thumb {
+            background-color: rgba(156, 163, 175, 0.3);
+            border-radius: 4px;
+        }
+
+        .dark .code-window pre::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>

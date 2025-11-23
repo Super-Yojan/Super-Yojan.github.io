@@ -1,239 +1,587 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+    <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yojan Gautam - Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class", 
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"], 
+                        mono: ["JetBrains Mono", "monospace"], 
+                    },
+                    letterSpacing: {
+                        tightest: "-.075em",
+                        tighter: "-.05em",
+                        widest: ".25em", 
+                    },
+                },
+            },
+        };
+    </script>
+
     <style>
-        @keyframes ping {
-
-            75%,
-            100% {
-                transform: scale(2);
-                opacity: 0;
-            }
-        }
-
-        .animate-ping {
-            animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-        }
-
-        .animate-pulse {
-            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: .5;
-            }
-        }
-
-        * {
+         
+        html {
             scroll-behavior: smooth;
         }
 
-        .selection\:bg-purple-500\/30::selection {
-            background-color: rgba(168, 85, 247, 0.3);
+         
+        ::selection {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+         
+        .dark ::selection {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+         
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(156, 163, 175, 0.5);
+            border-radius: 20px;
+            border: 3px solid transparent;
+            background-clip: content-box;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(156, 163, 175, 0.8);
+        }
+
+         
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+         
+        .writing-mode-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+         
+        pre {
+            @apply rounded-lg border border-black/10 dark:border-white/10;
+            @apply bg-gray-50 dark:bg-white/5;
+            @apply p-6 overflow-x-auto;
+            @apply text-sm leading-relaxed;
+        }
+
+        pre code {
+            @apply bg-transparent px-0 py-0;
+            @apply text-gray-800 dark:text-gray-200;
+            @apply font-mono;
+        }
+
+         
+        :not(pre)>code {
+            @apply font-mono text-[0.9em] font-medium;
+            @apply bg-gray-100 dark:bg-white/10;
+            @apply px-1.5 py-0.5 rounded-md;
+            @apply text-black dark:text-white;
+        }
+
+         
+        .highlight {
+            @apply rounded-lg overflow-hidden mb-6;
+        }
+
+        .highlight pre {
+            @apply m-0;
+        }
+
+         
+        .dark .highlight .chroma {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .highlight .chroma {
+            background-color: rgb(249, 250, 251);
+        }
+
+        .chroma .k,
+        .chroma .kd,
+        .chroma .kn,
+        .chroma .kp,
+        .chroma .kr,
+        .chroma .kt {
+            color: #f92672;
+            font-weight: bold;
+        }
+
+         
+        .dark .chroma .k,
+        .dark .chroma .kd,
+        .dark .chroma .kn,
+        .dark .chroma .kp,
+        .dark .chroma .kr,
+        .dark .chroma .kt {
+            color: #ff6b9d;
+        }
+
+        .chroma .s,
+        .chroma .s1,
+        .chroma .s2,
+        .chroma .sa,
+        .chroma .sb,
+        .chroma .sc,
+        .chroma .dl,
+        .chroma .sd,
+        .chroma .se,
+        .chroma .sh,
+        .chroma .si,
+        .chroma .sx,
+        .chroma .sr,
+        .chroma .ss {
+            color: #16a34a;
+        }
+
+         
+        .dark .chroma .s,
+        .dark .chroma .s1,
+        .dark .chroma .s2,
+        .dark .chroma .sa,
+        .dark .chroma .sb,
+        .dark .chroma .sc,
+        .dark .chroma .dl,
+        .dark .chroma .sd,
+        .dark .chroma .se,
+        .dark .chroma .sh,
+        .dark .chroma .si,
+        .dark .chroma .sx,
+        .dark .chroma .sr,
+        .dark .chroma .ss {
+            color: #a7f3d0;
+        }
+
+        .chroma .c,
+        .chroma .c1,
+        .chroma .ch,
+        .chroma .cm,
+        .chroma .cp,
+        .chroma .cpf,
+        .chroma .cs {
+            color: #6b7280;
+            font-style: italic;
+        }
+
+         
+        .dark .chroma .c,
+        .dark .chroma .c1,
+        .dark .chroma .ch,
+        .dark .chroma .cm,
+        .dark .chroma .cp,
+        .dark .chroma .cpf,
+        .dark .chroma .cs {
+            color: #9ca3af;
+        }
+
+        .chroma .m,
+        .chroma .mb,
+        .chroma .mf,
+        .chroma .mh,
+        .chroma .mi,
+        .chroma .il,
+        .chroma .mo {
+            color: #9333ea;
+        }
+
+         
+        .dark .chroma .m,
+        .dark .chroma .mb,
+        .dark .chroma .mf,
+        .dark .chroma .mh,
+        .dark .chroma .mi,
+        .dark .chroma .il,
+        .dark .chroma .mo {
+            color: #c084fc;
+        }
+
+        .chroma .n,
+        .chroma .na,
+        .chroma .nb,
+        .chroma .nc,
+        .chroma .no,
+        .chroma .nd,
+        .chroma .ni,
+        .chroma .ne,
+        .chroma .nf,
+        .chroma .nl,
+        .chroma .nn,
+        .chroma .nx,
+        .chroma .py,
+        .chroma .nt,
+        .chroma .nv,
+        .chroma .vc,
+        .chroma .vg,
+        .chroma .vi,
+        .chroma .vm {
+            color: #1f2937;
+        }
+
+         
+        .dark .chroma .n,
+        .dark .chroma .na,
+        .dark .chroma .nb,
+        .dark .chroma .nc,
+        .dark .chroma .no,
+        .dark .chroma .nd,
+        .dark .chroma .ni,
+        .dark .chroma .ne,
+        .dark .chroma .nf,
+        .dark .chroma .nl,
+        .dark .chroma .nn,
+        .dark .chroma .nx,
+        .dark .chroma .py,
+        .dark .chroma .nt,
+        .dark .chroma .nv,
+        .dark .chroma .vc,
+        .dark .chroma .vg,
+        .dark .chroma .vi,
+        .dark .chroma .vm {
+            color: #e5e7eb;
+        }
+
+        .chroma .nf {
+            color: #2563eb;
+        }
+
+         
+        .dark .chroma .nf {
+            color: #60a5fa;
+        }
+
+        .chroma .o,
+        .chroma .ow {
+            color: #f92672;
+        }
+
+         
+        .dark .chroma .o,
+        .dark .chroma .ow {
+            color: #ff6b9d;
+        }
+    </style>
+    <style>
+         
+        .code-window {
+            position: relative;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark .code-window {
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+         
+        .code-window button:active {
+            transform: scale(0.95);
+        }
+
+         
+        .code-window pre::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .code-window pre::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .code-window pre::-webkit-scrollbar-thumb {
+            background-color: rgba(156, 163, 175, 0.3);
+            border-radius: 4px;
+        }
+
+        .dark .code-window pre::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
-<body class="font-sans">
-    <div id="app" class="min-h-screen selection:bg-purple-500/30 transition-colors duration-500 relative overflow-x-hidden">
-        
-        <div id="canvas-container" class="fixed inset-0 z-0 h-screen w-full opacity-60 pointer-events-none"></div>
-        <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden transition-opacity duration-1000">
-            <div id="glow-1" class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full blur-[120px] animate-pulse transition-colors duration-500"></div>
-            <div id="glow-2" class="absolute top-[20%] right-[-10%] w-[30vw] h-[30vw] rounded-full blur-[100px] transition-colors duration-500"></div>
-            <div id="glow-3" class="absolute bottom-[-10%] left-[20%] w-[50vw] h-[50vw] rounded-full blur-[120px] transition-colors duration-500"></div>
-        </div>
 
-        <nav
-    id="navbar"
-    class="fixed top-0 w-full z-50 transition-all duration-300 bg-transparent"
->
-    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+    <body class="font-sans antialiased">
         <div
-            class="flex items-center gap-3 cursor-pointer group"
-            onclick="window.location.href='/'"
+            id="app"
+            class="min-h-screen relative overflow-x-hidden transition-colors duration-500 selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black"
         >
             <div
-                class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-300 via-purple-300 to-yellow-200 flex items-center justify-center text-slate-900 shadow-lg group-hover:scale-105 transition-transform"
-            >
-                <svg
-                    class="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.5"
-                    viewBox="0 0 24 24"
-                >
-                    <path
-                        d="M22 12h-4l-3 9L9 3l-3 9H2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </div>
-            <div class="flex flex-col leading-none">
-                <span
-                    id="logo-text"
-                    class="text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r"
-                    >HUMAN</span
-                >
-                <span
-                    id="logo-subtext"
-                    class="text-xs tracking-widest uppercase"
-                    >Augmentation</span
-                >
-            </div>
-        </div>
+                id="canvas-container"
+                class="fixed inset-0 z-0 h-screen w-full opacity-40 pointer-events-none"
+            ></div>
 
-        <div class="flex items-center gap-6">
-            <div
-                id="nav-links"
-                class="hidden md:flex items-center gap-8 text-sm font-medium"
+            <nav
+    id="navbar"
+    class="fixed left-0 top-0 h-screen w-20 z-50 transition-all duration-500 border-r border-black/5 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-xl saturate-150 flex flex-col items-center py-8"
+>
+    <div class="cursor-pointer group mb-12" onclick="window.location.href='/'">
+        <div
+            class="w-12 h-12 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center group-hover:rounded-xl transition-all duration-500"
+        >
+            <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
             >
-                <a href="/#pillars" class="transition-colors">Pillars</a>
-                <a href="/#work" class="transition-colors">Projects</a>
-                <a href="/posts" class="transition-colors">Blog</a>
-                <a
-                    href="/#contact"
-                    id="nav-connect"
-                    class="px-5 py-2 rounded-full border transition-all"
-                    >Connect</a
-                >
-            </div>
-
-            <button
-                id="theme-toggle"
-                class="p-2 rounded-full border transition-all duration-300 flex items-center justify-center group"
-                aria-label="Toggle Theme"
-            >
-                <svg
-                    id="sun-icon"
-                    class="w-4 h-4 group-hover:rotate-45 transition-transform duration-500"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    style="display: none"
-                >
-                    <circle cx="12" cy="12" r="5" />
-                    <line x1="12" y1="1" x2="12" y2="3" />
-                    <line x1="12" y1="21" x2="12" y2="23" />
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                    <line x1="1" y1="12" x2="3" y2="12" />
-                    <line x1="21" y1="12" x2="23" y2="12" />
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                </svg>
-                <svg
-                    id="moon-icon"
-                    class="w-4 h-4 group-hover:-rotate-12 transition-transform duration-500"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                >
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-            </button>
+                <path
+                    d="M22 12h-4l-3 9L9 3l-3 9H2"
+                    stroke-linecap="square"
+                    stroke-linejoin="miter"
+                />
+            </svg>
         </div>
+    </div>
+
+    <div
+        id="nav-links"
+        class="flex flex-col items-center gap-8 flex-1 text-sm font-medium"
+    >
+        <a
+            href="/#pillars"
+            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
+            title="Pillars"
+            >Pillars</a
+        >
+        <a
+            href="/#work"
+            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
+            title="Projects"
+            >Projects</a
+        >
+        <a
+            href="/posts"
+            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
+            title="Blog"
+            >Blog</a
+        >
+    </div>
+
+    <div class="flex flex-col items-center gap-6 mt-auto">
+        <button
+            id="theme-toggle"
+            class="w-12 h-12 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 flex items-center justify-center text-gray-600 dark:text-gray-300"
+            aria-label="Toggle Theme"
+        >
+            <svg
+                id="sun-icon"
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+                style="display: none"
+            >
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+            <svg
+                id="moon-icon"
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                viewBox="0 0 24 24"
+            >
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+        </button>
+
+        <a
+            href="/#contact"
+            id="nav-connect"
+            class="writing-mode-vertical transform rotate-180 px-3 py-6 rounded-full bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300"
+            title="Connect"
+            >Connect</a
+        >
     </div>
 </nav>
 
 
-        <main class="relative z-10 min-h-screen">
-            
-<div class="max-w-4xl mx-auto pt-44 px-6">
-    <h1 class="text-5xl font-black mb-16 tracking-tight" id="blog-heading">Transmission Log</h1>
+            <main class="relative z-10 min-h-screen flex flex-col ml-20">
+                
+<div class="relative z-10 max-w-6xl mx-auto pt-32 px-8 pb-24">
+    <div class="mb-20">
+        <h1
+            id="blog-heading"
+            class="text-6xl md:text-8xl font-bold tracking-tighter mb-8 text-black dark:text-white"
+        >
+            Transmission<br />
+            <span class="text-gray-400 dark:text-gray-600">Log</span>
+        </h1>
 
-    <div class="grid gap-8">
+        <div class="w-full h-px bg-black/10 dark:bg-white/10"></div>
+
+        <div class="flex justify-between items-center mt-4">
+            <span
+                class="text-xs font-mono uppercase tracking-widest text-gray-500"
+            >
+                Archive // 0 Entries
+            </span>
+            <span
+                class="text-xs font-mono uppercase tracking-widest text-gray-500"
+            >
+                Sorted by Date (DESC)
+            </span>
+        </div>
+    </div>
+
+    <div class="grid gap-6">
         
     </div>
 </div>
 
-        </main>
+            </main>
 
-        <footer id="contact"
-    class="relative z-10 border-t pt-24 pb-12 px-6 transition-colors duration-500 bg-slate-900 border-white/5">
+            <footer
+    id="contact"
+    class="relative z-10 border-t py-24 px-8 transition-colors duration-500 bg-white dark:bg-black border-black/5 dark:border-white/10"
+>
     <div class="max-w-4xl mx-auto text-center">
-        <h2 id="footer-heading" class="text-4xl md:text-5xl font-black mb-8 tracking-tight text-slate-100">Ready to
-            Collaborate?</h2>
-        <p id="footer-desc" class="text-lg mb-12 max-w-xl mx-auto leading-relaxed text-slate-400">
-            Whether it's engineering robust systems, producing sonic landscapes, or optimizing human performance, I'm
-            always open to new challenges.
+        <h2
+            id="footer-heading"
+            class="text-4xl md:text-6xl font-bold mb-8 tracking-tighter text-black dark:text-white uppercase"
+        >
+            Ready to<br /><span class="text-gray-400 dark:text-gray-600"
+                >Collaborate?</span
+            >
+        </h2>
+
+        <p
+            id="footer-desc"
+            class="text-lg md:text-xl mb-12 max-w-xl mx-auto leading-relaxed text-gray-600 dark:text-gray-400 font-light"
+        >
+            Whether it's engineering robust systems, producing sonic landscapes,
+            or optimizing human performance, I'm open to challenges.
         </p>
 
-        <a href="mailto:hello@example.com" id="contact-btn"
-            class="inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold transition-all hover:scale-105 shadow-xl mb-16 bg-white text-slate-950 hover:bg-slate-200">
+        <a
+            href="mailto:hello@example.com"
+            id="contact-btn"
+            class="group inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-300 hover:scale-105 shadow-xl bg-black text-white dark:bg-white dark:text-black"
+        >
             <span>Start a Conversation</span>
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+            <svg
+                class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    d="M5 12h14M12 5l7 7-7 7"
+                    stroke-linecap="square"
+                    stroke-linejoin="miter"
+                />
             </svg>
         </a>
 
-        <div class="flex items-center justify-center gap-8 mb-12">
-            <a href="#" id="social-github"
-                class="transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-blue-500"
-                aria-label="GitHub">
+        <div class="w-px h-16 mx-auto bg-gray-200 dark:bg-gray-800 my-12"></div>
+
+        <div class="flex items-center justify-center gap-10 mb-12">
+            <a
+                href="#"
+                id="social-github"
+                class="transition-colors duration-300 text-gray-400 hover:text-black dark:hover:text-white transform hover:scale-110"
+                aria-label="GitHub"
+            >
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path
-                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+                    />
                 </svg>
             </a>
-            <a href="#" id="social-linkedin"
-                class="transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-blue-600"
-                aria-label="LinkedIn">
+            <a
+                href="#"
+                id="social-linkedin"
+                class="transition-colors duration-300 text-gray-400 hover:text-black dark:hover:text-white transform hover:scale-110"
+                aria-label="LinkedIn"
+            >
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path
-                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                    />
                 </svg>
             </a>
-            <a href="#" id="social-instagram"
-                class="transition-colors transform hover:-translate-y-1 text-slate-400 hover:text-purple-500"
-                aria-label="Instagram">
+            <a
+                href="#"
+                id="social-instagram"
+                class="transition-colors duration-300 text-gray-400 hover:text-black dark:hover:text-white transform hover:scale-110"
+                aria-label="Instagram"
+            >
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                     <path
-                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                    />
                 </svg>
             </a>
         </div>
 
-        <p id="footer-copy" class="text-sm font-medium text-slate-400">
-            &copy; 2025 Yojan Gautam.
-            All rights reserved.
+        <p
+            id="footer-copy"
+            class="text-xs font-mono uppercase tracking-widest text-gray-400"
+        >
+            &copy; 2025 Yojan Gautam.<br />
+            Based in Virginia.
         </p>
     </div>
 </footer>
-    </div>
 
-    <script>
-    
+        </div>
+
+        <script>
     
     const projects = JSON.parse("{\"artist\":[{\"color\":\"purple\",\"desc\":\"5-track instrumental hip-hop EP fusing traditional Nepali samples with modern trap percussion.\",\"role\":\"Producer\",\"tags\":[\"Logic Pro\",\"Production\"],\"title\":\"Neon Horizon EP\"}],\"athlete\":[{\"color\":\"yellow\",\"desc\":\"A Python script that analyzes 3 years of workout logs to optimize volume.\",\"role\":\"Analyst\",\"tags\":[\"Data Viz\",\"Fitness\",\"Python\"],\"title\":\"Hypertrophy Data Analysis\"}],\"engineer\":[{\"color\":\"blue\",\"desc\":\"Engineered fail-safe bootloader logic (U-boot) for network/SD card failover. Architected a full-stack web relay system.\",\"role\":\"IoT Engineering Intern\",\"tags\":[\"Rust\",\"Go\",\"React\",\"U-boot\"],\"title\":\"Databuoy Embedded Systems\"},{\"color\":\"blue\",\"desc\":\"Built custom drone hardware and developed proprietary data labeling tools.\",\"role\":\"Databuoy\",\"tags\":[\"Hardware\",\"Data Ops\",\"Embedded\"],\"title\":\"Drone Tracking Infrastructure\"}]}");
 
-        
-        let isDark = true;
-        let activeTab = 'engineer';
+    
+    let isDark = true;
+    let activeTab = 'engineer';
 
-        
-        if (typeof localStorage !== 'undefined') {
-            const saved = localStorage.getItem('theme');
-            isDark = saved ? saved === 'dark' : true;
-        }
+    
+    if (typeof localStorage !== 'undefined') {
+        const saved = localStorage.getItem('theme');
+        isDark = saved ? saved === 'dark' : true;
+    }
 
     function applyTheme() {
+        
+        document.documentElement.classList.toggle('dark', isDark);
+
         const app = document.getElementById('app');
-        const navbar = document.getElementById('navbar');
 
         
         const setClass = (id, cls) => {
@@ -241,264 +589,289 @@
             if (el) el.className = cls;
         };
 
+        
+        const updateParticles = (colorHex) => {
+            if (window.particleMaterial) {
+                window.particleMaterial.color.setHex(colorHex);
+            }
+        };
+
         if (isDark) {
             
-            app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-900 text-slate-200';
+            if (app) app.className = 'min-h-screen bg-black text-gray-300 font-sans selection:bg-white selection:text-black';
 
             
-            setClass('glow-1', document.getElementById('glow-1').className.replace(/bg-blue-\d+\/\d+/g, '') + ' bg-blue-500/5');
-            setClass('glow-2', document.getElementById('glow-2').className.replace(/bg-purple-\d+\/\d+/g, '') + ' bg-purple-500/5');
-            setClass('glow-3', document.getElementById('glow-3').className.replace(/bg-yellow-\d+\/\d+/g, '') + ' bg-yellow-200/2');
+            setClass('glow-1', 'hidden');
+            setClass('glow-2', 'hidden');
+            setClass('glow-3', 'hidden');
 
             
-            setClass('logo-text', 'text-lg font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-blue-200 via-purple-200 to-white');
-            setClass('logo-subtext', 'text-xs tracking-widest uppercase text-slate-400');
+            if (document.getElementById('sun-icon')) document.getElementById('sun-icon').style.display = 'block';
+            if (document.getElementById('moon-icon')) document.getElementById('moon-icon').style.display = 'none';
 
             
-            setClass('nav-links', 'hidden md:flex items-center gap-8 text-sm font-medium text-slate-400');
-            setClass('nav-connect', 'px-5 py-2 rounded-full border transition-all bg-white/5 border-white/10 hover:bg-slate-500/10');
-
-            
-            setClass('theme-toggle', 'p-2 rounded-full border transition-all duration-300 flex items-center justify-center group bg-slate-800 border-slate-700 text-yellow-300 hover:border-yellow-300/50');
-            if(document.getElementById('sun-icon')) document.getElementById('sun-icon').style.display = 'block';
-            if(document.getElementById('moon-icon')) document.getElementById('moon-icon').style.display = 'none';
-
-            
-            setClass('status-pill', 'inline-flex items-center gap-2 px-4 py-1.5 rounded-full border mb-8 backdrop-blur-sm transition-colors duration-500 bg-white/5 border-white/10');
-            setClass('status-text', 'text-xs uppercase tracking-widest font-semibold text-slate-400');
-
-            setClass('hero-name-1', 'block transition-colors duration-500 text-slate-100');
-            setClass('hero-name-2', 'block transition-colors duration-500 text-slate-100');
-            setClass('hero-desc', 'max-w-2xl text-lg md:text-xl leading-relaxed mb-12 transition-colors duration-500 text-slate-400');
-
-            setClass('pillars', 'relative z-10 py-24 px-6 backdrop-blur-sm border-y transition-colors duration-500 bg-slate-800/30 border-white/5');
-            setClass('pillars-heading', 'text-3xl md:text-4xl font-bold mb-4 text-slate-100');
-            setClass('pillars-desc', 'text-slate-400');
-
-            
-            setClass('blog-heading', 'text-5xl font-black mb-16 tracking-tight text-slate-100');
-
-            
-            document.querySelectorAll('.blog-card').forEach(el => {
-                 el.className = 'relative p-8 rounded-2xl border backdrop-blur-md transition-all duration-500 bg-slate-800/50 border-white/10 hover:bg-slate-700/50';
-            });
-
-            
-            const prose = document.querySelector('.blog-content');
-            if(prose) prose.classList.add('prose-invert');
+            updateParticles(0x444444);
 
         } else {
             
-            
-            app.className = app.className.replace(/bg-slate-\d+/g, '').replace(/text-slate-\d+/g, '') + ' bg-slate-50 text-slate-800';
+            if (app) app.className = 'min-h-screen bg-white text-gray-800 font-sans selection:bg-black selection:text-white';
 
             
-            const prose = document.querySelector('.blog-content');
-            if(prose) prose.classList.remove('prose-invert');
+            setClass('glow-1', 'hidden');
+            setClass('glow-2', 'hidden');
+            setClass('glow-3', 'hidden');
+
+            
+            if (document.getElementById('sun-icon')) document.getElementById('sun-icon').style.display = 'none';
+            if (document.getElementById('moon-icon')) document.getElementById('moon-icon').style.display = 'block';
+
+            
+            updateParticles(0x666666);
+        }
+
+        
+        renderProjects();
+        
+        setupCodeBlocks();
+    }
+
+    
+    function toggleTheme() {
+        isDark = !isDark;
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        applyTheme();
+    }
+
+    
+    function switchTab(tab) {
+        activeTab = tab;
+        const tabs = ['engineer', 'artist', 'athlete'];
+
+        tabs.forEach(t => {
+            const btn = document.getElementById('tab-' + t);
+            if (!btn) return;
+
+            if (t === tab) {
+                btn.className = isDark
+                    ? 'px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-white text-black transition-all'
+                    : 'px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider bg-black text-white transition-all';
+            } else {
+                btn.className = isDark
+                    ? 'px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider border border-white/20 text-gray-300 hover:border-white hover:text-white transition-all'
+                    : 'px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider border border-black/20 text-gray-500 hover:border-black hover:text-black transition-all';
+            }
+        });
+        renderProjects();
+    }
+
+    
+    function renderProjects() {
+        const grid = document.getElementById('project-grid');
+        if (!grid) return;
+
+        const items = projects[activeTab];
+
+        grid.innerHTML = items.map((item, idx) => `
+            <div class="group relative flex flex-col h-full p-8 rounded-xl border transition-all duration-500
+                ${isDark
+                ? 'bg-white/5 border-white/10 hover:border-white/30'
+                : 'bg-gray-50 border-black/5 hover:border-black/20'
+            }">
+
+                <div class="flex justify-between items-start mb-6">
+                    <div class="w-10 h-10 rounded-md flex items-center justify-center transition-colors
+                        ${isDark ? 'bg-white text-black' : 'bg-black text-white'}">
+                        ${getIcon(idx, activeTab)} </div>
+
+                    <svg class="w-5 h-5 -mr-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 ${isDark ? 'text-white' : 'text-black'}"
+                        fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke-linecap="square" stroke-linejoin="miter"/>
+                    </svg>
+                </div>
+
+                <div class="mb-4">
+                    <h3 class="text-xl font-bold tracking-tight mb-2 ${isDark ? 'text-white' : 'text-black'}">
+                        ${item.title}
+                    </h3>
+                    <span class="inline-block text-[10px] font-mono uppercase tracking-widest py-1 border-b ${isDark ? 'text-gray-300 border-white/20' : 'text-gray-500 border-black/20'}">
+                        ${item.role}
+                    </span>
+                </div>
+
+                <p class="text-sm leading-relaxed mb-8 flex-grow ${isDark ? 'text-gray-300' : 'text-gray-600'}">
+                    ${item.desc}
+                </p>
+
+                <div class="flex flex-wrap gap-2 mt-auto pt-6 border-t ${isDark ? 'border-white/10' : 'border-black/5'}">
+                    ${item.tags.map(tag => `
+                        <span class="text-[9px] uppercase tracking-widest font-bold px-2 py-1 rounded border transition-colors
+                            ${isDark
+                    ? 'border-white/20 text-gray-300 group-hover:border-white/40 group-hover:text-white'
+                    : 'border-black/20 text-gray-500 group-hover:border-black/40 group-hover:text-black'
+                }">
+                            ${tag}
+                        </span>
+                    `).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function getIcon(idx, tab) {
+        return '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 3h18v18H3z" stroke-linecap="square"/></svg>';
+    }
+
+    
+    function setupCodeBlocks() {
+        document.querySelectorAll('pre').forEach(pre => {
+            
+            if (pre.parentElement.classList.contains('code-window')) return;
+
+            
+            const windowDiv = document.createElement('div');
+            windowDiv.className = `code-window rounded-xl border overflow-hidden mb-8 transition-colors duration-500 ${isDark ? 'bg-[#1e1e1e] border-white/10' : 'bg-gray-50 border-black/5'}`;
+
+            
+            const header = document.createElement('div');
+            header.className = `flex items-center justify-between px-4 py-3 border-b ${isDark ? 'border-white/5 bg-white/5' : 'border-black/5 bg-gray-100'}`;
+
+            
+            const dots = document.createElement('div');
+            dots.className = 'flex gap-2';
+            dots.innerHTML = `
+                <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+            `;
+
+            
+            const copyBtn = document.createElement('button');
+            copyBtn.className = `text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded transition-all ${isDark ? 'text-gray-300 hover:text-white hover:bg-white/10' : 'text-gray-500 hover:text-black hover:bg-black/5'}`;
+            copyBtn.innerHTML = 'Copy';
+
+            copyBtn.addEventListener('click', () => {
+                const code = pre.innerText;
+                navigator.clipboard.writeText(code).then(() => {
+                    copyBtn.innerHTML = 'Copied!';
+                    setTimeout(() => copyBtn.innerHTML = 'Copy', 2000);
+                });
+            });
+
+            header.appendChild(dots);
+            header.appendChild(copyBtn);
+
+            
+            pre.parentNode.insertBefore(windowDiv, pre);
+            windowDiv.appendChild(header);
+            windowDiv.appendChild(pre);
+
+            
+            pre.classList.add('p-6', 'overflow-x-auto', 'text-sm', 'font-mono', 'leading-relaxed', '!bg-transparent', '!m-0', '!border-0');
+        });
+    }
+
+    
+    function initThreeJS() {
+        const container = document.getElementById('canvas-container');
+        if (!container) return;
+
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 1.2;
+
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        const count = 4000;
+        const radius = 1.6;
+        const positions = new Float32Array(count * 3);
+
+        for (let i = 0; i < count; i++) {
+            const u = Math.random();
+            const v = Math.random();
+            const theta = 2 * Math.PI * u;
+            const phi = Math.acos(2 * v - 1);
+            const r = Math.cbrt(Math.random()) * radius;
+
+            const sinPhi = Math.sin(phi);
+            const x = r * sinPhi * Math.cos(theta);
+            const y = r * sinPhi * Math.sin(theta);
+            const z = r * Math.cos(phi);
+
+            positions[i * 3] = x;
+            positions[i * 3 + 1] = y;
+            positions[i * 3 + 2] = z;
+        }
+
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        const material = new THREE.PointsMaterial({
+            color: isDark ? 0x444444 : 0x666666,
+            size: 0.004,
+            transparent: true,
+            opacity: 0.8,
+            depthWrite: false
+        });
+
+        window.particleMaterial = material;
+
+        const points = new THREE.Points(geometry, material);
+        scene.add(points);
+
+        const mouse = { x: 0, y: 0 };
+        const targetRotation = { x: 0, y: 0 };
+
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            targetRotation.x = mouse.y * 0.1;
+            targetRotation.y = mouse.x * 0.1;
+        });
+
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.005;
+
+            points.rotation.x += (targetRotation.x - points.rotation.x) * 0.02;
+            points.rotation.y += (targetRotation.y - points.rotation.y) * 0.02;
+            points.rotation.y -= 0.0005;
+            points.position.y = Math.sin(time * 0.5) * 0.05;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    }
+
+    function initialize() {
+        applyTheme();
+        switchTab('engineer');
+        if (typeof THREE !== 'undefined') {
+            initThreeJS();
+        } else {
+            setTimeout(() => {
+                if (typeof THREE !== 'undefined') initThreeJS();
+            }, 100);
+        }
+
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', toggleTheme);
         }
     }
 
-        
-        function toggleTheme() {
-            isDark = !isDark;
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            applyTheme();
-            renderProjects();
-        }
-
-        
-        function switchTab(tab) {
-            activeTab = tab;
-
-            
-            const tabs = ['engineer', 'artist', 'athlete'];
-            tabs.forEach(t => {
-                const btn = document.getElementById('tab-' + t);
-                if (t === tab) {
-                    if (t === 'engineer') {
-                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-blue-500/20 text-blue-400 shadow-sm ring-1 ring-blue-500/20';
-                    } else if (t === 'artist') {
-                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-purple-500/20 text-purple-400 shadow-sm ring-1 ring-purple-500/20';
-                    } else {
-                        btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all bg-yellow-500/20 text-yellow-500 shadow-sm ring-1 ring-yellow-500/20';
-                    }
-                } else {
-                    btn.className = 'px-5 py-2.5 rounded-lg text-sm font-medium transition-all ' + (isDark ? 'text-slate-400 hover:text-slate-100' : 'text-slate-500 hover:text-slate-900');
-                }
-            });
-
-            renderProjects();
-        }
-
-        
-        function renderProjects() {
-            const grid = document.getElementById('project-grid');
-            if (!grid) return; 
-
-            const items = projects[activeTab];
-
-            grid.innerHTML = items.map((item, idx) => `
-                <div class="rounded-2xl p-6 border transition-all group cursor-pointer backdrop-blur-sm flex flex-col h-full ${isDark ? 'bg-slate-800/50 border-white/5 hover:bg-slate-700/50' : 'bg-white border-slate-200 shadow-sm hover:bg-slate-50 hover:shadow-md'}">
-                    <div class="h-1.5 w-16 rounded-full mb-6 bg-gradient-to-r ${item.color === 'blue' ? 'from-blue-400 to-cyan-300' : item.color === 'purple' ? 'from-purple-400 to-pink-300' : 'from-yellow-400 to-orange-300'}"></div>
-
-                    <div class="flex justify-between items-start mb-3">
-                        <div class="flex items-center gap-3">
-                            <div class="p-2 rounded-lg ${isDark ? 'bg-white/5 text-white' : 'bg-slate-100 text-slate-700'}">
-                                ${getIcon(idx, activeTab)}
-                            </div>
-                            <h3 class="text-xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}">
-                                ${item.title}
-                            </h3>
-                        </div>
-                        <svg class="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity ${isDark ? 'text-slate-400' : 'text-slate-500'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-                        </svg>
-                    </div>
-
-                    <span class="text-xs font-bold uppercase tracking-wider mb-4 block ${item.color === 'blue' ? 'text-blue-400' : item.color === 'purple' ? 'text-purple-400' : 'text-yellow-500'}">
-                        ${item.role}
-                    </span>
-
-                    <p class="${isDark ? 'text-slate-400' : 'text-slate-500'} text-sm mb-8 leading-relaxed flex-grow">
-                        ${item.desc}
-                    </p>
-
-                    <div class="flex flex-wrap gap-2 mt-auto pt-6 border-t border-dashed border-white/10">
-                        ${item.tags.map(tag => `
-                            <span class="text-[10px] uppercase tracking-wider font-bold px-2.5 py-1.5 rounded-md border transition-colors ${isDark ? 'bg-white/5 border-white/10 text-slate-400' : 'bg-slate-100 border-slate-200 text-slate-500'}">
-                                ${tag}
-                            </span>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        
-        function getIcon(idx, tab) {
-            
-            
-            return '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
-        }
-
-        
-        window.addEventListener('scroll', () => {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md border-b ' + (isDark ? 'bg-slate-900/80 border-white/5' : 'bg-white/80 border-slate-200');
-            } else {
-                navbar.className = 'fixed top-0 w-full z-50 transition-all duration-300 bg-transparent';
-            }
-        });
-
-        
-        function initThreeJS() {
-            const container = document.getElementById('canvas-container');
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 1;
-
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(window.devicePixelRatio);
-            container.appendChild(renderer.domElement);
-
-            const count = 5000;
-            const radius = 1.5;
-            const positions = new Float32Array(count * 3);
-
-            for (let i = 0; i < count; i++) {
-                const u = Math.random();
-                const v = Math.random();
-                const theta = 2 * Math.PI * u;
-                const phi = Math.acos(2 * v - 1);
-                const r = Math.cbrt(Math.random()) * radius;
-
-                const sinPhi = Math.sin(phi);
-                const x = r * sinPhi * Math.cos(theta);
-                const y = r * sinPhi * Math.sin(theta);
-                const z = r * Math.cos(phi);
-
-                positions[i * 3] = x;
-                positions[i * 3 + 1] = y;
-                positions[i * 3 + 2] = z;
-            }
-
-            const geometry = new THREE.BufferGeometry();
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-            const material = new THREE.PointsMaterial({
-                color: isDark ? 0xa3d5ff : 0x0369a1,
-                size: 0.005,
-                transparent: true,
-                depthWrite: false
-            });
-
-            window.particleMaterial = material;
-
-            const points = new THREE.Points(geometry, material);
-            points.rotation.set(0, 0, Math.PI / 4);
-            scene.add(points);
-
-            
-            const mouse = { x: 0, y: 0 };
-            const targetRotation = { x: 0, y: 0 };
-
-            window.addEventListener('mousemove', (event) => {
-                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-                targetRotation.x = mouse.y * 0.3;
-                targetRotation.y = mouse.x * 0.3;
-            });
-
-            let time = 0;
-            function animate() {
-                requestAnimationFrame(animate);
-                time += 0.01;
-
-                
-                points.rotation.x += (targetRotation.x - points.rotation.x) * 0.05;
-                points.rotation.y += (targetRotation.y - points.rotation.y) * 0.05;
-
-                
-                points.rotation.x -= 0.0005;
-                points.rotation.y -= 0.00033;
-
-                
-                points.position.y = Math.sin(time * 0.5) * 0.1;
-
-                renderer.render(scene, camera);
-            }
-            animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        }
-
-        function initialize() {
-            applyTheme();
-            renderProjects();
-            if (typeof THREE !== 'undefined') {
-                initThreeJS();
-            } else {
-                setTimeout(() => {
-                    if (typeof THREE !== 'undefined') initThreeJS();
-                }, 100);
-            }
-
-            
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', toggleTheme);
-            }
-        }
-
-        window.addEventListener('load', initialize);
+    window.addEventListener('load', initialize);
 </script>
-
-</body>
+    </body>
 </html>

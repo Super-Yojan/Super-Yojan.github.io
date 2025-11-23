@@ -1,23 +1,80 @@
 {{ define "main" }}
-<div class="max-w-4xl mx-auto pt-44 px-6">
-    <h1 class="text-5xl font-black mb-16 tracking-tight" id="blog-heading">Transmission Log</h1>
+<div class="relative z-10 max-w-6xl mx-auto pt-32 px-8 pb-24">
+    <div class="mb-20">
+        <h1
+            id="blog-heading"
+            class="text-6xl md:text-8xl font-bold tracking-tighter mb-8 text-black dark:text-white"
+        >
+            Transmission<br />
+            <span class="text-gray-400 dark:text-gray-600">Log</span>
+        </h1>
 
-    <div class="grid gap-8">
+        <div class="w-full h-px bg-black/10 dark:bg-white/10"></div>
+
+        <div class="flex justify-between items-center mt-4">
+            <span
+                class="text-xs font-mono uppercase tracking-widest text-gray-500"
+            >
+                Archive // {{ len .Pages }} Entries
+            </span>
+            <span
+                class="text-xs font-mono uppercase tracking-widest text-gray-500"
+            >
+                Sorted by Date (DESC)
+            </span>
+        </div>
+    </div>
+
+    <div class="grid gap-6">
         {{ range .Pages }}
-        <a href="{{ .RelPermalink }}" class="group relative block">
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div class="relative p-8 rounded-2xl border backdrop-blur-md transition-all duration-500
-                        {{ if eq (site.Params.mode) "dark" }}bg-slate-800/50 border-white/10 hover:bg-slate-700/50{{ else }}bg-white/80 border-slate-200 hover:bg-white{{ end }}
-                        blog-card">
-                
-                <div class="flex items-center gap-4 mb-4 text-xs font-bold uppercase tracking-widest opacity-60">
-                    <time>{{ .Date.Format "Jan 02, 2006" }}</time>
-                    <span>/</span>
-                    <span>{{ .Params.tags | default "Update" }}</span>
+        <a
+            href="{{ .RelPermalink }}"
+            class="group relative block p-8 rounded-2xl border transition-all duration-500 hover:-translate-y-1 bg-white dark:bg-white/5 border-black/5 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30"
+        >
+            <div
+                class="flex flex-col md:flex-row md:items-baseline justify-between gap-6"
+            >
+                <div class="flex-1">
+                    <div
+                        class="flex items-center gap-3 mb-4 text-[10px] font-mono uppercase tracking-widest text-gray-500 dark:text-gray-400"
+                    >
+                        <time>{{ .Date.Format "2006.01.02" }}</time>
+                        <span class="text-gray-300 dark:text-gray-700">/</span>
+                        <span class="font-bold text-black dark:text-white"
+                            >{{ .Params.tags | default "Update" }}</span
+                        >
+                    </div>
+
+                    <h2
+                        class="text-2xl md:text-3xl font-bold mb-3 tracking-tight text-black dark:text-white group-hover:underline decoration-1 underline-offset-4 decoration-black/30 dark:decoration-white/30 transition-all"
+                    >
+                        {{ .Title }}
+                    </h2>
+
+                    <p
+                        class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 max-w-3xl"
+                    >
+                        {{ .Description }}
+                    </p>
                 </div>
-                
-                <h2 class="text-3xl font-bold mb-4 group-hover:text-blue-400 transition-colors">{{ .Title }}</h2>
-                <p class="opacity-80 leading-relaxed">{{ .Description }}</p>
+
+                <div
+                    class="hidden md:flex items-center justify-center w-12 h-12 rounded-full border border-black/5 dark:border-white/10 text-black dark:text-white opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500"
+                >
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            d="M5 12h14M12 5l7 7-7 7"
+                            stroke-linecap="square"
+                            stroke-linejoin="miter"
+                        />
+                    </svg>
+                </div>
             </div>
         </a>
         {{ end }}

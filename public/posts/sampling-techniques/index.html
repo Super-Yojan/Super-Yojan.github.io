@@ -320,8 +320,41 @@
             border-radius: 4px;
         }
 
+
         .dark .code-window pre::-webkit-scrollbar-thumb {
             background-color: rgba(255, 255, 255, 0.2);
+        }
+
+         
+        .nav-expand .nav-full {
+            display: none;
+        }
+
+        .nav-expand:hover .nav-full {
+            display: inline;
+        }
+
+        .nav-expand:hover .nav-short {
+            display: none;
+        }
+
+         
+        @media (max-width: 767px) {
+            .nav-expand .nav-short {
+                display: none;
+            }
+
+            .nav-expand .nav-full {
+                display: inline;
+            }
+        }
+
+         
+        @media (min-width: 768px) {
+            #navbar:has(.nav-expand:hover) {
+                width: 8rem !important;
+                 
+            }
         }
     </style>
 </head>
@@ -336,69 +369,35 @@
                 class="fixed inset-0 z-0 h-screen w-full opacity-40 pointer-events-none"
             ></div>
 
-            <nav
-    id="navbar"
-    class="fixed left-0 top-0 h-screen w-20 z-50 transition-all duration-500 border-r border-black/5 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-xl saturate-150 flex flex-col items-center py-8"
->
-    <div class="cursor-pointer group mb-12" onclick="window.location.href='/'">
+            <nav id="navbar"
+    class="group fixed bottom-0 left-0 w-full h-16 z-50 transition-all duration-500 border-t border-black/5 dark:border-white/10 bg-white/80 dark:bg-black/80 backdrop-blur-xl saturate-150 flex flex-row items-center justify-between px-6 md:fixed md:left-0 md:top-0 md:h-screen md:w-20 md:border-r md:border-t-0 md:flex-col md:py-8">
+    <div class="cursor-pointer group md:mb-12" onclick="window.location.href='/'">
         <div
-            class="w-12 h-12 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center group-hover:rounded-xl transition-all duration-500"
-        >
-            <svg
-                class="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-            >
-                <path
-                    d="M22 12h-4l-3 9L9 3l-3 9H2"
-                    stroke-linecap="square"
-                    stroke-linejoin="miter"
-                />
+            class="w-8 h-8 md:w-12 md:h-12 rounded-md bg-black dark:bg-white text-white dark:text-black flex items-center justify-center group-hover:rounded-xl transition-all duration-500">
+            <svg class="w-4 h-4 md:w-6 md:h-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke-linecap="square" stroke-linejoin="miter" />
             </svg>
         </div>
     </div>
 
-    <div
-        id="nav-links"
-        class="flex flex-col items-center gap-8 flex-1 text-sm font-medium"
-    >
-        <a
-            href="/#pillars"
-            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
-            title="Pillars"
-            >Pillars</a
-        >
-        <a
-            href="/#work"
-            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
-            title="Projects"
-            >Projects</a
-        >
-        <a
-            href="/posts"
-            class="writing-mode-vertical transform rotate-180 text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs uppercase tracking-widest font-bold"
-            title="Blog"
-            >Blog</a
-        >
+    <div id="nav-links" class="flex flex-row md:flex-col items-center gap-6 md:gap-8 flex-1 text-sm font-medium">
+        <a href="/#pillars"
+            class="nav-expand md:writing-mode-vertical text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs md:text-sm uppercase tracking-widest font-bold"
+            title="Pillars"><span class="nav-short">P</span><span class="nav-full">illars</span></a>
+        <a href="/#work"
+            class="nav-expand md:writing-mode-vertical text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs md:text-sm uppercase tracking-widest font-bold"
+            title="Projects"><span class="nav-short">P</span><span class="nav-full">rojects</span></a>
+        <a href="/posts"
+            class="nav-expand md:writing-mode-vertical text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors duration-300 text-xs md:text-sm uppercase tracking-widest font-bold"
+            title="Blog"><span class="nav-short">B</span><span class="nav-full">log</span></a>
     </div>
 
-    <div class="flex flex-col items-center gap-6 mt-auto">
-        <button
-            id="theme-toggle"
-            class="w-12 h-12 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 flex items-center justify-center text-gray-600 dark:text-gray-300"
-            aria-label="Toggle Theme"
-        >
-            <svg
-                id="sun-icon"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-                style="display: none"
-            >
+    <div class="flex flex-row md:flex-col items-center gap-4 md:gap-6 md:mt-auto">
+        <button id="theme-toggle"
+            class="w-8 h-8 md:w-12 md:h-12 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-300 flex items-center justify-center text-gray-600 dark:text-gray-300"
+            aria-label="Toggle Theme">
+            <svg id="sun-icon" class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                viewBox="0 0 24 24" style="display: none">
                 <circle cx="12" cy="12" r="5" />
                 <line x1="12" y1="1" x2="12" y2="3" />
                 <line x1="12" y1="21" x2="12" y2="23" />
@@ -409,28 +408,17 @@
                 <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
             </svg>
-            <svg
-                id="moon-icon"
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.5"
-                viewBox="0 0 24 24"
-            >
+            <svg id="moon-icon" class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" stroke-width="1.5"
+                viewBox="0 0 24 24">
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
         </button>
 
-        <a
-            href="/#contact"
-            id="nav-connect"
-            class="writing-mode-vertical transform rotate-180 px-3 py-6 rounded-full bg-black dark:bg-white text-white dark:text-black text-xs font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300"
-            title="Connect"
-            >Connect</a
-        >
+        <a href="/#contact" id="nav-connect"
+            class="nav-expand md:writing-mode-vertical px-4 py-2 md:px-3 md:py-6 rounded-full bg-black dark:bg-white text-white dark:text-black text-xs md:text-sm font-bold uppercase tracking-widest hover:scale-105 active:scale-95 transition-all duration-300"
+            title="Connect"><span class="nav-short">C</span><span class="nav-full">onnect</span></a>
     </div>
 </nav>
-
 
             <main class="relative z-10 min-h-screen flex flex-col ml-20">
                 
@@ -442,33 +430,37 @@
         </div>
     </div>
 
-    <div class="relative z-10 max-w-3xl mx-auto px-6">
-        
-        <header class="mb-20 text-center">
-            <div
-                class="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-8 backdrop-blur-md transition-all duration-500 bg-white/50 border-black/5 dark:bg-white/5 dark:border-white/10">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                <span
-                    class="text-[10px] uppercase tracking-[0.2em] font-mono font-medium text-gray-500 dark:text-gray-400">
-                    Log Entry
-                </span>
-            </div>
-
-            <h1 class="text-4xl md:text-6xl font-bold tracking-tighter mb-8 leading-[1.1] text-black dark:text-white">
-                Advanced Sampling Techniques: From Vinyl to Digital
-            </h1>
-
-            <div
-                class="flex items-center justify-center gap-6 text-xs font-mono uppercase tracking-widest text-gray-500 dark:text-gray-400 border-y border-black/5 dark:border-white/5 py-4 max-w-lg mx-auto">
-                <time>January 12, 2025</time>
-                <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></span>
-                <span>6 min read</span>
-            </div>
-        </header>
-
+    <div class="relative z-10 max-w-5xl mx-auto px-6">
         
         <div
-            class="blog-content prose prose-lg prose-neutral dark:prose-invert max-w-none 
+            class="bg-white/80 dark:bg-black/80 backdrop-blur-xl rounded-3xl p-8 md:p-12 shadow-2xl border border-black/5 dark:border-white/10">
+            
+            <header class="mb-12 text-center">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full border mb-8 bg-white/50 border-black/5 dark:bg-white/5 dark:border-white/10">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    <span
+                        class="text-[10px] uppercase tracking-[0.2em] font-mono font-medium text-gray-500 dark:text-gray-400">
+                        Log Entry
+                    </span>
+                </div>
+
+                <h1
+                    class="text-3xl md:text-5xl font-bold tracking-tighter mb-8 leading-[1.1] text-black dark:text-white">
+                    Advanced Sampling Techniques: From Vinyl to Digital
+                </h1>
+
+                <div
+                    class="flex items-center justify-center gap-6 text-xs font-mono uppercase tracking-widest text-gray-500 dark:text-gray-400 border-y border-black/5 dark:border-white/5 py-4 max-w-lg mx-auto">
+                    <time>January 12, 2025</time>
+                    <span class="w-1 h-1 rounded-full bg-gray-300 dark:bg-gray-700"></span>
+                    <span>6 min read</span>
+                </div>
+            </header>
+
+            
+            <div
+                class="blog-content prose prose-lg prose-neutral dark:prose-invert max-w-none 
             prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-black dark:prose-headings:text-white 
             prose-p:font-light prose-p:leading-loose prose-p:text-gray-600 dark:prose-p:text-gray-300 
             prose-a:font-medium prose-a:text-black dark:prose-a:text-white prose-a:no-underline prose-a:border-b prose-a:border-black/20 dark:prose-a:border-white/30 hover:prose-a:border-black dark:hover:prose-a:border-white prose-a:transition-all 
@@ -476,7 +468,7 @@
             prose-ul:list-disc prose-ul:pl-6 prose-li:marker:text-gray-300 dark:prose-li:marker:text-gray-600
             prose-blockquote:border-l-2 prose-blockquote:border-black dark:prose-blockquote:border-white prose-blockquote:font-normal prose-blockquote:italic prose-blockquote:pl-6 prose-blockquote:text-gray-500 dark:prose-blockquote:text-gray-400
             prose-img:rounded-2xl prose-img:shadow-2xl prose-img:border prose-img:border-black/5 dark:prose-img:border-white/10">
-            <p>Sampling is an art form. It&rsquo;s not just about finding a cool loop—it&rsquo;s about transformation, context, and creating something entirely new from existing material.</p>
+                <p>Sampling is an art form. It&rsquo;s not just about finding a cool loop—it&rsquo;s about transformation, context, and creating something entirely new from existing material.</p>
 <p>Here&rsquo;s how I approach sampling in my productions.</p>
 <h2 id="the-philosophy-of-sampling">The Philosophy of Sampling</h2>
 <p>Sampling is <strong>data transformation in the sonic domain</strong>.</p>
@@ -673,27 +665,28 @@
 <p>The challenge: Make industrial noise sound musical.</p>
 <p><strong>What&rsquo;s your sampling workflow?</strong> What sources do you use? Let me know—I&rsquo;m always looking for new techniques.</p>
 
-        </div>
+            </div>
 
-        
-        <div class="mt-32 pt-12 border-t border-black/5 dark:border-white/5 flex justify-between items-center">
-            <a href="/posts"
-                class="group inline-flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black dark:hover:text-white transition-colors">
-                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor"
-                    stroke-width="1.5" viewBox="0 0 24 24">
-                    <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="square" />
-                </svg>
-                Return to Logs
-            </a>
+            
+            <div class="mt-20 pt-12 border-t border-black/5 dark:border-white/5 flex justify-between items-center">
+                <a href="/posts"
+                    class="group inline-flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+                    <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none"
+                        stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="square" />
+                    </svg>
+                    Return to Logs
+                </a>
 
-            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-                class="group inline-flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black dark:hover:text-white transition-colors">
-                Top
-                <svg class="w-4 h-4 transition-transform group-hover:-translate-y-1" fill="none" stroke="currentColor"
-                    stroke-width="1.5" viewBox="0 0 24 24">
-                    <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="square" />
-                </svg>
-            </button>
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                    class="group inline-flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-black dark:hover:text-white transition-colors">
+                    Top
+                    <svg class="w-4 h-4 transition-transform group-hover:-translate-y-1" fill="none"
+                        stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                        <path d="M12 19V5M5 12l7-7 7 7" stroke-linecap="square" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
 </article>

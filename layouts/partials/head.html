@@ -324,8 +324,41 @@
             border-radius: 4px;
         }
 
+
         .dark .code-window pre::-webkit-scrollbar-thumb {
             background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Navbar Hover Expansion */
+        .nav-expand .nav-full {
+            display: none;
+        }
+
+        .nav-expand:hover .nav-full {
+            display: inline;
+        }
+
+        .nav-expand:hover .nav-short {
+            display: none;
+        }
+
+        /* Mobile: always show full text */
+        @media (max-width: 767px) {
+            .nav-expand .nav-short {
+                display: none;
+            }
+
+            .nav-expand .nav-full {
+                display: inline;
+            }
+        }
+
+        /* Navbar Width Expansion on Hover (Desktop only) */
+        @media (min-width: 768px) {
+            #navbar:has(.nav-expand:hover) {
+                width: 8rem !important;
+                /* w-32 = 128px */
+            }
         }
     </style>
 </head>

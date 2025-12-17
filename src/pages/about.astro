@@ -1,0 +1,411 @@
+---
+// src/pages/about.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="About System">
+    <div class="dashboard-container">
+        <div class="bento-grid">
+            <div class="bento-item hero span-2-col span-2-row fade-in delay-1">
+                <div class="content">
+                    <span class="label">/usr/bin/whoami</span>
+                    <h2>Hello, I'm Yojan.</h2>
+                    <p class="bio">
+                        I am a <b>PhD Researcher</b> at GMU specializing in autonomous
+                        systems. I bridge the gap between algorithms and hardware
+                        using
+                        <b>Rust</b>, <b>Embedded Linux</b>and <b
+                            >Control Theory</b
+                        >.
+                    </p>
+                    <div class="status-badge">
+                        <span class="dot pulsing"></span> SYSTEM STATUS: RESEARCHING
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-item avatar span-2-col fade-in delay-2">
+                <div class="glitch-container">
+                    <div class="cyber-face">IMG_01.RAW</div>
+                    <div class="scanline"></div>
+                </div>
+            </div>
+
+            <div class="bento-item lab fade-in delay-3">
+                <div class="card-header">
+                    <span class="label">LAB FOCUS</span>
+                </div>
+                <h3>Blimps</h3>
+            </div>
+
+            <div class="bento-item music fade-in delay-3">
+                <div class="card-header">
+                    <span class="label">DSP / AUDIO</span>
+                </div>
+                <div class="waveform-visualizer">
+                    <div class="bar b1"></div>
+                    <div class="bar b2"></div>
+                    <div class="bar b3"></div>
+                    <div class="bar b4"></div>
+                </div>
+            </div>
+
+            <div class="bento-item stack span-4-col fade-in delay-4">
+                <div class="marquee-wrapper">
+                    <div class="marquee-content">
+                        <span>RUST //</span>
+                        <span>PYTHON //</span>
+                        <span>C++ //</span>
+                        <span>ZENOH //</span>
+                        <span>ROS2 //</span>
+                        <span>EMBEDDED //</span>
+                        <span>LINUX //</span>
+                        <span>NIXOS //</span>
+                        <span>JUCE //</span>
+                        <span>DSP //</span>
+                        <span>RUST //</span>
+                        <span>PYTHON //</span>
+                        <span>C++ //</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-item connect span-2-col fade-in delay-5">
+                <a
+                    href="https://github.com/"
+                    target="_blank"
+                    class="social-link">GITHUB</a
+                >
+                <span class="separator">/</span>
+                <a
+                    href="https://linkedin.com/"
+                    target="_blank"
+                    class="social-link">LINKEDIN</a
+                >
+                <span class="separator">/</span>
+                <a href="mailto:your@email.com" class="social-link">EMAIL</a>
+            </div>
+
+            <div class="bento-item task span-2-col fade-in delay-5">
+                <span class="prompt">></span>
+                <span class="cmd">make build --release</span>
+                <span class="cursor">_</span>
+            </div>
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    /* --- DASHBOARD CONTAINER --- */
+    .dashboard-container {
+        /* Full viewport height minus Nav (approx 80px) and margins */
+        height: calc(100vh - 100px);
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1rem 2rem 2rem 2rem;
+        overflow: hidden; /* Prevent scrolling */
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* --- THE GRID --- */
+    .bento-grid {
+        display: grid;
+        height: 100%;
+        /* 4 Columns, 4 Rows */
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 2fr 1fr 0.8fr 0.8fr; /* Fractions define height */
+        gap: 1rem;
+    }
+
+    /* --- ITEM STYLES --- */
+    .bento-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .bento-item:hover {
+        border-color: var(--accent);
+        background: var(--mono-bg);
+    }
+
+    /* Grid Spans */
+    .span-2-col {
+        grid-column: span 2;
+    }
+    .span-4-col {
+        grid-column: span 4;
+    }
+    .span-2-row {
+        grid-row: span 2;
+    }
+
+    /* --- CONTENT TWEAKS --- */
+
+    /* Hero */
+    .hero .content {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .hero h2 {
+        font-size: clamp(1.5rem, 4vw, 3rem);
+        margin: 0;
+        line-height: 1.1;
+    }
+    .bio {
+        font-size: clamp(0.9rem, 1vw, 1.1rem);
+        opacity: 0.8;
+        margin: 1rem 0;
+        line-height: 1.5;
+    }
+    .status-badge {
+        font-family: var(--font-code);
+        font-size: 0.75rem;
+        color: #00ff41;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .dot {
+        width: 6px;
+        height: 6px;
+        background: #00ff41;
+        border-radius: 50%;
+    }
+
+    /* Avatar */
+    .avatar {
+        background: #000;
+        align-items: center;
+    }
+    .cyber-face {
+        font-family: var(--font-code);
+        color: var(--accent);
+        letter-spacing: 2px;
+    }
+    .scanline {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 20%;
+        background: linear-gradient(
+            to bottom,
+            transparent,
+            var(--accent),
+            transparent
+        );
+        opacity: 0.1;
+        animation: scan 4s linear infinite;
+    }
+
+    /* Stack */
+    .stack {
+        padding: 0;
+        background: var(--mono-bg);
+        border: none;
+        align-items: center;
+    }
+    .marquee-wrapper {
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .marquee-content {
+        display: inline-block;
+        animation: marquee 20s linear infinite;
+        font-family: var(--font-code);
+        font-weight: bold;
+        color: var(--text);
+        font-size: 1.2rem;
+    }
+    .marquee-content span {
+        margin-right: 3rem;
+    }
+
+    /* Lab & Music */
+    .lab h3 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+    .label {
+        font-family: var(--font-code);
+        font-size: 0.7rem;
+        opacity: 0.5;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .waveform-visualizer {
+        display: flex;
+        gap: 4px;
+        align-items: flex-end;
+        height: 30px;
+    }
+    .bar {
+        width: 6px;
+        background: var(--accent);
+        animation: visualize 1s ease-in-out infinite alternate;
+    }
+    .b1 {
+        height: 40%;
+    }
+    .b2 {
+        height: 80%;
+        animation-delay: 0.1s;
+    }
+    .b3 {
+        height: 60%;
+        animation-delay: 0.2s;
+    }
+    .b4 {
+        height: 90%;
+        animation-delay: 0.3s;
+    }
+
+    /* Connect & Task */
+    .connect {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        font-family: var(--font-code);
+        font-size: 0.9rem;
+    }
+    .social-link {
+        text-decoration: none;
+        color: var(--text);
+        font-weight: bold;
+    }
+    .social-link:hover {
+        color: var(--accent);
+    }
+    .separator {
+        opacity: 0.3;
+    }
+
+    .task {
+        font-family: var(--font-code);
+        font-size: 0.9rem;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 10px;
+        background: #000;
+    }
+    .prompt {
+        color: #00ff41;
+    }
+    .cmd {
+        color: #fff;
+    }
+    .cursor {
+        animation: blink 1s step-end infinite;
+    }
+
+    /* --- ANIMATIONS --- */
+    @keyframes scan {
+        0% {
+            top: -20%;
+        }
+        100% {
+            top: 120%;
+        }
+    }
+    @keyframes marquee {
+        0% {
+            transform: translateX(0);
+        }
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+    @keyframes pulseFast {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0.5;
+        }
+    }
+    @keyframes blink {
+        50% {
+            opacity: 0;
+        }
+    }
+    @keyframes visualize {
+        0% {
+            transform: scaleY(0.5);
+        }
+        100% {
+            transform: scaleY(1);
+        }
+    }
+    .pulsing {
+        animation: pulseFast 2s infinite;
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.5s ease forwards;
+    }
+    .delay-1 {
+        animation-delay: 0.1s;
+    }
+    .delay-2 {
+        animation-delay: 0.2s;
+    }
+    .delay-3 {
+        animation-delay: 0.3s;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* --- MOBILE RESPONSIVE (Must Scroll on Mobile) --- */
+    @media (max-width: 900px) {
+        .dashboard-container {
+            height: auto;
+            overflow: visible;
+            padding: 2rem 1rem;
+        }
+        .bento-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .span-2-col,
+        .span-4-col,
+        .span-2-row {
+            grid-column: auto;
+            grid-row: auto;
+        }
+        .hero {
+            height: auto;
+            min-height: 250px;
+        }
+        .avatar {
+            height: 150px;
+        }
+        .stack {
+            height: 60px;
+        }
+    }
+</style>

@@ -1,0 +1,212 @@
+---
+// src/layouts/BlogPost.astro
+import BaseLayout from "./BaseLayout.astro";
+import type { CollectionEntry } from "astro:content";
+
+type Props = CollectionEntry<"blog">["data"];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+
+// Format date for the "file metadata" look
+const dateStr = pubDate.toLocaleDateString("en-us", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+});
+---
+
+<BaseLayout title={title}>
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+        integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV"
+        crossorigin="anonymous"
+    />
+
+    <article class="post-container fade-in">
+        <div class="post-nav">
+            <a href="/blog" class="back-link">
+                <span class="prompt">➜</span> cd ..
+            </a>
+            <span class="path">~/logs/{dateStr}</span>
+        </div>
+
+        <header class="post-header">
+            <div class="meta">
+                <span class="tag">PUBLIC</span>
+                {updatedDate && <span class="tag update">UPDATED</span>}
+            </div>
+
+            <h1 class="title">{title}</h1>
+            <p class="description">// {description}</p>
+
+            <hr class="separator" />
+        </header>
+
+        <div class="prose">
+            <slot />
+        </div>
+    </article>
+</BaseLayout>
+
+<style>
+    .post-container {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 2rem 1rem 6rem 1rem;
+    }
+
+    /* --- NAVIGATION --- */
+    .post-nav {
+        display: flex;
+        justify-content: space-between;
+        font-family: var(--font-code);
+        font-size: 0.9rem;
+        margin-bottom: 3rem;
+        opacity: 0.7;
+    }
+    .back-link {
+        text-decoration: none;
+        color: var(--accent);
+        transition: opacity 0.2s;
+    }
+    .back-link:hover {
+        opacity: 1;
+        text-decoration: underline;
+    }
+    .prompt {
+        margin-right: 0.5rem;
+        color: #27c93f;
+    }
+
+    /* --- HEADER --- */
+    .post-header {
+        margin-bottom: 3rem;
+    }
+
+    .meta {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    .tag {
+        font-family: var(--font-code);
+        font-size: 0.7rem;
+        background: var(--mono-bg);
+        color: var(--text);
+        padding: 2px 6px;
+        border-radius: 4px;
+    }
+
+    .title {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin: 0 0 1rem 0;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+    }
+
+    .description {
+        font-family: var(--font-code);
+        color: #888;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .separator {
+        border: 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    /* --- PROSE (The actual content styling) --- */
+    .prose {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--text);
+    }
+
+    /* Typography Overrides for Markdown */
+    .prose :global(h2) {
+        font-size: 1.8rem;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        border-left: 3px solid var(--accent);
+        padding-left: 1rem;
+    }
+
+    .prose :global(h3) {
+        font-size: 1.4rem;
+        margin-top: 2rem;
+        font-weight: 600;
+    }
+
+    .prose :global(p) {
+        margin-bottom: 1.5rem;
+    }
+
+    .prose :global(a) {
+        color: var(--accent);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+    }
+
+    /* Code Blocks */
+    .prose :global(pre) {
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        background: #1a1a1a !important; /* Force dark bg for code */
+        font-family: var(--font-code) !important;
+        font-size: 0.9rem;
+        overflow-x: auto;
+    }
+
+    /* Inline Code */
+    .prose :global(code):not(:global(pre code)) {
+        background: var(--mono-bg);
+        color: var(--accent);
+        font-family: var(--font-code);
+        padding: 2px 4px;
+        border-radius: 4px;
+        font-size: 0.85em;
+    }
+
+    /* Blockquotes */
+    .prose :global(blockquote) {
+        border-left: 3px solid #666;
+        margin: 2rem 0;
+        padding-left: 1.5rem;
+        font-style: italic;
+        color: #888;
+    }
+
+    /* Math (KaTeX) Adjustments */
+    .prose :global(.katex-display) {
+        margin: 2rem 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
+    /* Images */
+    .prose :global(img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        margin: 2rem 0;
+    }
+
+    /* Light Mode specifics */
+    body.light-mode .prose {
+        color: #222;
+    }
+    body.light-mode .description {
+        color: #555;
+    }
+    body.light-mode .prose :global(pre) {
+        border-color: #ddd;
+    }
+</style>

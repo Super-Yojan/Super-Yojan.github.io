@@ -1,0 +1,208 @@
+---
+// src/pages/blog/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// 1. Fetch and sort posts
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// 2. Helper to format date like a terminal timestamp (e.g. "Oct 05 14:30")
+function formatDate(date) {
+    return date.toLocaleDateString('en-us', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric'
+    });
+}
+---
+
+<BaseLayout title="System Logs">
+    <div class="terminal-wrapper">
+        
+        <div class="terminal-header">
+            <div class="buttons">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+            </div>
+            <div class="title">yojan@gmu: ~/logs</div>
+        </div>
+
+        <div class="terminal-window">
+            
+            <div class="command-line">
+                <span class="prompt">➜</span> 
+                <span class="directory">~/logs</span> 
+                <span class="git-branch">(main)</span> 
+                <span class="cmd">ls -l --sort=date</span>
+            </div>
+
+            <div class="file-list">
+                <div class="table-header">
+                    <span class="col-perm">PERMISSIONS</span>
+                    <span class="col-date">DATE_MOD</span>
+                    <span class="col-name">FILENAME / TITLE</span>
+                    <span class="col-desc">DESCRIPTION</span>
+                </div>
+
+                {posts.map((post) => (
+                    <a href={`/blog/${post.id}/`} class="file-row fade-in">
+                        <span class="col-perm">-rw-r--r--</span>
+                        <span class="col-date">{formatDate(post.data.pubDate)}</span>
+                        <span class="col-name">{post.data.title}<span class="extension">.md</span></span>
+                        <span class="col-desc mobile-hide">// {post.data.description}</span>
+                    </a>
+                ))}
+            </div>
+
+            <div class="command-line mt-4">
+                <span class="prompt">➜</span> 
+                <span class="directory">~/logs</span> 
+                <span class="git-branch">(main)</span> 
+                <span class="cursor">█</span>
+            </div>
+
+        </div>
+    </div>
+</BaseLayout>
+
+<style>
+    /* --- TERMINAL CONTAINER --- */
+    .terminal-wrapper {
+        max-width: 900px;
+        margin: 4rem auto;
+        padding: 0 1rem;
+        font-family: var(--font-code); /* JetBrains Mono */
+    }
+
+    /* Window Decoration (Mac/Linux style) */
+    .terminal-header {
+        background: var(--mono-bg);
+        border: 1px solid var(--border);
+        border-bottom: none;
+        padding: 0.8rem 1rem;
+        border-radius: 8px 8px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .buttons {
+        position: absolute;
+        left: 1rem;
+        display: flex;
+        gap: 6px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .red { background: #ff5f56; }
+    .yellow { background: #ffbd2e; }
+    .green { background: #27c93f; }
+
+    .title {
+        font-size: 0.8rem;
+        color: var(--text);
+        opacity: 0.6;
+    }
+
+    .terminal-window {
+        background: rgba(0,0,0,0.3); /* Slightly darker than bg */
+        border: 1px solid var(--border);
+        border-radius: 0 0 8px 8px;
+        padding: 2rem;
+        min-height: 400px;
+    }
+    body.light-mode .terminal-window {
+        background: #fff;
+        border-color: #ccc;
+    }
+
+    /* --- COMMAND LINE STYLE --- */
+    .command-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.9rem;
+    }
+    .prompt { color: #27c93f; font-weight: bold; }
+    .directory { color: #00e5ff; }
+    .git-branch { color: #666; }
+    .cmd { color: var(--text); }
+    .mt-4 { margin-top: 2rem; }
+
+    /* --- FILE LIST (TABLE) --- */
+    .file-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .table-header {
+        display: grid;
+        grid-template-columns: 100px 120px 1fr 1fr;
+        gap: 1rem;
+        padding: 0.5rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--text);
+        opacity: 0.5;
+    }
+
+    .file-row {
+        display: grid;
+        grid-template-columns: 100px 120px 1fr 1fr;
+        gap: 1rem;
+        text-decoration: none;
+        color: var(--text);
+        padding: 0.5rem;
+        transition: background 0.1s;
+        align-items: center;
+    }
+
+    .file-row:hover {
+        background: var(--mono-bg);
+    }
+
+    .file-row:hover .col-name {
+        color: var(--accent);
+        font-weight: bold;
+    }
+
+    /* Column Styles */
+    .col-perm { color: #666; font-size: 0.85rem; }
+    .col-date { color: var(--text); font-size: 0.85rem; opacity: 0.8; }
+    .col-name { color: var(--text); }
+    .extension { opacity: 0.5; }
+    .col-desc { color: #888; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* Cursor Blink */
+    .cursor {
+        color: var(--text);
+        animation: blink 1s step-end infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    /* Light Mode Tweaks */
+    body.light-mode .directory { color: #0056b3; }
+    body.light-mode .prompt { color: #008000; }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+        .table-header { display: none; } /* Hide headers on mobile */
+        
+        .file-row {
+            grid-template-columns: 1fr; /* Stack everything */
+            gap: 0.2rem;
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0.5rem;
+        }
+        
+        .col-perm, .mobile-hide { display: none; }
+        .col-date { font-size: 0.75rem; color: var(--accent); }
+        .col-name { font-size: 1rem; }
+    }
+</style>

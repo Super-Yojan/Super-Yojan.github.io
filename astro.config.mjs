@@ -7,7 +7,7 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 export default defineConfig({
-  site: "https://super-yojan.github.io",
+  site: "https://super-yojan.dev",
   integrations: [mdx(), sitemap()],
   // 2. Configure Markdown
   markdown: {

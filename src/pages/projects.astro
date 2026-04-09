@@ -4,35 +4,59 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const projects = [
   {
-    title: "Autonomous Blimp Framework",
+    title: "Autonomous Blimp — 152–0",
     id: "PRJ-001",
-    status: "Active",
-    tags: ["Rust", "Zenoh", "Robotics"],
-    desc: "A lightweight control framework for indoor autonomous blimps using the Zenoh protocol for low-latency communication. Replaces ROS2 for embedded constraints.",
-    link: "https://github.com/yourusername/blimp"
-  },
-  {
-    title: "Nepalese Instrument Sampler",
-    id: "PRJ-002",
-    status: "Beta",
-    tags: ["C++", "JUCE", "DSP"],
-    desc: "VST3/AU Audio plugin preserving traditional Nepali sounds. Features spectral modelling of the Sarangi and Madal instruments.",
-    link: "#"
-  },
-  {
-    title: "Thrust Measurement Stand",
-    id: "HW-04",
     status: "Completed",
-    tags: ["Arduino", "Hardware", "C"],
-    desc: "Custom test rig using HX711 load cells to characterize micro-motor performance data for blimp propulsion optimization.",
+    tags: ["Computer Vision", "Control Systems", "ROS", "C++"],
+    desc: "Wrote the full autonomous stack for a competition blimp: ball detection, tracking, and capture. Won by the largest recorded margin (152–0). Then rebuilt the platform to be cheaper and more compact without losing performance.",
     link: "#"
   },
   {
-    title: "Dotfiles & Emacs Config",
-    id: "SYS-09",
-    status: "Maintenance",
-    tags: ["Lisp", "Nix", "Linux"],
-    desc: "My personal development environment. Heavily customized Evil-mode Emacs with LSP bridge for Rust and Python.",
+    title: "Databuoy — Full Stack Sensor Infrastructure",
+    id: "PRJ-002",
+    status: "Completed",
+    tags: ["U-Boot", "FPGA", "Embedded C", "Linux"],
+    desc: "Owned U-Boot and boot sequences for deployed gunshot-detection sensors. Built automated hardware testing, a full-stack web relay (UI + backend + relay firmware), FPGA autocorrelation algorithm, Linux image maintenance, and a drone sound detection pipeline with live visualization and labeling tools.",
+    link: "#"
+  },
+  {
+    title: "CTF Platform — 500+ Teams, Age 17",
+    id: "PRJ-003",
+    status: "Completed",
+    tags: ["Security", "FPGA", "Web", "Hardware"],
+    desc: "Built a CTF platform from scratch in high school and hosted a county-wide and international competition. Later created FPGA and hardware challenges for Patriot CTF and competed in MACCDC (Cyber Defense Competition). Won Cyber Fusion CTF.",
+    link: "#"
+  },
+  {
+    title: "Blimp Kit — Designed, Built, Sold",
+    id: "PRJ-004",
+    status: "Completed",
+    tags: ["PCB Design", "CAD", "iOS", "Education"],
+    desc: "Designed the PCB, all 3D printed components, and a companion app for a complete blimp kit. Sold 20 units to middle schoolers and organized a competition around them. End-to-end product ownership: hardware, firmware, mobile.",
+    link: "#"
+  },
+  {
+    title: "Raytheon Drone — Water-Pouring Interceptor",
+    id: "PRJ-005",
+    status: "Completed",
+    tags: ["Drones", "Computer Vision", "Team Lead", "ROS"],
+    desc: "Led a team to build an autonomous drone that detected an opponent ground vehicle and poured water on it. Team lead across hardware, autonomy, and mission planning.",
+    link: "#"
+  },
+  {
+    title: "CIAO Lab — Multi-Agent Autonomous Systems (PhD)",
+    id: "PRJ-006",
+    status: "Active",
+    tags: ["Control Theory", "Reinforcement Learning", "Python", "Rust"],
+    desc: "Research at GMU covering blimp pitch control, optical flow navigation, OptiTrack/IMU pipelines, differential thrust vectoring, and heterogeneous multi-agent coordination across aerial, ground, and underwater platforms.",
+    link: "#"
+  },
+  {
+    title: "Patriot Hacks — Sustainability Award, 3rd Place",
+    id: "PRJ-007",
+    status: "Completed",
+    tags: ["Computer Vision", "Reinforcement Learning", "Sustainability", "Hackathon"],
+    desc: "Before LLMs made generative AI mainstream, built an app that used computer vision and a multi-model RL pipeline to scan household objects and generate step-by-step DIY build guides. Added a social layer so neighbors could share parts they'd otherwise discard — making one person's trash another's raw material.",
     link: "#"
   }
 ];
@@ -43,7 +67,7 @@ const projects = [
         
         <header class="page-header">
             <h1>Engineering <span class="highlight">Logs</span></h1>
-            <p class="subtitle">System Design / Hardware / Audio</p>
+            <p class="subtitle">Hardware / Robotics / Systems / Security / Product</p>
         </header>
 
         <div class="grid">

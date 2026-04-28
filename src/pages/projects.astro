@@ -1,227 +1,479 @@
 ---
-// src/pages/projects.astro
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-const projects = [
-  {
-    title: "Autonomous Blimp — 152–0",
-    id: "PRJ-001",
-    status: "Completed",
-    tags: ["Computer Vision", "Control Systems", "ROS", "C++"],
-    desc: "Wrote the full autonomous stack for a competition blimp: ball detection, tracking, and capture. Won by the largest recorded margin (152–0). Then rebuilt the platform to be cheaper and more compact without losing performance.",
-    link: "#"
-  },
-  {
-    title: "Databuoy — Full Stack Sensor Infrastructure",
-    id: "PRJ-002",
-    status: "Completed",
-    tags: ["U-Boot", "FPGA", "Embedded C", "Linux"],
-    desc: "Owned U-Boot and boot sequences for deployed gunshot-detection sensors. Built automated hardware testing, a full-stack web relay (UI + backend + relay firmware), FPGA autocorrelation algorithm, Linux image maintenance, and a drone sound detection pipeline with live visualization and labeling tools.",
-    link: "#"
-  },
-  {
-    title: "CTF Platform — 500+ Teams, Age 17",
-    id: "PRJ-003",
-    status: "Completed",
-    tags: ["Security", "FPGA", "Web", "Hardware"],
-    desc: "Built a CTF platform from scratch in high school and hosted a county-wide and international competition. Later created FPGA and hardware challenges for Patriot CTF and competed in MACCDC (Cyber Defense Competition). Won Cyber Fusion CTF.",
-    link: "#"
-  },
-  {
-    title: "Blimp Kit — Designed, Built, Sold",
-    id: "PRJ-004",
-    status: "Completed",
-    tags: ["PCB Design", "CAD", "iOS", "Education"],
-    desc: "Designed the PCB, all 3D printed components, and a companion app for a complete blimp kit. Sold 20 units to middle schoolers and organized a competition around them. End-to-end product ownership: hardware, firmware, mobile.",
-    link: "#"
-  },
-  {
-    title: "Raytheon Drone — Water-Pouring Interceptor",
-    id: "PRJ-005",
-    status: "Completed",
-    tags: ["Drones", "Computer Vision", "Team Lead", "ROS"],
-    desc: "Led a team to build an autonomous drone that detected an opponent ground vehicle and poured water on it. Team lead across hardware, autonomy, and mission planning.",
-    link: "#"
-  },
-  {
-    title: "CIAO Lab — Multi-Agent Autonomous Systems (PhD)",
-    id: "PRJ-006",
-    status: "Active",
-    tags: ["Control Theory", "Reinforcement Learning", "Python", "Rust"],
-    desc: "Research at GMU covering blimp pitch control, optical flow navigation, OptiTrack/IMU pipelines, differential thrust vectoring, and heterogeneous multi-agent coordination across aerial, ground, and underwater platforms.",
-    link: "#"
-  },
-  {
-    title: "Patriot Hacks — Sustainability Award, 3rd Place",
-    id: "PRJ-007",
-    status: "Completed",
-    tags: ["Computer Vision", "Reinforcement Learning", "Sustainability", "Hackathon"],
-    desc: "Before LLMs made generative AI mainstream, built an app that used computer vision and a multi-model RL pipeline to scan household objects and generate step-by-step DIY build guides. Added a social layer so neighbors could share parts they'd otherwise discard — making one person's trash another's raw material.",
-    link: "#"
-  }
+type Vis = "blimp" | "glid" | "ctf" | "motor" | "yt" | "fpga";
+type Project = {
+    id: string;
+    title: string;
+    year: string;
+    layout: "feature" | "side" | "half" | "third";
+    desc: string;
+    status: string;
+    statusKey: "live" | "building" | "archived";
+    metrics: { v: string; l: string }[];
+    tags: string[];
+    vis: Vis;
+};
+
+const projects: Project[] = [
+    {
+        id: "P-01",
+        title: "Glid",
+        year: "2025–",
+        layout: "feature",
+        desc: "A consumer mobility app for the DMV — solo founder build. Native SwiftUI + Rust backend. In closed beta with ~300 daily actives.",
+        status: "Building (Beta)",
+        statusKey: "building",
+        metrics: [
+            { v: "300", l: "DAU" },
+            { v: "99.4%", l: "API uptime" },
+            { v: "< 80ms", l: "p50 latency" },
+        ],
+        tags: ["CONSUMER", "RUST", "SWIFTUI", "POSTGRES"],
+        vis: "glid",
+    },
+    {
+        id: "P-02",
+        title: "Autonomous Blimp · 152–0",
+        year: "2024",
+        layout: "side",
+        desc: "Autonomy stack for an indoor blimp competition. Kalman filter state estimation, Rust runtime, ROS2 bridges. Swept the bracket.",
+        status: "Shipped",
+        statusKey: "live",
+        metrics: [
+            { v: "152–0", l: "final" },
+            { v: "11 ms", l: "EKF lock" },
+        ],
+        tags: ["ROBOTICS", "RUST", "ROS2", "RESEARCH"],
+        vis: "blimp",
+    },
+    {
+        id: "P-03",
+        title: "BLDC Thrust Modeling",
+        year: "2025",
+        layout: "half",
+        desc: "First-order model for BLDC rise time. Empirical τ ≈ 0.227s. Released as open-source Python lib + companion blog post.",
+        status: "Released",
+        statusKey: "live",
+        metrics: [
+            { v: "τ ≈ 0.227s", l: "" },
+            { v: "4.2k", l: "reads" },
+        ],
+        tags: ["ROBOTICS", "CONTROL", "RESEARCH", "PYTHON"],
+        vis: "motor",
+    },
+    {
+        id: "P-04",
+        title: "CTF Platform — Age 17",
+        year: "2018",
+        layout: "half",
+        desc: "Built a capture-the-flag platform from scratch in Go and hosted an international competition with 500+ teams. Where it started.",
+        status: "Archived",
+        statusKey: "archived",
+        metrics: [
+            { v: "500+", l: "teams" },
+            { v: "14 days", l: "live" },
+        ],
+        tags: ["SECURITY", "GO", "INFRA"],
+        vis: "ctf",
+    },
+    {
+        id: "P-05",
+        title: "YouTube · @Super-Yojan",
+        year: "2024–",
+        layout: "third",
+        desc: "Long-form videos on robotics, control theory, and Rust. 12-minute average watch time.",
+        status: "Active",
+        statusKey: "live",
+        metrics: [
+            { v: "11.2k", l: "subs" },
+            { v: "12 min", l: "AVD" },
+        ],
+        tags: ["CONSUMER", "CONTENT"],
+        vis: "yt",
+    },
+    {
+        id: "P-06",
+        title: "FPGA U-Boot Bringup",
+        year: "2023",
+        layout: "third",
+        desc: "Low-level U-Boot port + custom VHDL peripheral block for an internal evaluation board (Databuoy).",
+        status: "Shipped",
+        statusKey: "live",
+        metrics: [
+            { v: "4 KLOC", l: "VHDL" },
+            { v: "< 90ms", l: "boot" },
+        ],
+        tags: ["EMBEDDED", "FPGA", "C"],
+        vis: "fpga",
+    },
+    {
+        id: "P-07",
+        title: "Multi-Agent Coordination",
+        year: "2026",
+        layout: "third",
+        desc: "PhD work — distributed consensus under intermittent comms. Paper in draft, simulator open-sourced.",
+        status: "In progress",
+        statusKey: "building",
+        metrics: [
+            { v: "6 agents", l: "sim" },
+            { v: "Q3", l: "submission" },
+        ],
+        tags: ["RESEARCH", "ROBOTICS", "PYTHON"],
+        vis: "blimp",
+    },
 ];
+
+const filters = [
+    "ALL",
+    "ROBOTICS",
+    "EMBEDDED",
+    "CONSUMER",
+    "SECURITY",
+    "RESEARCH",
+] as const;
 ---
 
-<BaseLayout title="Engineering Logs">
-    <div class="archive-container">
-        
-        <header class="page-header">
-            <h1>Engineering <span class="highlight">Logs</span></h1>
-            <p class="subtitle">Hardware / Robotics / Systems / Security / Product</p>
+<BaseLayout
+    title="Projects"
+    description="Selected work across robotics, embedded, consumer, and research."
+>
+    <div class="page">
+        <header class="page-intro">
+            <div>
+                <div class="breadcrumb">~/projects (ls -l --sort=date)</div>
+                <h1>Projects.</h1>
+                <p class="lede">
+                    Selected work across robotics, embedded, consumer, and
+                    research. The list is opinionated — only systems I built
+                    end-to-end.
+                </p>
+            </div>
+            <div class="summary">
+                <div><b>14</b> repositories tracked</div>
+                <div><b>3</b> shipped in 2026</div>
+                <div><b>1</b> in active beta</div>
+            </div>
         </header>
 
-        <div class="grid">
-            {projects.map((project, index) => (
-                <a href={project.link} class="card fade-in" style={`animation-delay: ${index * 0.1}s`}>
-                    <div class="card-header">
-                        <span class="project-id">{project.id}</span>
-                        <span class={`status-badge ${project.status.toLowerCase()}`}>{project.status}</span>
-                    </div>
-                    
-                    <h3>{project.title}</h3>
-                    <p>{project.desc}</p>
-                    
-                    <div class="tags">
-                        {project.tags.map(tag => (
-                            <span class="tag">#{tag}</span>
-                        ))}
-                    </div>
-                    
-                    <div class="card-footer">
-                        <span class="link-arrow">ACCESS_REPO -></span>
-                    </div>
-                </a>
-            ))}
+        <div class="filter-row" id="filter-row">
+            {
+                filters.map((f) => (
+                    <button
+                        class={"filter-chip" + (f === "ALL" ? " on" : "")}
+                        data-filter={f}
+                    >
+                        {f}
+                    </button>
+                ))
+            }
+            <span class="filter-meta" id="filter-count">
+                {projects.length} matching //
+            </span>
         </div>
 
+        <div class="proj-grid" id="proj-grid">
+            {
+                projects.map((p) => (
+                    <article
+                        class={"proj " + p.layout + " fade-in"}
+                        data-tags={p.tags.join(",")}
+                    >
+                        <span class="open">OPEN →</span>
+                        <div class="pheader">
+                            <div>
+                                <div class="pid">
+                                    {p.id} // {p.year}
+                                </div>
+                                <h3 class="ptitle">{p.title}</h3>
+                            </div>
+                            <div
+                                class="pmeta"
+                                style="flex-direction: column; align-items: flex-end; gap: 4px;"
+                            >
+                                <div
+                                    style="display: flex; gap: 6px; align-items: center;"
+                                >
+                                    <span class={"dot " + p.statusKey} />
+                                    <span style="text-transform: uppercase;">
+                                        {p.status}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pvis">
+                            {p.vis === "glid" && (
+                                <svg viewBox="0 0 240 100">
+                                    <rect
+                                        x="20"
+                                        y="20"
+                                        width="56"
+                                        height="60"
+                                        rx="8"
+                                    />
+                                    <rect
+                                        x="92"
+                                        y="20"
+                                        width="56"
+                                        height="60"
+                                        rx="8"
+                                    />
+                                    <rect
+                                        x="164"
+                                        y="20"
+                                        width="56"
+                                        height="60"
+                                        rx="8"
+                                    />
+                                    <line x1="48" y1="38" x2="64" y2="38" />
+                                    <line x1="48" y1="50" x2="58" y2="50" />
+                                    <line x1="120" y1="38" x2="136" y2="38" />
+                                    <line x1="120" y1="50" x2="130" y2="50" />
+                                    <line x1="192" y1="38" x2="208" y2="38" />
+                                    <line x1="192" y1="50" x2="202" y2="50" />
+                                    <circle
+                                        cx="48"
+                                        cy="68"
+                                        r="3"
+                                        class="dot"
+                                    />
+                                    <circle
+                                        cx="120"
+                                        cy="68"
+                                        r="3"
+                                        class="dot"
+                                    />
+                                    <circle
+                                        cx="192"
+                                        cy="68"
+                                        r="3"
+                                        class="dot"
+                                    />
+                                </svg>
+                            )}
+                            {p.vis === "blimp" && (
+                                <svg viewBox="0 0 240 100">
+                                    <ellipse cx="120" cy="50" rx="80" ry="22" />
+                                    <line
+                                        x1="40"
+                                        y1="50"
+                                        x2="200"
+                                        y2="50"
+                                        class="muted"
+                                        stroke-dasharray="2 4"
+                                    />
+                                    <rect
+                                        x="105"
+                                        y="68"
+                                        width="30"
+                                        height="10"
+                                        rx="2"
+                                    />
+                                    <line
+                                        x1="120"
+                                        y1="78"
+                                        x2="120"
+                                        y2="92"
+                                    />
+                                    <circle
+                                        cx="120"
+                                        cy="92"
+                                        r="2"
+                                        class="dot"
+                                    />
+                                    <path
+                                        d="M30 30 Q60 20 90 30 Q120 40 150 30 Q180 20 210 30"
+                                        class="muted"
+                                    />
+                                    <text
+                                        x="178"
+                                        y="20"
+                                        font-family="JetBrains Mono"
+                                        font-size="9"
+                                        fill="var(--accent)"
+                                        stroke="none"
+                                    >
+                                        EKF.lock
+                                    </text>
+                                </svg>
+                            )}
+                            {p.vis === "ctf" && (
+                                <svg viewBox="0 0 240 100">
+                                    <path d="M20 80 L60 80 L60 30 L80 30" />
+                                    <path d="M80 30 L100 30 L100 60 L140 60 L140 20 L180 20 L180 70 L220 70" />
+                                    <circle
+                                        cx="60"
+                                        cy="30"
+                                        r="3"
+                                        class="dot"
+                                    />
+                                    <circle
+                                        cx="100"
+                                        cy="60"
+                                        r="3"
+                                        class="dot"
+                                    />
+                                    <circle
+                                        cx="140"
+                                        cy="20"
+                                        r="3"
+                                        class="dot"
+                                    />
+                                    <circle
+                                        cx="180"
+                                        cy="70"
+                                        r="3"
+                                        class="dot"
+                                    />
+                                    <text
+                                        x="20"
+                                        y="22"
+                                        font-family="JetBrains Mono"
+                                        font-size="9"
+                                        fill="var(--accent)"
+                                        stroke="none"
+                                    >
+                                        flag&#123;root_me&#125;
+                                    </text>
+                                </svg>
+                            )}
+                            {p.vis === "motor" && (
+                                <svg viewBox="0 0 240 100">
+                                    <path
+                                        class="muted"
+                                        stroke-dasharray="3 3"
+                                        d="M20 80 L220 80"
+                                    />
+                                    <path d="M20 80 C 60 80, 80 30, 220 25" />
+                                    <path
+                                        class="fill"
+                                        d="M20 80 C 60 80, 80 30, 220 25 L220 80 Z"
+                                    />
+                                    <text
+                                        x="180"
+                                        y="18"
+                                        font-family="JetBrains Mono"
+                                        font-size="9"
+                                        fill="var(--accent)"
+                                        stroke="none"
+                                    >
+                                        F_ss
+                                    </text>
+                                    <text
+                                        x="20"
+                                        y="22"
+                                        font-family="JetBrains Mono"
+                                        font-size="9"
+                                        fill="var(--accent)"
+                                        stroke="none"
+                                    >
+                                        τ=0.227
+                                    </text>
+                                </svg>
+                            )}
+                            {p.vis === "yt" && (
+                                <svg viewBox="0 0 240 100">
+                                    <rect
+                                        x="20"
+                                        y="20"
+                                        width="200"
+                                        height="60"
+                                        rx="6"
+                                    />
+                                    <polygon
+                                        points="110,40 110,60 130,50"
+                                        class="dot"
+                                    />
+                                    <line x1="20" y1="76" x2="80" y2="76" />
+                                    <line x1="80" y1="76" x2="80" y2="80" />
+                                    <line
+                                        x1="20"
+                                        y1="80"
+                                        x2="220"
+                                        y2="80"
+                                        class="muted"
+                                        stroke-dasharray="2 3"
+                                    />
+                                </svg>
+                            )}
+                            {p.vis === "fpga" && (
+                                <svg viewBox="0 0 240 100">
+                                    <rect
+                                        x="80"
+                                        y="20"
+                                        width="80"
+                                        height="60"
+                                        rx="4"
+                                    />
+                                    <line x1="60" y1="30" x2="80" y2="30" />
+                                    <line x1="60" y1="45" x2="80" y2="45" />
+                                    <line x1="60" y1="60" x2="80" y2="60" />
+                                    <line x1="60" y1="75" x2="80" y2="75" />
+                                    <line x1="160" y1="30" x2="180" y2="30" />
+                                    <line x1="160" y1="45" x2="180" y2="45" />
+                                    <line x1="160" y1="60" x2="180" y2="60" />
+                                    <line x1="160" y1="75" x2="180" y2="75" />
+                                    <text
+                                        x="100"
+                                        y="55"
+                                        font-family="JetBrains Mono"
+                                        font-size="11"
+                                        fill="var(--accent)"
+                                        stroke="none"
+                                    >
+                                        VHDL
+                                    </text>
+                                </svg>
+                            )}
+                        </div>
+
+                        <p class="pdesc">{p.desc}</p>
+                        <div class="pmeta">
+                            {p.metrics.map((m) => (
+                                <span>
+                                    <span style="color: var(--accent)">
+                                        {m.v}
+                                    </span>{" "}
+                                    {m.l}
+                                </span>
+                            ))}
+                        </div>
+                        <div class="ptags">
+                            {p.tags.map((t) => (
+                                <span class="ptag">{t}</span>
+                            ))}
+                        </div>
+                    </article>
+                ))
+            }
+        </div>
     </div>
+
+    <script is:inline>
+        (function () {
+            var row = document.getElementById("filter-row");
+            var grid = document.getElementById("proj-grid");
+            var count = document.getElementById("filter-count");
+            if (!row || !grid || !count) return;
+            var chips = row.querySelectorAll(".filter-chip");
+            chips.forEach(function (c) {
+                c.addEventListener("click", function () {
+                    var f = c.getAttribute("data-filter");
+                    chips.forEach((x) => x.classList.remove("on"));
+                    c.classList.add("on");
+                    var visible = 0;
+                    grid.querySelectorAll(".proj").forEach(function (p) {
+                        var tags = (p.getAttribute("data-tags") || "").split(
+                            ",",
+                        );
+                        var show = f === "ALL" || tags.indexOf(f) !== -1;
+                        p.style.display = show ? "" : "none";
+                        if (show) visible++;
+                    });
+                    count.textContent = visible + " matching //";
+                });
+            });
+        })();
+    </script>
 </BaseLayout>
-
-<style>
-    .archive-container {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 4rem 2rem;
-    }
-
-    .page-header {
-        margin-bottom: 4rem;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 2rem;
-    }
-
-    h1 {
-        font-size: 3rem;
-        font-weight: 300;
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: -1px;
-    }
-
-    .highlight {
-        font-weight: 700;
-        color: var(--accent);
-    }
-
-    .subtitle {
-        font-family: var(--font-code);
-        color: var(--text);
-        opacity: 0.6;
-        margin-top: 0.5rem;
-    }
-
-    /* GRID LAYOUT */
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 2rem;
-    }
-
-    /* CARD STYLES */
-    .card {
-        display: flex;
-        flex-direction: column;
-        background: rgba(255,255,255,0.02);
-        border: 1px solid var(--border);
-        padding: 1.5rem;
-        text-decoration: none;
-        color: var(--text);
-        transition: all 0.2s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .card:hover {
-        background: var(--mono-bg);
-        border-color: var(--accent);
-        transform: translateY(-2px);
-    }
-
-    /* Card Header */
-    .card-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-        font-family: var(--font-code);
-        font-size: 0.75rem;
-    }
-
-    .project-id { opacity: 0.5; }
-
-    .status-badge {
-        padding: 2px 6px;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        text-transform: uppercase;
-        font-size: 0.65rem;
-    }
-    .status-badge.active { color: #00ff41; border-color: #00ff41; }
-    .status-badge.beta { color: #ffcc00; border-color: #ffcc00; }
-    .status-badge.completed { color: var(--accent); border-color: var(--accent); }
-
-    h3 {
-        font-size: 1.25rem;
-        margin: 0 0 0.5rem 0;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-    }
-
-    p {
-        font-size: 0.9rem;
-        opacity: 0.8;
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        flex-grow: 1; /* Pushes footer down */
-    }
-
-    /* Tags */
-    .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
-    .tag {
-        font-family: var(--font-code);
-        font-size: 0.75rem;
-        color: var(--accent);
-        opacity: 0.8;
-    }
-
-    /* Footer */
-    .card-footer {
-        font-family: var(--font-code);
-        font-size: 0.8rem;
-        text-align: right;
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.2s;
-    }
-    .card:hover .card-footer { opacity: 1; transform: translateX(0); }
-    .link-arrow { color: var(--accent); }
-
-    /* Animations */
-    .fade-in {
-        opacity: 0;
-        animation: fadeIn 0.5s ease forwards;
-    }
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-</style>

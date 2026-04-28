@@ -1,0 +1,375 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+function spark(seed: number, trend: "up" | "down" | "flat") {
+    const W = 280,
+        H = 60,
+        N = 32;
+    const rng = (i: number) => {
+        const x = Math.sin(seed * 9.23 + i * 1.61) * 10000;
+        return x - Math.floor(x);
+    };
+    const pts = Array.from({ length: N }, (_, i) => {
+        const base =
+            trend === "up"
+                ? 10 + (i / N) * 30
+                : trend === "down"
+                  ? 50 - (i / N) * 30
+                  : 30;
+        return {
+            x: (i / (N - 1)) * W,
+            y: H - (base + rng(i) * 16 - 8),
+        };
+    });
+    const path = pts
+        .map(
+            (p, i) =>
+                `${i === 0 ? "M" : "L"}${p.x.toFixed(1)} ${p.y.toFixed(1)}`,
+        )
+        .join(" ");
+    const fill = `${path} L${W} ${H} L0 ${H} Z`;
+    return { path, fill, W, H };
+}
+
+const sparks = {
+    phd: spark(3, "up"),
+    glid: spark(7, "up"),
+    yt: spark(11, "up"),
+    commits: spark(17, "flat"),
+};
+
+// 26 weeks × 7 days commit heatmap (deterministic).
+const heat = Array.from({ length: 26 }, (_, w) =>
+    Array.from({ length: 7 }, (_, d) => {
+        const r = Math.abs(Math.sin(w * 13.7 + d * 5.3));
+        return r > 0.85
+            ? "l4"
+            : r > 0.65
+              ? "l3"
+              : r > 0.4
+                ? "l2"
+                : r > 0.15
+                  ? "l1"
+                  : "";
+    }),
+);
+
+const builds = [
+    {
+        name: "Super-Yojan/glid-core @ main",
+        status: "passing",
+        duration: "2m 14s",
+    },
+    {
+        name: "Super-Yojan/glid-routing @ feat/EKF",
+        status: "passing",
+        duration: "3m 02s",
+    },
+    {
+        name: "Super-Yojan/blimp-autonomy @ main",
+        status: "passing",
+        duration: "1m 48s",
+    },
+    {
+        name: "Super-Yojan/bldc-rs @ main",
+        status: "passing",
+        duration: "0m 41s",
+    },
+    {
+        name: "Super-Yojan/super-yojan.github.io",
+        status: "passing",
+        duration: "0m 26s",
+    },
+    { name: "Super-Yojan/papers @ draft", status: "warn", duration: "—" },
+];
+const buildMap: Record<string, { c: string; l: string }> = {
+    passing: { c: "var(--color-term-status)", l: "PASS" },
+    warn: { c: "var(--color-term-yellow)", l: "WARN" },
+    fail: { c: "var(--color-term-red)", l: "FAIL" },
+};
+---
+
+<BaseLayout
+    title="Now"
+    description="Engineering dashboard — what I'm working on, reading, and shipping this month."
+>
+    <div class="page">
+        <header class="page-intro">
+            <div>
+                <div class="breadcrumb">~/now (live)</div>
+                <h1>Now.</h1>
+                <p class="lede">
+                    What I'm working on, reading, and shipping this month.
+                    Updated weekly. Numbers are real where possible —
+                    placeholders where confidential.
+                </p>
+            </div>
+            <div class="summary">
+                <div>WEEK <b>17</b> / 2026</div>
+                <div>LAST PUSH <b>14m ago</b></div>
+                <div style="color: var(--color-term-status)">● BUILDING</div>
+            </div>
+        </header>
+
+        <div class="logs-grid">
+            <div class="cell col-3 acc">
+                <div class="ck">PhD Progress</div>
+                <div class="cv">Y2<small>/4</small></div>
+                <div class="cd">Multi-agent coordination · paper draft</div>
+                <svg
+                    class="spark"
+                    viewBox={`0 0 ${sparks.phd.W} ${sparks.phd.H}`}
+                    preserveAspectRatio="none"
+                >
+                    <path class="fill" d={sparks.phd.fill}></path>
+                    <path class="line" d={sparks.phd.path}></path>
+                </svg>
+            </div>
+            <div class="cell col-3 acc">
+                <div class="ck">Glid · DAU</div>
+                <div class="cv">312<small>+18 wk</small></div>
+                <div class="cd">DMV closed beta</div>
+                <svg
+                    class="spark"
+                    viewBox={`0 0 ${sparks.glid.W} ${sparks.glid.H}`}
+                    preserveAspectRatio="none"
+                >
+                    <path class="fill" d={sparks.glid.fill}></path>
+                    <path class="line" d={sparks.glid.path}></path>
+                </svg>
+            </div>
+            <div class="cell col-3 acc">
+                <div class="ck">YouTube · subs</div>
+                <div class="cv">11.2k<small>+340 wk</small></div>
+                <div class="cd">@Super-Yojan</div>
+                <svg
+                    class="spark"
+                    viewBox={`0 0 ${sparks.yt.W} ${sparks.yt.H}`}
+                    preserveAspectRatio="none"
+                >
+                    <path class="fill" d={sparks.yt.fill}></path>
+                    <path class="line" d={sparks.yt.path}></path>
+                </svg>
+            </div>
+            <div class="cell col-3 acc">
+                <div class="ck">Commits / 7d</div>
+                <div class="cv">186<small>across 6 repos</small></div>
+                <div class="cd">github.com/Super-Yojan</div>
+                <svg
+                    class="spark"
+                    viewBox={`0 0 ${sparks.commits.W} ${sparks.commits.H}`}
+                    preserveAspectRatio="none"
+                >
+                    <path class="fill" d={sparks.commits.fill}></path>
+                    <path class="line" d={sparks.commits.path}></path>
+                </svg>
+            </div>
+
+            <div class="cell col-8">
+                <div class="ck">Activity feed</div>
+                <div class="feed" style="margin-top: 6px">
+                    <div class="row">
+                        <span class="t">14m ago</span>
+                        <span class="m"
+                            >pushed <span class="accent">glid-routing</span> v0.4.2
+                            · 12 files, +318/-44</span
+                        >
+                        <span class="s">rust</span>
+                    </div>
+                    <div class="row">
+                        <span class="t">3h ago</span>
+                        <span class="m"
+                            >opened PR <span class="accent">#42</span> on blimp-autonomy:
+                            "EKF: handle clock skew on disagreement"</span
+                        >
+                        <span class="s">rust</span>
+                    </div>
+                    <div class="row">
+                        <span class="t">yesterday</span>
+                        <span class="m"
+                            >queued YouTube — <span class="accent"
+                                >"Modeling BLDC rise time in Rust"</span
+                            ></span
+                        >
+                        <span class="s">content</span>
+                    </div>
+                    <div class="row">
+                        <span class="t">2d</span>
+                        <span class="m"
+                            >read <i>Probabilistic Robotics</i>, ch. 3 —
+                            finished EKF derivation</span
+                        >
+                        <span class="s">reading</span>
+                    </div>
+                    <div class="row">
+                        <span class="t">3d</span>
+                        <span class="m"
+                            >met w/ <span class="accent">Dr. K.</span> · paper outline
+                            approved</span
+                        >
+                        <span class="s">phd</span>
+                    </div>
+                    <div class="row">
+                        <span class="t">4d</span>
+                        <span class="m"
+                            >shipped <span class="accent">Glid 1.7</span> — TestFlight
+                            build for the DMV cohort</span
+                        >
+                        <span class="s">glid</span>
+                    </div>
+                    <div class="row">
+                        <span class="t">1 wk</span>
+                        <span class="m"
+                            >open-sourced <span class="accent">bldc-rs</span> · first-order
+                            rise-time model in Rust</span
+                        >
+                        <span class="s">oss</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cell col-4">
+                <div class="ck">Currently reading</div>
+                <div class="list">
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">Probabilistic Robotics</span>
+                        <span class="s">Thrun · Burgard · Fox</span>
+                    </div>
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t"
+                            >Designing Data-Intensive Applications</span
+                        >
+                        <span class="s">Kleppmann · ch. 9</span>
+                    </div>
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">The Linux Programming Interface</span>
+                        <span class="s">Kerrisk · ref</span>
+                    </div>
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">Crafting Interpreters</span>
+                        <span class="s">Nystrom · re-read</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cell col-6">
+                <div class="ck">Build status · last 6 jobs</div>
+                <div
+                    style="display: flex; flex-direction: column; gap: 8px; margin-top: 8px;"
+                >
+                    {
+                        builds.map((b) => {
+                            const m = buildMap[b.status];
+                            return (
+                                <div class="build">
+                                    <span class="name">{b.name}</span>
+                                    <span class="status" style={`color:${m.c}`}>
+                                        <span
+                                            class="sb-dot"
+                                            style={`background:${m.c}; box-shadow: 0 0 6px ${m.c}`}
+                                        />
+                                        {m.l}
+                                        <span style="color: var(--fg-muted); margin-left: 8px;">
+                                            {b.duration}
+                                        </span>
+                                    </span>
+                                </div>
+                            );
+                        })
+                    }
+                </div>
+            </div>
+
+            <div class="cell col-6">
+                <div class="ck">Commit heatmap · 26 weeks</div>
+                <div class="heat">
+                    {
+                        heat.map((col) => (
+                            <div class="col">
+                                {col.map((cls) => (
+                                    <span class={cls} />
+                                ))}
+                            </div>
+                        ))
+                    }
+                </div>
+                <div class="cd" style="margin-top: 12px">
+                    486 commits · longest streak <b style="color: var(--accent)"
+                        >47 days</b
+                    > · current <b style="color: var(--accent)">14 days</b>
+                </div>
+            </div>
+
+            <div class="cell col-4">
+                <div class="ck">Talks · upcoming</div>
+                <div class="list">
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">GMU CIAO Lab — internal</span>
+                        <span class="s">May 06 · 30 min</span>
+                    </div>
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">ROSCon late-breaking</span>
+                        <span class="s">Submitted · pending</span>
+                    </div>
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">DMV Robotics Meetup</span>
+                        <span class="s">Jun 12 · invited</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cell col-4">
+                <div class="ck">Open questions</div>
+                <div class="list">
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">Can EKF handle 30Hz comms drop?</span>
+                        <span class="s">experimenting</span>
+                    </div>
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">Best Rust crate for SE(3) lie alg?</span
+                        >
+                        <span class="s">open</span>
+                    </div>
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t"
+                            >When to break Glid into services?</span
+                        >
+                        <span class="s">thinking</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cell col-4">
+                <div class="ck">Inbox to writers</div>
+                <div class="list">
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">hi@super-yojan.dev</span>
+                        <span class="s">usually replies < 48h</span>
+                    </div>
+                    <div class="item">
+                        <span class="b"></span>
+                        <span class="t">Best for: collab, RA roles</span>
+                        <span class="s">grad ’28</span>
+                    </div>
+                </div>
+                <a
+                    href="/about"
+                    class="btn primary"
+                    style="margin-top: auto; align-self: flex-start;"
+                    >Read CV →</a
+                >
+            </div>
+        </div>
+    </div>
+</BaseLayout>

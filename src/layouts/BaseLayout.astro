@@ -8,7 +8,7 @@ const { title, description } = Astro.props as {
 const fullTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 const desc =
     description ??
-    "Systems builder. PhD researcher in autonomous systems at GMU. Founder of Glid.";
+    "Systems builder. PhD student in autonomous systems at GMU. Founder of Glid.";
 
 const path = Astro.url.pathname;
 const isActive = (href: string) =>
@@ -73,7 +73,6 @@ const isActive = (href: string) =>
                     href="/projects"
                     class={isActive("/projects") ? "active" : ""}>PROJECTS</a
                 >
-                <a href="/now" class={isActive("/now") ? "active" : ""}>NOW</a>
                 <a href="/blog" class={isActive("/blog") ? "active" : ""}
                     >BLOG</a
                 >
@@ -105,7 +104,7 @@ const isActive = (href: string) =>
                     </svg>
                 </div>
                 <p>
-                    Yojan Gautam — systems builder, PhD researcher, founder.
+                    Yojan Gautam — systems builder, PhD student, founder.
                 </p>
                 <div>© 2026 / Built in Astro / Hosted on github.io</div>
             </div>
@@ -113,7 +112,6 @@ const isActive = (href: string) =>
                 <h5>SITE</h5>
                 <a href="/">Home</a>
                 <a href="/projects">Projects</a>
-                <a href="/now">Now</a>
                 <a href="/blog">Blog</a>
                 <a href="/about">About</a>
             </div>
@@ -122,10 +120,9 @@ const isActive = (href: string) =>
                 <a href="https://github.com/Super-Yojan" target="_blank"
                     >github.com/Super-Yojan</a
                 >
-                <a href="https://linkedin.com/in/yojangautam" target="_blank"
-                    >linkedin.com/in/yojangautam</a
-                >
-                <a href="https://youtube.com/@Super-Yojan" target="_blank"
+                <a href="https://linkedin.com/in/yojan-gautam/" target="_blank"
+                   >linkedin.com/in/yojan-gautam</a
+                >                <a href="https://youtube.com/@Super-Yojan" target="_blank"
                     >youtube.com/@Super-Yojan</a
                 >
             </div>

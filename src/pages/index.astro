@@ -9,7 +9,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 <span class="dot"></span>
                 <span>SYSTEM ONLINE</span>
                 <span style="opacity:0.4">//</span>
-                <span>PHD RESEARCHER · GMU CIAO LAB</span>
+                <span>PHD STUDENT · GMU CIAO LAB</span>
             </div>
 
             <h1 class="hero-display fade-in delay-1">
@@ -20,7 +20,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
             <p class="hero-sub fade-in delay-2">
                 I build things from the bare metal up — analog circuits to
-                consumer apps. PhD researcher in autonomous systems at GMU.
+                consumer apps. PhD student in autonomous systems at GMU.
                 Founder of Glid.
             </p>
 
@@ -30,8 +30,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                     <div class="l">Blimp comp · sweep</div>
                 </div>
                 <div class="hero-stat">
-                    <div class="v">500<small>+ teams</small></div>
-                    <div class="l">CTF hosted, age 17</div>
+                    <div class="v">200<small>+ teams</small></div>
+                    <div class="l">Freedom CTF hosted</div>
                 </div>
                 <div class="hero-stat">
                     <div class="v">τ<small>≈ 0.227s</small></div>
@@ -106,13 +106,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 },
                 {
                     kind: "cmd",
-                    dir: "~/yt",
+                    dir: "~/drone-comp",
                     branch: "(main)",
-                    text: "youtube-upload --schedule 2026-05-04",
+                    text: "python3 mission_control.py --mode auto",
                 },
                 {
                     kind: "ok",
-                    text: '✓ Queued: "Modeling BLDC rise time in Rust" (12 min)',
+                    text: "✓ Mission start: ArUco target lock acquired",
                 },
                 {
                     kind: "cmd",

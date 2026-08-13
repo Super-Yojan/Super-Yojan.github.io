@@ -6,67 +6,60 @@ const posts = (await getCollection("blog")).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-function formatDate(date: Date) {
-    return date.toLocaleDateString("en-us", {
+const formatDate = (date: Date) =>
+    date.toLocaleDateString("en-us", {
         month: "short",
         day: "2-digit",
         year: "numeric",
     });
-}
 ---
 
-<BaseLayout title="Blog" description="Engineering logs and research notes.">
-    <div class="terminal-wrapper">
-        <div class="terminal-header">
-            <div class="tt-buttons">
-                <span class="tt-dot red"></span>
-                <span class="tt-dot yellow"></span>
-                <span class="tt-dot green"></span>
-            </div>
-            <div class="tt-title">yojan@gmu: ~/logs</div>
-        </div>
+<BaseLayout title="Writing" description="Engineering logs and research notes.">
+    <header class="page-head shell">
+        <h1 class="t-headline">
+            <span class="reveal-line"><span>Writing</span></span>
+        </h1>
+        <p class="t-lede rise" data-delay="200">
+            Engineering logs and research notes — worked examples rather than
+            opinions, mostly from whatever I'm modeling that month.
+        </p>
+    </header>
 
-        <div class="terminal-window">
-            <div class="command-line">
-                <span class="tt-prompt">➜</span>
-                <span class="tt-dir">~/logs</span>
-                <span class="tt-branch">(main)</span>
-                <span class="tt-cmd">ls -l --sort=date</span>
-            </div>
-
-            <div class="file-list">
-                <div class="table-header">
-                    <span>PERMISSIONS</span>
-                    <span>DATE_MOD</span>
-                    <span>FILENAME / TITLE</span>
-                    <span>DESCRIPTION</span>
-                </div>
-
-                {
-                    posts.map((post) => (
-                        <a href={`/blog/${post.id}/`} class="file-row fade-in">
-                            <span class="col-perm">-rw-r--r--</span>
-                            <span class="col-date">
+    <section class="shell">
+        {
+            posts.length === 0 ? (
+                <p class="empty t-lede">
+                    Nothing published yet. The first log is in progress.
+                </p>
+            ) : (
+                <div class="rows">
+                    {posts.map((post) => (
+                        <a href={`/blog/${post.id}/`} class="row rise">
+                            <span class="t-label">
                                 {formatDate(post.data.pubDate)}
                             </span>
-                            <span class="col-name">
-                                {post.data.title}
-                                <span class="extension">.md</span>
-                            </span>
-                            <span class="col-desc">
-                                // {post.data.description}
-                            </span>
+                            <div>
+                                <h2 class="t-title">{post.data.title}</h2>
+                                <p class="row-note">{post.data.description}</p>
+                            </div>
+                            <span class="t-label read">Read →</span>
                         </a>
-                    ))
-                }
-            </div>
-
-            <div class="command-line mt">
-                <span class="tt-prompt">➜</span>
-                <span class="tt-dir">~/logs</span>
-                <span class="tt-branch">(main)</span>
-                <span class="tt-cursor">█</span>
-            </div>
-        </div>
-    </div>
+                    ))}
+                </div>
+            )
+        }
+    </section>
 </BaseLayout>
+
+<style>
+    .row-note {
+        max-width: 56ch;
+        margin-top: 8px;
+        color: var(--graphite);
+    }
+    .read {
+        transition: color var(--dur-state) var(--ease);
+    }
+    .row:hover .read { color: var(--ink); }
+    .empty { padding-block: 64px; border-top: 1px solid var(--rule); }
+</style>

@@ -2,98 +2,193 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const stack = [
-    "RUST",
-    "SWIFT",
-    "ROS2",
-    "KUBERNETES",
-    "SURREALDB",
+    "Rust",
+    "Swift",
+    "ROS 2",
+    "Kubernetes",
+    "SurrealDB",
     "ONNX",
-    "PYTHON",
-    "GO",
-    "LINUX",
+    "Python",
+    "Go",
+    "Linux",
     "VHDL",
-    "PCB DESIGN",
+    "PCB design",
 ];
-const marquee = [...stack, ...stack];
+const stackTrack = [...stack, ...stack];
+
+const timeline = [
+    {
+        year: "2025–",
+        title: "Masters student, CIAO Lab",
+        place: "George Mason University",
+        note: "Multi-agent autonomous systems. Twelve-state nonlinear blimp dynamics and look-ahead pitch control.",
+    },
+    {
+        year: "2026–",
+        title: "Founder",
+        place: "Glid",
+        note: "Sole engineer on a published iOS and Android sports coordination app, backend to client.",
+    },
+    {
+        year: "2023–24",
+        title: "Software lead",
+        place: "Autonomous blimp team",
+        note: "Championship autonomy software, 152–0. Edge inference on a 150-gram airframe.",
+    },
+    {
+        year: "2022–23",
+        title: "Embedded engineer",
+        place: "Databuoy",
+        note: "U-Boot, FPGA work, and gunshot detection systems at the bare-metal layer.",
+    },
+    {
+        year: "2020–21",
+        title: "Builder",
+        place: "Freedom CTF",
+        note: "Built a capture-the-flag platform at 17 and ran international events on it.",
+    },
+];
 ---
 
 <BaseLayout title="About" description="About Yojan Gautam.">
-    <div class="dashboard-container">
-        <div class="bento-grid">
-            <div
-                class="bento-item hero span-2-col span-2-row fade-in delay-1"
-            >
-                <div class="bento-content">
-                    <span class="kicker-label">/usr/bin/whoami</span>
-                    <h2>Hello, I'm Yojan Gautam.</h2>
-                    <p class="bio">
-                        It started with breaking systems. At 17, I built the Freedom CTF
-                        platform from scratch and hosted an international
-                        competition with <b>200+ teams</b>. That obsession with
-                        understanding how things fail shaped everything after.
-                        In college, I moved to building — low-level embedded
-                        work at Databuoy (U-Boot, FPGA, gunshot detection),
-                        then robotics. My autonomous blimp software won a
-                        competition <b>152–0</b>. I led a team to 1st place in the Raytheon
-                        Drone Competition, and designed a complete educational blimp
-                        kit for 20 students. Now I'm a <b>PhD student</b> at GMU's CIAO Lab
-                        working on multi-agent autonomous systems, while
-                        building <b>Glid</b> as a solo founder.
-                    </p>
-                    <div class="status-badge">
-                        <span class="sb-pulse"></span> SYSTEM STATUS: BUILDING
-                    </div>
-                </div>
-            </div>
+    <header class="page-head shell">
+        <h1 class="t-headline">
+            <span class="reveal-line"><span>About</span></span>
+        </h1>
+        <p class="t-lede rise" data-delay="200">
+            It started with breaking systems. It turned into building them at
+            every layer.
+        </p>
+    </header>
 
-            <div class="bento-item avatar span-2-col fade-in delay-2">
-                <div class="cyber-face">IMG_01.RAW</div>
-                <div class="scanline"></div>
-            </div>
-
-            <div class="bento-item lab fade-in delay-3">
-                <span class="kicker-label">LAB FOCUS</span>
-                <h3>CIAO Lab / Multi-Agent</h3>
-            </div>
-
-            <div class="bento-item music fade-in delay-3">
-                <span class="kicker-label">FOUNDER</span>
-                <div class="waveform">
-                    <div class="wf-bar b1"></div>
-                    <div class="wf-bar b2"></div>
-                    <div class="wf-bar b3"></div>
-                    <div class="wf-bar b4"></div>
-                </div>
-                <span class="mono-foot">Glid — Beta (DMV)</span>
-            </div>
-
-            <div class="bento-item stack span-4-col fade-in delay-4">
-                <div class="marquee-wrapper">
-                    <div class="marquee-content">
-                        {marquee.map((s) => <span>{s} //</span>)}
-                    </div>
-                </div>
-            </div>
-
-            <div class="bento-item connect span-2-col fade-in delay-5">
-                <a
-                    href="https://github.com/Super-Yojan"
-                    target="_blank"
-                    class="social-link">GITHUB</a
-                >
-                <span class="sep">/</span>
-                <a
-                    href="https://linkedin.com/in/yojan-gautam/"
-                    target="_blank"
-                    class="social-link">LINKEDIN</a
-                >
-            </div>
-
-            <div class="bento-item task span-2-col fade-in delay-5">
-                <span class="tk-prompt">&gt;</span>
-                <span class="tk-cmd">make build --release</span>
-                <span class="tk-cursor">_</span>
-            </div>
+    <section class="shell bio">
+        <div class="bio-body">
+            <p>
+                At 17 I built the Freedom CTF platform from scratch and hosted
+                an international competition with 200+ teams on it. That
+                obsession with understanding how things fail shaped everything
+                after it.
+            </p>
+            <p>
+                In college I moved from breaking to building — low-level
+                embedded work at Databuoy on U-Boot, FPGA, and gunshot
+                detection, then robotics. My autonomous blimp software won a
+                competition 152–0. I led a team to first place in the Raytheon
+                Drone Competition, and designed a complete educational blimp kit
+                for 20 students.
+            </p>
+            <p>
+                Now I'm a Masters student at George Mason University's CIAO Lab
+                working on multi-agent autonomous systems, and building Glid as
+                a solo founder. The two feed each other more than they compete.
+            </p>
         </div>
-    </div>
+
+        <aside class="bio-side">
+            <h2 class="t-label">Currently</h2>
+            <div class="bio-facts">
+                <p>Masters student, GMU CIAO Lab</p>
+                <p>Founder, Glid</p>
+                <p>Washington, DC</p>
+            </div>
+            <a class="link-wipe bio-contact" href="mailto:hi@super-yojan.dev">
+                hi@super-yojan.dev
+            </a>
+        </aside>
+    </section>
+
+    <section class="marquee stack-marquee" aria-label="Tools and languages">
+        <div class="marquee-track stack-track">
+            {
+                stackTrack.map((s, i) => (
+                    <span aria-hidden={i >= stack.length ? "true" : undefined}>
+                        {s}
+                    </span>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="shell">
+        <div class="section-head">
+            <h2 class="t-headline">Track</h2>
+            <span class="t-label">{timeline.length} entries</span>
+        </div>
+
+        <div class="rows">
+            {
+                timeline.map((t) => (
+                    <div class="row rise">
+                        <span class="t-label">{t.year}</span>
+                        <div>
+                            <h3 class="t-title">{t.title}</h3>
+                            <p class="row-note">{t.note}</p>
+                        </div>
+                        <span class="t-label">{t.place}</span>
+                    </div>
+                ))
+            }
+        </div>
+    </section>
 </BaseLayout>
+
+<style>
+    .bio {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 96px;
+        padding-bottom: var(--section);
+    }
+    .bio-body {
+        max-width: 62ch;
+        font-size: clamp(19px, 2vw, 24px); /* Lede role — see DESIGN.md */
+        line-height: 1.45;
+    }
+    .bio-body > p + p { margin-top: 32px; }
+
+    .bio-side { padding-top: 8px; }
+    .bio-facts {
+        margin-top: 24px;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+        color: var(--graphite);
+    }
+    .bio-facts > p + p { margin-top: 8px; }
+    .bio-contact { margin-top: 32px; }
+
+    .stack-marquee { border-block: 1px solid var(--rule); }
+    /* Keeps the inherited 32px gap so the track's -50%-minus-half-gap
+       translate stays seamless. */
+    .stack-track {
+        align-items: center;
+        animation-duration: 40s;
+    }
+    .stack-track > span {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+        padding: 24px 0;
+        font-size: clamp(1.75rem, 3.5vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        white-space: nowrap;
+    }
+    .stack-track > span::after {
+        content: "·";
+        color: var(--ash);
+    }
+
+    /* The marquee is a hard edge; the section after it needs the full
+       rhythm above its heading. */
+    .stack-marquee + section { padding-top: var(--section); }
+
+    .row-note {
+        max-width: 52ch;
+        margin-top: 8px;
+        color: var(--graphite);
+    }
+
+    @media (max-width: 900px) {
+        .bio { grid-template-columns: 1fr; gap: 48px; }
+    }
+</style>

@@ -1,0 +1,280 @@
+---
+import type { PlateKey } from "../data/projects";
+
+interface Props {
+    plate: PlateKey;
+}
+
+const { plate } = Astro.props;
+---
+
+<!--
+  Engineering plates. Hairline ink figures standing in the slots photography
+  would occupy — see DESIGN.md → Signature Component. Drawn on a landscape
+  viewBox with preserveAspectRatio="meet" so the figure is never cropped in
+  either the 5:7 marquee frame or the 4:3 grid frame; the letterbox is white
+  on white and therefore invisible.
+
+  The `.annot` layer is the plate's hover moment: annotations resolve in when
+  the card is hovered, so the drawing reads as a figure first and a labelled
+  schematic second.
+-->
+<svg
+    class="plate-svg"
+    viewBox="0 0 500 360"
+    preserveAspectRatio="xMidYMid meet"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.25"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+>
+    {
+        plate === "glid" && (
+            <g>
+                {/* availability lanes */}
+                <line x1="60" y1="90" x2="440" y2="90" opacity="0.25" />
+                <line x1="60" y1="140" x2="440" y2="140" opacity="0.25" />
+                <line x1="60" y1="190" x2="440" y2="190" opacity="0.25" />
+
+                <rect x="96" y="78" width="86" height="24" />
+                <rect x="238" y="78" width="120" height="24" />
+                <rect x="128" y="128" width="150" height="24" />
+                <rect x="300" y="128" width="70" height="24" />
+                <rect x="80" y="178" width="60" height="24" />
+                <rect x="252" y="178" width="132" height="24" />
+
+                {/* the one window all three share */}
+                <rect x="252" y="66" width="26" height="148" opacity="0.18" />
+                <path d="M252 66 L252 214" stroke-dasharray="3 4" />
+                <path d="M278 66 L278 214" stroke-dasharray="3 4" />
+
+                <path d="M265 214 L265 262" />
+                <rect x="196" y="262" width="138" height="42" />
+                <path d="M212 283 L226 283 M240 283 L296 283" opacity="0.4" />
+                <circle cx="232" cy="283" r="3" fill="currentColor" stroke="none" />
+
+                <g class="annot">
+                    <text x="60" y="60" class="plate-label">
+                        AVAILABILITY
+                    </text>
+                    <text x="292" y="60" class="plate-label">
+                        OVERLAP
+                    </text>
+                    <text x="196" y="330" class="plate-label">
+                        SLOT LOCKED
+                    </text>
+                </g>
+            </g>
+        )
+    }
+
+    {
+        plate === "blimp" && (
+            <g>
+                {/* envelope */}
+                <ellipse cx="250" cy="170" rx="172" ry="54" />
+                <path d="M78 170 Q 250 132 422 170" opacity="0.3" />
+                <path d="M422 170 L462 148 L462 192 Z" />
+
+                {/* gondola + tether */}
+                <rect x="228" y="224" width="44" height="16" />
+                <path d="M236 224 L242 170 M264 224 L258 170" opacity="0.45" />
+
+                {/* truth vs estimate */}
+                <path
+                    d="M60 306 C 140 306, 168 268, 250 268 C 332 268, 372 296, 452 288"
+                    stroke-dasharray="4 5"
+                    opacity="0.45"
+                />
+                <path d="M60 310 C 142 310, 170 274, 250 273 C 330 272, 374 300, 452 292" />
+                <circle cx="250" cy="273" r="3.5" fill="currentColor" stroke="none" />
+
+                <g class="annot">
+                    <text x="60" y="70" class="plate-label">
+                        ENVELOPE 150 G
+                    </text>
+                    <text x="60" y="290" class="plate-label">
+                        TRUTH
+                    </text>
+                    <text x="330" y="336" class="plate-label">
+                        EKF σ=0.10
+                    </text>
+                </g>
+            </g>
+        )
+    }
+
+    {
+        plate === "drone" && (
+            <g>
+                {/* descent trajectory */}
+                <path
+                    d="M52 62 C 168 74, 214 176, 300 236"
+                    stroke-dasharray="4 5"
+                />
+                <circle cx="52" cy="62" r="5" />
+                <path d="M44 54 L60 54 M52 44 L52 54" opacity="0.5" />
+
+                {/* release cone */}
+                <path d="M300 236 L266 316 M300 236 L346 316" opacity="0.35" />
+                <path d="M266 316 L346 316" opacity="0.35" />
+
+                {/* moving target */}
+                <rect x="278" y="308" width="56" height="16" />
+                <path d="M348 316 L392 316 M382 308 L392 316 L382 324" />
+
+                {/* aruco marker */}
+                <rect x="392" y="70" width="72" height="72" />
+                <rect x="404" y="82" width="16" height="16" fill="currentColor" stroke="none" />
+                <rect x="436" y="82" width="16" height="16" fill="currentColor" stroke="none" />
+                <rect x="420" y="98" width="16" height="16" fill="currentColor" stroke="none" />
+                <rect x="404" y="114" width="16" height="16" fill="currentColor" stroke="none" />
+                <rect x="436" y="114" width="16" height="16" fill="currentColor" stroke="none" />
+
+                <g class="annot">
+                    <text x="72" y="46" class="plate-label">
+                        RELEASE
+                    </text>
+                    <text x="392" y="60" class="plate-label">
+                        ARUCO
+                    </text>
+                    <text x="266" y="348" class="plate-label">
+                        MOVING TARGET
+                    </text>
+                </g>
+            </g>
+        )
+    }
+
+    {
+        plate === "ctf" && (
+            <g>
+                {/* attack tree */}
+                <circle cx="66" cy="180" r="7" />
+                <path d="M73 180 L152 118 M73 180 L152 180 M73 180 L152 244" opacity="0.45" />
+
+                <circle cx="160" cy="118" r="7" />
+                <circle cx="160" cy="180" r="7" />
+                <circle cx="160" cy="244" r="7" />
+
+                <path d="M167 118 L250 90 M167 180 L250 152" opacity="0.45" />
+                <path d="M167 244 L250 214" />
+                <path d="M167 180 L250 214" opacity="0.45" />
+
+                <circle cx="258" cy="90" r="7" />
+                <circle cx="258" cy="152" r="7" />
+                <circle cx="258" cy="214" r="7" fill="currentColor" />
+
+                <path d="M265 214 L348 180" />
+                <path d="M265 90 L348 124" opacity="0.45" />
+                <path d="M265 152 L348 124" opacity="0.45" />
+
+                <circle cx="356" cy="124" r="7" />
+                <circle cx="356" cy="180" r="7" fill="currentColor" />
+
+                <path d="M363 180 L424 180" />
+                <rect x="424" y="164" width="48" height="32" />
+                <path d="M436 180 L448 180 M436 172 L444 172 M436 188 L452 188" opacity="0.4" />
+
+                <g class="annot">
+                    <text x="52" y="150" class="plate-label">
+                        ENTRY
+                    </text>
+                    <text x="228" y="252" class="plate-label">
+                        PIVOT
+                    </text>
+                    <text x="404" y="232" class="plate-label">
+                        ROOT
+                    </text>
+                </g>
+            </g>
+        )
+    }
+
+    {
+        plate === "mips" && (
+            <g>
+                {/* five stages */}
+                <rect x="44" y="150" width="76" height="60" />
+                <rect x="136" y="150" width="76" height="60" />
+                <rect x="228" y="150" width="76" height="60" />
+                <rect x="320" y="150" width="76" height="60" />
+                <rect x="412" y="150" width="44" height="60" />
+
+                <path d="M120 180 L136 180 M212 180 L228 180 M304 180 L320 180 M396 180 L412 180" />
+
+                {/* forwarding arc EX -> EX */}
+                <path d="M266 150 C 266 96, 358 96, 358 150" />
+                <path d="M352 142 L358 150 L364 142" />
+
+                {/* stall / hazard marker */}
+                <path d="M174 210 L174 262" stroke-dasharray="3 4" opacity="0.5" />
+                <path d="M160 262 L188 262" opacity="0.5" />
+
+                {/* clock */}
+                <path
+                    d="M44 306 L74 306 L74 288 L104 288 L104 306 L134 306 L134 288 L164 288 L164 306 L194 306 L194 288 L224 288 L224 306 L254 306"
+                    opacity="0.4"
+                />
+
+                <g class="annot">
+                    <text x="56" y="186" class="plate-stage">IF</text>
+                    <text x="148" y="186" class="plate-stage">ID</text>
+                    <text x="240" y="186" class="plate-stage">EX</text>
+                    <text x="330" y="186" class="plate-stage">MEM</text>
+                    <text x="422" y="186" class="plate-stage">WB</text>
+                    <text x="266" y="82" class="plate-label">
+                        FORWARD
+                    </text>
+                    <text x="150" y="284" class="plate-label">
+                        STALL
+                    </text>
+                </g>
+            </g>
+        )
+    }
+
+    {
+        plate === "multiagent" && (
+            <g>
+                {/* topology */}
+                <path
+                    d="M120 96 L260 70 L400 118 M120 96 L200 210 M260 70 L200 210 M400 118 L332 226 M200 210 L332 226 M120 96 L332 226"
+                    opacity="0.35"
+                />
+
+                <ellipse cx="120" cy="96" rx="34" ry="12" />
+                <ellipse cx="260" cy="70" rx="34" ry="12" />
+                <ellipse cx="400" cy="118" rx="34" ry="12" />
+                <ellipse cx="200" cy="210" rx="34" ry="12" />
+                <ellipse cx="332" cy="226" rx="34" ry="12" />
+
+                <circle cx="260" cy="70" r="4" fill="currentColor" stroke="none" />
+
+                {/* look-ahead horizon */}
+                <path
+                    d="M60 300 C 150 300, 190 274, 268 272 C 344 270, 396 292, 462 284"
+                    stroke-dasharray="4 5"
+                    opacity="0.5"
+                />
+                <path d="M60 300 C 150 300, 190 274, 268 272" />
+                <circle cx="268" cy="272" r="3.5" fill="currentColor" stroke="none" />
+                <path d="M268 258 L268 286" opacity="0.4" />
+
+                <g class="annot">
+                    <text x="228" y="46" class="plate-label">
+                        LEADER
+                    </text>
+                    <text x="60" y="256" class="plate-label">
+                        12-STATE
+                    </text>
+                    <text x="300" y="316" class="plate-label">
+                        LOOK-AHEAD
+                    </text>
+                </g>
+            </g>
+        )
+    }
+</svg>

@@ -13,9 +13,11 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
-    // Use a dark theme for code blocks
+    // Code blocks obey The One Ink Rule: Shiki emits CSS variables and the
+    // stylesheet maps every token onto the ink/graphite/ash ladder, so syntax
+    // highlighting is tonal rather than coloured. See DESIGN.md → Colors.
     shikiConfig: {
-      theme: "material-theme-palenight",
+      theme: "css-variables",
       wrap: true,
     },
   },

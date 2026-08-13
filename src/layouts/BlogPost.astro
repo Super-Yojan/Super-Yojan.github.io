@@ -6,11 +6,12 @@ type Props = CollectionEntry<"blog">["data"];
 
 const { title, description, pubDate, updatedDate } = Astro.props;
 
-const dateStr = pubDate.toLocaleDateString("en-us", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-});
+const fmt = (d: Date) =>
+    d.toLocaleDateString("en-us", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    });
 ---
 
 <BaseLayout title={title} description={description}>
@@ -21,26 +22,86 @@ const dateStr = pubDate.toLocaleDateString("en-us", {
         crossorigin="anonymous"
     />
 
-    <article class="post-container fade-in">
-        <div class="post-nav">
-            <a href="/blog" class="back-link">
-                <span class="tt-prompt">➜ </span>cd ..
-            </a>
-            <span class="path">~/logs/{dateStr}</span>
-        </div>
-
-        <header>
-            <div class="tags">
-                <span class="tag">PUBLIC</span>
-                {updatedDate && <span class="tag">UPDATED</span>}
+    <article class="post">
+        <header class="post-head shell">
+            <a href="/blog" class="link-wipe back">← Writing</a>
+            <h1 class="post-title">
+                <span class="reveal-line"><span>{title}</span></span>
+            </h1>
+            <p class="t-lede rise" data-delay="200">{description}</p>
+            <div class="post-meta t-label rise" data-delay="320">
+                <span>Published {fmt(pubDate)}</span>
+                {updatedDate && <span>Updated {fmt(updatedDate)}</span>}
             </div>
-            <h1 class="post-title">{title}</h1>
-            <p class="post-desc">// {description}</p>
-            <hr class="separator" />
         </header>
 
-        <div class="prose">
-            <slot />
+        <div class="shell">
+            <div class="prose">
+                <slot />
+                <p class="end-mark" aria-hidden="true"></p>
+            </div>
+
+            <footer class="post-foot">
+                <a href="/blog" class="link-wipe">← All writing</a>
+                <a href="mailto:hi@super-yojan.dev" class="link-wipe">
+                    Reply by email
+                </a>
+            </footer>
         </div>
     </article>
 </BaseLayout>
+
+<style>
+    /* A reading page wants one measure, not a 68ch column pinned to the
+       left of a 1600px shell. Narrowing the shell centres head and prose
+       together as a single document. */
+    .post { --shell: 860px; }
+
+    .post-head {
+        padding-top: 160px;
+        padding-bottom: 64px;
+    }
+    .back { margin-bottom: 48px; }
+
+    .post-title {
+        margin-top: 24px;
+        font-size: clamp(2.25rem, 5vw, 3.75rem);
+        line-height: 1;
+        letter-spacing: -0.05em;
+    }
+
+    .post-head :global(.t-lede) { max-width: 52ch; }
+
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 32px;
+        margin-top: 48px;
+        padding-top: 24px;
+        border-top: 1px solid var(--rule);
+    }
+
+    /* An end mark terminates the prose so the article closes rather than
+       running out. */
+    .end-mark {
+        width: 10px;
+        height: 10px;
+        margin-top: 48px;
+        background: var(--ink);
+    }
+
+    .post-foot {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 24px;
+        margin-top: 64px;
+        padding-top: 32px;
+        border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 900px) {
+        .post-head { padding-top: 120px; }
+        .back { margin-bottom: 32px; }
+    }
+</style>

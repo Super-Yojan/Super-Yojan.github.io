@@ -1,189 +1,189 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Plate from "../components/Plate.astro";
+import { projects } from "../data/projects";
+
+/*
+  DIRECTION CONTRACT — Landing (Experience)
+
+  THESIS: A studio monograph for an engineer, printed in one ink. It refuses
+  the dashboard-portfolio arrangement — stat tiles, status LEDs, terminal
+  chrome — that this category always ships.
+
+  OWN-WORLD: Paper white, ink black, three greys, no accent. Inter at two
+  extremes: 12vw display against 14px tracked mono. Hairline 1px rules as the
+  only divider. Images are hand-drawn engineering plates, never photographs.
+
+  STORY: A visitor sees a name at architectural scale, then six drawn systems
+  moving past, then one sentence explaining the span, then the work itself.
+  They leave knowing this person builds top to bottom.
+
+  FIRST VIEWPORT: Name centered at 12vw, letters rising into place; a 34ch
+  sub-headline beneath in graphite; a hairline rule at the fold carrying
+  location and availability in mono.
+
+  FORM: User-pinned brief (bold editorial studio) — no concept roll was run.
+*/
+
+const marqueeCards = [...projects, ...projects];
+
+const heroLines = ["Yojan", "Gautam"];
+let charIndex = 0;
 ---
 
 <BaseLayout>
-    <main class="hero-terminal">
-        <div class="left">
-            <div class="hero-kicker fade-in">
-                <span class="dot"></span>
-                <span>SYSTEM ONLINE</span>
-                <span style="opacity:0.4">//</span>
-                <span>PHD STUDENT · GMU CIAO LAB</span>
-            </div>
+    <section class="hero shell">
+        <!-- Split into per-character spans for the staggered reveal, so the
+             heading carries its own name and the fragments are hidden from
+             assistive tech rather than being spelled out letter by letter. -->
+        <h1 class="hero-display" aria-label="Yojan Gautam">
+            {
+                heroLines.map((line) => (
+                    <span class="reveal-line" aria-hidden="true">
+                        {[...line].map((ch) => (
+                            <span style={`transition-delay:${charIndex++ * 45}ms`}>
+                                {ch}
+                            </span>
+                        ))}
+                    </span>
+                ))
+            }
+        </h1>
 
-            <h1 class="hero-display fade-in delay-1">
-                Systems<br />
-                <span class="stroked">Builder.</span><br />
-                All the way <span class="accent">down.</span>
-            </h1>
+        <p class="hero-sub rise" data-delay="500">
+            Systems builder — analog circuits to shipped consumer software.
+            Masters student in autonomous systems at GMU. Founder of Glid.
+        </p>
 
-            <p class="hero-sub fade-in delay-2">
-                I build things from the bare metal up — analog circuits to
-                consumer apps. PhD student in autonomous systems at GMU.
-                Founder of Glid.
-            </p>
+        <div class="hero-foot rise t-label" data-delay="700">
+            <span>Washington, DC</span>
+            <span>Open to collaboration</span>
+        </div>
+    </section>
 
-            <div class="hero-stats fade-in delay-3">
-                <div class="hero-stat">
-                    <div class="v">152<small>– 0</small></div>
-                    <div class="l">Blimp comp · sweep</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="v">200<small>+ teams</small></div>
-                    <div class="l">Freedom CTF hosted</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="v">τ<small>≈ 0.227s</small></div>
-                    <div class="l">Modeled BLDC rise</div>
-                </div>
-            </div>
+    <section class="marquee" aria-label="Selected systems">
+        <div class="marquee-track">
+            {
+                marqueeCards.map((p, i) => (
+                    <a
+                        class="marquee-card plate-host"
+                        href={`/projects#${p.slug}`}
+                        aria-hidden={i >= projects.length ? "true" : undefined}
+                        tabindex={i >= projects.length ? -1 : undefined}
+                    >
+                        <div class="marquee-frame">
+                            <div class="frame-head t-label">
+                                <span>Fig. {p.index}</span>
+                                <span>{p.category}</span>
+                            </div>
+                            <div class="plate">
+                                <Plate plate={p.plate} />
+                            </div>
+                            <div class="frame-foot t-label">
+                                {p.metrics[0].value} {p.metrics[0].label}
+                            </div>
+                        </div>
+                        <div class="marquee-cap t-label">
+                            <span>Fig. {p.index} — {p.title}</span>
+                            <span>{p.year}</span>
+                        </div>
+                    </a>
+                ))
+            }
+        </div>
+    </section>
 
-            <div class="hero-ctas fade-in delay-4">
-                <a href="/projects" class="btn primary">View Projects</a>
-                <a href="/blog" class="btn secondary">Engineering Logs</a>
-                <a href="/about" class="btn secondary">About / CV</a>
-            </div>
+    <section class="statement shell">
+        <p class="statement-lead rise">I build from the bare metal up.</p>
+        <p class="statement-body rise" data-delay="120">
+            Most of my projects start at the layer nobody wants to touch — a
+            VHDL pipeline, a control loop, a quantized model small enough to run
+            on a 150-gram airframe — and end at something a person can actually
+            open and use. The span is the point.
+        </p>
+    </section>
+
+    <section class="shell" id="work">
+        <div class="section-head">
+            <h2 class="t-headline">Selected work</h2>
+            <span class="t-label">{projects.length} projects</span>
         </div>
 
-        <div class="right fade-in delay-2">
-            <div class="live-term">
-                <div class="bar">
-                    <div class="lights">
-                        <span class="r"></span><span class="y"></span><span
-                            class="g"></span>
-                    </div>
-                    <div>yojan@gmu — zsh — 86×24</div>
-                </div>
-                <div class="body" id="term-body" aria-live="polite"></div>
-            </div>
+        <div class="grid">
+            {
+                projects.map((p) => (
+                    <a class="card plate-host rise" href={`/projects#${p.slug}`}>
+                        <div class="card-frame">
+                            <div class="plate">
+                                <Plate plate={p.plate} />
+                            </div>
+                            <div class="card-veil" />
+                            <span class="card-arrow" aria-hidden="true">
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    width="18"
+                                    height="18"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                >
+                                    <path d="M7 17 L17 7 M9 7 h8 v8" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div class="card-meta">
+                            <span class="t-label fig">Fig. {p.index}</span>
+                            <h3 class="t-title card-name">{p.title}</h3>
+                            <span class="t-label">{p.category}</span>
+                            <span class="t-label">{p.year}</span>
+                        </div>
+                    </a>
+                ))
+            }
         </div>
-    </main>
+    </section>
 
-    <script is:inline>
-        (function () {
-            var lines = [
-                {
-                    kind: "cmd",
-                    dir: "~/glid",
-                    branch: "(main)",
-                    text: "cargo run --release",
-                },
-                { kind: "out", text: "   Compiling glid-core v0.4.1" },
-                { kind: "out", text: "   Compiling glid-routing v0.4.1" },
-                {
-                    kind: "out",
-                    text: "    Finished release [optimized] target(s) in 4.21s",
-                },
-                {
-                    kind: "ok",
-                    text: "✓ Beta build OK · 318 KB · DMV region",
-                },
-                {
-                    kind: "cmd",
-                    dir: "~/blimp",
-                    branch: "(autonomy)",
-                    text: "rosrun blimp_autonomy estimator",
-                },
-                {
-                    kind: "out",
-                    text: "[INFO] Kalman filter initialized · 6-state · σ=0.10",
-                },
-                { kind: "info", text: "[INFO] EKF lock acquired in 11 ms" },
-                {
-                    kind: "out",
-                    text: "[INFO] Position drift: 0.4 cm/s · within tolerance",
-                },
-                {
-                    kind: "cmd",
-                    dir: "~/papers",
-                    branch: "(draft)",
-                    text: "pandoc multi-agent-coord.md -o paper.pdf",
-                },
-                {
-                    kind: "warn",
-                    text: "! 2 figures missing captions — flagged for review",
-                },
-                {
-                    kind: "cmd",
-                    dir: "~/drone-comp",
-                    branch: "(main)",
-                    text: "python3 mission_control.py --mode auto",
-                },
-                {
-                    kind: "ok",
-                    text: "✓ Mission start: ArUco target lock acquired",
-                },
-                {
-                    kind: "cmd",
-                    dir: "~",
-                    branch: "(main)",
-                    text: "whoami",
-                },
-                {
-                    kind: "info",
-                    text: "yojan@gmu — systems builder · all the way down",
-                },
-            ];
-
-            var body = document.getElementById("term-body");
-            if (!body) return;
-            var i = 0;
-
-            function escape(s) {
-                return s.replace(
-                    /[&<>]/g,
-                    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c],
-                );
-            }
-
-            function renderCmd(ln) {
-                return (
-                    '<div class="ln"><span class="pr">➜</span>' +
-                    '<span class="dir">' +
-                    escape(ln.dir) +
-                    "</span>" +
-                    '<span class="br">' +
-                    escape(ln.branch) +
-                    "</span>" +
-                    "<span>" +
-                    escape(ln.text) +
-                    "</span></div>"
-                );
-            }
-            function renderOut(ln) {
-                var cls =
-                    ln.kind === "ok"
-                        ? "out ok"
-                        : ln.kind === "warn"
-                          ? "out warn"
-                          : ln.kind === "info"
-                            ? "out info"
-                            : "out";
-                return (
-                    '<div class="' + cls + '">' + escape(ln.text) + "</div>"
-                );
-            }
-
-            function tick() {
-                if (i >= lines.length) {
-                    body.insertAdjacentHTML(
-                        "beforeend",
-                        '<div class="ln"><span class="pr">➜</span>' +
-                            '<span class="dir">~</span>' +
-                            '<span class="br">(main)</span>' +
-                            '<span class="cur"></span></div>',
-                    );
-                    return;
-                }
-                var ln = lines[i++];
-                body.insertAdjacentHTML(
-                    "beforeend",
-                    ln.kind === "cmd" ? renderCmd(ln) : renderOut(ln),
-                );
-                setTimeout(tick, i < 5 ? 380 : 600);
-            }
-            setTimeout(tick, 400);
-        })();
-    </script>
+    <section class="shell close">
+        <div class="close-rule">
+            <span class="t-label">End of index</span>
+        </div>
+        <p class="close-lead rise">
+            Building something at the edge of hardware and software?
+        </p>
+        <a class="close-link rise" data-delay="120" href="mailto:hi@super-yojan.dev">
+            hi@super-yojan.dev
+        </a>
+    </section>
 </BaseLayout>
+
+<style>
+    .close { padding-block: var(--section); }
+
+    .close-rule {
+        display: flex;
+        justify-content: flex-end;
+        padding-bottom: 24px;
+        margin-bottom: 64px;
+        border-bottom: 1px solid var(--ink);
+    }
+
+    .close-lead {
+        max-width: 18ch;
+        font-size: clamp(28px, 4.4vw, 60px);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        text-wrap: balance;
+    }
+
+    .close-link {
+        display: inline-block;
+        margin-top: 40px;
+        font-size: clamp(1.5rem, 3.5vw, 3rem);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+        border-bottom: 1px solid var(--rule);
+        transition: border-color var(--dur-state) var(--ease);
+    }
+    .close-link:hover { border-bottom-color: var(--ink); }
+</style>

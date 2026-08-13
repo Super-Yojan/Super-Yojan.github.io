@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-12T00:00:00.000Z",
+  "title": "Design System: Yojan Gautam",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Ink",
+        "canonical": "#000000",
+        "tonalRamp": ["#000000", "#0a0a0a", "#171717", "#262626", "#404040", "#525252", "#737373", "#a3a3a3"]
+      },
+      "paper": {
+        "role": "primary",
+        "displayName": "Paper",
+        "canonical": "#FFFFFF",
+        "tonalRamp": ["#525252", "#737373", "#a3a3a3", "#d4d4d4", "#e5e5e5", "#f5f5f5", "#fafafa", "#ffffff"]
+      },
+      "graphite": {
+        "role": "neutral",
+        "displayName": "Graphite",
+        "canonical": "#525252",
+        "tonalRamp": ["#171717", "#262626", "#404040", "#525252", "#737373", "#a3a3a3", "#d4d4d4", "#f5f5f5"]
+      },
+      "ash": {
+        "role": "neutral",
+        "displayName": "Ash",
+        "canonical": "#737373",
+        "tonalRamp": ["#262626", "#404040", "#525252", "#737373", "#8a8a8a", "#a3a3a3", "#d4d4d4", "#f0f0f0"]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline Rule",
+        "canonical": "rgba(0, 0, 0, 0.10)",
+        "tonalRamp": ["rgba(0,0,0,0.80)", "rgba(0,0,0,0.60)", "rgba(0,0,0,0.40)", "rgba(0,0,0,0.24)", "rgba(0,0,0,0.16)", "rgba(0,0,0,0.10)", "rgba(0,0,0,0.06)", "rgba(0,0,0,0.03)"]
+      },
+      "pitch": {
+        "role": "tertiary",
+        "displayName": "Pitch",
+        "canonical": "#0A0A0A",
+        "tonalRamp": ["#000000", "#0a0a0a", "#141414", "#1f1f1f", "#2e2e2e", "#454545", "#6b6b6b", "#9a9a9a"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "The landing hero only. One per site, set in per-character spans for the staggered reveal." },
+      "headline": { "displayName": "Headline", "purpose": "Page titles and the footer brand mark." },
+      "title": { "displayName": "Title", "purpose": "Project names and article titles in listings." },
+      "lede": { "displayName": "Lede", "purpose": "Hero sub-headline and the centered introductory statement. Always graphite." },
+      "body": { "displayName": "Body", "purpose": "Running prose, capped at a 68ch measure." },
+      "label": { "displayName": "Label", "purpose": "Categories, years, counts, nav items, button text, figure captions. The only monospace voice." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-house", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Every transition and reveal in the system. The only easing curve permitted." },
+      { "name": "dur-reveal", "value": "1000ms", "purpose": "Staggered text reveals sliding up from translateY(100%)." },
+      { "name": "dur-image", "value": "700ms", "purpose": "Plate hover: grayscale(1) to grayscale(0) with a 1.05x scale." },
+      { "name": "dur-state", "value": "500ms", "purpose": "The floor for any hover or state transition." },
+      { "name": "dur-marquee", "value": "30s", "purpose": "One full marquee track cycle, linear and infinite, paused on container hover." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "600px" },
+      { "name": "md", "value": "900px" },
+      { "name": "lg", "value": "1200px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The filled call to action. Inverts on hover rather than darkening.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">View Projects</a>",
+      "css": ".ds-btn-primary { display: inline-block; background: #000; color: #fff; padding: 20px 40px; border: 1px solid #000; border-radius: 0; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; transition: background 500ms cubic-bezier(0.16,1,0.3,1), color 500ms cubic-bezier(0.16,1,0.3,1); } .ds-btn-primary:hover { background: #fff; color: #000; } .ds-btn-primary:focus-visible { outline: 2px solid #000; outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Link",
+      "kind": "button",
+      "refersTo": "link-underline",
+      "description": "Unfilled action. A 1px rule wipes in from the left on hover.",
+      "html": "<a class=\"ds-link-underline\" href=\"#\">Engineering Logs</a>",
+      "css": ".ds-link-underline { position: relative; display: inline-block; color: #000; padding-bottom: 6px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: none; } .ds-link-underline::after { content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: #000; transform: scaleX(0); transform-origin: left; transition: transform 500ms cubic-bezier(0.16,1,0.3,1); } .ds-link-underline:hover::after { transform: scaleX(1); } .ds-link-underline:focus-visible { outline: 2px solid #000; outline-offset: 3px; }"
+    },
+    {
+      "name": "Metadata Label",
+      "kind": "chip",
+      "refersTo": "meta-row",
+      "description": "The mono caption voice: categories, years, counts.",
+      "html": "<span class=\"ds-label\">Robotics</span><span class=\"ds-label\">2023–24</span>",
+      "css": ".ds-label { display: inline-block; margin-right: 24px; color: #737373; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; }"
+    },
+    {
+      "name": "Project Card",
+      "kind": "card",
+      "refersTo": "card-project",
+      "description": "A 4:3 plate over a hairline-ruled metadata row. The plate desaturates in and scales on hover.",
+      "html": "<a class=\"ds-card\" href=\"#\"><div class=\"ds-card-frame\"><div class=\"ds-card-plate\"></div></div><div class=\"ds-card-meta\"><h3>Autonomous Blimp</h3><span>Robotics</span><span>2023–24</span></div></a>",
+      "css": ".ds-card { display: block; color: #000; text-decoration: none; } .ds-card-frame { position: relative; aspect-ratio: 4/3; overflow: hidden; border-radius: 8px; background: #fff; } .ds-card-plate { width: 100%; height: 100%; background: repeating-linear-gradient(90deg, #000 0 1px, transparent 1px 14px); filter: grayscale(1); transition: filter 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1); } .ds-card:hover .ds-card-plate { filter: grayscale(0); transform: scale(1.05); } .ds-card-meta { display: flex; align-items: baseline; gap: 24px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.10); } .ds-card-meta h3 { margin: 0; margin-right: auto; font-size: 24px; font-weight: 700; letter-spacing: -0.03em; } .ds-card-meta span { color: #737373; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; text-transform: uppercase; letter-spacing: 0.1em; }"
+    },
+    {
+      "name": "Fixed Navigation",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Difference-blended header that stays legible over paper and pitch alike.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-mark\" href=\"/\">yg</a><button class=\"ds-nav-toggle\" aria-label=\"Open menu\"><svg viewBox=\"0 0 24 24\" width=\"24\" height=\"24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><path d=\"M12 5v14M5 12h14\"/></svg></button></header>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; padding: 24px; mix-blend-mode: difference; color: #fff; } .ds-nav-mark { color: inherit; font-size: 24px; font-weight: 700; letter-spacing: -0.05em; text-decoration: none; } .ds-nav-toggle { display: grid; place-items: center; width: 40px; height: 40px; background: none; border: 0; color: inherit; cursor: pointer; transition: transform 500ms cubic-bezier(0.16,1,0.3,1); } .ds-nav-toggle:hover { transform: rotate(90deg); }"
+    },
+    {
+      "name": "Difference Cursor",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "32px lagging circle that inverts whatever sits beneath it. Fine-pointer devices only.",
+      "html": "<div class=\"ds-cursor\"></div>",
+      "css": ".ds-cursor { position: fixed; top: 0; left: 0; width: 32px; height: 32px; margin: -16px 0 0 -16px; border: 1px solid #000; border-radius: 999px; background: #fff; mix-blend-mode: difference; pointer-events: none; z-index: 9999; transition: transform 500ms cubic-bezier(0.16,1,0.3,1); } .ds-cursor[data-grow='true'] { transform: scale(2.5); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Engineering Monograph",
+    "overview": "A studio monograph printed in one ink. The pages are white, the type is enormous and set tight, and every image is a plate — a black-and-white technical drawing of a real system this person built. The register is a design studio's, not a lab's: the confidence comes from scale and restraint, not from terminal chrome or dashboard furniture.\n\nDiscipline is the whole argument. With no color available, hierarchy has to come from size, weight, and the amount of white space around a thing — which is exactly the constraint that makes the type do real work. A 12vw headline against a 14px tracked mono label is the system's entire dynamic range, and it is enough. Motion is the second material: everything eases on cubic-bezier(0.16, 1, 0.3, 1) and nothing snaps, so the page feels weighted rather than animated.\n\nThe plates are the counterweight to all that type. Each project carries a drawn figure — a blimp envelope with its EKF trace, five pipeline stages, a network graph, a step response curve — in hairline black on white. They read as evidence, not decoration, and they are the only place the page gets busy.",
+    "keyCharacteristics": [
+      "Strict monochrome; the palette has no accent and does not want one.",
+      "Type at two extremes — enormous display, small tracked mono — with little in between.",
+      "Hairline rules (1px) as the only dividing device.",
+      "Asymmetric corner radii on marquee plates; near-square everywhere else.",
+      "Continuous horizontal motion in the marquee; slow reveals everywhere else.",
+      "A custom difference-blend cursor replaces the system pointer on fine-pointer devices."
+    ],
+    "rules": [
+      { "name": "The One Ink Rule", "body": "The interface is black on white. Color enters the page only through project imagery — and while the plates are monochrome line art, that channel stays closed. Introducing an accent to signal state, category, or emphasis is a system violation; use weight, size, or a rule instead.", "section": "colors" },
+      { "name": "The Grey Ladder Rule", "body": "Three steps and no more: ink for what matters, graphite for support, ash for metadata. A fourth grey means the hierarchy failed upstream.", "section": "colors" },
+      { "name": "The Two Extremes Rule", "body": "Type is either very large or very small. A page needing a size between the title (24px) and the headline is usually a page whose hierarchy needs rethinking, not a new step in the scale.", "section": "typography" },
+      { "name": "The Tracking Inversion Rule", "body": "Tracking runs negative as size runs up (-0.05em at display) and positive as size runs down (+0.1em on 14px mono). The two never meet in the middle.", "section": "typography" },
+      { "name": "The No-Shadow Rule", "body": "A box-shadow in this system is a bug. If an element needs to feel lifted, give it space or a rule; if it needs to feel above the page, use difference blending.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep every transition at 500ms or longer on cubic-bezier(0.16, 1, 0.3, 1).",
+      "Do use the 1px Rule line as the only divider, on paper or inverse.",
+      "Do set metadata in 14px mono, uppercase, 0.1em tracking, in ash.",
+      "Do give the marquee plates their three-card asymmetric radius cycle; the irregularity is the point.",
+      "Do gate the custom cursor behind (hover: hover) and (pointer: fine) and collapse every animation under prefers-reduced-motion: reduce.",
+      "Do let sections breathe at clamp(96px, 12vw, 200px)."
+    ],
+    "donts": [
+      "Don't introduce any accent color, including for status, category, or error. See The One Ink Rule.",
+      "Don't use a border heavier than 1px anywhere.",
+      "Don't add a box-shadow; this system has no elevation vocabulary.",
+      "Don't use the platform's default easing (ease, ease-in-out, linear for anything but the marquee track).",
+      "Don't let mono type run longer than a short label — it is a caption voice, not a body voice.",
+      "Don't reintroduce the retired terminal world: no window chrome, no prompt glyphs, no status LEDs, no blueprint grid, no theme toggle."
+    ]
+  }
+}

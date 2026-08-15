@@ -1,10 +1,11 @@
 /* ============================================================
    YOJAN GAUTAM — "The Engineering Monograph"
-   Bold editorial studio identity. Strict black and white.
+   Editorial studio identity in strict black and white, set light.
+   Display type is Inter 300; there is no 700 in the system.
    System of record: DESIGN.md at the project root.
    ============================================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap");
 
 /* ------------------------------------------------------------
    TOKENS
@@ -16,6 +17,12 @@
   --ash: #737373;
   --rule: rgba(0, 0, 0, 0.1);
   --pitch: #0a0a0a;
+  /* The pill system's two grounds: a soft chip against paper, and the
+     hairline that keeps a white tag legible on white. */
+  --soft: #f4f4f6;
+  --edge: rgba(0, 0, 0, 0.12);
+  --edge-strong: rgba(0, 0, 0, 0.35);
+  --quiet: rgba(0, 0, 0, 0.55);
   --rule-inverse: rgba(255, 255, 255, 0.1);
   /* The grey ladder, inverted for the pitch footer and menu. */
   --graphite-inverse: rgba(255, 255, 255, 0.72);
@@ -37,6 +44,7 @@
   --r-slight: 8px;
   --r-soft: 40px;
   --r-sweep: 100px;
+  --r-pill: 999px;
 }
 
 /* ------------------------------------------------------------
@@ -68,7 +76,7 @@ body {
   body a, body button, body [role="button"] { cursor: none; }
 }
 
-h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: 700; }
+h1, h2, h3, h4, h5, h6 { margin: 0; font-weight: 500; }
 p { margin: 0; }
 img, svg { display: block; max-width: 100%; }
 
@@ -118,21 +126,24 @@ a { color: inherit; text-decoration: none; }
 /* ------------------------------------------------------------
    TYPE ROLES
    ------------------------------------------------------------ */
+/* Display type is set LIGHT. At these sizes 300 has all the presence it
+   needs, and the thin stroke is what separates this from a bold-poster
+   portfolio. Weight climbs only as size falls. */
 .t-display {
   font-size: 12vw;
-  font-weight: 700;
+  font-weight: 300;
   line-height: 0.9;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
 }
 .t-headline {
   font-size: clamp(2.5rem, 6vw, 5rem);
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.05em;
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
 }
 .t-title {
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
@@ -157,7 +168,7 @@ a { color: inherit; text-decoration: none; }
 .t-body { max-width: 68ch; }
 
 /* Headlines break on sense, not on the raw line box. */
-.t-display, .t-headline, .statement-lead, .hero-display { text-wrap: balance; }
+.t-display, .t-headline, .statement-lead, .hero-heading { text-wrap: balance; }
 
 /* ------------------------------------------------------------
    REVEAL — the one authored entrance.
@@ -217,41 +228,148 @@ html.js .rise.is-in {
 /* ------------------------------------------------------------
    NAVIGATION
    ------------------------------------------------------------ */
+/* ---- the pill system -------------------------------------------------
+   Three parts compose every control on the site: a pill (the capsule), a
+   knob (the circular affordance inside it), and a tag (a bare chip). They
+   are shared so the navbar, the hero and the page furniture read as one
+   set of hardware. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px 0 4px;
+  border: 0;
+  border-radius: var(--r-pill);
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+.pill-dark { background: var(--ink); color: var(--paper); }
+.pill-soft {
+  gap: 14px;
+  background: var(--soft);
+  color: var(--ink);
+}
+/* A soft pill carrying only text needs its left padding back. */
+.pill-soft:not(:has(.knob)) { padding-inline: 16px; }
+.pill-text { line-height: 1; }
+
+.knob {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 28px; height: 28px;
+  border-radius: var(--r-pill);
+  transition: transform var(--dur-state) var(--ease);
+}
+.knob-light { background: var(--paper); color: var(--ink); }
+.knob-dark { background: var(--ink); color: var(--paper); }
+.knob svg { fill: currentColor; }
+.knob-light svg { fill: none; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 14px;
+  border: 1px solid var(--edge);
+  border-radius: var(--r-pill);
+  background: var(--paper);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+/* Pill buttons — the site's call to action, replacing the mono slab. */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 22px;
+  border: 1px solid transparent;
+  border-radius: var(--r-pill);
+  font-size: 13px;
+  font-weight: 500;
+  transition:
+    background var(--dur-state) var(--ease),
+    color var(--dur-state) var(--ease),
+    border-color var(--dur-state) var(--ease);
+}
+.pill-btn-dark { background: var(--ink); color: var(--paper); }
+.pill-btn-dark:hover { background: var(--graphite); }
+.pill-btn-ghost { border-color: var(--edge-strong); color: var(--ink); }
+.pill-btn-ghost:hover { border-color: var(--ink); background: var(--ink); color: var(--paper); }
+
+/* ---- navbar ---------------------------------------------------------- */
 .nav {
   position: fixed;
   inset: 0 0 auto 0;
-  z-index: 900;
+  z-index: 50;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px;
-  mix-blend-mode: difference;
-  color: var(--paper);
+  gap: 16px;
+  padding: 16px;
+  /* The bar spans the viewport but must not swallow clicks meant for the
+     hero beneath it; only the controls take the pointer back. */
+  pointer-events: none;
 }
-.nav-mark {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-  line-height: 1;
+.nav > * { pointer-events: auto; }
+.nav-group { display: flex; align-items: center; gap: 8px; }
+
+/* Every other control in the bar carries its own ground, so it survives the
+   pitch footer scrolling underneath. The wordmark has none, so it is told
+   explicitly when it is standing on pitch — difference blending cannot do
+   the job here, because .nav's own stacking context has nothing behind it
+   to difference against. */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 6px;
+  color: var(--ink);
+  transition: color var(--dur-state) var(--ease);
 }
-.nav-toggle {
-  display: grid;
-  place-items: center;
-  width: 40px; height: 40px;
-  padding: 0;
-  background: none;
-  border: 0;
-  color: inherit;
-  transition: transform var(--dur-state) var(--ease);
+.brand-mark { flex: none; fill: currentColor; transition: fill var(--dur-state) var(--ease); }
+/* On pitch — the open menu, or the footer scrolled under the bar — the ink
+   pill would disappear into the ground. The whole set flips together. */
+.nav.is-inverse .brand { color: var(--paper); }
+.nav.is-inverse .pill-dark { background: var(--paper); color: var(--ink); }
+.nav.is-inverse .knob-light { background: var(--ink); color: var(--paper); }
+.brand-name {
+  display: none;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
-.nav-toggle:hover { transform: rotate(90deg); }
-.nav-toggle.is-open { transform: rotate(45deg); }
+
+.nav-tags { display: none; }
+.nav-tags span { line-height: 1; }
+/* One hairline between the two labels, drawn by the pair rather than by
+   an extra element. */
+.nav-tags span + span {
+  padding-left: 14px;
+  border-left: 1px solid var(--edge);
+}
+
+.nav-toggle { padding-right: 16px; }
+.nav-toggle:hover .knob { transform: rotate(90deg); }
+.nav-toggle.is-open .knob { transform: rotate(45deg); }
+
+.nav-status { padding-right: 16px; }
+.nav-status-label { display: none; line-height: 1; }
 
 /* full-viewport menu */
 .menu {
   position: fixed;
   inset: 0;
-  z-index: 890;
+  /* Below the bar (z 50), so the control that opened the menu is still
+     there to close it. */
+  z-index: 40;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -282,7 +400,7 @@ html.js .rise.is-in {
   width: fit-content;
   padding: 4px 0;
   font-size: clamp(2.5rem, 9vw, 7rem);
-  font-weight: 700;
+  font-weight: 300;
   line-height: 1;
   letter-spacing: -0.05em;
   color: var(--paper);
@@ -310,39 +428,129 @@ html.js .rise.is-in {
 /* ------------------------------------------------------------
    HERO
    ------------------------------------------------------------ */
+/* The hero is a full-viewport white frame: the footage sits behind
+   everything, and the type rides a fade-up that lands it on paper. */
 .hero {
-  min-height: 80vh;
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-top: 140px;
-  padding-bottom: 64px;
+  justify-content: flex-end;
+  background: var(--paper);
+  overflow: hidden;
 }
-.hero-display {
-  font-size: 12vw;
-  font-weight: 700;
-  line-height: 0.9;
-  letter-spacing: -0.05em;
+
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  background: var(--paper);
 }
-.hero-sub {
-  max-width: 34ch;
-  margin-top: 32px;
-  font-size: clamp(19px, 2vw, 24px);
-  line-height: 1.4;
-  letter-spacing: -0.02em;
-  color: var(--graphite);
+/* On a narrow screen the frame is inset so the hand keeps its air and does
+   not collide with the type; on desktop it fills. */
+.hero-media > * {
+  width: 80%;
+  height: 80%;
 }
-.hero-foot {
-  display: flex;
-  justify-content: space-between;
-  gap: 24px;
+/* The footage's ground is a light grey, not paper — so the inset frame would
+   read as a pasted rectangle. The mask sits on the video, not the wrapper,
+   because it is the video's own four edges that have to disappear. */
+.hero-video {
+  -webkit-mask-image: radial-gradient(ellipse at 50% 46%, #000 40%, transparent 76%);
+  mask-image: radial-gradient(ellipse at 50% 46%, #000 40%, transparent 76%);
+}
+.hero-video {
+  object-fit: cover;
+  /* The poster is the paint before decode and the whole image under
+     reduced motion; both live on the same box so the swap is invisible. */
+  background: var(--paper) url("/media/hero-poster.jpg") center / cover no-repeat;
+}
+
+/* THE FADE-UP — white at the base, transparent at the top, so the heading
+   always has paper under it no matter what the footage is doing. */
+.hero-base {
+  position: relative;
+  z-index: 30;
+  padding: 40px var(--gutter);
+}
+/* The fade is its own layer with a fixed height rather than the base's
+   background. Tied to the base's height it grew with the copy and washed
+   the hand out to a smudge; pinned, it dissolves the wrist into the paper
+   and leaves the fingers crisp above it. */
+.hero-base::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: auto 0 0 0;
+  height: clamp(240px, 34vh, 340px);
+  background: linear-gradient(
+    to top,
+    var(--paper) 0%,
+    var(--paper) 42%,
+    rgba(255, 255, 255, 0.85) 70%,
+    transparent 100%
+  );
+}
+.hero-base-inner {
   width: 100%;
-  margin-top: 64px;
-  padding-top: 24px;
-  border-top: 1px solid var(--rule);
+  max-width: var(--shell);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--quiet);
+}
+.hero-dot {
+  flex: none;
+  width: 8px; height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+}
+
+.hero-heading {
+  margin-top: 20px;
+  font-size: clamp(2rem, 8vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ---- entrance -------------------------------------------------------
+   The hero is above the fold, so it plays on load rather than on scroll.
+   Every step shares the site ease; only distance and delay differ. */
+@keyframes hero-lift {
+  from { opacity: 0; transform: translateY(var(--lift, 16px)); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes hero-settle {
+  from { opacity: 0; transform: scale(1.05); }
+  to { opacity: 1; transform: none; }
+}
+html.js .hero-video { animation: hero-settle 1800ms var(--ease) both; }
+html.js .hero-base { animation: hero-lift 1000ms var(--ease) 500ms both; --lift: 20px; }
+html.js .hero-eyebrow { animation: hero-lift 800ms var(--ease) 600ms both; }
+html.js .hero-heading { animation: hero-lift 800ms var(--ease) 800ms both; --lift: 20px; }
+html.js .hero-actions { animation: hero-lift 800ms var(--ease) 1000ms both; }
+html.js .nav { animation: hero-lift 800ms var(--ease) both; --lift: -16px; }
 
 /* ------------------------------------------------------------
    MARQUEE
@@ -484,7 +692,7 @@ html.js .rise.is-in {
   max-width: 22ch;
   margin-inline: auto;
   font-size: clamp(28px, 4.4vw, 60px);
-  font-weight: 700;
+  font-weight: 300;
   line-height: 1.05;
   letter-spacing: -0.04em;
 }
@@ -735,7 +943,7 @@ html.js .rise.is-in {
 }
 .foot-brand {
   font-size: clamp(2.5rem, 7vw, 6rem);
-  font-weight: 700;
+  font-weight: 300;
   line-height: 0.9;
   letter-spacing: -0.05em;
 }
@@ -782,10 +990,35 @@ html.js .rise.is-in {
   .page-head { padding-top: 140px; }
 }
 
+/* The hero is authored mobile-first and opens up at 768px: the frame fills,
+   the navbar's secondary labels appear, and the base becomes a row. */
+@media (min-width: 768px) {
+  .nav { padding: 24px 32px; }
+  .pill { height: 40px; }
+  .knob { width: 32px; height: 32px; }
+  .brand-name { display: block; }
+  .nav-tags { display: inline-flex; }
+  .nav-status-label { display: block; }
+
+  .hero-media > * { width: 100%; height: 100%; }
+  /* Full-bleed needs no feathering — the frame reaches every edge. */
+  .hero-video { -webkit-mask-image: none; mask-image: none; }
+  /* The subject sits dead-centre in frame, which is exactly where the
+     heading goes. `translate` rather than `transform` — the entrance
+     animation owns transform, and the two compose instead of clobbering. */
+  .hero-video { translate: 0 -12%; }
+  .hero-base { padding: 56px var(--gutter); }
+  .hero-base-inner {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 48px;
+  }
+  .hero-heading { font-size: clamp(2.5rem, 5.5vw, 4.5rem); }
+  .hero-tags { justify-content: flex-end; padding-bottom: 6px; }
+}
+
 @media (max-width: 600px) {
-  .hero { min-height: 74vh; padding-top: 120px; }
-  .hero-display { font-size: 17vw; }
-  .hero-foot { flex-direction: column; gap: 8px; }
   .section-head { flex-direction: column; align-items: flex-start; gap: 8px; }
   .foot-grid { grid-template-columns: 1fr; gap: 48px; }
   .card-meta { flex-wrap: wrap; gap: 8px 16px; }
@@ -806,4 +1039,12 @@ html.js .rise.is-in {
   html.js .reveal-line > span { transform: none; }
   html.js .rise { opacity: 1; transform: none; }
   .plate .annot { opacity: 1; }
+  /* The footage is paused by script rather than hidden, so the frame keeps
+     its image — a still hand instead of a moving one. */
+  html.js .hero-video,
+  html.js .hero-base,
+  html.js .hero-eyebrow,
+  html.js .hero-heading,
+  html.js .hero-actions,
+  html.js .nav { animation: none; opacity: 1; transform: none; }
 }

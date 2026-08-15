@@ -9,35 +9,39 @@ colors:
   rule: "rgba(0, 0, 0, 0.10)"
   pitch: "#0A0A0A"
   rule-inverse: "rgba(255, 255, 255, 0.10)"
+  soft: "#F4F4F6"
+  edge: "rgba(0, 0, 0, 0.12)"
+  edge-strong: "rgba(0, 0, 0, 0.35)"
+  quiet: "rgba(0, 0, 0, 0.55)"
 typography:
   display:
     fontFamily: "Inter, system-ui, sans-serif"
-    fontSize: "12vw"
-    fontWeight: 700
-    lineHeight: 0.9
-    letterSpacing: "-0.05em"
+    fontSize: "clamp(2rem, 8vw, 4.5rem)"
+    fontWeight: 300
+    lineHeight: 1
+    letterSpacing: "-0.03em"
   headline:
     fontFamily: "Inter, system-ui, sans-serif"
     fontSize: "clamp(2.5rem, 6vw, 5rem)"
-    fontWeight: 700
-    lineHeight: 0.9
-    letterSpacing: "-0.05em"
+    fontWeight: 300
+    lineHeight: 0.95
+    letterSpacing: "-0.035em"
   statement:
     fontFamily: "Inter, system-ui, sans-serif"
     fontSize: "clamp(28px, 4.4vw, 60px)"
-    fontWeight: 700
+    fontWeight: 300
     lineHeight: 1.05
     letterSpacing: "-0.04em"
   subhead:
     fontFamily: "Inter, system-ui, sans-serif"
     fontSize: "32px"
-    fontWeight: 700
+    fontWeight: 300
     lineHeight: 1.1
     letterSpacing: "-0.04em"
   title:
     fontFamily: "Inter, system-ui, sans-serif"
     fontSize: "24px"
-    fontWeight: 700
+    fontWeight: 500
     lineHeight: 1.1
     letterSpacing: "-0.03em"
   body:
@@ -75,12 +79,38 @@ components:
   button-primary:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.paper}"
-    rounded: "{rounded.none}"
-    padding: "20px 40px"
-    typography: "{typography.label}"
+    rounded: "{rounded.pill}"
+    padding: "0 22px"
+    height: "44px"
+    fontSize: "13px"
+    fontWeight: 500
   button-primary-hover:
+    backgroundColor: "{colors.graphite}"
+    textColor: "{colors.paper}"
+  button-ghost:
+    backgroundColor: "transparent"
+    textColor: "{colors.ink}"
+    borderColor: "{colors.edge-strong}"
+    rounded: "{rounded.pill}"
+    padding: "0 22px"
+    height: "44px"
+    fontSize: "13px"
+    fontWeight: 500
+  pill-soft:
+    backgroundColor: "{colors.soft}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.pill}"
+    height: "40px"
+    fontSize: "11px"
+    fontWeight: 500
+  tag:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.ink}"
+    borderColor: "{colors.edge}"
+    rounded: "{rounded.pill}"
+    height: "30px"
+    fontSize: "11px"
+    fontWeight: 500
   link-underline:
     textColor: "{colors.ink}"
     typography: "{typography.label}"
@@ -108,8 +138,11 @@ and restraint, not from terminal chrome or dashboard furniture.
 
 Discipline is the whole argument. With no color available, hierarchy has to come from size,
 weight, and the amount of white space around a thing — which is exactly the constraint that
-makes the type do real work. A 12vw headline against a 14px tracked mono label is the system's
-entire dynamic range, and it is enough. Motion is the second material: everything eases on
+makes the type do real work. Display type is set LIGHT (Inter 300) and large; a 12vw headline
+at hairline weight against an 11px pill label is the system's entire dynamic range, and it is
+enough. Weight climbs only as size falls — 300 for display, 500 for titles and controls, 400
+for prose. There is no 700 anywhere in the system; bold display type is what this refresh
+deliberately left behind. Motion is the second material: everything eases on
 `cubic-bezier(0.16, 1, 0.3, 1)` and nothing snaps, so the page feels weighted rather than
 animated.
 
@@ -120,8 +153,9 @@ only place the page gets busy.
 
 **Key Characteristics:**
 - Strict monochrome; the palette has no accent and does not want one.
-- Type at two extremes — enormous display, small tracked mono — with little in between.
-- Hairline rules (1px) as the only dividing device.
+- Type at two extremes — large LIGHT display, small tracked mono — with little in between.
+- Hairline rules (1px) as the only dividing device, and full-round pills as the only control.
+- One moving frontispiece: the landing hero's footage, held to the page's ink.
 - Asymmetric corner radii on marquee plates; near-square everywhere else.
 - Continuous horizontal motion in the marquee; slow reveals everywhere else.
 - A custom difference-blend cursor replaces the system pointer on fine-pointer devices.
@@ -144,16 +178,43 @@ for the one inverted region.
   used for anything a visitor must read to understand the page.
 - **Rule** (rgba(0,0,0,0.10)): Every divider, card border, and metadata separator on paper.
 - **Rule Inverse** (rgba(255,255,255,0.10)): The same device inside the footer.
+- **Soft** (#F4F4F6): The ground of a secondary pill in the navbar. The only fill between
+  paper and ink, and it exists so a control can read as a control without a border.
+- **Edge** (rgba(0,0,0,0.12)) / **Edge Strong** (rgba(0,0,0,0.35)): The hairline on a white
+  tag, and the heavier one on a ghost button.
+- **Quiet** (rgba(0,0,0,0.55)): The hero eyebrow, and nothing else.
 
 ### Tertiary
-- **Pitch** (#0A0A0A): The footer ground, and nothing else. Its job is to close the page with
-  a hard tonal flip.
+- **Pitch** (#0A0A0A): The footer ground and the full-viewport menu, and nothing else. Its job
+  is to close the page with a hard tonal flip. The hero is paper, not pitch — the footage
+  supplies its own black.
 
 ### Named Rules
 **The One Ink Rule.** The interface is black on white. Color enters the page only through
 project imagery — and while the plates are monochrome line art, that channel stays closed.
 Introducing an accent to signal state, category, or emphasis is a system violation; use
-weight, size, or a rule instead.
+weight, size, or a rule instead. Footage obeys the same rule as a drawing: the hero's moving
+plate is a black subject on a white ground, so it needs no grading to belong. Footage that
+arrives in colour is desaturated in CSS rather than baked, so the source stays unmodified.
+
+**The Frontispiece Rule.** Exactly one moving plate exists, and it is the landing hero: a
+black manipulator opening and closing on white, looping by ping-pong so there is no cut. It
+is silent, `aria-hidden` (it states nothing the copy does not), and it pauses off-screen and
+under reduced motion, falling back to its own poster frame. It is full-bleed on desktop and
+an 80% frame on mobile, where a radial mask feathers its edges — the footage's ground is a
+light grey, not paper, so an unmasked inset frame would read as a pasted rectangle. A second
+video anywhere on the site turns the device into wallpaper and forfeits the effect.
+
+**The Fade-Up Rule.** Type never sits directly on footage. A white gradient of fixed height
+rises from the base of the hero and lands the copy on paper; the subject dissolves into it.
+The fade is pinned in pixels, not tied to the height of the copy — tied to the copy it grows
+with the text and washes the subject out to a smudge.
+
+**The Pill Rule.** Every control is a full-round capsule, and the set is three parts: a pill
+(the capsule), a knob (the 28/32px circle inside it), and a tag (a bare chip). They are shared
+between the navbar, the hero and the page furniture so the site reads as one set of hardware.
+Controls carry their own ground, which is what lets the fixed bar survive the pitch footer
+scrolling under it — the bare wordmark is the exception, and is told explicitly to invert.
 
 **The Grey Ladder Rule.** Three steps and no more: ink for what matters, graphite for support,
 ash for metadata. A fourth grey means the hierarchy failed upstream. On pitch the ladder
@@ -172,21 +233,26 @@ the one thing the plates are not.
 **Body Font:** Inter (with system-ui, sans-serif)
 **Label/Mono Font:** ui-monospace / SFMono-Regular / Menlo
 
-**Character:** One family carrying the whole page, worked at its extremes. Inter at 700 and
--0.05em tracking is dense and architectural at display size; the same family at 400 and
--0.02em is quiet and highly readable at body size. The monospace is the only foreign voice and
+**Character:** One family carrying the whole page, worked at its extremes. Inter at 300 and
+-0.03em tracking is open and architectural at display size — the thin stroke at scale is the
+identity, and the reason the page reads as a studio rather than a poster; the same family at
+400 and -0.02em is quiet and highly readable at body size, and at 500 it becomes a control
+label. The weight axis only ever moves in one direction: heavier as the type gets smaller. The monospace is the only foreign voice and
 it appears only as small tracked uppercase metadata, which keeps it reading as a caption
 system rather than as a terminal.
 
 ### Hierarchy
-- **Display** (700, 12vw, 0.9): The landing hero only. One per site. Set in per-character
-  spans for the staggered reveal. Rises to 17vw below 600px so the name still fills the frame.
-- **Headline** (700, clamp(2.5rem, 6vw, 5rem), 0.9): Page titles. The footer brand mark runs a
+- **Display** (300, clamp(2.5rem, 5.5vw, 4.5rem), 1.0): The landing hero only. One per site.
+  Two hard-broken lines, entering as one block rather than per-character — the light weight is
+  doing the work the stagger used to. Drops to clamp(2rem, 8vw, 4.5rem) below 768px.
+- **Headline** (300, clamp(2.5rem, 6vw, 5rem), 0.95): Page titles. The footer brand mark runs a
   wider clamp(2.5rem, 7vw, 6rem) and the menu overlay clamp(2.5rem, 9vw, 7rem), since each
   owns its whole region.
-- **Statement** (700, clamp(28px, 4.4vw, 60px), 1.05): The one centered thesis line on a page.
-- **Subhead** (700, 32px, 1.1): `h2` inside long-form prose.
-- **Title** (700, 24px, 1.1): Project names and article titles in listings.
+- **Statement** (300, clamp(28px, 4.4vw, 60px), 1.05): The one centered thesis line on a page.
+- **Subhead** (300, 32px, 1.1): `h2` inside long-form prose.
+- **Title** (500, 24px, 1.1): Project names and article titles in listings.
+- **Control** (500, 11–13px): Pill labels, tags, and buttons. The only place weight rises
+  above 500, and it never does.
 - **Lede** (400, clamp(19px, 2vw, 24px), 1.4, graphite): The hero sub-headline and page
   standfirsts.
 - **Body** (400, 18px, 1.5): Running prose at every breakpoint — there is no smaller mobile
@@ -252,11 +318,12 @@ Borders are 1px, always, in Rule or Rule Inverse. There is no second border weig
 ## Components
 
 ### Buttons
-- **Shape:** Square (0 radius).
-- **Primary:** Ink fill, paper text, 20px 40px padding, mono label at 14px / 0.1em uppercase.
-- **Hover / Focus:** Inverts to paper fill with ink text and a 1px ink border, over 500ms on
-  the house easing. Focus-visible adds a 2px ink outline at 3px offset.
-- **Ghost:** No fill; ink text with a 1px bottom rule that wipes from left to right on hover.
+- **Shape:** Full-round pill (999px). Nothing in the control set is square.
+- **Primary:** Ink fill, paper text, 44px tall, 0 22px padding, 13px / 500 label — sentence
+  case, not the tracked mono used for metadata.
+- **Ghost:** No fill; ink text inside a 1px Edge Strong (rgba(0,0,0,0.35)) hairline.
+- **Hover / Focus:** Primary softens to graphite; ghost fills to ink with paper text. Both
+  over 500ms on the house easing. Focus-visible adds a 2px ink outline at 3px offset.
 
 ### Cards / Containers
 - **Corner Style:** 8px on grid plates; the asymmetric cycle on marquee plates.
@@ -279,10 +346,18 @@ document rather than a text block pinned to the left of a 1600px page.
   widening the page.
 
 ### Navigation
-Fixed to the top, `mix-blend-mode: difference` on the container so it reads against both paper
-and the pitch footer without needing a scroll listener. Lowercase wordmark `yg` at 24px / 700 /
--0.05em on the left; a rotating plus-glyph menu toggle on the right; 24px padding. The open
-menu is a full-viewport pitch panel with the routes set at headline scale.
+Fixed to the top at `z-index: 50`, `pointer-events: none` on the bar itself and `auto` on the
+controls, so it never swallows a click meant for the hero. Left group: the two-blade wordmark
+plus "Yojan Gautam" at 15px / 600, an ink Menu pill whose knob rotates 45° to a close glyph,
+and a soft pill carrying two discipline labels. Right group: a soft pill with an ink knob
+linking to the work, plus an availability label. Padding steps 16px → 24px/32px at 768px; the
+brand name, the discipline labels and the availability label all drop below it.
+
+Because the bar has no ground of its own, two pitch surfaces can end up behind it — the open
+menu (`z-index: 40`, below the bar so the control that opened it can close it) and the footer
+on a short viewport. A scroll/resize listener adds `.is-inverse`, which flips the wordmark to
+paper and the ink pill to paper-on-ink. Difference blending cannot do this job here: the bar
+forms its own stacking context, so there is nothing behind it to blend against.
 
 ### Signature Component — The Difference Cursor
 A 32px circle, `position: fixed`, `pointer-events: none`, `z-index: 9999`, paper fill, 1px ink

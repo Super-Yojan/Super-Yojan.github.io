@@ -12,52 +12,73 @@ import { projects } from "../data/projects";
 
   OWN-WORLD: Paper white, ink black, three greys, no accent. Inter at two
   extremes: 12vw display against 14px tracked mono. Hairline 1px rules as the
-  only divider. Images are hand-drawn engineering plates, never photographs.
+  only divider. Project imagery is hand-drawn engineering plates, never
+  photographs; the single exception is the frontispiece, which is footage held
+  to the same ink by a CSS desaturation.
 
-  STORY: A visitor sees a name at architectural scale, then six drawn systems
-  moving past, then one sentence explaining the span, then the work itself.
-  They leave knowing this person builds top to bottom.
+  STORY: A visitor lands inside a moving plate with a name across it, steps out
+  onto paper, watches six drawn systems move past, reads one sentence
+  explaining the span, then reaches the work. They leave knowing this person
+  builds top to bottom.
 
-  FIRST VIEWPORT: Name centered at 12vw, letters rising into place; a 34ch
-  sub-headline beneath in graphite; a hairline rule at the fold carrying
-  location and availability in mono.
+  FIRST VIEWPORT: A full-bleed monochrome plate in pitch — a figure at the edge
+  of a slow vortex — with the name centered over it at 12vw, letters rising
+  into place; a 34ch sub-headline beneath in graphite inverse; a hairline rule
+  at the fold carrying location and availability in mono. The plate ends on a
+  hard edge and the paper resumes at the marquee.
 
   FORM: User-pinned brief (bold editorial studio) — no concept roll was run.
 */
 
 const marqueeCards = [...projects, ...projects];
-
-const heroLines = ["Yojan", "Gautam"];
-let charIndex = 0;
 ---
 
 <BaseLayout>
-    <section class="hero shell">
-        <!-- Split into per-character spans for the staggered reveal, so the
-             heading carries its own name and the fragments are hidden from
-             assistive tech rather than being spelled out letter by letter. -->
-        <h1 class="hero-display" aria-label="Yojan Gautam">
-            {
-                heroLines.map((line) => (
-                    <span class="reveal-line" aria-hidden="true">
-                        {[...line].map((ch) => (
-                            <span style={`transition-delay:${charIndex++ * 45}ms`}>
-                                {ch}
-                            </span>
-                        ))}
-                    </span>
-                ))
-            }
-        </h1>
+    <section class="hero">
+        <!-- The subject is centred and small, so the frame is allowed to be
+             mostly empty. aria-hidden: it repeats nothing the copy states. -->
+        <div class="hero-media" aria-hidden="true">
+            <video
+                id="hero-video"
+                class="hero-video"
+                poster="/media/hero-poster.jpg"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="auto"
+                tabindex="-1"
+            >
+                <source src="/media/hero-loop.mp4" type="video/mp4" />
+            </video>
+        </div>
 
-        <p class="hero-sub rise" data-delay="500">
-            Systems builder — analog circuits to shipped consumer software.
-            Masters student in autonomous systems at GMU. Founder of Glid.
-        </p>
+        <!-- The fade-up carries the type off the footage and onto paper, so
+             the two never fight for the same tone. -->
+        <div class="hero-base">
+            <div class="hero-base-inner">
+                <div class="hero-lead">
+                    <p class="hero-eyebrow">
+                        <span class="hero-dot" aria-hidden="true"></span>
+                        Masters in autonomous systems — GMU CIAO Lab
+                    </p>
 
-        <div class="hero-foot rise t-label" data-delay="700">
-            <span>Washington, DC</span>
-            <span>Open to collaboration</span>
+                    <h1 class="hero-heading">
+                        Bare metal to<br />shipped software.
+                    </h1>
+
+                    <div class="hero-actions">
+                        <a class="pill-btn pill-btn-dark" href="#work">See the work</a>
+                        <a class="pill-btn pill-btn-ghost" href="/about">How I build</a>
+                    </div>
+                </div>
+
+                <div class="hero-tags">
+                    <span class="tag">Robotics</span>
+                    <span class="tag">Embedded</span>
+                    <span class="tag">Research</span>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -170,7 +191,7 @@ let charIndex = 0;
     .close-lead {
         max-width: 18ch;
         font-size: clamp(28px, 4.4vw, 60px);
-        font-weight: 700;
+        font-weight: 300;
         line-height: 1.05;
         letter-spacing: -0.04em;
         text-wrap: balance;
@@ -180,10 +201,40 @@ let charIndex = 0;
         display: inline-block;
         margin-top: 40px;
         font-size: clamp(1.5rem, 3.5vw, 3rem);
-        font-weight: 700;
+        font-weight: 300;
         letter-spacing: -0.04em;
         border-bottom: 1px solid var(--rule);
         transition: border-color var(--dur-state) var(--ease);
     }
     .close-link:hover { border-bottom-color: var(--ink); }
 </style>
+
+<script>
+    // The plate plays only when it is both wanted and visible. CSS can hide a
+    // video but cannot stop it decoding, so the pause has to happen here.
+    const video = document.getElementById("hero-video") as HTMLVideoElement | null;
+
+    if (video) {
+        const calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        const apply = () => {
+            if (calm.matches) video.pause();
+            else video.play().catch(() => {});
+        };
+
+        calm.addEventListener("change", apply);
+        apply();
+
+        // Scrolling past the fold leaves a decoder running behind six sections
+        // of paper. Stop it, and pick it back up on the way home.
+        const io = new IntersectionObserver(
+            ([entry]) => {
+                if (calm.matches) return;
+                if (entry.isIntersecting) video.play().catch(() => {});
+                else video.pause();
+            },
+            { threshold: 0 },
+        );
+        io.observe(video);
+    }
+</script>

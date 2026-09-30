@@ -45,10 +45,10 @@ Differential allocation of left/right thrusters (and, in later work, Differentia
 
 **Source:** [arXiv:2309.06352](https://arxiv.org/html/2309.06352v1) — *Lighter-Than-Air Autonomous Ball Capture and Scoring Robot* (co-author Yojan Gautam).
 
-- **Decision:** Yaw via **differential drive** using motors/propellers \(m_1, m_2\) placed **1000 mm** apart; altitude via \(m_3\); forward thrust via \(m_4\) to **decouple** yaw from surge.
-- **Control:** In search modes, full-throttle spin on \(u_2\); when a target is visible, **PD on yaw error** \(e_{\text{yaw}}\) using differential drive; PD on vertical error via \(u_3\).
+- **Decision:** Yaw via **differential drive** using motors/propellers $m_1, m_2$ placed **1000 mm** apart; altitude via $m_3$; forward thrust via $m_4$ to **decouple** yaw from surge.
+- **Control:** In search modes, full-throttle spin on $u_2$; when a target is visible, **PD on yaw error** $e_{\text{yaw}}$ using differential drive; PD on vertical error via $u_3$.
 - **Outcome:** Documented minimum-viable scoring agent for April 2023 DTR; homogeneous fleet strategy; LinkedIn/CIAO framing credits Yojan with PD programming, electronics maintenance, and performance testing.
-- **Kinematic model:** Reduced 2.5D model maps \(m_1,m_2\) → yaw \(u_2\).
+- **Kinematic model:** Reduced 2.5D model maps $m_1,m_2$ → yaw $u_2$.
 
 ### 1.2 Senior-design / competition flight stack (DifferentialBlimp)
 
@@ -82,7 +82,7 @@ Differential allocation of left/right thrusters (and, in later work, Differentia
 |------|------------------------|
 | Competition differential yaw + PD | Documented in arXiv; competition deployment Apr 2023 |
 | DifferentialBlimp / mixer rationale | Written into lessons-learned platform section |
-| DTV pitch paper model | 96% NRMSE fit; underdamped \(\omega_n=5.09\) rad/s, \(\zeta=0.0198\) |
+| DTV pitch paper model | 96% NRMSE fit; underdamped $\omega_n=5.09$ rad/s, $\zeta=0.0198$ |
 | `blimp-actuator` node | Repo present; ESC arming + Zenoh commands |
 | Xiao phone vehicle DIFF_DRIVE | Firmware/docs on box; separate from blimp airframe |
 
@@ -93,7 +93,7 @@ Differential allocation of left/right thrusters (and, in later work, Differentia
 ### Problem (observed across sources)
 
 - Function-allocation lab PDF (box `blimp-lab-full.txt`): gondola/mass distribution makes the blimp behave like a **natural pendulum** with **no control surface to dampen oscillation**.
-- Swing-Reducing paper: gondola thrust below center of buoyancy creates pitch-up moment → **unstable feedback** and **sustained oscillations** without active control; open-loop settling \(\approx 40\) s given \(\zeta \approx 0.0198\).
+- Swing-Reducing paper: gondola thrust below center of buoyancy creates pitch-up moment → **unstable feedback** and **sustained oscillations** without active control; open-loop settling $\approx 40$ s given $\zeta \approx 0.0198$.
 
 ### Work found
 
@@ -127,10 +127,10 @@ arXiv reduced model (position + yaw + altitude); explicitly noted as **not** a h
 From Swing-Reducing paper:
 
 - Frames: inertial, body (origin at center of buoyancy/volume), gondola (IMU + thrust).
-- Pitch EOM about CM: inertia, aero damping \(b\dot\theta\), buoyancy–gravity restoring \(d_{VM} mg \sin\theta\), thrust torque with lever \((d_{VT}-d_{VM})f(u)\).
-- Geometry: ellipsoid \(a,b,c\); \(d_{VT}\approx 0.300\) m; mass via buoyancy equilibrium \(\approx 0.187\) kg.
-- \(I_{CM}\), \(d_{VM}\) from SolidWorks then refined by ID.
-- Linearized state-space; poles yield \(\omega_n=5.09\) rad/s, \(\zeta=0.0198\).
+- Pitch EOM about CM: inertia, aero damping $b\dot\theta$, buoyancy–gravity restoring $d_{VM} mg \sin\theta$, thrust torque with lever $(d_{VT}-d_{VM})f(u)$.
+- Geometry: ellipsoid $a,b,c$; $d_{VT}\approx 0.300$ m; mass via buoyancy equilibrium $\approx 0.187$ kg.
+- $I_{CM}$, $d_{VM}$ from SolidWorks then refined by ID.
+- Linearized state-space; poles yield $\omega_n=5.09$ rad/s, $\zeta=0.0198$.
 
 ### Other modeling artifacts (Drive)
 
@@ -160,16 +160,16 @@ Drive thruster characterization (`20251204T103847--thruster-characterization__�
 
 - Sweep PWM **1000–2000 µs**; fit **asymmetric cubic + quadratic** about neutral 1500 µs (separate forward/reverse coeffs for blade asymmetry).
 - Example fitted constants reported in notes:  
-  \(k_\text{pos}=-1.77\times10^{-8}\), \(b_\text{pos}=1.09\times10^{-5}\),  
-  \(k_\text{neg}=1.37\times10^{-8}\), \(b_\text{neg}=-7.22\times10^{-6}\).
+  $k_\text{pos}=-1.77\times10^{-8}$, $b_\text{pos}=1.09\times10^{-5}$,  
+  $k_\text{neg}=1.37\times10^{-8}$, $b_\text{neg}=-7.22\times10^{-6}$.
 
 ### Transition / rise-time dynamics
 
-- First-order: \(F(t)=F_\text{final}+(F_\text{init}-F_\text{final})e^{-t/\tau}\).
-- Metrics: \(\tau\), rise \(t_{10–90}\approx 2.2\tau\), settle \(\approx 4\tau\), zero-crossing time on reversals.
-- Empirical asymmetry: e.g. Full Fwd→Full Rev \(\tau\approx 1114\) ms vs Full Rev→Full Fwd \(\tau\approx 514\) ms (table in notes / blog).
-- Linear models: Fwd→Rev \(\tau(\text{ms})=1.7084\,\Delta\text{PWM}-593.96\); Rev→Fwd \(0.5459\,\Delta\text{PWM}-31.46\).
-- Motor-modeling note: rise \(\sim 0.5\) s → \(\tau\approx 0.227\) s; Python sim vs `thrust_vs_time.csv`.
+- First-order: $F(t)=F_\text{final}+(F_\text{init}-F_\text{final})e^{-t/\tau}$.
+- Metrics: $\tau$, rise $t_{10–90}\approx 2.2\tau$, settle $\approx 4\tau$, zero-crossing time on reversals.
+- Empirical asymmetry: e.g. Full Fwd→Full Rev $\tau\approx 1114$ ms vs Full Rev→Full Fwd $\tau\approx 514$ ms (table in notes / blog).
+- Linear models: Fwd→Rev $\tau(\text{ms})=1.7084\,\Delta\text{PWM}-593.96$; Rev→Fwd $0.5459\,\Delta\text{PWM}-31.46$.
+- Motor-modeling note: rise $\sim 0.5$ s → $\tau\approx 0.227$ s; Python sim vs `thrust_vs_time.csv`.
 
 ### Public write-up
 
@@ -177,7 +177,7 @@ Blog already published: [Modeling Motor Thrust: Why BLDC Systems Have a Rise Tim
 
 ### Swing paper thrust section
 
-Load-cell stand (0–100 g), CW/CCW characterization, nonlinear \(f(u)\) into pitch EOM — consistent with the Drive characterization pipeline.
+Load-cell stand (0–100 g), CW/CCW characterization, nonlinear $f(u)$ into pitch EOM — consistent with the Drive characterization pipeline.
 
 ### Gap
 
@@ -243,7 +243,7 @@ No searched source showed a completed closed-loop **thrust-vectoring controller 
 ## 7. Decisions (cross-cutting)
 
 1. Prefer **underactuated differential (+ vectoring)** LTA over multirotor for indoor HRI/competition safety and endurance.
-2. **Decouple** yaw vs forward thrust with dedicated motors when mass allows (DTR \(m_4\)).
+2. **Decouple** yaw vs forward thrust with dedicated motors when mass allows (DTR $m_4$).
 3. Move from motion-capture-dependent demos toward **onboard IMU-only** pitch stabilization (Swing-Reducing paper motivation).
 4. Characterize thrusters with **load-cell + asymmetric polynomials + first-order τ**, then publish educational write-up.
 5. Productize classroom kits (**Sano Blimp**) with Pi-based control stack and mobile BLE UI.
@@ -332,7 +332,7 @@ Local Mac paths referenced inside Drive notebooks (e.g. `…/Swing-Reducing/Expe
 ### Blimp paper draft actually found (Drive, Typst — not live Overleaf URL)
 - **`Swing-Reducing-Paper.typ`** + compiled **`Swing-Reducing-Paper.pdf`** — IEEE Typst template (`@preview/charged-ieee`).
 - Title: *Pitch Stabilization of an Autonomous Blimp Using Onboard Measurements* — **Yojan Gautam**, **Ningshi Yao** (GMU).
-- Content covers DTV (differential + gimbal vectoring), pitch EOM, thrust characterization, system ID (avg **96.04%** NRMSE across 7 free-oscillation trials), linearization (\(\omega_n=5.09\), \(\zeta=0.0198\)), control recommendations.
+- Content covers DTV (differential + gimbal vectoring), pitch EOM, thrust characterization, system ID (avg **96.04%** NRMSE across 7 free-oscillation trials), linearization ($\omega_n=5.09$, $\zeta=0.0198$), control recommendations.
 - **Gap:** No authenticated Overleaf project URL located this run. Draft is archived on Drive (and mirrored under `/workspace/blimp-archive/`). Live Overleaf login via browser was not completed.
 
 

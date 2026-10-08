@@ -1,13 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Plate from "../components/Plate.astro";
-import { docSites } from "../data/docs";
 import { projects } from "../data/projects";
 ---
 
 <BaseLayout
     title="Work"
-    description="Selected work across robotics, embedded, consumer, and research, plus documentation for ARGOS, Terra, and Zorvane."
+    description="Selected work across robotics, embedded, consumer, and research."
 >
     <header class="page-head shell">
         <h1 class="t-headline">
@@ -18,7 +17,7 @@ import { projects } from "../data/projects";
             research — the list is short because it only holds things I took
             all the way.
         </p>
-        <a class="link-wipe head-docs rise" data-delay="320" href="#docs">
+        <a class="link-wipe head-docs rise" data-delay="320" href="/docs">
             Documentation
         </a>
     </header>
@@ -64,45 +63,6 @@ import { projects } from "../data/projects";
             ))
         }
     </div>
-
-    <section class="shell docs" id="docs">
-        <div class="docs-head">
-            <h2 class="t-headline">Documentation</h2>
-            <p class="t-lede docs-lead rise">
-                ARGOS is the hub. It is the operator and fleet supervision
-                layer, and its site links Terra and Zorvane.
-            </p>
-        </div>
-
-        <div class="docs-list">
-            {
-                docSites.map((site) => (
-                    <article class="doc rise" id={site.slug}>
-                        <p class="t-label">{site.role}</p>
-                        <div>
-                            <h3 class="t-title">{site.title}</h3>
-                            <p class="doc-note">{site.blurb}</p>
-                        </div>
-                        <p class="doc-links">
-                            <a class="link-wipe" href={site.docsUrl}>
-                                Docs
-                                <span class="visually-hidden"> for {site.title}</span>
-                            </a>
-                            <a
-                                class="link-wipe"
-                                href={site.repoUrl}
-                                target="_blank"
-                                rel="noopener"
-                            >
-                                GitHub
-                                <span class="visually-hidden"> for {site.title}</span>
-                            </a>
-                        </p>
-                    </article>
-                ))
-            }
-        </div>
-    </section>
 </BaseLayout>
 
 <style>
@@ -172,43 +132,9 @@ import { projects } from "../data/projects";
 
     .head-docs { margin-top: 40px; }
 
-    .docs {
-        margin-top: var(--section);
-        scroll-margin-top: 120px;
-    }
-    .docs-lead {
-        max-width: 42ch;
-        margin-top: 32px;
-    }
-    .docs-list {
-        margin-top: 64px;
-        border-top: 1px solid var(--rule);
-    }
-    .doc {
-        display: grid;
-        grid-template-columns: minmax(7rem, 1fr) minmax(0, 2.4fr) auto;
-        align-items: baseline;
-        gap: 32px;
-        padding: 32px 0;
-        border-bottom: 1px solid var(--rule);
-        scroll-margin-top: 120px;
-    }
-    .doc-note {
-        max-width: 52ch;
-        margin-top: 8px;
-        color: var(--graphite);
-    }
-    .doc-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 24px;
-        margin: 0;
-    }
-
     @media (max-width: 900px) {
         .entry { grid-template-columns: 1fr; gap: 32px; }
         .entry:nth-child(even) .entry-plate { order: 0; }
         .specs { gap: 32px; }
-        .doc { grid-template-columns: 1fr; gap: 12px; }
     }
 </style>

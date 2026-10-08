@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { docSites } from "../data/docs";
+---
+
+<BaseLayout
+    title="Documentation"
+    description="Documentation for ARGOS, Terra, and Zorvane. ARGOS is the hub."
+>
+    <header class="page-head shell">
+        <h1 class="t-headline">
+            <span class="reveal-line"><span>Documentation</span></span>
+        </h1>
+        <p class="t-lede rise" data-delay="200">
+            ARGOS is the hub. It is the operator and fleet supervision
+            layer, and its site links Terra and Zorvane.
+        </p>
+    </header>
+
+    <section class="shell">
+        <div class="docs-list">
+            {
+                docSites.map((site) => (
+                    <article class="doc rise" id={site.slug}>
+                        <p class="t-label">{site.role}</p>
+                        <div>
+                            <h2 class="t-title">{site.title}</h2>
+                            <p class="doc-note">{site.blurb}</p>
+                        </div>
+                        <p class="doc-links">
+                            <a
+                                class="link-wipe"
+                                href={site.docsUrl}
+                                aria-label={`Docs for ${site.title}`}
+                            >
+                                Docs
+                            </a>
+                            <a
+                                class="link-wipe"
+                                href={site.repoUrl}
+                                target="_blank"
+                                rel="noopener"
+                                aria-label={`${site.title} on GitHub`}
+                            >
+                                GitHub
+                            </a>
+                        </p>
+                    </article>
+                ))
+            }
+        </div>
+    </section>
+</BaseLayout>
+
+<style>
+    .docs-list { border-top: 1px solid var(--rule); }
+    .doc {
+        display: grid;
+        grid-template-columns: minmax(7rem, 1fr) minmax(0, 2.4fr) auto;
+        align-items: baseline;
+        gap: 32px;
+        padding: 32px 0;
+        border-bottom: 1px solid var(--rule);
+        scroll-margin-top: 120px;
+    }
+    .doc-note {
+        max-width: 52ch;
+        margin-top: 8px;
+        color: var(--graphite);
+    }
+    .doc-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 24px;
+        margin: 0;
+    }
+
+    @media (max-width: 900px) {
+        .doc { grid-template-columns: 1fr; gap: 12px; }
+    }
+</style>

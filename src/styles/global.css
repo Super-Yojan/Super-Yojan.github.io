@@ -372,7 +372,12 @@ html.js .rise.is-in {
   z-index: 40;
   display: flex;
   flex-direction: column;
+  /* `safe` keeps a short viewport from centering the list off both edges.
+     Five items at display size overflow a 720p window; the panel scrolls
+     instead of clipping About and the contact row. */
   justify-content: center;
+  justify-content: safe center;
+  overflow-y: auto;
   gap: 8px;
   padding: 96px var(--gutter) var(--gutter);
   background: var(--pitch);

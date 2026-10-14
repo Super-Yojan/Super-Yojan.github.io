@@ -859,7 +859,11 @@ html.js .nav { animation: hero-lift 800ms var(--ease) both; --lift: -16px; }
   font-size: 24px;
   letter-spacing: -0.03em;
 }
-.prose a { text-decoration: underline; text-underline-offset: 4px; }
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
+}
 .prose ul, .prose ol { margin-block: 24px; padding-left: 20px; }
 .prose li + li { margin-top: 8px; }
 .prose blockquote {
@@ -873,6 +877,7 @@ html.js .nav { animation: hero-lift 800ms var(--ease) both; --lift: -16px; }
   font-size: 0.85em;
   background: rgba(0, 0, 0, 0.05);
   padding: 2px 6px;
+  overflow-wrap: anywhere;
 }
 /* Shiki runs in css-variables mode; syntax highlighting is carried by the
    grey ladder rather than by hue, so a code block stays inside the palette. */

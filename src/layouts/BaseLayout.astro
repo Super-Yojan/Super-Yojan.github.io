@@ -289,6 +289,83 @@ const year = new Date().getFullYear();
                 );
             }
 
+            // ---- code blocks --------------------------------------------
+            // Every listing, including Markdown, gets one copy control.
+            // The button sits outside the pre so its label is never copied.
+            const writeClipboard = async (text: string): Promise<boolean> => {
+                try {
+                    if (navigator.clipboard?.writeText) {
+                        await navigator.clipboard.writeText(text);
+                        return true;
+                    }
+                } catch {
+                    /* Permission or a non-secure context: try the fallback. */
+                }
+                try {
+                    const area = document.createElement("textarea");
+                    area.value = text;
+                    area.setAttribute("readonly", "");
+                    area.style.position = "fixed";
+                    area.style.top = "0";
+                    area.style.left = "0";
+                    area.style.opacity = "0";
+                    document.body.append(area);
+                    area.focus();
+                    area.select();
+                    const ok = document.execCommand("copy");
+                    area.remove();
+                    return ok;
+                } catch {
+                    return false;
+                }
+            };
+
+            const codeText = (pre: HTMLElement): string => {
+                const source = pre.querySelector("code") ?? pre;
+                const clone = source.cloneNode(true) as HTMLElement;
+                clone
+                    .querySelectorAll(".line-number, [data-line-number]")
+                    .forEach((node) => node.remove());
+                let text = clone.innerText.replace(/\u00a0/g, " ").replace(/\n$/, "");
+                const lines = text.split("\n");
+                const filled = lines.filter((line) => line.length > 0);
+                if (filled.length > 0 && filled.every((line) => line.startsWith("$ "))) {
+                    text = lines.map((line) => line.replace(/^\$ /, "")).join("\n");
+                }
+                return text;
+            };
+
+            document.querySelectorAll("pre").forEach((node) => {
+                const pre = node as HTMLElement;
+                if (pre.closest(".code-block, .katex")) return;
+                const wrap = document.createElement("div");
+                wrap.className = "code-block";
+                pre.before(wrap);
+                wrap.append(pre);
+                if (!pre.hasAttribute("tabindex")) pre.tabIndex = 0;
+
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "code-copy";
+                button.textContent = "Copy";
+                button.setAttribute("aria-label", "Copy code");
+                button.setAttribute("aria-live", "polite");
+                wrap.insertBefore(button, pre);
+
+                let timer = 0;
+                button.addEventListener("click", async () => {
+                    const ok = await writeClipboard(codeText(pre));
+                    if (!ok) return;
+                    button.textContent = "Copied";
+                    button.setAttribute("aria-label", "Copied");
+                    window.clearTimeout(timer);
+                    timer = window.setTimeout(() => {
+                        button.textContent = "Copy";
+                        button.setAttribute("aria-label", "Copy code");
+                    }, 1600);
+                });
+            });
+
             // ---- reveals ------------------------------------------------
             const targets = document.querySelectorAll(".reveal-line, .rise");
 

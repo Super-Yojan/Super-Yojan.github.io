@@ -185,9 +185,10 @@ for the one inverted region.
 - **Quiet** (rgba(0,0,0,0.55)): The hero eyebrow, and nothing else.
 
 ### Tertiary
-- **Pitch** (#0A0A0A): The footer ground and the full-viewport menu, and nothing else. Its job
-  is to close the page with a hard tonal flip. The hero is paper, not pitch — the footage
-  supplies its own black.
+- **Pitch** (#0A0A0A): The footer ground, the full-viewport menu, and code blocks. The footer
+  and menu close the page with a hard tonal flip. A code block is that same panel at the size
+  of a command, so a listing is not read as body copy. Type on it is paper, with the grey
+  ladder inverted. The hero stays paper.
 
 ### Named Rules
 **The One Ink Rule.** The interface is black on white. Color enters the page only through

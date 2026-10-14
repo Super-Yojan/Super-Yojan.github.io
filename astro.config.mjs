@@ -13,12 +13,12 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
-    // Code blocks obey The One Ink Rule: Shiki emits CSS variables and the
-    // stylesheet maps every token onto the ink/graphite/ash ladder, so syntax
-    // highlighting is tonal rather than coloured. See DESIGN.md → Colors.
+    // Code blocks sit on the pitch panel. Shiki emits CSS variables and the
+    // stylesheet maps every token onto the inverted grey ladder, so syntax
+    // stays tonal. Lines stay on one row so a long command scrolls.
     shikiConfig: {
       theme: "css-variables",
-      wrap: true,
+      wrap: false,
     },
   },
 });

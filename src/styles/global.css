@@ -879,29 +879,82 @@ html.js .nav { animation: hero-lift 800ms var(--ease) both; --lift: -16px; }
   padding: 2px 6px;
   overflow-wrap: anywhere;
 }
-/* Shiki runs in css-variables mode; syntax highlighting is carried by the
-   grey ladder rather than by hue, so a code block stays inside the palette. */
-.prose pre {
-  padding: 24px;
+/* A command is a pitch panel, the same near-black as the footer, so it
+   cannot be mistaken for the paragraph around it. Tokens stay on the grey
+   ladder, inverted: paper for the code, graphite and ash for the quieter
+   spans. Inline code above keeps the paper chip. */
+.code-block {
+  position: relative;
+  min-width: 0;
+  max-width: 100%;
+}
+.prose pre,
+.code-block pre {
+  margin: 0;
+  padding: 52px 20px 20px;
   overflow-x: auto;
-  border: 1px solid var(--rule);
+  border: 0;
   border-radius: var(--r-slight);
+  background: var(--pitch);
+  color: var(--paper);
+  font-family: var(--font-mono);
   font-size: 14px;
   line-height: 1.7;
+  white-space: pre;
+  tab-size: 2;
 
-  --astro-code-foreground: var(--ink);
-  --astro-code-background: var(--paper);
-  --astro-code-token-comment: var(--ash);
-  --astro-code-token-punctuation: var(--ash);
-  --astro-code-token-string: var(--graphite);
-  --astro-code-token-string-expression: var(--graphite);
-  --astro-code-token-parameter: var(--graphite);
-  --astro-code-token-constant: var(--ink);
-  --astro-code-token-keyword: var(--ink);
-  --astro-code-token-function: var(--ink);
-  --astro-code-token-link: var(--graphite);
+  --astro-code-foreground: var(--paper);
+  --astro-code-background: var(--pitch);
+  --astro-code-token-comment: var(--ash-inverse);
+  --astro-code-token-punctuation: var(--ash-inverse);
+  --astro-code-token-string: var(--graphite-inverse);
+  --astro-code-token-string-expression: var(--graphite-inverse);
+  --astro-code-token-parameter: var(--graphite-inverse);
+  --astro-code-token-constant: var(--paper);
+  --astro-code-token-keyword: var(--paper);
+  --astro-code-token-function: var(--paper);
+  --astro-code-token-link: var(--graphite-inverse);
 }
-.prose pre code { background: none; padding: 0; }
+.prose pre code,
+.code-block pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+  white-space: inherit;
+  overflow-wrap: normal;
+}
+.code-block pre ::selection {
+  background: var(--paper);
+  color: var(--pitch);
+}
+.code-copy {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--paper);
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+}
+.code-copy:hover {
+  background: var(--paper);
+  color: var(--pitch);
+}
+.code-copy:focus-visible {
+  outline: 2px solid var(--paper);
+  outline-offset: 2px;
+}
 .prose img { border-radius: var(--r-slight); }
 .prose hr { border: 0; border-top: 1px solid var(--rule); margin-block: 48px; }
 

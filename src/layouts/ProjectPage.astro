@@ -173,7 +173,7 @@ const {
     }
     .stage-media {
         position: relative;
-        height: clamp(280px, 40vh, 620px);
+        height: clamp(240px, 34vh, 520px);
         border: 1px solid var(--rule);
         border-radius: var(--r-slight);
         background: var(--paper);
@@ -258,7 +258,10 @@ const {
     }
     .quick :global(.act) { font-weight: 500; }
 
-    .quick { padding-bottom: var(--section); }
+    .quick {
+        padding-bottom: var(--section);
+        scroll-margin-top: 112px;
+    }
     .quick-head :global(.t-lede) {
         max-width: 42ch;
         margin-top: 28px;
@@ -303,7 +306,7 @@ const {
     @media (max-width: 900px) {
         .project-hero { padding-top: 112px; }
         .back { margin-bottom: 20px; }
-        .stage-media { height: clamp(260px, 36vh, 420px); }
+        .stage-media { height: clamp(220px, 30vh, 360px); }
         .stage-cap { flex-direction: column; }
         .about-grid { grid-template-columns: 1fr; gap: 40px; }
         .steps > :global(li) { grid-template-columns: 1fr; gap: 12px; }

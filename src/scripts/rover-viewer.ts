@@ -20,12 +20,12 @@ export function mountModel(stage: HTMLElement): void {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || !canWebGL()) {
         stage.dataset.state = "still";
-        note("Static plate");
+        note("");
         return;
     }
 
     stage.dataset.state = "pending";
-    note("Loading model");
+    note("");
 
     const io = new IntersectionObserver(
         (entries) => {
@@ -74,17 +74,17 @@ async function start(
         const renderer = new THREE.WebGLRenderer({
             canvas,
             antialias: true,
-            alpha: false,
+            alpha: true,
             powerPreference: "high-performance",
         });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
         renderer.outputColorSpace = THREE.SRGBColorSpace;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.toneMappingExposure = 0.92;
-        renderer.setClearColor(0xffffff, 1);
+        renderer.setClearColor(0x000000, 0);
 
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xffffff);
+        scene.background = null;
 
         const pmrem = new THREE.PMREMGenerator(renderer);
         scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
@@ -111,17 +111,20 @@ async function start(
         controls.maxPolarAngle = Math.PI * 0.92;
         controls.listenToKeyEvents(canvas);
 
+        const media = stage.querySelector(".stage-media") ?? stage;
+        let frameCamera = () => {};
         const resize = () => {
-            const width = stage.clientWidth;
-            const height = stage.clientHeight;
+            const width = media.clientWidth;
+            const height = media.clientHeight;
             if (width === 0 || height === 0) return;
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
             renderer.setSize(width, height, false);
+            frameCamera();
         };
         resize();
         const ro = new ResizeObserver(resize);
-        ro.observe(stage);
+        ro.observe(media);
 
         const draco = new DRACOLoader();
         draco.setDecoderPath("/draco/");
@@ -136,17 +139,23 @@ async function start(
         const center = box.getCenter(new THREE.Vector3());
         model.position.sub(center);
         box.setFromObject(model);
-        const size = box.getSize(new THREE.Vector3());
-        const radius = Math.max(size.x, size.y, size.z) * 0.5;
-        const dist = radius / Math.sin((camera.fov * Math.PI) / 360);
-        camera.near = Math.max(radius / 80, 0.05);
-        camera.far = dist * 12;
-        camera.position.set(dist * 0.62, dist * 0.34, dist * 0.78);
-        camera.updateProjectionMatrix();
-        controls.target.set(0, size.y * 0.02, 0);
-        controls.minDistance = radius * 0.55;
-        controls.maxDistance = dist * 2.4;
-        controls.update();
+        const sphere = box.getBoundingSphere(new THREE.Sphere());
+        const radius = sphere.radius;
+        const viewDir = new THREE.Vector3(0.62, 0.28, 0.78).normalize();
+        frameCamera = () => {
+            const vFov = (camera.fov * Math.PI) / 180;
+            const hFov = 2 * Math.atan(Math.tan(vFov / 2) * camera.aspect);
+            const dist = (radius / Math.sin(Math.min(vFov, hFov) / 2)) * 1.22;
+            camera.near = Math.max(radius / 80, 0.05);
+            camera.far = dist * 12;
+            camera.position.copy(viewDir).multiplyScalar(dist);
+            camera.updateProjectionMatrix();
+            controls.target.set(0, 0, 0);
+            controls.minDistance = radius * 0.55;
+            controls.maxDistance = dist * 2.4;
+            controls.update();
+        };
+        frameCamera();
 
         let resume: number | undefined;
         const pauseSpin = () => {
@@ -190,6 +199,7 @@ async function start(
         renderer.render(scene, camera);
         canvas.classList.add("is-shown");
         poster?.setAttribute("aria-hidden", "true");
+        if (poster) poster.style.visibility = "hidden";
         stage.dataset.state = "live";
         note("Drag to orbit");
         requestAnimationFrame(frame);
@@ -198,6 +208,6 @@ async function start(
     } catch {
         canvas.remove();
         stage.dataset.state = "still";
-        note("Static plate");
+        note("");
     }
 }

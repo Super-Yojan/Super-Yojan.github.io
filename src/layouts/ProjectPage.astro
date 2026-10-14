@@ -59,15 +59,27 @@ const {
 
 <BaseLayout title={title} description={description}>
     <header class="project-hero shell">
-        <a href="/projects" class="link-wipe back">← Work</a>
-        <h1 class="t-headline">
-            <span class="reveal-line"><span>{title}</span></span>
-        </h1>
-        <p class="t-lede rise" data-delay="160">{lede}</p>
+        <div class="hero-copy">
+            <a href="/projects" class="link-wipe back">← Work</a>
+            <h1 class="t-headline">
+                <span class="reveal-line"><span>{title}</span></span>
+            </h1>
+            <p class="t-lede rise" data-delay="160">{lede}</p>
+            <div class="hero-actions rise" data-delay="280">
+                <a class="pill-btn pill-btn-dark" href={primary.href}>{primary.label}</a>
+                {
+                    secondary && (
+                        <a class="pill-btn pill-btn-ghost" href={secondary.href}>
+                            {secondary.label}
+                        </a>
+                    )
+                }
+            </div>
+        </div>
 
         <figure
             class="stage rise"
-            data-delay="280"
+            data-delay="160"
             data-model={model}
             data-model-label={modelLabel}
         >
@@ -98,27 +110,14 @@ const {
                 }
             </div>
             <figcaption class="stage-cap">
-                <span class="t-label">{figureLabel}</span>
+                <span class="visually-hidden">{figureLabel}. {figureAlt}</span>
                 {
-                    figureNote && (
-                        <span class="t-label" data-note={model ? true : undefined}>
-                            {figureNote}
-                        </span>
+                    (model || figureNote) && (
+                        <span class="orbit-hint t-label" data-note={model ? true : undefined}>{model ? "" : figureNote}</span>
                     )
                 }
             </figcaption>
         </figure>
-
-        <div class="hero-actions rise" data-delay="400">
-            <a class="pill-btn pill-btn-dark" href={primary.href}>{primary.label}</a>
-            {
-                secondary && (
-                    <a class="pill-btn pill-btn-ghost" href={secondary.href}>
-                        {secondary.label}
-                    </a>
-                )
-            }
-        </div>
     </header>
 
     <section class="shell about">
@@ -157,26 +156,41 @@ const {
 
 <style>
     .project-hero {
-        padding-top: 128px;
-        padding-bottom: clamp(64px, 8vw, 120px);
+        display: grid;
+        grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+        column-gap: clamp(24px, 4vw, 72px);
+        align-items: stretch;
+        min-height: 100svh;
+        padding-top: 96px;
+        padding-bottom: 40px;
     }
-    .back { margin-bottom: 32px; }
+    .hero-copy {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 0;
+    }
+    .back { margin-bottom: 28px; }
 
     .project-hero :global(.t-lede) {
-        max-width: 36ch;
-        margin-top: 28px;
+        max-width: 32ch;
+        margin-top: 24px;
     }
 
     .stage {
-        margin: 32px 0 0;
+        position: relative;
+        margin: 0;
         min-width: 0;
+        min-height: 0;
+        height: 100%;
     }
     .stage-media {
         position: relative;
-        height: clamp(240px, 34vh, 520px);
-        border: 1px solid var(--rule);
-        border-radius: var(--r-slight);
-        background: var(--paper);
+        height: 100%;
+        min-height: 460px;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
         overflow: hidden;
     }
     /* Colour in a CAD render or a product screenshot stays out of the page. */
@@ -201,20 +215,28 @@ const {
     }
     .stage-media :global(canvas) {
         opacity: 0;
+        background: transparent;
         touch-action: none;
+    }
+    .stage[data-state="live"] img {
+        visibility: hidden;
     }
     .stage-media :global(canvas.is-shown) {
         opacity: 1;
         transition: opacity var(--dur-image) var(--ease);
     }
     .stage-cap {
-        display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        margin-top: 16px;
-        padding-top: 16px;
-        border-top: 1px solid var(--rule);
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 6px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        text-align: center;
+        pointer-events: none;
     }
+    .orbit-hint:empty { display: none; }
 
     .hero-actions {
         display: flex;
@@ -304,10 +326,21 @@ const {
     }
 
     @media (max-width: 900px) {
-        .project-hero { padding-top: 112px; }
+        .project-hero {
+            grid-template-columns: 1fr;
+            min-height: 0;
+            padding-top: 112px;
+            padding-bottom: 64px;
+            row-gap: 12px;
+        }
+        .hero-copy { justify-content: flex-start; }
         .back { margin-bottom: 20px; }
-        .stage-media { height: clamp(220px, 30vh, 360px); }
-        .stage-cap { flex-direction: column; }
+        .stage { height: auto; }
+        .stage-media {
+            height: auto;
+            min-height: 0;
+            aspect-ratio: 1;
+        }
         .about-grid { grid-template-columns: 1fr; gap: 40px; }
         .steps > :global(li) { grid-template-columns: 1fr; gap: 12px; }
     }

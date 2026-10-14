@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
 import { SITE_TITLE } from "../consts";
+import geistSansUrl from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
+import geistMonoUrl from "@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url";
 
 const { title, description } = Astro.props as {
     title?: string;
@@ -36,8 +38,10 @@ const year = new Date().getFullYear();
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="sitemap" href="/sitemap-index.xml" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <!-- Same files the @font-face rules use. crossorigin is required
+             or the browser downloads the face twice. -->
+        <link rel="preload" href={geistSansUrl} as="font" type="font/woff2" crossorigin />
+        <link rel="preload" href={geistMonoUrl} as="font" type="font/woff2" crossorigin />
         <title>{fullTitle}</title>
         <meta name="description" content={desc} />
         <meta property="og:title" content={fullTitle} />

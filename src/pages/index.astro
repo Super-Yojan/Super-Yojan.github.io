@@ -10,8 +10,8 @@ import { projectHref, projects } from "../data/projects";
   the dashboard-portfolio arrangement — stat tiles, status LEDs, terminal
   chrome — that this category always ships.
 
-  OWN-WORLD: Paper white, ink black, three greys, no accent. Inter at two
-  extremes: 12vw display against 14px tracked mono. Hairline 1px rules as the
+  OWN-WORLD: Paper white, ink black, three greys, no accent. Geist at two
+  extremes: heavy display against 14px tracked Geist Mono. Hairline 1px rules as the
   only divider. Project imagery is hand-drawn engineering plates, never
   photographs; the single exception is the frontispiece, which is footage held
   to the same ink by a CSS desaturation.
@@ -191,9 +191,9 @@ const marqueeCards = [...projects, ...projects];
     .close-lead {
         max-width: 18ch;
         font-size: clamp(28px, 4.4vw, 60px);
-        font-weight: 300;
+        font-weight: 700;
         line-height: 1.05;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.05em;
         text-wrap: balance;
     }
 
@@ -201,8 +201,8 @@ const marqueeCards = [...projects, ...projects];
         display: inline-block;
         margin-top: 40px;
         font-size: clamp(1.5rem, 3.5vw, 3rem);
-        font-weight: 300;
-        letter-spacing: -0.04em;
+        font-weight: 700;
+        letter-spacing: -0.05em;
         border-bottom: 1px solid var(--rule);
         transition: border-color var(--dur-state) var(--ease);
     }

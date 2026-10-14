@@ -15,49 +15,49 @@ colors:
   quiet: "rgba(0, 0, 0, 0.55)"
 typography:
   display:
-    fontFamily: "Inter, system-ui, sans-serif"
+    fontFamily: "Geist, system-ui, sans-serif"
     fontSize: "clamp(2rem, 8vw, 4.5rem)"
-    fontWeight: 300
+    fontWeight: 700
     lineHeight: 1
-    letterSpacing: "-0.03em"
+    letterSpacing: "-0.06em"
   headline:
-    fontFamily: "Inter, system-ui, sans-serif"
+    fontFamily: "Geist, system-ui, sans-serif"
     fontSize: "clamp(2.5rem, 6vw, 5rem)"
-    fontWeight: 300
+    fontWeight: 700
     lineHeight: 0.95
-    letterSpacing: "-0.035em"
+    letterSpacing: "-0.055em"
   statement:
-    fontFamily: "Inter, system-ui, sans-serif"
+    fontFamily: "Geist, system-ui, sans-serif"
     fontSize: "clamp(28px, 4.4vw, 60px)"
-    fontWeight: 300
+    fontWeight: 700
     lineHeight: 1.05
-    letterSpacing: "-0.04em"
+    letterSpacing: "-0.05em"
   subhead:
-    fontFamily: "Inter, system-ui, sans-serif"
+    fontFamily: "Geist, system-ui, sans-serif"
     fontSize: "32px"
-    fontWeight: 300
+    fontWeight: 600
     lineHeight: 1.1
     letterSpacing: "-0.04em"
   title:
-    fontFamily: "Inter, system-ui, sans-serif"
+    fontFamily: "Geist, system-ui, sans-serif"
     fontSize: "24px"
     fontWeight: 500
     lineHeight: 1.1
     letterSpacing: "-0.03em"
   body:
-    fontFamily: "Inter, system-ui, sans-serif"
+    fontFamily: "Geist, system-ui, sans-serif"
     fontSize: "18px"
     fontWeight: 400
     lineHeight: 1.5
     letterSpacing: "-0.02em"
   lede:
-    fontFamily: "Inter, system-ui, sans-serif"
+    fontFamily: "Geist, system-ui, sans-serif"
     fontSize: "clamp(19px, 2vw, 24px)"
     fontWeight: 400
     lineHeight: 1.4
     letterSpacing: "-0.02em"
   label:
-    fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace"
+    fontFamily: "Geist Mono, ui-monospace, monospace"
     fontSize: "14px"
     fontWeight: 400
     lineHeight: 1.2
@@ -138,11 +138,10 @@ and restraint, not from terminal chrome or dashboard furniture.
 
 Discipline is the whole argument. With no color available, hierarchy has to come from size,
 weight, and the amount of white space around a thing — which is exactly the constraint that
-makes the type do real work. Display type is set LIGHT (Inter 300) and large; a 12vw headline
-at hairline weight against an 11px pill label is the system's entire dynamic range, and it is
-enough. Weight climbs only as size falls — 300 for display, 500 for titles and controls, 400
-for prose. There is no 700 anywhere in the system; bold display type is what this refresh
-deliberately left behind. Motion is the second material: everything eases on
+makes the type do real work. Display type is set heavy (Geist 700) and large, with tight
+tracking; a headline at that weight against an 11px pill label is the system's entire dynamic
+range, and it is enough. Big headings are 700, the 32px subhead is 600, titles and controls
+are 500, and prose is 400. Motion is the second material: everything eases on
 `cubic-bezier(0.16, 1, 0.3, 1)` and nothing snaps, so the page feels weighted rather than
 animated.
 
@@ -153,7 +152,7 @@ only place the page gets busy.
 
 **Key Characteristics:**
 - Strict monochrome; the palette has no accent and does not want one.
-- Type at two extremes — large LIGHT display, small tracked mono — with little in between.
+- Type at two extremes — large heavy display, small tracked mono — with little in between.
 - Hairline rules (1px) as the only dividing device, and full-round pills as the only control.
 - One moving frontispiece: the landing hero's footage, held to the page's ink.
 - Asymmetric corner radii on marquee plates; near-square everywhere else.
@@ -230,30 +229,34 @@ the one thing the plates are not.
 
 ## Typography
 
-**Display Font:** Inter (with system-ui, sans-serif)
-**Body Font:** Inter (with system-ui, sans-serif)
-**Label/Mono Font:** ui-monospace / SFMono-Regular / Menlo
+**Display Font:** Geist (with system-ui, sans-serif)
+**Body Font:** Geist (with system-ui, sans-serif)
+**Label/Mono Font:** Geist Mono (with ui-monospace)
 
-**Character:** One family carrying the whole page, worked at its extremes. Inter at 300 and
--0.03em tracking is open and architectural at display size — the thin stroke at scale is the
-identity, and the reason the page reads as a studio rather than a poster; the same family at
-400 and -0.02em is quiet and highly readable at body size, and at 500 it becomes a control
-label. The weight axis only ever moves in one direction: heavier as the type gets smaller. The monospace is the only foreign voice and
-it appears only as small tracked uppercase metadata, which keeps it reading as a caption
-system rather than as a terminal.
+**Character:** One family carrying the whole page, worked at its extremes, in the manner of
+a heavy editorial sans. Geist at 700 and about -0.06em tracking is dense at display size —
+the heavy stroke and the tight fit are the identity; the same family at 400 and -0.02em is
+quiet and highly readable at body size, and at 500 it becomes a control label. The 32px
+subhead sits between them at 600. Geist Mono is the only foreign voice. It appears as small
+tracked uppercase metadata and as code, which keeps it reading as a caption system rather
+than as a terminal.
+
+The faces are self-hosted variable fonts. One latin file per family covers weights 100–900,
+and those two files are preloaded. A metric-matched local fallback (Arial for Geist, Courier
+New for Geist Mono) holds the line box still until the files arrive.
 
 ### Hierarchy
-- **Display** (300, clamp(2.5rem, 5.5vw, 4.5rem), 1.0): The landing hero only. One per site.
-  Two hard-broken lines, entering as one block rather than per-character — the light weight is
-  doing the work the stagger used to. Drops to clamp(2rem, 8vw, 4.5rem) below 768px.
-- **Headline** (300, clamp(2.5rem, 6vw, 5rem), 0.95): Page titles. The footer brand mark runs a
-  wider clamp(2.5rem, 7vw, 6rem) and the menu overlay clamp(2.5rem, 9vw, 7rem), since each
-  owns its whole region.
-- **Statement** (300, clamp(28px, 4.4vw, 60px), 1.05): The one centered thesis line on a page.
-- **Subhead** (300, 32px, 1.1): `h2` inside long-form prose.
+- **Display** (700, clamp(2.5rem, 5.5vw, 4.5rem), 1.0, -0.06em): The landing hero only. One per site.
+  Two hard-broken lines, entering as one block rather than per-character — the heavy weight
+  and the tight tracking do the work the stagger used to. Drops to clamp(2rem, 8vw, 4.5rem) below 768px.
+- **Headline** (700, clamp(2.5rem, 6vw, 5rem), 0.95, -0.055em): Page titles. The footer brand mark runs a
+  wider clamp(2.5rem, 7vw, 6rem) at -0.06em and the menu overlay clamp(2.5rem, 9vw, 7rem) at
+  -0.06em, since each owns its whole region.
+- **Statement** (700, clamp(28px, 4.4vw, 60px), 1.05, -0.05em): The one centered thesis line on a page.
+- **Subhead** (600, 32px, 1.1, -0.04em): `h2` inside long-form prose.
 - **Title** (500, 24px, 1.1): Project names and article titles in listings.
-- **Control** (500, 11–13px): Pill labels, tags, and buttons. The only place weight rises
-  above 500, and it never does.
+- **Control** (500, 11–13px): Pill labels, tags, and buttons. Heavier than that is reserved
+  for headings: 600 on the subhead, 700 on display.
 - **Lede** (400, clamp(19px, 2vw, 24px), 1.4, graphite): The hero sub-headline and page
   standfirsts.
 - **Body** (400, 18px, 1.5): Running prose at every breakpoint — there is no smaller mobile
@@ -270,7 +273,7 @@ the only steps that sit between Title (24px) and Headline, and both are reserved
 a page's single thesis line, Subhead for prose `h2`. A page wanting another size in that band
 is a page whose hierarchy needs rethinking, not a new step in the scale.
 
-**The Tracking Inversion Rule.** Tracking runs negative as size runs up (-0.05em at display)
+**The Tracking Inversion Rule.** Tracking runs negative as size runs up (-0.06em at display)
 and positive as size runs down (+0.1em on 14px mono). The two never meet in the middle.
 
 ## Layout

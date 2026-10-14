@@ -1,11 +1,18 @@
+import { readFileSync } from "node:fs";
 import puppeteer from "puppeteer-core";
 import { createRequire } from "node:module";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const require = createRequire(import.meta.url);
 const mermaidPath = require.resolve("mermaid/dist/mermaid.min.js");
+const geistSansPath = join(
+    dirname(fileURLToPath(import.meta.url)),
+    "../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2",
+);
 
 const themeVariables = {
-    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+    fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif",
     fontSize: "14px",
     primaryColor: "#ffffff",
     primaryTextColor: "#000000",
@@ -48,12 +55,17 @@ function getPage() {
                 "<!doctype html><html><body style=\"margin:0;background:#fff\"></body></html>",
             );
             await page.addScriptTag({ path: mermaidPath });
+            const geistB64 = readFileSync(geistSansPath).toString("base64");
+            await page.addStyleTag({
+                content: `@font-face{font-family:Geist;src:url(data:font/woff2;base64,${geistB64}) format("woff2");font-weight:100 900;font-style:normal;font-display:block}`,
+            });
+            await page.evaluate(() => document.fonts.load("14px Geist"));
             await page.evaluate((variables) => {
                 window.mermaid.initialize({
                     startOnLoad: false,
                     securityLevel: "loose",
                     theme: "base",
-                    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+                    fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif",
                     flowchart: { htmlLabels: false, curve: "basis", padding: 14 },
                     themeVariables: variables,
                 });

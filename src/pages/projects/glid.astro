@@ -1,0 +1,101 @@
+---
+import ProjectPage from "../../layouts/ProjectPage.astro";
+
+const store = "https://apps.apple.com/us/app/glid/id6757968087";
+---
+
+<ProjectPage
+    title="Glid"
+    description="Glid is a published iOS and Android sports coordination app. Yojan Gautam is the founder and sole engineer."
+    lede="A published sports coordination app. One engineer, from the database to the phone."
+    figureLabel="Fig. 01 — Glid"
+    figureAlt="Schematic of overlapping availability lanes locking one shared slot."
+    plate="glid"
+    figureNote="Plate"
+    primary={{ href: store, label: "App Store" }}
+    secondary={{ href: "#how-it-works", label: "How it works" }}
+    aboutTitle="Shipped, end to end."
+    sectionId="how-it-works"
+    sectionTitle="How it works."
+    sectionLede="There is no public source repository for Glid. This is the stack and the record already on the site, plus the iOS listing."
+    links={[{ href: store, label: "Glid on the App Store" }]}
+>
+    <Fragment slot="prose">
+        <p>
+            Glid is a published iOS and Android sports coordination app. The
+            founder is the sole engineer: schema, API, client, and deploy
+            pipeline.
+        </p>
+        <p>
+            The client is native SwiftUI. The service is Rust and Axum, with
+            SurrealDB, running on GKE. The site record is 300+ daily active
+            users and 99.4% uptime, in a live beta in the DMV.
+        </p>
+        <p>
+            The iOS app is listed on the App Store. This site does not link a
+            Play Store page or a public repository, and it does not publish
+            install-from-source steps.
+        </p>
+    </Fragment>
+    <Fragment slot="facts">
+        <div>
+            <dt class="t-label">Platforms</dt>
+            <dd>iOS and Android</dd>
+        </div>
+        <div>
+            <dt class="t-label">Client</dt>
+            <dd>SwiftUI</dd>
+        </div>
+        <div>
+            <dt class="t-label">Service</dt>
+            <dd>Rust, Axum, SurrealDB, GKE</dd>
+        </div>
+        <div>
+            <dt class="t-label">Daily active</dt>
+            <dd>300+</dd>
+        </div>
+        <div>
+            <dt class="t-label">Uptime</dt>
+            <dd>99.4%</dd>
+        </div>
+        <div>
+            <dt class="t-label">Where</dt>
+            <dd>Live beta, DMV</dd>
+        </div>
+    </Fragment>
+    <Fragment slot="steps">
+        <li>
+            <p class="t-label">01</p>
+            <div class="prose">
+                <h3>The phone</h3>
+                <p>
+                    The client is native SwiftUI, and the app is published for
+                    iOS and Android. The iOS listing is
+                    <a href={store}>Glid on the App Store</a>.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">02</p>
+            <div class="prose">
+                <h3>The service</h3>
+                <p>
+                    The backend is Rust and Axum on SurrealDB, deployed to
+                    GKE. One person owns the schema, the API, the client, and
+                    the deploy pipeline.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">03</p>
+            <div class="prose">
+                <h3>The record on this site</h3>
+                <p>
+                    300+ daily active users. 99.4% uptime. A live beta in the
+                    DMV. Those figures are the portfolio record. This page
+                    does not add a feature list beyond them.
+                </p>
+            </div>
+        </li>
+    </Fragment>
+</ProjectPage>

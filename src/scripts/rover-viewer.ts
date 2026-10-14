@@ -1,16 +1,18 @@
 /**
- * Terra hero. The glTF is the full Zorvane CAD mesh (Draco), loaded only
- * when the stage is near the viewport and the visitor did not ask for
- * reduced motion. No WebGL, or reduced motion, keeps the poster.
+ * Hero model. The glTF is loaded only when the stage is near the viewport
+ * and the visitor did not ask for reduced motion. No WebGL, or reduced
+ * motion, keeps the poster. The URL comes from data-model on the stage.
  */
-
-const MODEL_URL = "/models/terra/rover.glb";
 
 type Note = (text: string) => void;
 
-export function mountRover(stage: HTMLElement): void {
+export function mountModel(stage: HTMLElement): void {
+    const modelUrl = stage.dataset.model;
+    if (!modelUrl) return;
+
     const noteEl = stage.querySelector<HTMLElement>("[data-note]");
     const poster = stage.querySelector<HTMLImageElement>("img");
+    const label = stage.dataset.modelLabel ?? "Model";
     const note: Note = (text) => {
         if (noteEl) noteEl.textContent = text;
     };
@@ -29,7 +31,7 @@ export function mountRover(stage: HTMLElement): void {
         (entries) => {
             if (!entries.some((entry) => entry.isIntersecting)) return;
             io.disconnect();
-            void start(stage, poster, note);
+            void start(stage, poster, note, modelUrl, label);
         },
         { rootMargin: "280px" },
     );
@@ -49,10 +51,15 @@ async function start(
     stage: HTMLElement,
     poster: HTMLImageElement | null,
     note: Note,
+    modelUrl: string,
+    label: string,
 ): Promise<void> {
     const canvas = document.createElement("canvas");
     canvas.tabIndex = 0;
-    canvas.setAttribute("aria-label", "Terra rover. Drag to orbit, scroll to look closer.");
+    canvas.setAttribute(
+        "aria-label",
+        `${label}. Drag to orbit, scroll to look closer.`,
+    );
     stage.querySelector(".stage-media")?.append(canvas);
 
     try {
@@ -121,7 +128,7 @@ async function start(
         const loader = new GLTFLoader();
         loader.setDRACOLoader(draco);
 
-        const gltf = await loader.loadAsync(MODEL_URL);
+        const gltf = await loader.loadAsync(modelUrl);
         const model = gltf.scene;
         scene.add(model);
 

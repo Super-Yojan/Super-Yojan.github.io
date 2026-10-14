@@ -1,0 +1,311 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Plate from "../components/Plate.astro";
+import type { PlateKey } from "../data/projects";
+
+interface Link {
+    href: string;
+    label: string;
+}
+
+interface Props {
+    title: string;
+    description: string;
+    lede: string;
+    figureLabel: string;
+    figureAlt: string;
+    /** Real screenshot or poster. Omitted when the hero is a plate. */
+    poster?: string;
+    posterWidth?: number;
+    posterHeight?: number;
+    /** Engineering plate, used when the project has no photo and no model. */
+    plate?: PlateKey;
+    /** glTF URL. The viewer loads it lazily and keeps the poster otherwise. */
+    model?: string;
+    modelLabel?: string;
+    /** Second caption, or the live/still note the viewer rewrites. */
+    figureNote?: string;
+    primary: Link;
+    secondary?: Link;
+    aboutTitle: string;
+    sectionId: string;
+    sectionTitle: string;
+    sectionLede?: string;
+    links?: Link[];
+}
+
+const {
+    title,
+    description,
+    lede,
+    figureLabel,
+    figureAlt,
+    poster,
+    posterWidth = 1600,
+    posterHeight = 1000,
+    plate,
+    model,
+    modelLabel,
+    figureNote,
+    primary,
+    secondary,
+    aboutTitle,
+    sectionId,
+    sectionTitle,
+    sectionLede,
+    links = [],
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+    <header class="project-hero shell">
+        <a href="/projects" class="link-wipe back">← Work</a>
+        <h1 class="t-headline">
+            <span class="reveal-line"><span>{title}</span></span>
+        </h1>
+        <p class="t-lede rise" data-delay="160">{lede}</p>
+
+        <figure
+            class="stage rise"
+            data-delay="280"
+            data-model={model}
+            data-model-label={modelLabel}
+        >
+            <div
+                class:list={[
+                    "stage-media",
+                    plate && "is-plate",
+                    poster && model && "is-model",
+                    poster && !model && "is-photo",
+                ]}
+            >
+                {
+                    poster && (
+                        <img
+                            src={poster}
+                            alt={figureAlt}
+                            width={posterWidth}
+                            height={posterHeight}
+                        />
+                    )
+                }
+                {
+                    plate && (
+                        <div class="plate plate-static">
+                            <Plate plate={plate} />
+                        </div>
+                    )
+                }
+            </div>
+            <figcaption class="stage-cap">
+                <span class="t-label">{figureLabel}</span>
+                {
+                    figureNote && (
+                        <span class="t-label" data-note={model ? true : undefined}>
+                            {figureNote}
+                        </span>
+                    )
+                }
+            </figcaption>
+        </figure>
+
+        <div class="hero-actions rise" data-delay="400">
+            <a class="pill-btn pill-btn-dark" href={primary.href}>{primary.label}</a>
+            {
+                secondary && (
+                    <a class="pill-btn pill-btn-ghost" href={secondary.href}>
+                        {secondary.label}
+                    </a>
+                )
+            }
+        </div>
+    </header>
+
+    <section class="shell about">
+        <h2 class="about-title">{aboutTitle}</h2>
+        <div class="about-grid">
+            <div class="prose">
+                <slot name="prose" />
+            </div>
+            <dl class="facts">
+                <slot name="facts" />
+            </dl>
+        </div>
+    </section>
+
+    <section class="shell quick" id={sectionId}>
+        <div class="quick-head">
+            <h2 class="about-title">{sectionTitle}</h2>
+            {sectionLede && <p class="t-lede">{sectionLede}</p>}
+        </div>
+        <ol class="steps">
+            <slot name="steps" />
+        </ol>
+        {
+            links.length > 0 && (
+                <p class="quick-foot">
+                    {links.map((link) => (
+                        <a class="link-wipe" href={link.href}>
+                            {link.label}
+                        </a>
+                    ))}
+                </p>
+            )
+        }
+    </section>
+</BaseLayout>
+
+<style>
+    .project-hero {
+        padding-top: 128px;
+        padding-bottom: clamp(64px, 8vw, 120px);
+    }
+    .back { margin-bottom: 32px; }
+
+    .project-hero :global(.t-lede) {
+        max-width: 36ch;
+        margin-top: 28px;
+    }
+
+    .stage {
+        margin: 32px 0 0;
+        min-width: 0;
+    }
+    .stage-media {
+        position: relative;
+        height: clamp(280px, 40vh, 620px);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-slight);
+        background: var(--paper);
+        overflow: hidden;
+    }
+    /* Colour in a CAD render or a product screenshot stays out of the page. */
+    .stage-media.is-model {
+        filter: grayscale(1) contrast(1.18);
+    }
+    .stage-media.is-photo {
+        filter: grayscale(1);
+    }
+    .stage-media img,
+    .stage-media :global(canvas) {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .stage-media img {
+        object-fit: contain;
+    }
+    .stage-media.is-plate :global(.plate) {
+        height: 100%;
+    }
+    .stage-media :global(canvas) {
+        opacity: 0;
+        touch-action: none;
+    }
+    .stage-media :global(canvas.is-shown) {
+        opacity: 1;
+        transition: opacity var(--dur-image) var(--ease);
+    }
+    .stage-cap {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--rule);
+    }
+
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+    }
+
+    .about {
+        padding-bottom: var(--section);
+    }
+    .about-title {
+        max-width: 16ch;
+        font-size: clamp(28px, 4.4vw, 60px);
+        font-weight: 300;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+    }
+    .about-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 0.8fr);
+        gap: 64px;
+        align-items: start;
+        margin-top: 48px;
+        min-width: 0;
+    }
+    .facts {
+        margin: 0;
+        border-top: 1px solid var(--rule);
+    }
+    .facts :global(div) {
+        padding: 20px 0;
+        border-bottom: 1px solid var(--rule);
+    }
+    .facts :global(dd) {
+        margin: 8px 0 0;
+    }
+    .facts :global(code) {
+        font-family: var(--font-mono);
+        font-size: 0.9em;
+    }
+    .quick :global(.act) { font-weight: 500; }
+
+    .quick { padding-bottom: var(--section); }
+    .quick-head :global(.t-lede) {
+        max-width: 42ch;
+        margin-top: 28px;
+    }
+    .steps {
+        margin: 64px 0 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--rule);
+    }
+    .steps > :global(li) {
+        display: grid;
+        grid-template-columns: 6rem minmax(0, 1fr);
+        gap: 32px;
+        padding: 48px 0;
+        border-bottom: 1px solid var(--rule);
+        min-width: 0;
+    }
+    .steps :global(.prose),
+    .steps :global(pre) {
+        min-width: 0;
+        max-width: 100%;
+    }
+    .steps :global(h3) { margin-top: 0; }
+    .steps :global(.release-note) {
+        max-width: 62ch;
+        margin-top: 8px;
+        padding-top: 20px;
+        border-top: 1px solid var(--ink);
+    }
+    .steps :global(.release-note p:last-child) {
+        margin-top: 12px;
+        color: var(--graphite);
+    }
+    .quick-foot {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px 32px;
+        margin-top: 48px;
+    }
+
+    @media (max-width: 900px) {
+        .project-hero { padding-top: 112px; }
+        .back { margin-bottom: 20px; }
+        .stage-media { height: clamp(260px, 36vh, 420px); }
+        .stage-cap { flex-direction: column; }
+        .about-grid { grid-template-columns: 1fr; gap: 40px; }
+        .steps > :global(li) { grid-template-columns: 1fr; gap: 12px; }
+    }
+</style>

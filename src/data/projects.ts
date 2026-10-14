@@ -5,7 +5,9 @@ export type PlateKey =
     | "ctf"
     | "mips"
     | "multiagent"
-    | "terra";
+    | "terra"
+    | "argos"
+    | "zorvane";
 
 export type Project = {
     index: string;
@@ -46,6 +48,7 @@ export const projects: Project[] = [
         stack: ["Rust", "SwiftUI", "SurrealDB", "Kubernetes"],
         plate: "glid",
         featured: true,
+        href: "/projects/glid",
     },
     {
         index: "02",
@@ -63,6 +66,7 @@ export const projects: Project[] = [
         stack: ["Rust", "ROS 2", "YOLOv5", "ONNX"],
         plate: "blimp",
         featured: true,
+        href: "/projects/autonomous-blimp",
     },
     {
         index: "03",
@@ -79,6 +83,7 @@ export const projects: Project[] = [
         stack: ["Python", "MAVLink", "OpenCV"],
         plate: "drone",
         featured: true,
+        href: "/projects/raytheon-drone",
     },
     {
         index: "04",
@@ -95,6 +100,7 @@ export const projects: Project[] = [
         stack: ["Go", "Flask", "Infrastructure"],
         plate: "ctf",
         featured: true,
+        href: "/projects/freedom-ctf",
     },
     {
         index: "05",
@@ -111,6 +117,7 @@ export const projects: Project[] = [
         stack: ["VHDL", "FPGA", "Architecture"],
         plate: "mips",
         featured: true,
+        href: "/projects/pipelined-mips",
     },
     {
         index: "06",
@@ -127,6 +134,7 @@ export const projects: Project[] = [
         stack: ["Rust", "Control theory", "Research"],
         plate: "multiagent",
         featured: true,
+        href: "/projects/multi-agent-systems",
     },
     {
         index: "07",
@@ -145,6 +153,42 @@ export const projects: Project[] = [
         plate: "terra",
         featured: true,
         href: "/projects/terra",
+    },
+    {
+        index: "08",
+        slug: "argos",
+        title: "ARGOS",
+        category: "Robotics",
+        year: "2026–",
+        blurb: "A native fleet operator for Terra, on Mac and iPhone.",
+        detail: "Adaptive Robotic Group Operator System. Rust and Swift through UniFFI. ARGOS supervises the fleet and sends high-level goals. Terra owns the vehicle. The dashboard figure is a simulator run from 2026-10-06, not hardware.",
+        metrics: [
+            { value: "macOS 14", label: "Mac app" },
+            { value: "iOS 17", label: "Phone app" },
+            { value: "terra/rover", label: "Prefix" },
+        ],
+        stack: ["Rust", "SwiftUI", "Zenoh", "UniFFI"],
+        plate: "argos",
+        featured: true,
+        href: "/projects/argos",
+    },
+    {
+        index: "09",
+        slug: "zorvane",
+        title: "Zorvane",
+        category: "Robotics",
+        year: "2026–",
+        blurb: "The world simulator split out of Terra: terrain, physics, cameras, Zenoh.",
+        detail: "Platform-agnostic simulator. The default world is the practice town and the default body is terra-ground. TERRA_NEXT=1 loads a practice pitch and does not score a match.",
+        metrics: [
+            { value: "7447", label: "Zenoh port" },
+            { value: "32", label: "Rover cap" },
+            { value: "terra-ground", label: "Default body" },
+        ],
+        stack: ["Rust", "Bevy", "Zenoh"],
+        plate: "zorvane",
+        featured: true,
+        href: "/projects/zorvane",
     },
 ];
 

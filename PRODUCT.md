@@ -35,8 +35,8 @@ skill-bar graphics.
 
 Astro 5 static site, built to `dist/` and hosted at super-yojan.dev via GitHub Pages.
 Content: two long-form engineering posts in `src/content/blog/` authored in Markdown, using
-remark-math + rehype-katex for equation rendering. Seven catalogued projects. Routes: `/`,
-`/projects`, `/projects/terra`, `/blog`, `/blog/[slug]`, `/about`, `/docs`, plus `/rss.xml` and a sitemap.
+remark-math + rehype-katex for equation rendering. Nine catalogued projects. Routes: `/`,
+`/projects`, `/projects/[slug]`, `/blog`, `/blog/[slug]`, `/about`, `/docs`, plus `/rss.xml` and a sitemap.
 
 ## Capabilities and Constraints
 
@@ -67,12 +67,15 @@ Real, verified from the repository and the user's own copy:
 - Freedom CTF — built at 17; hosted 200+ international teams, 50k req/s.
 - Pipelined MIPS — VHDL, 5-stage, hazard detection and forwarding.
 - Graduate research — GMU CIAO Lab, 12-state nonlinear blimp dynamics, look-ahead pitch control.
+- ARGOS — native fleet operator (Rust and Swift). Terra is the vehicle. Documented dashboard evidence is a simulator run, 2026-10-06.
+- Zorvane — world simulator split out of Terra. Default world is the practice town. Default body is terra-ground.
 - Prior embedded work at Databuoy: U-Boot, FPGA, gunshot detection.
 - Educational blimp kit designed for 20 students.
 
-**Absent — must not be fabricated:** there is no photography of any kind in this repository,
-no headshot, no product screenshots, no testimonials, no press, no client list, and no
-pricing. Project imagery is authored black-and-white technical plates, not photographs.
+**Absent — must not be fabricated:** there is no headshot, no testimonials, no press, no
+client list, and no pricing. The work index uses authored black-and-white technical plates.
+Terra’s project hero is a simplified rover mesh from the Zorvane CAD. ARGOS and Zorvane
+project heroes are screenshots taken from those repositories and shown in grayscale.
 Any future claim of employers, revenue, or user counts beyond the figures above must come
 from the user.
 

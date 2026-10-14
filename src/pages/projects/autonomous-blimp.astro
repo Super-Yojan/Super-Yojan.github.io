@@ -1,0 +1,113 @@
+---
+import ProjectPage from "../../layouts/ProjectPage.astro";
+
+const paper = "https://arxiv.org/abs/2309.06352";
+---
+
+<ProjectPage
+    title="Autonomous Blimp"
+    description="Championship autonomy software for a lighter-than-air robot. The published design is arXiv:2309.06352. The site record is 152–0 on a 150 g airframe."
+    lede="Championship autonomy software for a lighter-than-air robot. The published design is the 2023 scoring-agent paper."
+    figureLabel="Fig. 02 — Autonomous Blimp"
+    figureAlt="Schematic of a blimp envelope, thrusters, and a vision target."
+    plate="blimp"
+    figureNote="Plate"
+    primary={{ href: paper, label: "Read the paper" }}
+    secondary={{ href: "#how-it-works", label: "How it works" }}
+    aboutTitle="The competition agent."
+    sectionId="how-it-works"
+    sectionTitle="How it works."
+    sectionLede="No public repository is linked from this site. The paper is the published design. The win-loss record and the airframe mass are the portfolio record."
+    links={[{ href: paper, label: "arXiv:2309.06352" }]}
+>
+    <Fragment slot="prose">
+        <p>
+            Led the software for a championship robotics team, 2023–24. The
+            record on this site is 152–0. Edge inference is a quantized
+            YOLOv5 model exported to ONNX, on a 150 g airframe, with
+            decentralized acoustic tracking for position hold. The stack
+            named here is Rust, ROS 2, YOLOv5, and ONNX.
+        </p>
+        <p>
+            The published design is
+            <a href={paper}>Lighter-Than-Air Autonomous Ball Capture and Scoring Robot</a>
+            (arXiv:2309.06352). Yojan Gautam is a co-author. Yaw uses
+            differential drive: motors <code>m1</code> and <code>m2</code>,
+            placed 1000 mm apart. Altitude uses <code>m3</code>. Forward
+            thrust uses <code>m4</code>, so yaw stays decoupled from surge.
+            In search, the agent spins at full throttle on the yaw channel.
+            When a target is visible, a PD controller tracks yaw error, and
+            another PD tracks vertical error. The YOLOv5 and Coral perception
+            pipeline is in the paper’s appendix. The competition deployment
+            described there is April 2023.
+        </p>
+        <p>
+            An educational kit for 20 students is a separate project on the
+            about page. It is not this airframe.
+        </p>
+    </Fragment>
+    <Fragment slot="facts">
+        <div>
+            <dt class="t-label">Years</dt>
+            <dd>2023–24</dd>
+        </div>
+        <div>
+            <dt class="t-label">Record</dt>
+            <dd>152–0, on this site</dd>
+        </div>
+        <div>
+            <dt class="t-label">Airframe</dt>
+            <dd>150 g</dd>
+        </div>
+        <div>
+            <dt class="t-label">Perception</dt>
+            <dd>YOLOv5, quantized to ONNX</dd>
+        </div>
+        <div>
+            <dt class="t-label">Paper</dt>
+            <dd>arXiv:2309.06352</dd>
+        </div>
+        <div>
+            <dt class="t-label">Role</dt>
+            <dd>Software lead, co-author</dd>
+        </div>
+    </Fragment>
+    <Fragment slot="steps">
+        <li>
+            <p class="t-label">01</p>
+            <div class="prose">
+                <h3>Yaw, altitude, surge</h3>
+                <p>
+                    The paper’s scoring agent yaws with two motors a metre
+                    apart, holds altitude with a third, and surges with a
+                    fourth. Search is an open-loop spin. A visible target
+                    switches yaw and altitude to PD.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">02</p>
+            <div class="prose">
+                <h3>Seeing the target</h3>
+                <p>
+                    The appendix documents a YOLOv5 pipeline on a Coral. The
+                    portfolio line for the same work is that model quantized
+                    to ONNX, running on the 150 g airframe, plus decentralized
+                    acoustic tracking for position hold.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">03</p>
+            <div class="prose">
+                <h3>What is not public here</h3>
+                <p>
+                    The competition code is not in a public repository linked
+                    from this site. The paper is the design you can read. The
+                    152–0 record and the 150 g mass are stated on this site,
+                    not as a table in that paper.
+                </p>
+            </div>
+        </li>
+    </Fragment>
+</ProjectPage>

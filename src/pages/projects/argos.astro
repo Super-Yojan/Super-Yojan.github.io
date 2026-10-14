@@ -1,0 +1,162 @@
+---
+import ProjectPage from "../../layouts/ProjectPage.astro";
+
+const docs = "https://super-yojan.dev/ARGOS/";
+const repo = "https://github.com/Super-Yojan/ARGOS";
+---
+
+<ProjectPage
+    title="ARGOS"
+    description="ARGOS is a native fleet operator for Terra. Rust and Swift on macOS 14 and iOS 17. The dashboard figure is a simulator run from 2026-10-06."
+    lede="The fleet operator. One person, more than one rover, native on Mac and iPhone."
+    figureLabel="Fig. 08 — Mac dashboard"
+    figureAlt="ARGOS on macOS during a geographic simulator run, with a rover pose and an accepted goal."
+    poster="/media/argos/macos-dashboard.jpg"
+    posterWidth={1200}
+    posterHeight={910}
+    figureNote="Simulator, 2026-10-06"
+    primary={{ href: "#quick-start", label: "Get Started" }}
+    secondary={{ href: docs, label: "Read the Docs" }}
+    aboutTitle="Supervision, not the vehicle."
+    sectionId="quick-start"
+    sectionTitle="Quick start."
+    sectionLede="Rust tests run anywhere. The app needs a Mac with Xcode. The figure above is a simulator session, not a physical rover."
+    links={[
+        { href: docs, label: "ARGOS manual" },
+        { href: repo, label: "ARGOS on GitHub" },
+        { href: "/projects/zorvane", label: "Zorvane" },
+        { href: "/projects/terra", label: "Terra" },
+    ]}
+>
+    <Fragment slot="prose">
+        <p>
+            ARGOS, the Adaptive Robotic Group Operator System, is a native
+            fleet operator for <a href="/projects/terra">Terra</a>. Rust and
+            Swift, joined by UniFFI. Terra is the vehicle.
+            <a href="/projects/zorvane">Zorvane</a> is the world. They meet
+            on the <code>terra/rover</code> prefix. Terra owns sensing,
+            onboard autonomy, and low-level control.
+            ARGOS owns fleet supervision and high-level goals. The Apple
+            dashboard is SwiftUI and MapKit over a shared Rust Zenoh client.
+            It supplies four autonomy levels, supervised proposal approval,
+            per-rover and fleet takeover, emergency stop, held keyboard or
+            touch teleop, and session-log export. It discovers rovers, shows
+            live positions and goal progress, and sends latched waypoint and
+            cancel commands.
+        </p>
+        <p>
+            The dashboard is that native Apple app. Deployment floors are macOS 14 and
+            iOS 17, on Apple Silicon: Mac, device, and simulator. The
+            screenshot is the Mac dashboard from a geographic simulator run
+            on 2026-10-06, against the local Bevy world and the bundled GMU
+            tile anchor. It shows a live pose and an accepted goal. It is not
+            a physical rover or a physical phone.
+        </p>
+    </Fragment>
+    <Fragment slot="facts">
+        <div>
+            <dt class="t-label">Mac</dt>
+            <dd>macOS 14, scheme ARGOSMac</dd>
+        </div>
+        <div>
+            <dt class="t-label">Phone</dt>
+            <dd>iOS 17, scheme ARGOSiOS</dd>
+        </div>
+        <div>
+            <dt class="t-label">Prefix</dt>
+            <dd><code>terra/rover</code></dd>
+        </div>
+        <div>
+            <dt class="t-label">Endpoint</dt>
+            <dd><code>tcp/127.0.0.1:7447</code></dd>
+        </div>
+        <div>
+            <dt class="t-label">Anchor</dt>
+            <dd>38.8297, −77.3075</dd>
+        </div>
+        <div>
+            <dt class="t-label">Evidence</dt>
+            <dd>Simulator, 2026-10-06</dd>
+        </div>
+    </Fragment>
+    <Fragment slot="steps">
+        <li>
+            <p class="t-label">01</p>
+            <div class="prose">
+                <h3>Start the world</h3>
+                <p>
+                    Clone <a href="/projects/zorvane">Zorvane</a> with Git LFS.
+                    The geographic demo uses its bundled GMU anchor:
+                </p>
+                <pre><code>cd /path/to/Zorvane
+TERRA_ROVER_COUNT=1 TERRA_TILES=1 TERRA_TILES_FETCH=0 cargo run -p zorvane</code></pre>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">02</p>
+            <div class="prose">
+                <h3>Connect and send a waypoint</h3>
+                <p>
+                    In ARGOS, open <span class="act">Connection</span>. Endpoint
+                    <code>tcp/127.0.0.1:7447</code>. Prefix
+                    <code>terra/rover</code>. Turn the geographic map on.
+                    Keep the anchor at latitude 38.8297, longitude −77.3075.
+                </p>
+                <p>
+                    Select the rover. Choose <span class="act">Waypoint</span>.
+                    Send 38.82981, −77.3075. You should see the token, then
+                    active, then arrived. Cancel, and wait for idle. The bus
+                    does not advertise the anchor. If the numbers disagree,
+                    the goal lands on the wrong patch.
+                </p>
+                <p>
+                    Flat world: turn geographic mode off and type local metres.
+                    +x is north. +y is west.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">03</p>
+            <div class="prose">
+                <h3>Build the app</h3>
+                <p>
+                    The app needs a Mac with Xcode. Rust edition 2024. Device
+                    builds need your signing team. Allow local network on the
+                    phone. The Mac target already has outgoing network.
+                </p>
+                <pre><code>rustup target add aarch64-apple-darwin aarch64-apple-ios aarch64-apple-ios-sim
+gem install xcodeproj
+./scripts/build-apple.sh
+open apps/apple/ARGOS.xcodeproj</code></pre>
+                <p>
+                    Open scheme <code>ARGOSMac</code> or <code>ARGOSiOS</code>.
+                    A physical phone needs the computer’s LAN address, not
+                    phone localhost. Start Zorvane with
+                    <code>TERRA_ZENOH_LISTEN=tcp/0.0.0.0:7447</code> and enter
+                    <code>tcp/COMPUTER_LAN_IP:7447</code>.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">04</p>
+            <div class="prose">
+                <h3>Mission smoke, on another port</h3>
+                <p>
+                    Keep this off the interactive simulator. The example walks
+                    autonomy levels, a waypoint, a supervised approval, fleet
+                    takeover, and fleet stop.
+                </p>
+                <pre><code>TERRA_MISSION=1 TERRA_ZENOH_LISTEN=tcp/127.0.0.1:7448 cargo run -p zorvane
+cargo run -p argos-zenoh --example mission_smoke -- tcp/127.0.0.1:7448</code></pre>
+                <p>
+                    Rust checks do not need the simulator:
+                    <code>cargo test --workspace --locked</code>. The
+                    evidence note from 2026-10-06 records 13 Rust tests and 3
+                    unit tests each on macOS and iOS. macOS XCUITest could not
+                    initialize host automation, and that UI result is not
+                    counted as passing.
+                </p>
+            </div>
+        </li>
+    </Fragment>
+</ProjectPage>

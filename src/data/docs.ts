@@ -31,6 +31,13 @@ export const docSites: DocSite[] = [
         hub: true,
         docsUrl: "https://super-yojan.dev/ARGOS/",
         repoUrl: "https://github.com/Super-Yojan/ARGOS",
+        pages: [
+            {
+                href: "/projects/argos",
+                label: "Project",
+                aria: "ARGOS project page",
+            },
+        ],
     },
     {
         slug: "terra",
@@ -61,5 +68,12 @@ export const docSites: DocSite[] = [
         hub: false,
         docsUrl: "https://super-yojan.dev/Zorvane/",
         repoUrl: "https://github.com/Super-Yojan/Zorvane",
+        pages: [
+            {
+                href: "/projects/zorvane",
+                label: "Project",
+                aria: "Zorvane project page",
+            },
+        ],
     },
 ];

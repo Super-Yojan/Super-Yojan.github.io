@@ -1,0 +1,78 @@
+---
+import ProjectPage from "../../layouts/ProjectPage.astro";
+---
+
+<ProjectPage
+    title="Pipelined MIPS"
+    description="A five-stage pipelined MIPS processor in VHDL, with hazard detection, forwarding, and custom peripherals."
+    lede="A five-stage pipelined processor, written in VHDL down to the register transfer."
+    figureLabel="Fig. 05 — Pipelined MIPS"
+    figureAlt="Schematic of a five-stage pipeline labeled IF, ID, EX, MEM, and WB."
+    plate="mips"
+    figureNote="Plate"
+    primary={{ href: "#how-it-works", label: "How it works" }}
+    aboutTitle="Five stages."
+    sectionId="how-it-works"
+    sectionTitle="How it works."
+    sectionLede="2023. The description on this site is the whole public record. No sources are linked."
+>
+    <Fragment slot="prose">
+        <p>
+            A 5-stage pipelined MIPS implementation in VHDL. It includes
+            hazard detection, forwarding, and custom peripherals, written
+            down to the register transfer level.
+        </p>
+        <p>
+            The stages are the classic five: instruction fetch, instruction
+            decode, execute, memory, and writeback. That is the pipeline the
+            plate draws. This site does not publish the VHDL, a bitstream, or
+            a board name.
+        </p>
+    </Fragment>
+    <Fragment slot="facts">
+        <div>
+            <dt class="t-label">Year</dt>
+            <dd>2023</dd>
+        </div>
+        <div>
+            <dt class="t-label">Pipeline</dt>
+            <dd>5 stages</dd>
+        </div>
+        <div>
+            <dt class="t-label">Language</dt>
+            <dd>VHDL</dd>
+        </div>
+        <div>
+            <dt class="t-label">Hazards</dt>
+            <dd>Detection and forwarding</dd>
+        </div>
+        <div>
+            <dt class="t-label">Also</dt>
+            <dd>Custom peripherals</dd>
+        </div>
+    </Fragment>
+    <Fragment slot="steps">
+        <li>
+            <p class="t-label">01</p>
+            <div class="prose">
+                <h3>The pipeline</h3>
+                <p>
+                    Fetch, decode, execute, memory, writeback — the five
+                    stages on the plate. The implementation includes hazard
+                    detection and forwarding.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">02</p>
+            <div class="prose">
+                <h3>What was written</h3>
+                <p>
+                    VHDL, down to the register transfer level, plus custom
+                    peripherals. No repository or waveform archive is linked
+                    from this site.
+                </p>
+            </div>
+        </li>
+    </Fragment>
+</ProjectPage>

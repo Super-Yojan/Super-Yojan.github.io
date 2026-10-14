@@ -1,0 +1,153 @@
+---
+import ProjectPage from "../../layouts/ProjectPage.astro";
+
+const docs = "https://super-yojan.dev/Zorvane/";
+const repo = "https://github.com/Super-Yojan/Zorvane";
+const zenoh = "https://github.com/Super-Yojan/Zorvane/blob/main/simulator/ZENOH.md";
+---
+
+<ProjectPage
+    title="Zorvane"
+    description="Zorvane is the world simulator split out of Terra. Terrain, physics, cameras, and a Zenoh bridge. The default world is the practice town."
+    lede="The world those rovers drive in. Terrain, physics, cameras, and the Zenoh bridge."
+    figureLabel="Fig. 09 — Practice town"
+    figureAlt="The default Zorvane world, a practice town, with the terra-ground rover on a road."
+    poster="/media/zorvane/town.png"
+    posterWidth={960}
+    posterHeight={540}
+    figureNote="Default world"
+    primary={{ href: "#quick-start", label: "Get Started" }}
+    secondary={{ href: docs, label: "Read the Docs" }}
+    aboutTitle="The world, split out of Terra."
+    sectionId="quick-start"
+    sectionTitle="Quick start."
+    sectionLede="Rust 1.85 or newer, a C toolchain, and the Bevy window libraries. The figure is the practice town, not the rover CAD."
+    links={[
+        { href: docs, label: "Zorvane manual" },
+        { href: repo, label: "Zorvane on GitHub" },
+        { href: zenoh, label: "Zenoh topics" },
+        { href: "/projects/argos", label: "ARGOS" },
+    ]}
+>
+    <Fragment slot="prose">
+        <p>
+            Zorvane is the platform-agnostic world and competition simulator
+            extracted from Terra. Terra is the vehicle body.
+            <a href="/projects/argos">ARGOS</a> is the fleet operator. This
+            repository is the world: terrain, physics, cameras, and the Zenoh
+            bridge those operators already speak.
+        </p>
+        <p>
+            The default world is the practice town in the figure. The default
+            body is <code>terra-ground</code>.             The mesh for that body,
+            <code>rover.glb</code>, is Git LFS, about 118 MB, and it lives in
+            this repository. Shared crates stay in Terra and are git
+            dependencies.
+        </p>
+        <p>
+            One peer listens on <code>tcp/127.0.0.1:7447</code>. The prefix is
+            <code>terra/rover</code>. There is no router. With Zenoh on, a
+            client selects waypoint autonomy and sends a goal on the existing
+            rover topics. The rover plans around obstacles in its
+            depth-derived occupancy map. An unknown or unreachable route holds
+            motion until a safe route exists. When a route exists, its points
+            are published as <code>global_route</code> in
+            <code>autonomy/status</code>.
+        </p>
+    </Fragment>
+    <Fragment slot="facts">
+        <div>
+            <dt class="t-label">Default world</dt>
+            <dd>Practice town</dd>
+        </div>
+        <div>
+            <dt class="t-label">Default body</dt>
+            <dd><code>terra-ground</code></dd>
+        </div>
+        <div>
+            <dt class="t-label">Listen</dt>
+            <dd><code>tcp/127.0.0.1:7447</code></dd>
+        </div>
+        <div>
+            <dt class="t-label">Prefix</dt>
+            <dd><code>terra/rover</code></dd>
+        </div>
+        <div>
+            <dt class="t-label">Fleet</dt>
+            <dd>0–32 rovers</dd>
+        </div>
+        <div>
+            <dt class="t-label">Mesh</dt>
+            <dd><code>rover.glb</code>, Git LFS, ~118 MB</dd>
+        </div>
+    </Fragment>
+    <Fragment slot="steps">
+        <li>
+            <p class="t-label">01</p>
+            <div class="prose">
+                <h3>Install the toolchain</h3>
+                <p>
+                    Rust stable new enough for edition 2024 (1.85 or newer;
+                    1.99 is known to work), a C toolchain, pkg-config, and the
+                    Bevy window libraries:
+                </p>
+                <pre><code>sudo apt-get install -y pkg-config build-essential \
+  libwayland-dev libxkbcommon-dev libvulkan-dev \
+  libxcursor-dev libxrandr-dev libxi-dev libx11-xcb-dev \
+  libasound2-dev libudev-dev</code></pre>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">02</p>
+            <div class="prose">
+                <h3>Run the practice town</h3>
+                <p>
+                    <code>rover.glb</code> is Git LFS, about 118 MB. Clone
+                    with <code>git lfs install</code> and
+                    <code>git lfs pull</code>, then:
+                </p>
+                <pre><code>cargo run -p zorvane</code></pre>
+                <p>
+                    That is the town in the figure. The body is
+                    <code>terra-ground</code>. A windowed run needs a display.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">03</p>
+            <div class="prose">
+                <h3>The other two worlds</h3>
+                <p>
+                    <code>TERRA_TILES=1</code> loads the real-elevation patch.
+                    <code>TERRA_NEXT=1</code> loads the NEXT practice pitch
+                    instead: a 32 m square, Zatara in spawn slot 0 on
+                    <code>terra-ground</code>, six tennis balls, two deposit
+                    buckets. NEXT does not score a match. It turns the
+                    practice town and the tiles off.
+                </p>
+                <p>
+                    <code>TERRA_ROVER_COUNT</code> sets the fleet size, from 0
+                    through 32. <code>ZORVANE_VEHICLE</code> selects a
+                    registered body and defaults to <code>terra-ground</code>.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">04</p>
+            <div class="prose">
+                <h3>Headless smoke</h3>
+                <p>
+                    No window, no Zenoh, exit after the world schedule starts:
+                </p>
+                <pre><code>TERRA_HEADLESS=1 TERRA_ZENOH=0 ZORVANE_SMOKE=1 cargo run -p zorvane</code></pre>
+                <p>
+                    <code>TERRA_HEADLESS=1</code> disables winit and steps the
+                    app on a timer. Rendering still asks Vulkan for a device.
+                    lavapipe (<code>mesa-vulkan-drivers</code>) is enough.
+                    Topics, including <code>cmd_vel</code>, <code>goal</code>,
+                    cameras, and fleet, are listed in the Zenoh note.
+                </p>
+            </div>
+        </li>
+    </Fragment>
+</ProjectPage>

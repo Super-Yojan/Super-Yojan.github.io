@@ -316,4 +316,51 @@ const { plate } = Astro.props;
             </g>
         )
     }
+
+    {
+        plate === "argos" && (
+            <g>
+                {/* operator console, three rovers on one prefix */}
+                <rect x="64" y="72" width="372" height="188" />
+                <path d="M64 112 L436 112" />
+                <path d="M88 140 L196 140 M88 156 L160 156" opacity="0.4" />
+                <circle cx="168" cy="214" r="14" />
+                <circle cx="250" cy="196" r="14" />
+                <circle cx="332" cy="220" r="14" />
+                <path d="M168 228 L168 248 L332 248 L332 234" opacity="0.45" />
+                <g class="annot">
+                    <text x="80" y="98" class="plate-label">
+                        OPERATOR
+                    </text>
+                    <text x="64" y="312" class="plate-label">
+                        FLEET
+                    </text>
+                    <text x="286" y="312" class="plate-label">
+                        terra/rover
+                    </text>
+                </g>
+            </g>
+        )
+    }
+
+    {
+        plate === "zorvane" && (
+            <g>
+                {/* ground plane and the default body */}
+                <path d="M78 248 L250 132 L422 248 L250 316 Z" />
+                <path d="M78 248 L250 316" opacity="0.35" />
+                <path d="M250 132 L250 316" opacity="0.35" />
+                <path d="M164 190 L336 262" />
+                <rect x="228" y="176" width="48" height="22" />
+                <g class="annot">
+                    <text x="78" y="108" class="plate-label">
+                        WORLD
+                    </text>
+                    <text x="292" y="164" class="plate-label">
+                        terra-ground
+                    </text>
+                </g>
+            </g>
+        )
+    }
 </svg>

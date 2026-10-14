@@ -1,0 +1,82 @@
+---
+import ProjectPage from "../../layouts/ProjectPage.astro";
+---
+
+<ProjectPage
+    title="Raytheon Drone Competition"
+    description="First place in the 2024 Raytheon Drone Competition. Autonomous payload delivery onto a moving target with MAVLink and ArUco markers."
+    lede="First place. Autonomous payload delivery onto a moving target."
+    figureLabel="Fig. 03 — Raytheon Drone Competition"
+    figureAlt="Schematic of a quadrotor, a marker on the ground, and a payload path."
+    plate="drone"
+    figureNote="Plate"
+    primary={{ href: "#status", label: "Status" }}
+    aboutTitle="A moving target."
+    sectionId="status"
+    sectionTitle="Status."
+    sectionLede="The public record is the portfolio line. There is no repository, paper, or build log linked from this site."
+>
+    <Fragment slot="prose">
+        <p>
+            2024. First place. Led the team. The system flew autonomous paths
+            over MAVLink and used ArUco markers, through OpenCV, to put a
+            payload on a moving target. The language named for the work is
+            Python.
+        </p>
+        <p>
+            That is the whole public description. This page does not add a
+            vehicle, a sensor list, a score, or a procedure that the site
+            does not already state.
+        </p>
+    </Fragment>
+    <Fragment slot="facts">
+        <div>
+            <dt class="t-label">Year</dt>
+            <dd>2024</dd>
+        </div>
+        <div>
+            <dt class="t-label">Place</dt>
+            <dd>1st</dd>
+        </div>
+        <div>
+            <dt class="t-label">Task</dt>
+            <dd>Payload onto a moving target</dd>
+        </div>
+        <div>
+            <dt class="t-label">Autonomy</dt>
+            <dd>MAVLink flight paths</dd>
+        </div>
+        <div>
+            <dt class="t-label">Markers</dt>
+            <dd>ArUco, OpenCV</dd>
+        </div>
+        <div>
+            <dt class="t-label">Language</dt>
+            <dd>Python</dd>
+        </div>
+    </Fragment>
+    <Fragment slot="steps">
+        <li>
+            <p class="t-label">01</p>
+            <div class="prose">
+                <h3>What the site records</h3>
+                <p>
+                    Autonomous flight paths over MAVLink. ArUco detection in
+                    OpenCV. A payload placed on a moving target. First place,
+                    with Yojan leading the team.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">02</p>
+            <div class="prose">
+                <h3>What is missing</h3>
+                <p>
+                    No competition URL, paper, repository, or screenshot is
+                    linked from this site. The figure is the engineering plate
+                    used everywhere else for this project.
+                </p>
+            </div>
+        </li>
+    </Fragment>
+</ProjectPage>

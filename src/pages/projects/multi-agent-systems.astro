@@ -1,0 +1,79 @@
+---
+import ProjectPage from "../../layouts/ProjectPage.astro";
+---
+
+<ProjectPage
+    title="Multi-Agent Systems"
+    description="Graduate research at GMU's CIAO Lab. Twelve-state nonlinear blimp dynamics and look-ahead pitch controllers in Rust."
+    lede="Graduate work at GMU’s CIAO Lab on blimp dynamics and look-ahead pitch control."
+    figureLabel="Fig. 06 — Multi-Agent Systems"
+    figureAlt="Schematic of several agents sharing one twelve-state model."
+    plate="multiagent"
+    figureNote="Plate"
+    primary={{ href: "#status", label: "Status" }}
+    aboutTitle="The dynamics."
+    sectionId="status"
+    sectionTitle="Status."
+    sectionLede="Ongoing graduate research. This site does not link a paper or a repository for the controller."
+>
+    <Fragment slot="prose">
+        <p>
+            Masters research at George Mason University’s CIAO Lab, from 2025.
+            The work on this site is a 12-state nonlinear model of blimp
+            dynamics, and look-ahead pitch controllers written in Rust, for
+            coordinated multi-agent flight.
+        </p>
+        <p>
+            The 2023 scoring-agent paper is a different project. It is linked
+            from <a href="/projects/autonomous-blimp">Autonomous Blimp</a>.
+            This page does not treat that paper as the twelve-state
+            controller, and it does not link a later draft that is not public.
+        </p>
+    </Fragment>
+    <Fragment slot="facts">
+        <div>
+            <dt class="t-label">Years</dt>
+            <dd>2025–</dd>
+        </div>
+        <div>
+            <dt class="t-label">Lab</dt>
+            <dd>GMU CIAO Lab</dd>
+        </div>
+        <div>
+            <dt class="t-label">Model</dt>
+            <dd>12-state nonlinear blimp</dd>
+        </div>
+        <div>
+            <dt class="t-label">Control</dt>
+            <dd>Look-ahead pitch, in Rust</dd>
+        </div>
+        <div>
+            <dt class="t-label">Setting</dt>
+            <dd>Coordinated multi-agent flight</dd>
+        </div>
+    </Fragment>
+    <Fragment slot="steps">
+        <li>
+            <p class="t-label">01</p>
+            <div class="prose">
+                <h3>What is stated</h3>
+                <p>
+                    A twelve-state nonlinear model of the blimp. Look-ahead
+                    pitch control implemented in Rust. The aim recorded here
+                    is coordinated flight of more than one agent.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">02</p>
+            <div class="prose">
+                <h3>What is not linked</h3>
+                <p>
+                    No public paper, repository, or install steps for this
+                    controller are on the site. The figure is the plate from
+                    the work index.
+                </p>
+            </div>
+        </li>
+    </Fragment>
+</ProjectPage>

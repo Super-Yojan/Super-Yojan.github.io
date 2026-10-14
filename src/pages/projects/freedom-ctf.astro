@@ -1,0 +1,77 @@
+---
+import ProjectPage from "../../layouts/ProjectPage.astro";
+---
+
+<ProjectPage
+    title="Freedom CTF"
+    description="A capture-the-flag platform built at 17. International events, 200+ teams, 50k requests per second at peak."
+    lede="A capture-the-flag platform built at 17 and run for international teams."
+    figureLabel="Fig. 04 — Freedom CTF"
+    figureAlt="Schematic of a capture-the-flag service with a flag and a score path."
+    plate="ctf"
+    figureNote="Plate"
+    primary={{ href: "#status", label: "Status" }}
+    aboutTitle="The platform."
+    sectionId="status"
+    sectionTitle="Status."
+    sectionLede="Built and operated in 2020–21. No public repository is linked from this site."
+>
+    <Fragment slot="prose">
+        <p>
+            Built at 17. A cybersecurity competition platform, written and
+            run for international events in 2020–21. The site record is 200+
+            registered teams and 50k requests per second at peak.
+        </p>
+        <p>
+            The stack named for it is Go, Flask, and the infrastructure under
+            the events. This page does not point at a later CTF fork. Freedom
+            CTF 2020–21 is the event this record describes.
+        </p>
+    </Fragment>
+    <Fragment slot="facts">
+        <div>
+            <dt class="t-label">Years</dt>
+            <dd>2020–21</dd>
+        </div>
+        <div>
+            <dt class="t-label">Built at</dt>
+            <dd>17</dd>
+        </div>
+        <div>
+            <dt class="t-label">Teams</dt>
+            <dd>200+</dd>
+        </div>
+        <div>
+            <dt class="t-label">Peak</dt>
+            <dd>50k requests/sec</dd>
+        </div>
+        <div>
+            <dt class="t-label">Stack</dt>
+            <dd>Go, Flask, infrastructure</dd>
+        </div>
+    </Fragment>
+    <Fragment slot="steps">
+        <li>
+            <p class="t-label">01</p>
+            <div class="prose">
+                <h3>What ran</h3>
+                <p>
+                    A capture-the-flag platform, built from scratch, hosting
+                    international events. 200+ registered teams. 50k requests
+                    per second at peak.
+                </p>
+            </div>
+        </li>
+        <li>
+            <p class="t-label">02</p>
+            <div class="prose">
+                <h3>What is not linked</h3>
+                <p>
+                    There is no source repository, challenge archive, or
+                    operations write-up on this site. The numbers above are
+                    the public record.
+                </p>
+            </div>
+        </li>
+    </Fragment>
+</ProjectPage>

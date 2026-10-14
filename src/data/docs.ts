@@ -18,6 +18,8 @@ export type DocSite = {
     hub: boolean;
     docsUrl: string;
     repoUrl: string;
+    /** In-site pages linked from this project's row on /docs. */
+    pages?: { href: string; label: string; aria?: string }[];
 };
 
 export const docSites: DocSite[] = [
@@ -38,6 +40,13 @@ export const docSites: DocSite[] = [
         hub: false,
         docsUrl: "https://super-yojan.dev/Terra/",
         repoUrl: "https://github.com/Super-Yojan/Terra",
+        pages: [
+            {
+                href: "/docs/terra/flash-with-imager",
+                label: "Flash with Imager",
+                aria: "Flash Terra with Raspberry Pi Imager",
+            },
+        ],
     },
     {
         slug: "zorvane",

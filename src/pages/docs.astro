@@ -35,6 +35,15 @@ import { docSites } from "../data/docs";
                             >
                                 Docs
                             </a>
+                            {site.pages?.map((page) => (
+                                <a
+                                    class="link-wipe"
+                                    href={page.href}
+                                    aria-label={page.aria ?? page.label}
+                                >
+                                    {page.label}
+                                </a>
+                            ))}
                             <a
                                 class="link-wipe"
                                 href={site.repoUrl}

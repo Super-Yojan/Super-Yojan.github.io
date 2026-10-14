@@ -187,8 +187,8 @@ for the one inverted region.
 ### Tertiary
 - **Pitch** (#0A0A0A): The footer ground, the full-viewport menu, and code blocks. The footer
   and menu close the page with a hard tonal flip. A code block is that same panel at the size
-  of a command, so a listing is not read as body copy. Type on it is paper, with the grey
-  ladder inverted. The hero stays paper.
+  of a command, so a listing is not read as body copy. Shiki's github-dark-dimmed theme colors
+  the tokens; the panel stays pitch, not the theme's own grey. The hero stays paper.
 
 ### Named Rules
 **The One Ink Rule.** The interface is black on white. Color enters the page only through
@@ -337,10 +337,11 @@ Borders are 1px, always, in Rule or Rule Inverse. There is no second border weig
 Reading pages narrow the shell to 860px so the head and the 68ch column read as one
 document rather than a text block pinned to the left of a 1600px page.
 
-- **Code blocks:** Shiki runs in `css-variables` mode and every token maps onto the grey
-  ladder — keywords and identifiers in ink, strings and parameters in graphite, comments and
-  punctuation in ash — on a paper ground inside a 1px rule at 8px radius. Syntax highlighting
-  is tonal here; a themed, coloured code block violates The One Ink Rule.
+- **Code blocks:** Shiki highlights at build time with `github-dark-dimmed`. The panel is
+  pitch (#0A0A0A), forced over the theme background, at an 8px radius, with a copy control
+  that copies the plain listing. Token color is the exception to The One Ink Rule: it exists
+  so a language reads as a language, and every text token clears 4.5:1 on pitch. Every fence
+  carries a language tag. Inline code stays a paper chip.
 - **Data tables:** header row in 13px mono uppercase ash over a 1px ink rule; body rows
   separated by 1px Rule lines with the last row unruled. Figures are set
   `tabular-nums lining-nums` so columns align. The table scrolls inside itself rather than

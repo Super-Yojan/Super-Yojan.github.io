@@ -880,9 +880,10 @@ html.js .nav { animation: hero-lift 800ms var(--ease) both; --lift: -16px; }
   overflow-wrap: anywhere;
 }
 /* A command is a pitch panel, the same near-black as the footer, so it
-   cannot be mistaken for the paragraph around it. Tokens stay on the grey
-   ladder, inverted: paper for the code, graphite and ash for the quieter
-   spans. Inline code above keeps the paper chip. */
+   cannot be mistaken for the paragraph around it. Shiki inlines
+   github-dark-dimmed token colors at build time. That theme's own panel
+   is #22272e, so the background is forced back to pitch. Inline code
+   above keeps the paper chip. */
 .code-block {
   position: relative;
   min-width: 0;
@@ -895,25 +896,14 @@ html.js .nav { animation: hero-lift 800ms var(--ease) both; --lift: -16px; }
   overflow-x: auto;
   border: 0;
   border-radius: var(--r-slight);
-  background: var(--pitch);
+  background: var(--pitch) !important;
+  background-color: var(--pitch) !important;
   color: var(--paper);
   font-family: var(--font-mono);
   font-size: 14px;
   line-height: 1.7;
   white-space: pre;
   tab-size: 2;
-
-  --astro-code-foreground: var(--paper);
-  --astro-code-background: var(--pitch);
-  --astro-code-token-comment: var(--ash-inverse);
-  --astro-code-token-punctuation: var(--ash-inverse);
-  --astro-code-token-string: var(--graphite-inverse);
-  --astro-code-token-string-expression: var(--graphite-inverse);
-  --astro-code-token-parameter: var(--graphite-inverse);
-  --astro-code-token-constant: var(--paper);
-  --astro-code-token-keyword: var(--paper);
-  --astro-code-token-function: var(--paper);
-  --astro-code-token-link: var(--graphite-inverse);
 }
 .prose pre code,
 .code-block pre code {

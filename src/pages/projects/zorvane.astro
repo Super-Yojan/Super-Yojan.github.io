@@ -1,5 +1,8 @@
 ---
+import { Code } from "astro:components";
 import ProjectPage from "../../layouts/ProjectPage.astro";
+
+const codeTheme = "github-dark-dimmed";
 
 const docs = "https://super-yojan.dev/Zorvane/";
 const repo = "https://github.com/Super-Yojan/Zorvane";
@@ -91,10 +94,15 @@ const zenoh = "https://github.com/Super-Yojan/Zorvane/blob/main/simulator/ZENOH.
                     1.99 is known to work), a C toolchain, pkg-config, and the
                     Bevy window libraries:
                 </p>
-                <pre><code>sudo apt-get install -y pkg-config build-essential \
-  libwayland-dev libxkbcommon-dev libvulkan-dev \
-  libxcursor-dev libxrandr-dev libxi-dev libx11-xcb-dev \
-  libasound2-dev libudev-dev</code></pre>
+                <Code
+                    code={`sudo apt-get install -y pkg-config build-essential \\
+  libwayland-dev libxkbcommon-dev libvulkan-dev \\
+  libxcursor-dev libxrandr-dev libxi-dev libx11-xcb-dev \\
+  libasound2-dev libudev-dev`}
+                    lang="bash"
+                    theme={codeTheme}
+                    wrap={false}
+                />
             </div>
         </li>
         <li>
@@ -106,7 +114,7 @@ const zenoh = "https://github.com/Super-Yojan/Zorvane/blob/main/simulator/ZENOH.
                     with <code>git lfs install</code> and
                     <code>git lfs pull</code>, then:
                 </p>
-                <pre><code>cargo run -p zorvane</code></pre>
+                <Code code="cargo run -p zorvane" lang="bash" theme={codeTheme} wrap={false} />
                 <p>
                     That is the town in the figure. The body is
                     <code>terra-ground</code>. A windowed run needs a display.
@@ -139,7 +147,12 @@ const zenoh = "https://github.com/Super-Yojan/Zorvane/blob/main/simulator/ZENOH.
                 <p>
                     No window, no Zenoh, exit after the world schedule starts:
                 </p>
-                <pre><code>TERRA_HEADLESS=1 TERRA_ZENOH=0 ZORVANE_SMOKE=1 cargo run -p zorvane</code></pre>
+                <Code
+                    code="TERRA_HEADLESS=1 TERRA_ZENOH=0 ZORVANE_SMOKE=1 cargo run -p zorvane"
+                    lang="bash"
+                    theme={codeTheme}
+                    wrap={false}
+                />
                 <p>
                     <code>TERRA_HEADLESS=1</code> disables winit and steps the
                     app on a timer. Rendering still asks Vulkan for a device.

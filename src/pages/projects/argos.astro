@@ -1,5 +1,8 @@
 ---
+import { Code } from "astro:components";
 import ProjectPage from "../../layouts/ProjectPage.astro";
+
+const codeTheme = "github-dark-dimmed";
 
 const docs = "https://super-yojan.dev/ARGOS/";
 const repo = "https://github.com/Super-Yojan/ARGOS";
@@ -88,8 +91,13 @@ const repo = "https://github.com/Super-Yojan/ARGOS";
                     Clone <a href="/projects/zorvane">Zorvane</a> with Git LFS.
                     The geographic demo uses its bundled GMU anchor:
                 </p>
-                <pre><code>cd /path/to/Zorvane
-TERRA_ROVER_COUNT=1 TERRA_TILES=1 TERRA_TILES_FETCH=0 cargo run -p zorvane</code></pre>
+                <Code
+                    code={`cd /path/to/Zorvane
+TERRA_ROVER_COUNT=1 TERRA_TILES=1 TERRA_TILES_FETCH=0 cargo run -p zorvane`}
+                    lang="bash"
+                    theme={codeTheme}
+                    wrap={false}
+                />
             </div>
         </li>
         <li>
@@ -124,10 +132,15 @@ TERRA_ROVER_COUNT=1 TERRA_TILES=1 TERRA_TILES_FETCH=0 cargo run -p zorvane</code
                     builds need your signing team. Allow local network on the
                     phone. The Mac target already has outgoing network.
                 </p>
-                <pre><code>rustup target add aarch64-apple-darwin aarch64-apple-ios aarch64-apple-ios-sim
+                <Code
+                    code={`rustup target add aarch64-apple-darwin aarch64-apple-ios aarch64-apple-ios-sim
 gem install xcodeproj
 ./scripts/build-apple.sh
-open apps/apple/ARGOS.xcodeproj</code></pre>
+open apps/apple/ARGOS.xcodeproj`}
+                    lang="bash"
+                    theme={codeTheme}
+                    wrap={false}
+                />
                 <p>
                     Open scheme <code>ARGOSMac</code> or <code>ARGOSiOS</code>.
                     A physical phone needs the computer’s LAN address, not
@@ -146,8 +159,13 @@ open apps/apple/ARGOS.xcodeproj</code></pre>
                     autonomy levels, a waypoint, a supervised approval, fleet
                     takeover, and fleet stop.
                 </p>
-                <pre><code>TERRA_MISSION=1 TERRA_ZENOH_LISTEN=tcp/127.0.0.1:7448 cargo run -p zorvane
-cargo run -p argos-zenoh --example mission_smoke -- tcp/127.0.0.1:7448</code></pre>
+                <Code
+                    code={`TERRA_MISSION=1 TERRA_ZENOH_LISTEN=tcp/127.0.0.1:7448 cargo run -p zorvane
+cargo run -p argos-zenoh --example mission_smoke -- tcp/127.0.0.1:7448`}
+                    lang="bash"
+                    theme={codeTheme}
+                    wrap={false}
+                />
                 <p>
                     Rust checks do not need the simulator:
                     <code>cargo test --workspace --locked</code>. The

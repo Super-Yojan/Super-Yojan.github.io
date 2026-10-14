@@ -31,4 +31,5 @@ fn update(x: Vector2<f32>, p: Matrix2<f32>, z: Vector2<f32>) {
     // Innovation
     let y = z - h * x;
 }
+```
 

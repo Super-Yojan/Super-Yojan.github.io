@@ -1,5 +1,8 @@
 ---
+import { Code } from "astro:components";
 import ProjectPage from "../../layouts/ProjectPage.astro";
+
+const codeTheme = "github-dark-dimmed";
 
 const osList =
     "https://github.com/Super-Yojan/terra-image-gen/releases/latest/download/terra-os-list.json";
@@ -115,7 +118,12 @@ const repo = "https://github.com/Super-Yojan/Terra";
                     <a href={osList}>terra-os-list.json</a>.
                     On a Mac, quit Imager if it is open, then:
                 </p>
-                <pre><code>open -a "Raspberry Pi Imager" --args --repo "{osList}"</code></pre>
+                <Code
+                    code={`open -a "Raspberry Pi Imager" --args --repo "${osList}"`}
+                    lang="bash"
+                    theme={codeTheme}
+                    wrap={false}
+                />
                 <p>
                     Linux and Windows use the same list. The commands, the
                     customisation fields, and the checksums are in
@@ -163,9 +171,14 @@ const repo = "https://github.com/Super-Yojan/Terra";
                     at <code>mobile/ios/TerraPhone.xcodeproj</code>. You
                     build it on a Mac with Xcode and the iOS 17 SDK.
                 </p>
-                <pre><code>rustup target add aarch64-apple-ios aarch64-apple-ios-sim x86_64-apple-ios
+                <Code
+                    code={`rustup target add aarch64-apple-ios aarch64-apple-ios-sim x86_64-apple-ios
 ./scripts/build-ios.sh
-open mobile/ios/TerraPhone.xcodeproj</code></pre>
+open mobile/ios/TerraPhone.xcodeproj`}
+                    lang="bash"
+                    theme={codeTheme}
+                    wrap={false}
+                />
                 <p>
                     A physical iPhone needs your Apple signing team. That
                     device build is the one with Bluetooth. The Simulator

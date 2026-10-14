@@ -138,8 +138,8 @@ const repo = "https://github.com/Super-Yojan/Terra";
                         service are already on the card.
                     </p>
                     <p>
-                        Raspberry Pi Imager reads the OS list at
-                        <a href={osList}>{osList}</a>.
+                        Raspberry Pi Imager reads the OS list from
+                        <a href={osList}>terra-os-list.json</a>.
                         On a Mac, quit Imager if it is open, then:
                     </p>
                     <pre><code>open -a "Raspberry Pi Imager" --args --repo "{osList}"</code></pre>
@@ -285,10 +285,10 @@ open mobile/ios/TerraPhone.xcodeproj</code></pre>
 
 <style>
     .terra-hero {
-        padding-top: 160px;
-        padding-bottom: var(--section);
+        padding-top: 128px;
+        padding-bottom: clamp(64px, 8vw, 120px);
     }
-    .back { margin-bottom: 48px; }
+    .back { margin-bottom: 32px; }
 
     .terra-hero :global(.t-lede) {
         max-width: 36ch;
@@ -296,11 +296,12 @@ open mobile/ios/TerraPhone.xcodeproj</code></pre>
     }
 
     .stage {
-        margin: 48px 0 0;
+        margin: 32px 0 0;
+        min-width: 0;
     }
     .stage-media {
         position: relative;
-        height: clamp(420px, 68vh, 820px);
+        height: clamp(280px, 40vh, 620px);
         border: 1px solid var(--rule);
         border-radius: var(--r-slight);
         background: var(--paper);
@@ -340,7 +341,7 @@ open mobile/ios/TerraPhone.xcodeproj</code></pre>
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-top: 40px;
+        margin-top: 28px;
     }
 
     .about {
@@ -359,6 +360,7 @@ open mobile/ios/TerraPhone.xcodeproj</code></pre>
         gap: 64px;
         align-items: start;
         margin-top: 48px;
+        min-width: 0;
     }
     .facts {
         margin: 0;
@@ -394,6 +396,12 @@ open mobile/ios/TerraPhone.xcodeproj</code></pre>
         gap: 32px;
         padding: 48px 0;
         border-bottom: 1px solid var(--rule);
+        min-width: 0;
+    }
+    .steps :global(.prose),
+    .steps :global(pre) {
+        min-width: 0;
+        max-width: 100%;
     }
     .steps :global(h3) { margin-top: 0; }
     .release-note {
@@ -414,9 +422,9 @@ open mobile/ios/TerraPhone.xcodeproj</code></pre>
     }
 
     @media (max-width: 900px) {
-        .terra-hero { padding-top: 120px; }
-        .back { margin-bottom: 32px; }
-        .stage-media { height: clamp(320px, 58vh, 560px); }
+        .terra-hero { padding-top: 112px; }
+        .back { margin-bottom: 20px; }
+        .stage-media { height: clamp(260px, 36vh, 420px); }
         .stage-cap { flex-direction: column; }
         .about-grid { grid-template-columns: 1fr; gap: 40px; }
         .steps > li { grid-template-columns: 1fr; gap: 12px; }

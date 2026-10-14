@@ -1,7 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Plate from "../components/Plate.astro";
-import { projects } from "../data/projects";
+import { projectHref, projects } from "../data/projects";
 
 /*
   DIRECTION CONTRACT — Landing (Experience)
@@ -88,7 +88,7 @@ const marqueeCards = [...projects, ...projects];
                 marqueeCards.map((p, i) => (
                     <a
                         class="marquee-card plate-host"
-                        href={`/projects#${p.slug}`}
+                        href={projectHref(p)}
                         aria-hidden={i >= projects.length ? "true" : undefined}
                         tabindex={i >= projects.length ? -1 : undefined}
                     >
@@ -133,7 +133,7 @@ const marqueeCards = [...projects, ...projects];
         <div class="grid">
             {
                 projects.map((p) => (
-                    <a class="card plate-host rise" href={`/projects#${p.slug}`}>
+                    <a class="card plate-host rise" href={projectHref(p)}>
                         <div class="card-frame">
                             <div class="plate">
                                 <Plate plate={p.plate} />

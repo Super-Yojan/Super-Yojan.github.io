@@ -4,7 +4,8 @@ export type PlateKey =
     | "drone"
     | "ctf"
     | "mips"
-    | "multiagent";
+    | "multiagent"
+    | "terra";
 
 export type Project = {
     index: string;
@@ -21,6 +22,11 @@ export type Project = {
     plate: PlateKey;
     /** Marquee cards cycle three radius treatments; see DESIGN.md → Shapes. */
     featured: boolean;
+    /**
+     * Where a card opens. Work-page anchors stay the default; a project
+     * with its own page sets this instead.
+     */
+    href?: string;
 };
 
 export const projects: Project[] = [
@@ -122,4 +128,27 @@ export const projects: Project[] = [
         plate: "multiagent",
         featured: true,
     },
+    {
+        index: "07",
+        slug: "terra",
+        title: "Terra",
+        category: "Robotics",
+        year: "2026–",
+        blurb: "A Raspberry Pi rover, the phone mounted on it, and the Rust crates they share.",
+        detail: "The vehicle in ARGOS. A Raspberry Pi and a SunFounder Fusion HAT run terra-rover. TerraPhone, on the robot, drives it through the shared Rust autonomy crates. ARGOS is the fleet side: one operator, more than one rover. The Pi image is a pre-release and has not been verified on hardware.",
+        metrics: [
+            { value: "Pi 4–5", label: "Computer" },
+            { value: "iOS 17", label: "TerraPhone" },
+            { value: "teleop", label: "Manual drive" },
+        ],
+        stack: ["Rust", "SwiftUI", "Raspberry Pi", "Bluetooth"],
+        plate: "terra",
+        featured: true,
+        href: "/projects/terra",
+    },
 ];
+
+/** Card destination. A project page wins over the work-page anchor. */
+export function projectHref(project: Project): string {
+    return project.href ?? `/projects#${project.slug}`;
+}

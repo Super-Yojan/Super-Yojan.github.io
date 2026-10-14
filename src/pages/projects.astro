@@ -13,7 +13,7 @@ import { projects } from "../data/projects";
             <span class="reveal-line"><span>Work</span></span>
         </h1>
         <p class="t-lede rise" data-delay="200">
-            Six systems, built end to end. Robotics, embedded, consumer, and
+            Seven systems, built end to end. Robotics, embedded, consumer, and
             research — the list is short because it only holds things I took
             all the way.
         </p>
@@ -45,7 +45,9 @@ import { projects } from "../data/projects";
                             <span>{p.year}</span>
                         </div>
 
-                        <h2 class="entry-title">{p.title}</h2>
+                        <h2 class="entry-title">
+                            {p.href ? <a href={p.href}>{p.title}</a> : p.title}
+                        </h2>
                         <p class="entry-detail">{p.detail}</p>
 
                         <dl class="specs">
@@ -58,6 +60,11 @@ import { projects } from "../data/projects";
                         </dl>
 
                         <p class="entry-stack t-label">{p.stack.join(" · ")}</p>
+                        {p.href && (
+                            <a class="link-wipe entry-open" href={p.href}>
+                                Project page
+                            </a>
+                        )}
                     </div>
                 </article>
             ))
@@ -129,6 +136,7 @@ import { projects } from "../data/projects";
     .spec-label { margin: 6px 0 0; }
 
     .entry-stack { margin-top: 40px; }
+    .entry-open { margin-top: 24px; }
 
     .head-docs { margin-top: 40px; }
 

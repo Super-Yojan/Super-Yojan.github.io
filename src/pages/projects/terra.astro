@@ -1,0 +1,424 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const osList =
+    "https://github.com/Super-Yojan/terra-image-gen/releases/latest/download/terra-os-list.json";
+const image =
+    "https://github.com/Super-Yojan/terra-image-gen/releases/download/terra-image-v0.1.0-rc3/terra-bookworm-arm64.img.xz";
+const release =
+    "https://github.com/Super-Yojan/terra-image-gen/releases/tag/terra-image-v0.1.0-rc3";
+const flash = "/docs/terra/flash-with-imager";
+const manual = "https://super-yojan.dev/Terra/";
+const phoneBuild = "https://super-yojan.dev/Terra/phone/build/";
+const pairing = "https://super-yojan.dev/Terra/phone/bluetooth/";
+const repo = "https://github.com/Super-Yojan/Terra";
+---
+
+<BaseLayout
+    title="Terra"
+    description="Terra is the ARGOS rover: a Raspberry Pi and SunFounder Fusion HAT running terra-rover, driven by TerraPhone and the shared Rust autonomy crates."
+>
+    <header class="terra-hero shell">
+        <a href="/projects" class="link-wipe back">← Work</a>
+        <h1 class="t-headline">
+            <span class="reveal-line"><span>Terra</span></span>
+        </h1>
+        <p class="t-lede rise" data-delay="160">
+            A Raspberry Pi rover. The phone on the robot runs the same Rust
+            crates the fleet operator does.
+        </p>
+
+        <figure class="stage rise" data-delay="280" data-rover>
+            <div class="stage-media">
+                <img
+                    src="/media/terra/rover-poster.jpg"
+                    alt="Terra rover, shown as a still of the three-dimensional model."
+                    width="1600"
+                    height="1000"
+                />
+            </div>
+            <figcaption class="stage-cap">
+                <span class="t-label">Fig. 07 — Terra rover</span>
+                <span class="t-label" data-note>Static plate</span>
+            </figcaption>
+        </figure>
+
+        <div class="hero-actions rise" data-delay="400">
+            <a class="pill-btn pill-btn-dark" href="#quick-start">Get Started</a>
+            <a class="pill-btn pill-btn-ghost" href={manual}>Read the Docs</a>
+        </div>
+    </header>
+
+    <section class="shell about">
+        <h2 class="about-title">The vehicle in the fleet.</h2>
+        <div class="about-grid">
+            <div class="prose">
+                <p>
+                    Terra is the rover body. A Raspberry Pi 4 or 5 carries a
+                    SunFounder Fusion HAT, and the <code>terra-rover</code> service
+                    on that Pi drives the hat. TerraPhone, a SwiftUI app, is the
+                    phone on the robot. It calls the shared Rust autonomy crates
+                    through UniFFI and sends actuator commands to the Pi over
+                    Bluetooth.
+                </p>
+                <p>
+                    <a href="https://super-yojan.dev/ARGOS/">ARGOS</a> is the fleet
+                    side of the same work: one operator supervising more than one
+                    rover. ARGOS owns supervision and high-level goals. Terra owns
+                    the vehicle.
+                    <a href="https://super-yojan.dev/Zorvane/">Zorvane</a> is the
+                    simulator. Both meet the rover on the <code>terra/rover</code>
+                    prefix. A physical iPhone uses Bluetooth. The iOS Simulator
+                    build does not — it talks to Zorvane over Zenoh, and that
+                    section is compiled out of the device app.
+                </p>
+                <p>
+                    The Pi does not run those Rust crates. It runs
+                    <code>terra-rover</code>, which speaks Bluetooth and writes the
+                    Fusion HAT. The crates live in TerraPhone, ARGOS, and Zorvane.
+                </p>
+            </div>
+            <dl class="facts">
+                <div>
+                    <dt class="t-label">Computer</dt>
+                    <dd>Raspberry Pi 4 or 5, 64-bit Bookworm</dd>
+                </div>
+                <div>
+                    <dt class="t-label">Hat</dt>
+                    <dd>SunFounder Fusion HAT</dd>
+                </div>
+                <div>
+                    <dt class="t-label">On the Pi</dt>
+                    <dd><code>terra-rover</code></dd>
+                </div>
+                <div>
+                    <dt class="t-label">On the robot</dt>
+                    <dd>TerraPhone, iOS 17</dd>
+                </div>
+                <div>
+                    <dt class="t-label">Shared math</dt>
+                    <dd>Rust crates, UniFFI into Swift</dd>
+                </div>
+                <div>
+                    <dt class="t-label">Manual level</dt>
+                    <dd><code>teleop</code></dd>
+                </div>
+            </dl>
+        </div>
+    </section>
+
+    <section class="shell quick" id="quick-start">
+        <div class="quick-head">
+            <h2 class="about-title">Quick start.</h2>
+            <p class="t-lede">
+                Five steps, ending at the joystick. The card image is a
+                pre-release and has not been verified on hardware.
+            </p>
+        </div>
+
+        <ol class="steps">
+            <li>
+                <p class="t-label">01</p>
+                <div class="prose">
+                    <h3>Download the image</h3>
+                    <aside class="release-note">
+                        <p class="t-label">Pre-release</p>
+                        <p>
+                            <a href={release}>terra-image v0.1.0-rc3</a> has not
+                            been verified on hardware. Treat the first boot on a
+                            Pi as a test.
+                        </p>
+                    </aside>
+                    <p>
+                        The file is
+                        <a href={image}>terra-bookworm-arm64.img.xz</a>, attached
+                        to <a href={release}>terra-image-v0.1.0-rc3</a>. It is a
+                        64-bit Raspberry Pi OS Bookworm image for Pi 4 and Pi 5.
+                        The Fusion HAT driver and the <code>terra-rover</code>
+                        service are already on the card.
+                    </p>
+                    <p>
+                        Raspberry Pi Imager reads the OS list at
+                        <a href={osList}>{osList}</a>.
+                        On a Mac, quit Imager if it is open, then:
+                    </p>
+                    <pre><code>open -a "Raspberry Pi Imager" --args --repo "{osList}"</code></pre>
+                    <p>
+                        Linux and Windows use the same list. The commands, the
+                        customisation fields, and the checksums are in
+                        <a href={flash}>Flash Terra with Raspberry Pi Imager</a>.
+                    </p>
+                </div>
+            </li>
+            <li>
+                <p class="t-label">02</p>
+                <div class="prose">
+                    <h3>Set up the Raspberry Pi</h3>
+                    <p>
+                        Use Imager 1.8.x, 1.9.x, or 2.x. Choose Terra (64-bit)
+                        and Pi 4 or Pi 5. The card needs at least 8 GB. Imager
+                        downloads the image and checks it against the OS list
+                        before it writes.
+                    </p>
+                    <p>
+                        Set the OS customisation while Imager has the list open:
+                        hostname, username and password, Wi-Fi, timezone, and
+                        SSH. The image ships no password of its own. Leave the
+                        hostname blank and the card names itself <code>terra-</code>
+                        plus the last six hex digits of the Pi serial. The
+                        <a href={flash}>flashing guide</a> has the gear-icon and
+                        Imager 2.x clicks.
+                    </p>
+                    <p>
+                        Eject the card, seat it, and power the Pi. The first
+                        start applies those settings and reboots once. The next
+                        start expands the filesystem and starts
+                        <code>terra-rover</code>. The USR button on the Fusion
+                        HAT opens the pairing window. It does not block SSH, and
+                        you do not hold it to log in.
+                    </p>
+                </div>
+            </li>
+            <li>
+                <p class="t-label">03</p>
+                <div class="prose">
+                    <h3>Build TerraPhone</h3>
+                    <p>
+                        TerraPhone is not on the App Store, and the Terra
+                        releases do not ship an installable app. It is the
+                        Xcode project in <a href={repo}>the Terra repository</a>,
+                        at <code>mobile/ios/TerraPhone.xcodeproj</code>. You
+                        build it on a Mac with Xcode and the iOS 17 SDK.
+                    </p>
+                    <pre><code>rustup target add aarch64-apple-ios aarch64-apple-ios-sim x86_64-apple-ios
+./scripts/build-ios.sh
+open mobile/ios/TerraPhone.xcodeproj</code></pre>
+                    <p>
+                        A physical iPhone needs your Apple signing team. That
+                        device build is the one with Bluetooth. The Simulator
+                        build hides Bluetooth — CoreBluetooth cannot scan there —
+                        and shows a Zenoh connection to Zorvane instead. Use the
+                        phone, not the Simulator, for the steps below.
+                        <a href={phoneBuild}>Building in Xcode</a> is the long
+                        version.
+                    </p>
+                </div>
+            </li>
+            <li>
+                <p class="t-label">04</p>
+                <div class="prose">
+                    <h3>Pair the phone and the rover</h3>
+                    <p>
+                        Turn the rover on and open TerraPhone. If the Fusion HAT
+                        USR button was held during boot, release it, then hold
+                        it for three seconds. The LED blinks slowly and a
+                        60-second pairing window opens. The rover advertises a
+                        name like <code>terra-XXXXXX</code>.
+                    </p>
+                    <p>
+                        In the app, tap <span class="act">Find rovers</span>, choose that
+                        name, and accept the iOS pairing prompt if it appears.
+                        The LED blinks quickly while the first phone enrolls.
+                        Three flashes mean the owner record was saved. The rover
+                        switches to its normal service on its own. Tap
+                        <span class="act">Find rovers</span> again and reconnect. The LED
+                        stays on.
+                    </p>
+                    <p>
+                        Pairing does not arm the motors. After this first owner
+                        is saved, TerraPhone remembers the rover and can
+                        reconnect when the app opens. A rover that already has
+                        an owner ignores the button. Unknown rovers are not
+                        selected silently. The byte-level version is
+                        <a href={pairing}>Bluetooth pairing</a>.
+                    </p>
+                </div>
+            </li>
+            <li>
+                <p class="t-label">05</p>
+                <div class="prose">
+                    <h3>Drive it by hand</h3>
+                    <p>
+                        Manual driving is the <code>teleop</code> level. That is
+                        the manual level in the autonomy contract — the wire
+                        name is <code>teleop</code>, not a separate L0 symbol.
+                        The numbered modes in the docs start later: L2 is
+                        <code>waypoint_direct</code>, L4 is target search. In
+                        TerraPhone this level is labeled manual control, and it
+                        lives under Debug tools. Home does not show the joystick.
+                    </p>
+                    <p>
+                        Stage an actuator layout and commit it, then
+                        <span class="act">Arm</span> when the wheels are safe to turn.
+                        Arming is a separate step from pairing. Hold the
+                        joystick and drag. Releasing it sends zero. The dead
+                        zone is 8%. <span class="act">Stop</span> latches until you
+                        reset, and reset leaves the rover disarmed.
+                    </p>
+                    <p>
+                        If an ARGOS fleet session is connected, ARGOS owns
+                        movement. Disconnect the fleet from Home, or tap
+                        <span class="act">Take Over Manual Control</span>, which sets
+                        the level back to <code>teleop</code> and disarms.
+                        Radio sessions and this drive path have not been run on
+                        hardware. The steps above are what the app and
+                        <code>terra-rover</code> implement.
+                    </p>
+                </div>
+            </li>
+        </ol>
+
+        <p class="quick-foot">
+            <a class="link-wipe" href={flash}>Flash with Imager</a>
+            <a class="link-wipe" href={manual}>Terra manual</a>
+            <a class="link-wipe" href={repo}>Terra on GitHub</a>
+        </p>
+    </section>
+</BaseLayout>
+
+<script>
+    import { mountRover } from "../../scripts/rover-viewer";
+
+    const stage = document.querySelector("[data-rover]");
+    if (stage instanceof HTMLElement) mountRover(stage);
+</script>
+
+<style>
+    .terra-hero {
+        padding-top: 160px;
+        padding-bottom: var(--section);
+    }
+    .back { margin-bottom: 48px; }
+
+    .terra-hero :global(.t-lede) {
+        max-width: 36ch;
+        margin-top: 28px;
+    }
+
+    .stage {
+        margin: 48px 0 0;
+    }
+    .stage-media {
+        position: relative;
+        height: clamp(420px, 68vh, 820px);
+        border: 1px solid var(--rule);
+        border-radius: var(--r-slight);
+        background: var(--paper);
+        overflow: hidden;
+        /* Colour in the CAD stays out of the page. The poster and the
+           canvas share one filter so the fallback matches the live view. */
+        filter: grayscale(1) contrast(1.18);
+    }
+    .stage-media img,
+    .stage-media :global(canvas) {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .stage-media img {
+        object-fit: contain;
+    }
+    .stage-media :global(canvas) {
+        opacity: 0;
+        touch-action: none;
+    }
+    .stage-media :global(canvas.is-shown) {
+        opacity: 1;
+        transition: opacity var(--dur-image) var(--ease);
+    }
+    .stage-cap {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid var(--rule);
+    }
+
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 40px;
+    }
+
+    .about {
+        padding-bottom: var(--section);
+    }
+    .about-title {
+        max-width: 16ch;
+        font-size: clamp(28px, 4.4vw, 60px);
+        font-weight: 300;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+    }
+    .about-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 0.8fr);
+        gap: 64px;
+        align-items: start;
+        margin-top: 48px;
+    }
+    .facts {
+        margin: 0;
+        border-top: 1px solid var(--rule);
+    }
+    .facts div {
+        padding: 20px 0;
+        border-bottom: 1px solid var(--rule);
+    }
+    .facts dd {
+        margin: 8px 0 0;
+    }
+    .facts code {
+        font-family: var(--font-mono);
+        font-size: 0.9em;
+    }
+    .act { font-weight: 500; }
+
+    .quick { padding-bottom: var(--section); }
+    .quick-head .t-lede {
+        max-width: 42ch;
+        margin-top: 28px;
+    }
+    .steps {
+        margin: 64px 0 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--rule);
+    }
+    .steps > li {
+        display: grid;
+        grid-template-columns: 6rem minmax(0, 1fr);
+        gap: 32px;
+        padding: 48px 0;
+        border-bottom: 1px solid var(--rule);
+    }
+    .steps :global(h3) { margin-top: 0; }
+    .release-note {
+        max-width: 62ch;
+        margin-top: 8px;
+        padding-top: 20px;
+        border-top: 1px solid var(--ink);
+    }
+    .release-note p:last-child {
+        margin-top: 12px;
+        color: var(--graphite);
+    }
+    .quick-foot {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px 32px;
+        margin-top: 48px;
+    }
+
+    @media (max-width: 900px) {
+        .terra-hero { padding-top: 120px; }
+        .back { margin-bottom: 32px; }
+        .stage-media { height: clamp(320px, 58vh, 560px); }
+        .stage-cap { flex-direction: column; }
+        .about-grid { grid-template-columns: 1fr; gap: 40px; }
+        .steps > li { grid-template-columns: 1fr; gap: 12px; }
+    }
+</style>

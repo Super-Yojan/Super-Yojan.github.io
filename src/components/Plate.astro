@@ -277,4 +277,43 @@ const { plate } = Astro.props;
             </g>
         )
     }
+
+    {
+        plate === "terra" && (
+            <g>
+                {/* side elevation: chassis, six wheels, phone on the deck */}
+                <path d="M78 196 L132 158 L368 158 L422 196 L400 214 L100 214 Z" />
+                <path d="M168 158 L168 132 L214 132 L214 158" />
+                <rect x="228" y="118" width="78" height="40" rx="8" />
+                <path d="M248 138 L286 138 M248 148 L270 148" opacity="0.45" />
+
+                <circle cx="118" cy="228" r="22" />
+                <circle cx="118" cy="228" r="6" />
+                <circle cx="178" cy="228" r="22" />
+                <circle cx="178" cy="228" r="6" />
+                <circle cx="238" cy="228" r="22" />
+                <circle cx="238" cy="228" r="6" />
+                <circle cx="298" cy="228" r="22" />
+                <circle cx="298" cy="228" r="6" />
+                <circle cx="358" cy="228" r="22" />
+                <circle cx="358" cy="228" r="6" />
+                <circle cx="418" cy="228" r="22" />
+                <circle cx="418" cy="228" r="6" />
+
+                <path d="M100 214 L118 206 M400 214 L418 206" opacity="0.4" />
+
+                <g class="annot">
+                    <text x="228" y="108" class="plate-label">
+                        PHONE
+                    </text>
+                    <text x="78" y="148" class="plate-label">
+                        PI
+                    </text>
+                    <text x="300" y="188" class="plate-label">
+                        FUSION HAT
+                    </text>
+                </g>
+            </g>
+        )
+    }
 </svg>

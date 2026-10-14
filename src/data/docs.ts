@@ -42,6 +42,11 @@ export const docSites: DocSite[] = [
         repoUrl: "https://github.com/Super-Yojan/Terra",
         pages: [
             {
+                href: "/projects/terra",
+                label: "Project",
+                aria: "Terra project page",
+            },
+            {
                 href: "/docs/terra/flash-with-imager",
                 label: "Flash with Imager",
                 aria: "Flash Terra with Raspberry Pi Imager",

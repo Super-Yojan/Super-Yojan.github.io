@@ -16,6 +16,11 @@ Use Imager 1.8.x, 1.9.x, or 2.x. The OS list sets `init_format` to `systemd`, wh
 
 Source install, Bluetooth pairing, and the bench outline stay in the [Terra manual](https://super-yojan.dev/Terra/hardware/INSTALL/). This page is the card.
 
+<figure class="drawing">
+<img src="/media/docs/microsd.svg" alt="Drawing of a microSD card on a small tray, with eight contact pads and a corner notch." width="720" height="460">
+<figcaption>A microSD card, the card a Pi 4 or Pi 5 reads. This is a drawing of the card shape, not a photograph of a flashed card.</figcaption>
+</figure>
+
 ## Install Raspberry Pi Imager
 
 Download it from [raspberrypi.com/software](https://www.raspberrypi.com/software/). Quit Imager if it is already open before you use a launcher below.
@@ -69,6 +74,19 @@ Set:
 - SSH. To log in with the password you just set, enable SSH and choose password authentication. To log in with a key instead, choose public-key authentication and paste the public key. If you set a public key, Imager turns password login off for that card.
 
 Save, then write. Imager downloads the compressed image, checks its size and sha256 against the OS list, and writes the card.
+
+Two choices in that form change the card you can log into later.
+
+```mermaid
+flowchart TD
+  list[Imager has the Terra OS list] --> host{Hostname set?}
+  host -->|Yes| named[The card uses that hostname]
+  host -->|No| blank[terra- plus six hex digits of the Pi serial]
+  named --> auth{SSH authentication}
+  blank --> auth
+  auth -->|Password| pw[Password login stays available]
+  auth -->|Public key| key[Imager turns password login off]
+```
 
 ## Boot and sign in
 

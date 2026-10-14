@@ -27,11 +27,16 @@ export const docSites: DocSite[] = [
         slug: "argos",
         title: "ARGOS",
         role: "Hub",
-        blurb: "Operator and fleet supervision layer, and the index for the other sites.",
+        blurb: "The fleet operator. A native app on macOS 14 and iOS 17. Its manual is the index for the other two sites.",
         hub: true,
         docsUrl: "https://super-yojan.dev/ARGOS/",
         repoUrl: "https://github.com/Super-Yojan/ARGOS",
         pages: [
+            {
+                href: "/docs/argos/getting-started",
+                label: "Getting started",
+                aria: "ARGOS getting started",
+            },
             {
                 href: "/projects/argos",
                 label: "Project",
@@ -64,11 +69,16 @@ export const docSites: DocSite[] = [
         slug: "zorvane",
         title: "Zorvane",
         role: "Simulator",
-        blurb: "Platform-agnostic world simulator, split out of Terra.",
+        blurb: "The world simulator, split out of Terra. The default world is the practice town.",
         hub: false,
         docsUrl: "https://super-yojan.dev/Zorvane/",
         repoUrl: "https://github.com/Super-Yojan/Zorvane",
         pages: [
+            {
+                href: "/docs/zorvane/running",
+                label: "Running",
+                aria: "Run Zorvane",
+            },
             {
                 href: "/projects/zorvane",
                 label: "Project",

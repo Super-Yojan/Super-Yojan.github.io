@@ -12,6 +12,8 @@ interface Props {
     manualLabel?: string;
     repoHref?: string;
     repoLabel?: string;
+    backHref?: string;
+    backLabel?: string;
 }
 
 const fm = Astro.props.frontmatter ?? Astro.props;
@@ -24,13 +26,15 @@ const {
     manualLabel = "Manual",
     repoHref,
     repoLabel = "Repository",
+    backHref = "/docs",
+    backLabel = "Documentation",
 } = fm;
 ---
 
 <BaseLayout title={title} description={description}>
     <article class="doc">
         <header class="post-head shell">
-            <a href="/docs" class="link-wipe back">← Documentation</a>
+            <a href={backHref} class="link-wipe back">← {backLabel}</a>
             <p class="t-label rise" data-delay="80">{kicker}</p>
             <h1 class="post-title">
                 <span class="reveal-line"><span>{title}</span></span>
@@ -53,7 +57,7 @@ const {
             </div>
 
             <footer class="post-foot">
-                <a href="/docs" class="link-wipe">← Documentation</a>
+                <a href={backHref} class="link-wipe">← {backLabel}</a>
                 {
                     manualHref && (
                         <a class="link-wipe" href={manualHref}>
@@ -133,4 +137,37 @@ const {
     /* Subhead is the 32px step, set light. Title stays at 500. */
     .doc .prose h2 { font-weight: 300; }
     .doc .prose h3 { font-weight: 500; }
+    .doc .prose figure,
+    .doc .prose .diagram {
+        margin: 40px 0;
+    }
+    .doc .prose .diagram {
+        overflow-x: auto;
+    }
+    .doc .prose .diagram svg,
+    .doc .prose figure svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+    .doc .prose figcaption {
+        margin-top: 12px;
+        color: var(--graphite);
+        font-size: 15px;
+        line-height: 1.5;
+    }
+    .doc .prose img {
+        filter: grayscale(1) contrast(1.08);
+    }
+    .doc .prose .shot-phone {
+        max-width: 280px;
+    }
+    .doc .prose .shot-phone img,
+    .doc .prose figure img {
+        width: 100%;
+        height: auto;
+    }
+    .doc .prose table {
+        font-size: 15px;
+    }
 </style>

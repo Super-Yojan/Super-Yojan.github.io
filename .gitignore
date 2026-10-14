@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Local skill checkouts used to draw figures. The site commits the SVG.
+.agents/
+skills-lock.json

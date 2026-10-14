@@ -36,7 +36,7 @@ skill-bar graphics.
 Astro 5 static site, built to `dist/` and hosted at super-yojan.dev via GitHub Pages.
 Content: two long-form engineering posts in `src/content/blog/` authored in Markdown, using
 remark-math + rehype-katex for equation rendering. Nine catalogued projects. Routes: `/`,
-`/projects`, `/projects/[slug]`, `/blog`, `/blog/[slug]`, `/about`, `/docs`, plus `/rss.xml` and a sitemap.
+`/projects`, `/projects/[slug]`, `/blog`, `/blog/[slug]`, `/about`, `/docs`, `/docs/terra/flash-with-imager`, `/docs/argos/getting-started`, `/docs/zorvane/running`, plus `/rss.xml` and a sitemap.
 
 ## Capabilities and Constraints
 

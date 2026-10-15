@@ -1,32 +1,39 @@
+import { readFileSync } from "node:fs";
 import puppeteer from "puppeteer-core";
 import { createRequire } from "node:module";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const require = createRequire(import.meta.url);
 const mermaidPath = require.resolve("mermaid/dist/mermaid.min.js");
+const geistSansPath = join(
+    dirname(fileURLToPath(import.meta.url)),
+    "../../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2",
+);
 
 const themeVariables = {
-    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+    fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif",
     fontSize: "14px",
-    primaryColor: "#ffffff",
-    primaryTextColor: "#000000",
-    primaryBorderColor: "#000000",
-    secondaryColor: "#F4F4F6",
-    secondaryTextColor: "#000000",
-    secondaryBorderColor: "#000000",
-    tertiaryColor: "#ffffff",
-    tertiaryTextColor: "#000000",
-    tertiaryBorderColor: "#000000",
-    lineColor: "#000000",
-    textColor: "#000000",
-    mainBkg: "#ffffff",
-    nodeBorder: "#000000",
-    clusterBkg: "#ffffff",
-    clusterBorder: "rgba(0,0,0,0.10)",
-    titleColor: "#000000",
-    edgeLabelBackground: "#ffffff",
-    nodeTextColor: "#000000",
-    defaultLinkColor: "#000000",
-    background: "#ffffff",
+    primaryColor: "#FAFAF8",
+    primaryTextColor: "#0B0B0B",
+    primaryBorderColor: "#0B0B0B",
+    secondaryColor: "#FFFFFF",
+    secondaryTextColor: "#0B0B0B",
+    secondaryBorderColor: "#0B0B0B",
+    tertiaryColor: "#FAFAF8",
+    tertiaryTextColor: "#0B0B0B",
+    tertiaryBorderColor: "#0B0B0B",
+    lineColor: "#1B7F86",
+    textColor: "#0B0B0B",
+    mainBkg: "#FAFAF8",
+    nodeBorder: "#0B0B0B",
+    clusterBkg: "#FAFAF8",
+    clusterBorder: "#BDBDBD",
+    titleColor: "#0B0B0B",
+    edgeLabelBackground: "#FAFAF8",
+    nodeTextColor: "#0B0B0B",
+    defaultLinkColor: "#1B7F86",
+    background: "#FAFAF8",
 };
 
 let chain = Promise.resolve();
@@ -48,12 +55,17 @@ function getPage() {
                 "<!doctype html><html><body style=\"margin:0;background:#fff\"></body></html>",
             );
             await page.addScriptTag({ path: mermaidPath });
+            const geistB64 = readFileSync(geistSansPath).toString("base64");
+            await page.addStyleTag({
+                content: `@font-face{font-family:Geist;src:url(data:font/woff2;base64,${geistB64}) format("woff2");font-weight:100 900;font-style:normal;font-display:block}`,
+            });
+            await page.evaluate(() => document.fonts.load("14px Geist"));
             await page.evaluate((variables) => {
                 window.mermaid.initialize({
                     startOnLoad: false,
                     securityLevel: "loose",
                     theme: "base",
-                    fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+                    fontFamily: "Geist, ui-sans-serif, system-ui, sans-serif",
                     flowchart: { htmlLabels: false, curve: "basis", padding: 14 },
                     themeVariables: variables,
                 });

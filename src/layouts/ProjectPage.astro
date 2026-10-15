@@ -237,6 +237,11 @@ const {
         pointer-events: none;
     }
     .orbit-hint:empty { display: none; }
+    .orbit-hint {
+        display: inline-block;
+        padding: 2px 8px;
+        background: var(--paper);
+    }
 
     .hero-actions {
         display: flex;
@@ -251,9 +256,9 @@ const {
     .about-title {
         max-width: 16ch;
         font-size: clamp(28px, 4.4vw, 60px);
-        font-weight: 300;
+        font-weight: 700;
         line-height: 1.05;
-        letter-spacing: -0.04em;
+        letter-spacing: -0.05em;
     }
     .about-grid {
         display: grid;
@@ -312,7 +317,7 @@ const {
         max-width: 62ch;
         margin-top: 8px;
         padding-top: 20px;
-        border-top: 1px solid var(--ink);
+        border-top: 1px solid var(--teal-deep);
     }
     .steps :global(.release-note p:last-child) {
         margin-top: 12px;

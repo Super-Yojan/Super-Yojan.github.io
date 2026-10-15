@@ -6,15 +6,16 @@ import { projectHref, projects } from "../data/projects";
 /*
   DIRECTION CONTRACT — Landing (Experience)
 
-  THESIS: A studio monograph for an engineer, printed in one ink. It refuses
+  THESIS: A studio monograph for an engineer. It refuses
   the dashboard-portfolio arrangement — stat tiles, status LEDs, terminal
   chrome — that this category always ships.
 
-  OWN-WORLD: Paper white, ink black, three greys, no accent. Geist at two
-  extremes: heavy display against 14px tracked Iosevka. Hairline 1px rules as the
-  only divider. Project imagery is hand-drawn engineering plates, never
-  photographs; the single exception is the frontispiece, which is footage held
-  to the same ink by a CSS desaturation.
+  OWN-WORLD: Paper (#FAFAF8) and ink (#0B0B0B). Safelight marks links,
+  labels, and one thin rule. Teal is secondary: code, diagrams, info notes.
+  Geist at two extremes: heavy display against 14px tracked Iosevka. Hairline
+  1px rules as the only divider. Project imagery is hand-drawn engineering
+  plates, never photographs; the single exception is the frontispiece, which
+  is footage held to ink by a CSS desaturation.
 
   STORY: A visitor lands inside a moving plate with a name across it, steps out
   onto paper, watches six drawn systems move past, reads one sentence
@@ -185,7 +186,7 @@ const marqueeCards = [...projects, ...projects];
         justify-content: flex-end;
         padding-bottom: 24px;
         margin-bottom: 64px;
-        border-bottom: 1px solid var(--ink);
+        border-bottom: 1px solid var(--safe);
     }
 
     .close-lead {
@@ -203,10 +204,11 @@ const marqueeCards = [...projects, ...projects];
         font-size: clamp(1.5rem, 3.5vw, 3rem);
         font-weight: 700;
         letter-spacing: -0.05em;
-        border-bottom: 1px solid var(--rule);
-        transition: border-color var(--dur-state) var(--ease);
+        color: var(--safe-link);
+        border-bottom: 1px solid var(--safe);
+        transition: color var(--dur-state) var(--ease), border-color var(--dur-state) var(--ease);
     }
-    .close-link:hover { border-bottom-color: var(--ink); }
+    .close-link:hover { color: var(--safe-pressed); border-bottom-color: var(--safe-pressed); }
 </style>
 
 <script>

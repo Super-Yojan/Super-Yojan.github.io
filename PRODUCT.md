@@ -51,9 +51,11 @@ remark-math + rehype-katex for equation rendering. Nine catalogued projects. Rou
 - Name: Yojan Gautam. Domain: super-yojan.dev.
 - Links: github.com/Super-Yojan · linkedin.com/in/yojan-gautam · youtube.com/@Super-Yojan ·
   hi@super-yojan.dev
-- The user pinned a binding visual brief on 2026-08-12: a bold editorial studio style, strict
-  black-and-white palette, Geist typography, custom difference-blend cursor, marquee, and
-  cubic-bezier(0.16, 1, 0.3, 1) easing. Recorded as binding; see DESIGN.md.
+- The user pinned a binding visual brief on 2026-08-12: a bold editorial studio style,
+  Geist typography, custom difference-blend cursor, marquee, and
+  cubic-bezier(0.16, 1, 0.3, 1) easing. The 2026-10 brand guide replaces the strict
+  black-and-white palette with ink, paper, a Safelight red ramp, and a secondary teal.
+  Recorded as binding; see DESIGN.md.
 
 ## Evidence on Hand
 

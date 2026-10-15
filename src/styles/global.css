@@ -2,19 +2,23 @@
    YOJAN GAUTAM — "The Engineering Monograph"
    Editorial studio identity in strict black and white.
    Display type is Geist 700 with tight tracking. Body is Geist.
-   Labels and code are Geist Mono.
+   Labels and code are Iosevka.
    System of record: DESIGN.md at the project root.
    ============================================================ */
 
-/* Variable faces from @fontsource-variable. One latin file covers
-   weights 100–900, so preloading it preloads the weights the page
-   actually uses (400 body, 500 controls, 600 subhead, 700 display).
-   latin-ext and italic are declared but not preloaded. format(woff2)
-   is the variable-font hint current browsers understand.
+/* Geist is a variable face from @fontsource-variable. One latin file
+   covers weights 100–900, so preloading it preloads the weights the
+   page actually uses (400 body, 500 controls, 600 subhead, 700 display).
+   latin-ext and italic are declared but not preloaded.
 
-   Fallback faces use the next/font size-adjust formula against Arial
-   and Courier New (Liberation Sans / Liberation Mono are the same
-   metrics) so the swap does not move the line box. */
+   Iosevka is the mono. The published latin files are the full family
+   (~1MB, thousands of glyphs), so these two are a latin subset of
+   Iosevka 22.1.2 at 400 and 500, the weights labels and code use.
+   font-display: swap. License: src/fonts/iosevka-OFL.txt.
+
+   The Geist fallback faces use the next/font size-adjust formula
+   against Arial (Liberation Sans is the same metrics) so the swap
+   does not move the line box. */
 @font-face {
   font-family: "Geist";
   font-style: normal;
@@ -40,27 +44,19 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Geist Mono";
+  font-family: "Iosevka";
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 400;
   font-display: swap;
-  src: url("../../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2") format("woff2");
+  src: url("../fonts/iosevka-latin-400-normal.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 @font-face {
-  font-family: "Geist Mono";
+  font-family: "Iosevka";
   font-style: normal;
-  font-weight: 100 900;
+  font-weight: 500;
   font-display: swap;
-  src: url("../../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-ext-wght-normal.woff2") format("woff2");
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: "Geist Mono";
-  font-style: italic;
-  font-weight: 100 900;
-  font-display: swap;
-  src: url("../../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-italic.woff2") format("woff2");
+  src: url("../fonts/iosevka-latin-500-normal.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -86,16 +82,6 @@
   descent-override: 27.99%;
   line-gap-override: 0%;
 }
-@font-face {
-  font-family: "Geist Mono Fallback";
-  src: local("Courier New"), local("Liberation Mono"), local("Cousine");
-  font-weight: 100 900;
-  font-style: normal;
-  size-adjust: 99.98%;
-  ascent-override: 100.52%;
-  descent-override: 29.50%;
-  line-gap-override: 0%;
-}
 
 /* ------------------------------------------------------------
    TOKENS
@@ -119,7 +105,7 @@
   --ash-inverse: rgba(255, 255, 255, 0.62);
 
   --font: "Geist", "Geist Fallback", system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: "Iosevka", "Iosevka Nerd Font", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-state: 500ms;

@@ -57,7 +57,7 @@ typography:
     lineHeight: 1.4
     letterSpacing: "-0.02em"
   label:
-    fontFamily: "Geist Mono, ui-monospace, monospace"
+    fontFamily: "Iosevka, Iosevka Nerd Font, ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
     fontSize: "14px"
     fontWeight: 400
     lineHeight: 1.2
@@ -231,19 +231,20 @@ the one thing the plates are not.
 
 **Display Font:** Geist (with system-ui, sans-serif)
 **Body Font:** Geist (with system-ui, sans-serif)
-**Label/Mono Font:** Geist Mono (with ui-monospace)
+**Label/Mono Font:** Iosevka (with Iosevka Nerd Font, ui-monospace, SFMono-Regular, Menlo, Consolas)
 
 **Character:** One family carrying the whole page, worked at its extremes, in the manner of
 a heavy editorial sans. Geist at 700 and about -0.06em tracking is dense at display size —
 the heavy stroke and the tight fit are the identity; the same family at 400 and -0.02em is
 quiet and highly readable at body size, and at 500 it becomes a control label. The 32px
-subhead sits between them at 600. Geist Mono is the only foreign voice. It appears as small
+subhead sits between them at 600. Iosevka is the only foreign voice. It appears as small
 tracked uppercase metadata and as code, which keeps it reading as a caption system rather
 than as a terminal.
 
-The faces are self-hosted variable fonts. One latin file per family covers weights 100–900,
-and those two files are preloaded. A metric-matched local fallback (Arial for Geist, Courier
-New for Geist Mono) holds the line box still until the files arrive.
+Geist is a self-hosted variable font. One latin file covers weights 100–900 and is
+preloaded. A metric-matched Arial fallback holds the line box still until it arrives.
+Iosevka is self-hosted at 400 and 500, `font-display: swap`, and those two files are
+preloaded. The stack continues through Iosevka Nerd Font, then the platform monos.
 
 ### Hierarchy
 - **Display** (700, clamp(2.5rem, 5.5vw, 4.5rem), 1.0, -0.06em): The landing hero only. One per site.

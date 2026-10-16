@@ -35,6 +35,13 @@
   - **Sends:** goals, level changes, stop/reset, approvals, arm/disarm, teleop; never `cmd_vel`
   - **Not shown:** no camera feed
   - **DualSense:** Apple GameController framework as generic gamepad; hold L1 dead-man switch; left stick drives; 0.12 deadzone; full forward = linear 0.5; teleop ~10 Hz only when in control and motors armed; release sends zero; no other buttons mapped; e-stop/level/goals are on-screen only.
+- **Web ARGOS dashboard**
+  - **Where:** `codex/browser-dashboard` branch of ARGOS, not in any PR; single commit Oct 15, nine days after the SwiftUI app merged in #5 on Oct 6
+  - **Built with:** React + TypeScript front end in `apps/web/`, Vite, MapLibre maps; Rust backend `crates/argos-server/` serves it, handles GitHub sign-in, sessions, audit log; Docker + Caddy hosting; GitHub Actions workflow
+  - **Connects:** browser never talks to Zenoh, only to argos-server; server pushes fleet updates ~5x/s and serves maps 1x/s; server uses the same Rust Zenoh client and topics as the native app over TCP or TLS; router over Tailscale in the hosted setup
+  - **Shows:** fleet map (local or geographic); per-robot panel with position + freshness, occupancy grid, autonomy level, motor arm state
+  - **Sends:** send/cancel waypoints, planner tuning; level picker labeled L0-L5 (L5 unavailable), mapped onto Terra's named modes
+  - **Missing:** no driving, no e-stop, no target search setup, no camera feed (docs say use the native app); no controller support.
 
 ## Supporting pieces
 

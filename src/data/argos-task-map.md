@@ -28,6 +28,13 @@
   - **L4** Searching without a map — Stretch (research)
   - **L5** VLM on the phone decides actions from the overall fleet goal — Stretch (research)
   - **Demo needs:** L0–L3. **Stretch goals:** L4, L5 (research track).
+- **Native ARGOS dashboard (SwiftUI)**
+  - **Where:** ARGOS repo, Mac + iOS app on Rust crates via UniFFI
+  - **Connects:** Zenoh directly over TCP via argos-router (port 7448) or a hosted router
+  - **Shows:** robots online; position/heading on 2D/3D scene + map; occupancy grid; 3D point cloud; autonomy level + who has control; waypoint status + suggested targets; motor arm state + battery; target search status
+  - **Sends:** goals, level changes, stop/reset, approvals, arm/disarm, teleop; never `cmd_vel`
+  - **Not shown:** no camera feed
+  - **DualSense:** Apple GameController framework as generic gamepad; hold L1 dead-man switch; left stick drives; 0.12 deadzone; full forward = linear 0.5; teleop ~10 Hz only when in control and motors armed; release sends zero; no other buttons mapped; e-stop/level/goals are on-screen only.
 
 ## Supporting pieces
 

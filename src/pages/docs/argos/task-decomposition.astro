@@ -8,7 +8,7 @@ import "@fontsource/geist/latin-500.css";
 
 const title = "Task decomposition";
 const description =
-    "Four chassis controlled from one dashboard, a 30-minute run, opened as a map.";
+    "ARGOS at the center: hardware, the autonomy ladder, and the software on the phone.";
 
 const { root } = new Transformer().transform(source);
 const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
@@ -27,7 +27,7 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
 
         <div class="shell stage">
             <div class="map-column">
-                <p class="t-label map-hint">Drag to pan. Scroll or pinch to zoom. Tap a dot to fold.</p>
+                <p class="t-label map-hint">Branches start folded. Drag to pan. Scroll or pinch to zoom. Tap a dot to open.</p>
                 <div class="canvas">
                     <div class="map-controls">
                         <button type="button" class="pill-btn pill-btn-ghost" id="map-fit">Fit</button>
@@ -73,7 +73,7 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
                 duration: reduce ? 0 : 500,
                 embedGlobalCSS: true,
                 fitRatio: 0.92,
-                initialExpandLevel: narrow ? 2 : 3,
+                initialExpandLevel: 2,
                 maxInitialScale: 1.4,
                 pan: true,
                 zoom: true,

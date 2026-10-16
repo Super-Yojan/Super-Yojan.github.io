@@ -1,33 +1,44 @@
-# Goal: Four chassis controlled from one dashboard, 30-minute run.
+# ARGOS
 
-## Chassis (x4)
+## Hardware
 
-### Mechanical
+- Chassis stability
+- Crash-proofing
+- Design principles
+- **Two chassis**
+  - **Small, 3D-printed:** fits tight spaces, no suspension
+  - **Bigger:** more payload, a scoring mechanism
+- Both have a Pi
+- Fixed phone mount
+- **Power:** DeWalt 20V lithium-ion chassis battery; option to charge the phone; power-sharing undecided
+- **Safety:** physical e-stop disconnects battery power (manual power cycle); remote kill switch designed but unused
 
-- GoBuilda frame
-- Wheels
-- Motors
-- Phone mount
+## Autonomy ladder (canonical L0-L5)
 
-### Electrical
+- **L0** Fully teleoperated
+- **L1** Teleop with assistance (for example, an obstacle stop)
+- **L2** Waypoint without obstacle avoidance
+- **L3** Waypoint with obstacle avoidance
+- **L4** Search on its own
+- **L5** Decide the best thing given all conditions
+- **Current implementation (code)**
+  - `Teleop`
+  - `AssistedTeleop`
+  - `Waypoint`
+  - `WaypointDirect`
+  - `Supervised`
+  - `TargetSearch`
+- **Open questions**
+  - L4 search target
+  - L5 decision logic
 
-- Phone as compute
-- Motor wiring
-- Battery
+## Software
 
-### Software
-
-- **Dashboard:** React + TypeScript frontend, Rust axum backend. A human sets each rover's autonomy level and assigns tasks.
-- **Zenoh router:** connects the dashboard to each rover.
-- **Swift app on iPhone:** observes the environment, builds an occupancy graph, and runs a local planner to the assigned waypoint.
-- **Autonomy ladder:**
-  - **L0** Fully teleoperated — Demo
-  - **L1** Assisted teleop: brakes near obstacles — Demo
-  - **L2** Waypoint navigation, no obstacle avoidance — Demo
-  - **L3** Obstacle-aware navigation: A* on a map, plus DWA for imminent crashes — Demo
-  - **L4** Searching without a map — Stretch (research)
-  - **L5** VLM on the phone decides actions from the overall fleet goal — Stretch (research)
-  - **Demo needs:** L0–L3. **Stretch goals:** L4, L5 (research track).
+- **Phone:** Swift, custom Rust, and a UniFFI bridge. The phone is the main brain.
+- **Pi:** overkill, kept from prior work
+  - Takes motor commands over Bluetooth and relays them to the motor controller, because the phone can't generate PWM
+  - `terra-motors` exists, but nothing uses it. Python on the Pi drives the Fusion HAT
+  - The Pi doesn't use Zenoh. The phone forwards arm/disarm and Pi status over Bluetooth
 - **Native ARGOS dashboard (SwiftUI)**
   - **Where:** ARGOS repo, Mac + iOS app on Rust crates via UniFFI
   - **Connects:** Zenoh directly over TCP via argos-router (port 7448) or a hosted router
@@ -43,21 +54,11 @@
   - **Sends:** send/cancel waypoints, planner tuning; level picker labeled L0-L5 (L5 unavailable), mapped onto Terra's named modes
   - **Missing:** no driving, no e-stop, no target search setup, no camera feed (docs say use the native app); no controller support.
 
-## Supporting pieces
+## Software details
 
-- Swift dashboard app (teleop, stop-all, takeover, Arm/Disarm): ARGOS #25 / PR #54
-- Four phones, each with a distinct ID: ARGOS #43 checklist
-- Hosted router on GCP with the `terra/phone` prefix (settled; not the local network)
-
-## Not needed
-
-- 2-hour soak (replaced by the 30-minute run)
-- Sensors (everything is on the phone)
-- Map merging (Zorvane #8, #10–#14): student learning steps
-- VLM research (Terra #49): offline
-
-## Open questions
-
-- The software stack is mostly in Yojan's head. Capture it first.
-- PR #54 is blocked on the Mac build check.
-- Zorvane #19 is on the critical path.
+- **VLM:** runs in the mobile app
+- **Sensors:** the phone has all of them: camera, LiDAR, IMU
+- **Speed:** no wheel encoders; the phone's VIO odometry
+- **Localization:** LiDAR + ARKit, GPS outdoors
+- **Maps:** on the fly, and each match starts fresh
+- **Autonomy logic:** Rust runs all of it, across 12 crates

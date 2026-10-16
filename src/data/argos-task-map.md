@@ -63,3 +63,22 @@
 - **Localization:** LiDAR + ARKit, GPS outdoors
 - **Maps:** on the fly, and each match starts fresh
 - **Autonomy logic:** Rust runs all of it, across 12 crates
+- **Zenoh bus**
+  - **Format:** every topic is `<prefix>/<robot id>/<name>`. All messages are JSON except `camera/depth` (a JSON header plus raw float pixels).
+  - **Pi:** does not use Zenoh, only Bluetooth to the phone. The phone forwards arm/disarm and Pi status.
+  - **`teleop`:** joystick input, with a session and a sequence number, sent by ARGOS
+  - **`cmd_vel`:** linear and angular, capped at ±2. Simulator only, 20 Hz, valid for 250 ms, then zeros
+  - **`autonomy`:** a level change and a token
+  - **`safety`:** stop or reset, for one robot or the fleet
+  - **`goal` and `goal/decision`:** a waypoint or a cancel; approve, reject, or resume
+  - **`hardware`:** arm or disarm the motors
+  - **`navigation/settings` and `search*`:** planner tuning and the L4 target search
+  - **`autonomy/status`:** assigned, requested, and effective level, plus the safety state
+  - **`pose` and `localization`:** x, y, and heading; the ARKit position
+  - **`goal/status` and `goal/proposal`:** waypoint progress, and a suggested target
+  - **`map/occupancy`:** at most every 200 ms
+  - **`pointcloud`:** at most every 500 ms
+  - **`hardware/status`:** Pi arm state and battery
+  - **`fleet/state`:** robots online
+  - **`camera/depth`:** Zorvane to the Simulator and to ARGOS, which keeps only the pose
+  - **Timing:** status every 100 ms on a real phone, and it stops if the data is older than 500 ms. Stop commands are never dropped and always run first.

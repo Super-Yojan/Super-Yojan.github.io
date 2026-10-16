@@ -6,13 +6,14 @@ import sitemap from "@astrojs/sitemap";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.mjs";
+import { remarkCallout } from "./src/plugins/remark-callout.mjs";
 
 export default defineConfig({
   site: "https://super-yojan.dev",
   integrations: [mdx(), sitemap()],
   // 2. Configure Markdown
   markdown: {
-    remarkPlugins: [remarkMermaid, remarkMath],
+    remarkPlugins: [remarkMermaid, remarkCallout, remarkMath],
     rehypePlugins: [rehypeKatex],
     // Shiki highlights at build time. github-dark-dimmed clears 4.5:1 on
     // #0A0A0A for every text token; the stylesheet forces that panel over

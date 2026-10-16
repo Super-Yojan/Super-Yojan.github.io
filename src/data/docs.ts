@@ -38,6 +38,11 @@ export const docSites: DocSite[] = [
                 aria: "ARGOS getting started",
             },
             {
+                href: "/docs/argos/task-decomposition",
+                label: "Task decomposition",
+                aria: "ARGOS task decomposition",
+            },
+            {
                 href: "/projects/argos",
                 label: "Project",
                 aria: "ARGOS project page",

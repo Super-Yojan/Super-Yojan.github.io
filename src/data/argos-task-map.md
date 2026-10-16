@@ -40,19 +40,20 @@
   - `terra-motors` exists, but nothing uses it. Python on the Pi drives the Fusion HAT
   - The Pi doesn't use Zenoh. The phone forwards arm/disarm and Pi status over Bluetooth
 - **Native ARGOS dashboard (SwiftUI)**
-  - **Where:** ARGOS repo, Mac + iOS app on Rust crates via UniFFI
-  - **Connects:** Zenoh directly over TCP via argos-router (port 7448) or a hosted router
-  - **Shows:** robots online; position/heading on 2D/3D scene + map; occupancy grid; 3D point cloud; autonomy level + who has control; waypoint status + suggested targets; motor arm state + battery; target search status
+  - **Where:** ARGOS repo, Mac and iOS, Rust crates via UniFFI
+  - **Connects:** Zenoh over TCP via argos-router (port 7448) or a hosted router
+  - **Shows:** robots online; position and heading on a 2D/3D scene and map; occupancy grid; 3D point cloud; autonomy level and who has control; waypoint status and suggested targets; motor arm state and battery; target search status
   - **Sends:** goals, level changes, stop/reset, approvals, arm/disarm, teleop; never `cmd_vel`
   - **Not shown:** no camera feed
-  - **DualSense:** Apple GameController framework as generic gamepad; hold L1 dead-man switch; left stick drives; 0.12 deadzone; full forward = linear 0.5; teleop ~10 Hz only when in control and motors armed; release sends zero; no other buttons mapped; e-stop/level/goals are on-screen only.
+  - **DualSense:** GameController framework as a generic gamepad; hold L1 as a dead-man switch; left stick drives; 0.12 deadzone; full forward is linear 0.5; teleop at about 10 Hz only when in control and motors are armed; release sends zero; no other buttons are mapped; e-stop, level, and goals are on-screen only
 - **Web ARGOS dashboard**
-  - **Where:** `codex/browser-dashboard` branch of ARGOS, not in any PR; single commit Oct 15, nine days after the SwiftUI app merged in #5 on Oct 6
-  - **Built with:** React + TypeScript front end in `apps/web/`, Vite, MapLibre maps; Rust backend `crates/argos-server/` serves it, handles GitHub sign-in, sessions, audit log; Docker + Caddy hosting; GitHub Actions workflow
-  - **Connects:** browser never talks to Zenoh, only to argos-server; server pushes fleet updates ~5x/s and serves maps 1x/s; server uses the same Rust Zenoh client and topics as the native app over TCP or TLS; router over Tailscale in the hosted setup
-  - **Shows:** fleet map (local or geographic); per-robot panel with position + freshness, occupancy grid, autonomy level, motor arm state
-  - **Sends:** send/cancel waypoints, planner tuning; level picker labeled L0-L5 (L5 unavailable), mapped onto Terra's named modes
-  - **Missing:** no driving, no e-stop, no target search setup, no camera feed (docs say use the native app); no controller support.
+  - **Where:** `codex/browser-dashboard` branch, not in any PR; single commit Oct 15, nine days after the SwiftUI app merged in #5 on Oct 6
+  - **Built with:** React and TypeScript in `apps/web/`, Vite, MapLibre; Rust backend `crates/argos-server/` with GitHub sign-in, sessions, and an audit log; Docker and Caddy; GitHub Actions
+  - **Connects:** the browser never talks to Zenoh, only to argos-server, which pushes fleet updates about 5 times a second and serves maps once a second; the server uses the same Rust Zenoh client and topics over TCP or TLS; the router is on Tailscale when hosted
+  - **Shows:** fleet map (local or geographic); per-robot panel with position and freshness, occupancy grid, autonomy level, and motor arm state
+  - **Sends:** send or cancel waypoints, and tune the planner
+  - **Level picker:** L0-L5 (L5 unavailable). Labels map onto Terra's named modes on the <a class="ladder-jump" href="#autonomy-ladder">autonomy ladder</a>.
+  - **Missing:** no driving, no e-stop, no target search setup, no camera feed (the docs say use the native app); no controller support
 
 ## Software details
 

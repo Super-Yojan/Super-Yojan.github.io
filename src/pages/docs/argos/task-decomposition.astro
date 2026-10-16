@@ -10,21 +10,7 @@ const title = "Task decomposition";
 const description =
     "Four chassis controlled from one dashboard, a 30-minute run, opened as a map.";
 
-type MapNode = {
-    content?: string;
-    payload?: { fold?: number };
-    children?: MapNode[];
-};
-
-const { root } = new Transformer().transform(source) as { root: MapNode };
-const foldOwnership = (node: MapNode) => {
-    const text = (node.content || "").replace(/<[^>]+>/g, "");
-    if (text.trim() === "Who does what") {
-        node.payload = { ...(node.payload ?? {}), fold: 1 };
-    }
-    for (const child of node.children ?? []) foldOwnership(child);
-};
-foldOwnership(root);
+const { root } = new Transformer().transform(source);
 const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
 ---
 
@@ -52,30 +38,9 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
                 </div>
             </div>
 
-            <aside class="ownership prose">
-                <h2>Who does what</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Owner</th>
-                            <th>Scope</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Students (high school interns)</strong></td>
-                            <td>Hardware only: assemble the GoBuilda chassis, wire the motors, mount the phones</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Yojan</strong></td>
-                            <td>All software: dashboard, Zenoh router, Swift app, autonomy ladder</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <blockquote class="callout" role="note">
-                    <p>⚠️ <strong>Integration point: phone-to-motor wiring.</strong> This is where hardware and software meet. If a student's wiring is off, the software can't compensate, so the wiring on all four chassis needs a check before the demo.</p>
-                </blockquote>
-            </aside>
+            <blockquote class="callout" role="note">
+                <p>⚠️ <strong>Integration point: phone-to-motor wiring.</strong> This is where hardware and software meet. If a student's wiring is off, the software can't compensate, so the wiring on all four chassis needs a check before the demo.</p>
+            </blockquote>
         </div>
 
         <div class="shell">
@@ -231,9 +196,7 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
 
     .stage {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(17rem, 22rem);
-        gap: clamp(24px, 3vw, 48px);
-        align-items: start;
+        gap: 24px;
     }
     .map-column { min-width: 0; }
     .map-hint { margin: 0 0 12px; }
@@ -272,30 +235,7 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
         line-height: 1;
     }
 
-    .ownership { min-width: 0; }
-    .ownership :global(h2) {
-        font-family: var(--font);
-        font-size: 32px;
-        font-weight: 300;
-        line-height: 1.1;
-        letter-spacing: -0.04em;
-    }
-    .ownership :global(table) {
-        display: table;
-        width: 100%;
-        margin-block: 24px 32px;
-        font-size: 15px;
-        table-layout: auto;
-    }
-    .ownership :global(thead th),
-    .ownership :global(tbody td) {
-        white-space: normal;
-        vertical-align: top;
-        overflow-wrap: break-word;
-    }
-    .ownership :global(tbody td) { line-height: 1.45; }
-    .ownership :global(strong) { font-weight: 500; }
-    .ownership :global(blockquote.callout) {
+    .callout {
         margin: 0;
         padding: 20px 24px;
         border: 0;
@@ -303,8 +243,8 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
         background: var(--pitch);
         color: var(--paper);
     }
-    .ownership :global(blockquote.callout p) { margin: 0; }
-    .ownership :global(blockquote.callout strong) {
+    .callout p { margin: 0; }
+    .callout strong {
         font-weight: 500;
         color: var(--paper);
     }
@@ -322,18 +262,11 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
     @media (max-width: 900px) {
         .post-head { padding-top: 120px; }
         .back { margin-bottom: 32px; }
-        .stage { grid-template-columns: 1fr; }
         .canvas {
             height: 68vh;
             min-height: 420px;
         }
-        .ownership :global(thead th),
-        .ownership :global(tbody td) {
-            padding: 12px 12px 12px 0;
-        }
-        .ownership :global(thead th:last-child),
-        .ownership :global(tbody td:last-child) { padding-right: 0; }
-        .ownership :global(blockquote.callout) { padding: 16px 18px; }
+        .callout { padding: 16px 18px; }
     }
 </style>
 

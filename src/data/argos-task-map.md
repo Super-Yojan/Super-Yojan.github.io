@@ -29,12 +29,6 @@
   - **L5** VLM on the phone decides actions from the overall fleet goal — Stretch (research)
   - **Demo needs:** L0–L3. **Stretch goals:** L4, L5 (research track).
 
-## Who does what
-
-- **Students (high school interns)** Hardware only: assemble the GoBuilda chassis, wire the motors, mount the phones
-- **Yojan** All software: dashboard, Zenoh router, Swift app, autonomy ladder
-- ⚠️ **Integration point: phone-to-motor wiring.** This is where hardware and software meet. If a student's wiring is off, the software can't compensate, so the wiring on all four chassis needs a check before the demo.
-
 ## Supporting pieces
 
 - Swift dashboard app (teleop, stop-all, takeover, Arm/Disarm): ARGOS #25 / PR #54

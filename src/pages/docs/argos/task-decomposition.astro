@@ -8,7 +8,7 @@ import "@fontsource/geist/latin-500.css";
 
 const title = "Task decomposition";
 const description =
-    "ARGOS at the center: hardware, the autonomy ladder, and the software on the phone.";
+    "ARGOS at the center: hardware, the autonomy ladder, the software, and the competition.";
 
 const { root } = new Transformer().transform(source);
 const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
@@ -27,7 +27,7 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
 
         <div class="shell stage">
             <div class="map-column">
-                <p class="t-label map-hint">Branches start folded. Drag to pan. Scroll or pinch to zoom. Tap a dot to open.</p>
+                <p class="t-label map-hint">Branches start folded. Drag to pan. Scroll or pinch to zoom. Tap a dot to open. Dashed lines jump to a related node.</p>
                 <div class="canvas">
                     <div class="map-controls">
                         <button type="button" class="pill-btn pill-btn-ghost" id="map-fit">Fit</button>
@@ -147,33 +147,13 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
         defs.append(marker);
         svg.prepend(defs);
 
-        const cross = document.createElementNS(svgNs, "path");
-        cross.setAttribute("class", "cross-link");
-        cross.setAttribute("marker-end", "url(#ladder-arrow)");
-        const crossHit = document.createElementNS(svgNs, "path");
-        crossHit.setAttribute("class", "cross-link-hit");
-        crossHit.setAttribute("role", "button");
-        crossHit.setAttribute("tabindex", "-1");
-        crossHit.setAttribute("aria-label", "Show the autonomy ladder");
-        const mapGroup = mm.g.node();
-        if (mapGroup) mapGroup.append(cross, crossHit);
-
-        const plain = (node) =>
-            node.content
-                .replace(/<[^>]+>/g, " ")
-                .replace(/&apos;/g, "'")
-                .replace(/\s+/g, " ")
-                .trim();
-        const findByPrefix = (prefix) => {
-            let found = null;
-            const walk = (node) => {
-                if (found || !node) return;
-                if (plain(node).startsWith(prefix)) found = node;
-                for (const child of node.children ?? []) walk(child);
-            };
-            walk(mm.state.data);
-            return found;
-        };
+        const groupLabel = (group) =>
+            group.querySelector(":scope > foreignObject")?.textContent?.replace(/\s+/g, " ").trim() ?? "";
+        const findGroup = (prefix, depth) =>
+            [...svg.querySelectorAll("g.markmap-node")].find((group) => {
+                if (!groupLabel(group).startsWith(prefix)) return false;
+                return depth == null || group.getAttribute("data-depth") === depth;
+            });
         const boxOf = (el) => {
             const match = /translate\(\s*(-?[\d.]+)[,\s]+(-?[\d.]+)\s*\)/.exec(el.getAttribute("transform") ?? "");
             const foreign = el.querySelector(":scope > foreignObject");
@@ -184,56 +164,91 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
                 height: foreign ? Number(foreign.getAttribute("height")) : 18,
             };
         };
-        const placeCrossLink = () => {
-            const ladderEl = mm.findElement(findByPrefix("Autonomy ladder"))?.g;
-            const pickerEl = mm.findElement(findByPrefix("Level picker"))?.g;
-            if (!(ladderEl instanceof SVGGElement) || !(pickerEl instanceof SVGGElement)) {
-                cross.setAttribute("d", "");
-                crossHit.setAttribute("d", "");
-                crossHit.setAttribute("tabindex", "-1");
-                crossHit.setAttribute("aria-hidden", "true");
-                return;
+        const parentOf = {
+            "L4 Search": "Autonomy ladder",
+            "L5 Decide": "Autonomy ladder",
+            "Power:": "Hardware",
+            "Team:": "Competition",
+        };
+        const specs = [
+            { source: "Level picker", target: "Autonomy ladder", label: "Show the autonomy ladder" },
+            { source: "L4 search target", sourceDepth: "3", target: "L4 Search", label: "Show L4" },
+            { source: "L5 decision logic", sourceDepth: "3", target: "L5 Decide", label: "Show L5" },
+            { source: "Power-sharing", sourceDepth: "3", target: "Power:", label: "Show power" },
+            { source: "Software assignments", sourceDepth: "3", target: "Team:", label: "Show the team" },
+        ];
+        const mapGroup = mm.g.node();
+        for (const spec of specs) {
+            const path = document.createElementNS(svgNs, "path");
+            path.setAttribute("class", "cross-link");
+            path.setAttribute("marker-end", "url(#ladder-arrow)");
+            const hit = document.createElementNS(svgNs, "path");
+            hit.setAttribute("class", "cross-link-hit");
+            hit.setAttribute("role", "button");
+            hit.setAttribute("tabindex", "-1");
+            hit.setAttribute("aria-label", spec.label);
+            hit.setAttribute("data-target", spec.target);
+            spec.path = path;
+            spec.hit = hit;
+            mapGroup?.append(path, hit);
+        }
+        const hideLink = (spec) => {
+            spec.path.setAttribute("d", "");
+            spec.hit.setAttribute("d", "");
+            spec.hit.setAttribute("tabindex", "-1");
+            spec.hit.setAttribute("aria-hidden", "true");
+        };
+        const placeCrossLinks = () => {
+            for (const spec of specs) {
+                const source = findGroup(spec.source, spec.sourceDepth);
+                const target = findGroup(spec.target);
+                if (!source || !target) {
+                    hideLink(spec);
+                    continue;
+                }
+                const from = boxOf(source);
+                const to = boxOf(target);
+                const x1 = from.x;
+                const y1 = from.y + from.height / 2;
+                const x2 = to.x + to.width + 8;
+                const y2 = to.y + to.height / 2;
+                const bow = Math.max(72, Math.abs(y1 - y2) * 0.3);
+                const d = `M ${x1} ${y1} C ${x1 - bow} ${y1}, ${x2 + bow} ${y2}, ${x2} ${y2}`;
+                spec.path.setAttribute("d", d);
+                spec.hit.setAttribute("d", d);
+                spec.hit.setAttribute("tabindex", "0");
+                spec.hit.removeAttribute("aria-hidden");
             }
-            const ladder = boxOf(ladderEl);
-            const picker = boxOf(pickerEl);
-            const lx = ladder.x + ladder.width + 8;
-            const ly = ladder.y + ladder.height / 2;
-            const px = picker.x;
-            const py = picker.y + picker.height / 2;
-            const bow = Math.max(72, Math.abs(py - ly) * 0.3);
-            const d = `M ${px} ${py} C ${px - bow} ${py}, ${lx + bow} ${ly}, ${lx} ${ly}`;
-            cross.setAttribute("d", d);
-            crossHit.setAttribute("d", d);
-            crossHit.setAttribute("tabindex", "0");
-            crossHit.removeAttribute("aria-hidden");
         };
         let crossFrame = 0;
-        const kickCrossLink = () => {
+        const kickCrossLinks = () => {
             if (crossFrame) return;
             crossFrame = window.requestAnimationFrame(() => {
                 crossFrame = 0;
-                placeCrossLink();
+                placeCrossLinks();
             });
         };
         if (mapGroup) {
-            new MutationObserver(kickCrossLink).observe(mapGroup, {
+            new MutationObserver(kickCrossLinks).observe(mapGroup, {
                 subtree: true,
                 childList: true,
                 attributes: true,
                 attributeFilter: ["transform"],
             });
         }
-        const goToLadder = async () => {
-            const ladderGroup = [...svg.querySelectorAll("g.markmap-node")].find((group) =>
-                group.querySelector(":scope > foreignObject")?.textContent?.replace(/\s+/g, " ").trim().startsWith("Autonomy ladder"),
-            );
-            if (!ladderGroup) return;
-            const folded = ladderGroup.classList.contains("markmap-fold");
-            const data = select(ladderGroup).datum();
-            if (folded && data) await mm.toggleNode(data);
-            if (folded && !reduce) await new Promise((resolve) => window.setTimeout(resolve, 540));
-            placeCrossLink();
-            const foreign = ladderGroup.querySelector(":scope > foreignObject");
+        const goToTarget = async (prefix) => {
+            let group = findGroup(prefix);
+            const parentPrefix = parentOf[prefix];
+            if (!group && parentPrefix) {
+                const parent = findGroup(parentPrefix);
+                const folded = parent?.classList.contains("markmap-fold");
+                const data = parent ? select(parent).datum() : null;
+                if (folded && data) await mm.toggleNode(data);
+                if (folded && !reduce) await new Promise((resolve) => window.setTimeout(resolve, 540));
+                group = findGroup(prefix);
+            }
+            placeCrossLinks();
+            const foreign = group?.querySelector(":scope > foreignObject");
             if (!foreign) return;
             const nodeBox = foreign.getBoundingClientRect();
             const view = svg.getBoundingClientRect();
@@ -244,27 +259,36 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
             const next = current.translate(dx / current.k, dy / current.k);
             await mm.svg.transition().duration(reduce ? 0 : 500).call(mm.zoom.transform, next).end().catch(() => {});
         };
-        crossHit.addEventListener("keydown", (event) => {
-            if (event.key !== "Enter" && event.key !== " ") return;
-            event.preventDefault();
-            void goToLadder();
-        });
+        for (const spec of specs) {
+            spec.hit.addEventListener("keydown", (event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                event.preventDefault();
+                void goToTarget(spec.target);
+            });
+        }
 
         document.addEventListener("click", (event) => {
             const target = event.target;
             if (!(target instanceof Element) || !svg.contains(target)) return;
-            if (target.closest(".ladder-jump") || target.closest(".cross-link-hit")) {
+            const jump = target.closest(".node-jump, .ladder-jump, .cross-link-hit");
+            if (jump) {
                 event.preventDefault();
-                void goToLadder();
+                void goToTarget(jump.getAttribute("data-target") || "Autonomy ladder");
                 return;
             }
             if (target.closest("circle")) return;
             const group = target.closest("g.markmap-node");
             if (!group) return;
-            const label = group.querySelector(":scope > foreignObject")?.textContent?.replace(/\s+/g, " ").trim() ?? "";
+            const label = groupLabel(group);
+            const ownJump = group.querySelector(":scope > foreignObject .node-jump, :scope > foreignObject .ladder-jump");
+            if (ownJump && !group.querySelector(":scope > circle")) {
+                event.preventDefault();
+                void goToTarget(ownJump.getAttribute("data-target") || "Autonomy ladder");
+                return;
+            }
             if (label.startsWith("Level picker")) {
                 event.preventDefault();
-                void goToLadder();
+                void goToTarget("Autonomy ladder");
                 return;
             }
             const data = select(group).datum();
@@ -439,7 +463,8 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
         stroke-width: 16px;
         cursor: pointer;
     }
-    #argos-map .markmap-foreign a.ladder-jump {
+    #argos-map .markmap-foreign a.ladder-jump,
+    #argos-map .markmap-foreign a.node-jump {
         color: #000;
         text-decoration: underline;
         text-decoration-thickness: 1px;

@@ -1,0 +1,473 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { Transformer } from "markmap-lib";
+import source from "../../../data/argos-task-map.md?raw";
+import "@fontsource/geist/latin-300.css";
+import "@fontsource/geist/latin-400.css";
+import "@fontsource/geist/latin-500.css";
+
+const title = "Task decomposition";
+const description =
+    "ARGOS at the center: hardware, the autonomy ladder, the software, and the competition.";
+
+const { root } = new Transformer().transform(source);
+const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
+---
+
+<BaseLayout title={title} description={description}>
+    <article class="map-page">
+        <header class="post-head shell">
+            <a href="/docs" class="link-wipe back">← Documentation</a>
+            <p class="t-label rise" data-delay="80">ARGOS</p>
+            <h1 class="post-title">
+                <span class="reveal-line"><span>{title}</span></span>
+            </h1>
+            <p class="t-lede rise" data-delay="200">{description}</p>
+        </header>
+
+        <div class="shell stage">
+            <div class="map-column">
+                <p class="t-label map-hint">Branches start folded. Drag to pan. Scroll or pinch to zoom. Tap a dot to open. Dashed lines jump to a related node.</p>
+                <div class="canvas">
+                    <div class="map-controls">
+                        <button type="button" class="pill-btn pill-btn-ghost" id="map-fit">Fit</button>
+                        <button type="button" class="pill-btn pill-btn-ghost map-icon" id="map-out" aria-label="Zoom out">−</button>
+                        <button type="button" class="pill-btn pill-btn-ghost map-icon" id="map-in" aria-label="Zoom in">+</button>
+                    </div>
+                    <svg id="argos-map" role="group" aria-label="ARGOS task decomposition mind map"></svg>
+                </div>
+            </div>
+
+            <blockquote class="callout" role="note">
+                <p>⚠️ <strong>Integration point: phone-to-motor wiring.</strong> This is where hardware and software meet. If a student's wiring is off, the software can't compensate, so the wiring on all four chassis needs a check before the demo.</p>
+            </blockquote>
+        </div>
+
+        <div class="shell">
+            <footer class="post-foot">
+                <a href="/docs" class="link-wipe">← Documentation</a>
+                <a class="link-wipe" href="https://super-yojan.dev/ARGOS/">ARGOS manual</a>
+                <a class="link-wipe" href="https://github.com/Super-Yojan/ARGOS">ARGOS repository</a>
+            </footer>
+        </div>
+    </article>
+</BaseLayout>
+
+<script type="application/json" id="argos-map-data" set:html={mapJson}></script>
+<script>
+    import { Markmap } from "markmap-view";
+    import { select } from "d3-selection";
+    import { zoomTransform } from "d3-zoom";
+
+    const data = document.querySelector("#argos-map-data");
+    const svg = document.querySelector("#argos-map");
+    const root = data?.textContent ? JSON.parse(data.textContent) : null;
+    if (svg instanceof SVGSVGElement && root) {
+        const narrow = window.matchMedia("(max-width: 800px)").matches;
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        const mm = Markmap.create(
+            svg,
+            {
+                autoFit: false,
+                duration: reduce ? 0 : 500,
+                embedGlobalCSS: true,
+                fitRatio: 0.92,
+                initialExpandLevel: 2,
+                maxInitialScale: 1.4,
+                pan: true,
+                zoom: true,
+                scrollForPan: false,
+                toggleRecursively: false,
+                color: () => "#000000",
+                lineWidth: () => 1,
+                maxWidth: narrow ? 200 : 280,
+                nodeMinHeight: 18,
+                paddingX: 10,
+                spacingHorizontal: narrow ? 36 : 64,
+                spacingVertical: 8,
+                style: () => `
+                    .markmap {
+                        --markmap-font: 400 15px/1.4 Geist, system-ui, sans-serif;
+                        --markmap-text-color: #000000;
+                        --markmap-code-bg: #f4f4f6;
+                        --markmap-code-color: #000000;
+                        --markmap-circle-open-bg: #ffffff;
+                        --markmap-a-color: #000000;
+                        --markmap-a-hover-color: #525252;
+                        --markmap-highlight-bg: transparent;
+                        --markmap-highlight-node-bg: rgba(0, 0, 0, 0.06);
+                    }
+                    .markmap-foreign code {
+                        font-family: Iosevka, ui-monospace, SFMono-Regular, monospace;
+                        font-weight: 400;
+                    }
+                    .markmap-foreign strong { font-weight: 500; }
+                    .markmap-foreign a {
+                        color: #000000;
+                        text-decoration: underline;
+                        text-decoration-thickness: 1px;
+                        text-underline-offset: 2px;
+                    }
+                    .markmap-node > circle { stroke-width: 1px; }
+                `,
+            },
+            root,
+        );
+
+        const armCircles = () => {
+            svg.querySelectorAll(".markmap-node > circle").forEach((circle) => {
+                if (circle.getAttribute("tabindex") === "0") return;
+                circle.setAttribute("tabindex", "0");
+                circle.setAttribute("role", "button");
+                const label = circle.parentElement
+                    ?.querySelector(".markmap-foreign")
+                    ?.textContent?.replace(/\s+/g, " ")
+                    .trim();
+                if (label) circle.setAttribute("aria-label", `Fold or open ${label}`);
+            });
+        };
+        const circles = new MutationObserver(armCircles);
+        circles.observe(svg, { subtree: true, childList: true });
+
+        const svgNs = "http://www.w3.org/2000/svg";
+        const defs = document.createElementNS(svgNs, "defs");
+        const marker = document.createElementNS(svgNs, "marker");
+        marker.setAttribute("id", "ladder-arrow");
+        marker.setAttribute("viewBox", "0 0 8 8");
+        marker.setAttribute("refX", "7");
+        marker.setAttribute("refY", "4");
+        marker.setAttribute("markerWidth", "6");
+        marker.setAttribute("markerHeight", "6");
+        marker.setAttribute("orient", "auto");
+        const head = document.createElementNS(svgNs, "path");
+        head.setAttribute("d", "M0,0 L8,4 L0,8 Z");
+        head.setAttribute("fill", "#000");
+        marker.append(head);
+        defs.append(marker);
+        svg.prepend(defs);
+
+        const groupLabel = (group) =>
+            group.querySelector(":scope > foreignObject")?.textContent?.replace(/\s+/g, " ").trim() ?? "";
+        const findGroup = (prefix, depth) =>
+            [...svg.querySelectorAll("g.markmap-node")].find((group) => {
+                if (!groupLabel(group).startsWith(prefix)) return false;
+                return depth == null || group.getAttribute("data-depth") === depth;
+            });
+        const boxOf = (el) => {
+            const match = /translate\(\s*(-?[\d.]+)[,\s]+(-?[\d.]+)\s*\)/.exec(el.getAttribute("transform") ?? "");
+            const foreign = el.querySelector(":scope > foreignObject");
+            return {
+                x: match ? Number(match[1]) : 0,
+                y: match ? Number(match[2]) : 0,
+                width: foreign ? Number(foreign.getAttribute("width")) + 20 : 40,
+                height: foreign ? Number(foreign.getAttribute("height")) : 18,
+            };
+        };
+        const parentOf = {
+            "L4 Search": "Autonomy ladder",
+            "L5 Decide": "Autonomy ladder",
+            "Power:": "Hardware",
+            "Team:": "Competition",
+        };
+        const specs = [
+            { source: "Level picker", target: "Autonomy ladder", label: "Show the autonomy ladder" },
+            { source: "L4 search target", sourceDepth: "3", target: "L4 Search", label: "Show L4" },
+            { source: "L5 decision logic", sourceDepth: "3", target: "L5 Decide", label: "Show L5" },
+            { source: "Power-sharing", sourceDepth: "3", target: "Power:", label: "Show power" },
+            { source: "Software assignments", sourceDepth: "3", target: "Team:", label: "Show the team" },
+        ];
+        const mapGroup = mm.g.node();
+        for (const spec of specs) {
+            const path = document.createElementNS(svgNs, "path");
+            path.setAttribute("class", "cross-link");
+            path.setAttribute("marker-end", "url(#ladder-arrow)");
+            const hit = document.createElementNS(svgNs, "path");
+            hit.setAttribute("class", "cross-link-hit");
+            hit.setAttribute("role", "button");
+            hit.setAttribute("tabindex", "-1");
+            hit.setAttribute("aria-label", spec.label);
+            hit.setAttribute("data-target", spec.target);
+            spec.path = path;
+            spec.hit = hit;
+            mapGroup?.append(path, hit);
+        }
+        const hideLink = (spec) => {
+            spec.path.setAttribute("d", "");
+            spec.hit.setAttribute("d", "");
+            spec.hit.setAttribute("tabindex", "-1");
+            spec.hit.setAttribute("aria-hidden", "true");
+        };
+        const placeCrossLinks = () => {
+            for (const spec of specs) {
+                const source = findGroup(spec.source, spec.sourceDepth);
+                const target = findGroup(spec.target);
+                if (!source || !target) {
+                    hideLink(spec);
+                    continue;
+                }
+                const from = boxOf(source);
+                const to = boxOf(target);
+                const x1 = from.x;
+                const y1 = from.y + from.height / 2;
+                const x2 = to.x + to.width + 8;
+                const y2 = to.y + to.height / 2;
+                const bow = Math.max(72, Math.abs(y1 - y2) * 0.3);
+                const d = `M ${x1} ${y1} C ${x1 - bow} ${y1}, ${x2 + bow} ${y2}, ${x2} ${y2}`;
+                spec.path.setAttribute("d", d);
+                spec.hit.setAttribute("d", d);
+                spec.hit.setAttribute("tabindex", "0");
+                spec.hit.removeAttribute("aria-hidden");
+            }
+        };
+        let crossFrame = 0;
+        const kickCrossLinks = () => {
+            if (crossFrame) return;
+            crossFrame = window.requestAnimationFrame(() => {
+                crossFrame = 0;
+                placeCrossLinks();
+            });
+        };
+        if (mapGroup) {
+            new MutationObserver(kickCrossLinks).observe(mapGroup, {
+                subtree: true,
+                childList: true,
+                attributes: true,
+                attributeFilter: ["transform"],
+            });
+        }
+        const goToTarget = async (prefix) => {
+            let group = findGroup(prefix);
+            const parentPrefix = parentOf[prefix];
+            if (!group && parentPrefix) {
+                const parent = findGroup(parentPrefix);
+                const folded = parent?.classList.contains("markmap-fold");
+                const data = parent ? select(parent).datum() : null;
+                if (folded && data) await mm.toggleNode(data);
+                if (folded && !reduce) await new Promise((resolve) => window.setTimeout(resolve, 540));
+                group = findGroup(prefix);
+            }
+            placeCrossLinks();
+            const foreign = group?.querySelector(":scope > foreignObject");
+            if (!foreign) return;
+            const nodeBox = foreign.getBoundingClientRect();
+            const view = svg.getBoundingClientRect();
+            const dx = view.left + view.width / 2 - (nodeBox.left + nodeBox.width / 2);
+            const dy = view.top + view.height / 2 - (nodeBox.top + nodeBox.height / 2);
+            if (Math.abs(dx) < 2 && Math.abs(dy) < 2) return;
+            const current = zoomTransform(svg);
+            const next = current.translate(dx / current.k, dy / current.k);
+            await mm.svg.transition().duration(reduce ? 0 : 500).call(mm.zoom.transform, next).end().catch(() => {});
+        };
+        for (const spec of specs) {
+            spec.hit.addEventListener("keydown", (event) => {
+                if (event.key !== "Enter" && event.key !== " ") return;
+                event.preventDefault();
+                void goToTarget(spec.target);
+            });
+        }
+
+        document.addEventListener("click", (event) => {
+            const target = event.target;
+            if (!(target instanceof Element) || !svg.contains(target)) return;
+            const jump = target.closest(".node-jump, .ladder-jump, .cross-link-hit");
+            if (jump) {
+                event.preventDefault();
+                void goToTarget(jump.getAttribute("data-target") || "Autonomy ladder");
+                return;
+            }
+            if (target.closest("circle")) return;
+            const group = target.closest("g.markmap-node");
+            if (!group) return;
+            const label = groupLabel(group);
+            const ownJump = group.querySelector(":scope > foreignObject .node-jump, :scope > foreignObject .ladder-jump");
+            if (ownJump && !group.querySelector(":scope > circle")) {
+                event.preventDefault();
+                void goToTarget(ownJump.getAttribute("data-target") || "Autonomy ladder");
+                return;
+            }
+            if (label.startsWith("Level picker")) {
+                event.preventDefault();
+                void goToTarget("Autonomy ladder");
+                return;
+            }
+            const data = select(group).datum();
+            if (!data?.children?.length) return;
+            mm.toggleNode(data);
+        }, true);
+        svg.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            const target = event.target;
+            if (!(target instanceof Element) || !target.closest("circle")) return;
+            event.preventDefault();
+            target.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        });
+
+        const fit = () => mm.fit();
+        document.fonts.ready.then(fit);
+        document.querySelector("#map-fit")?.addEventListener("click", fit);
+        const zoomBy = (factor) => {
+            const current = zoomTransform(svg);
+            mm.rescale(Math.min(2.6, Math.max(0.3, current.k * factor)));
+        };
+        document.querySelector("#map-in")?.addEventListener("click", () => zoomBy(1.25));
+        document.querySelector("#map-out")?.addEventListener("click", () => zoomBy(0.8));
+
+        let width = window.innerWidth;
+        let timer = 0;
+        window.addEventListener("resize", () => {
+            if (window.innerWidth === width) return;
+            width = window.innerWidth;
+            window.clearTimeout(timer);
+            timer = window.setTimeout(fit, 150);
+        });
+    }
+</script>
+
+<style>
+    @font-face {
+        font-family: Iosevka;
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url("/fonts/iosevka-ascii.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+2013, U+2014, U+2018-201D, U+2026, U+26A0, U+FE0F;
+    }
+
+    .map-page {
+        --font: "Geist", system-ui, sans-serif;
+        --font-mono: Iosevka, ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-family: var(--font);
+    }
+
+    .post-head {
+        padding-top: 160px;
+        padding-bottom: 32px;
+    }
+    .back { margin-bottom: 48px; }
+    .post-head .t-label { margin-bottom: 16px; }
+    .post-title {
+        margin-top: 24px;
+        font-family: var(--font);
+        font-size: clamp(2.25rem, 5vw, 3.75rem);
+        font-weight: 300;
+        line-height: 1;
+        letter-spacing: -0.05em;
+    }
+    .post-head :global(.t-lede) { max-width: 42ch; }
+
+    .stage {
+        display: grid;
+        gap: 24px;
+    }
+    .map-column { min-width: 0; }
+    .map-hint { margin: 0 0 12px; }
+
+    .canvas {
+        position: relative;
+        height: min(74vh, 820px);
+        min-height: 520px;
+        border: 1px solid var(--rule);
+        background: var(--paper);
+        touch-action: none;
+        overscroll-behavior: contain;
+    }
+    #argos-map {
+        display: block;
+        width: 100%;
+        height: 100%;
+        touch-action: none;
+    }
+    .map-controls {
+        position: absolute;
+        z-index: 2;
+        top: 12px;
+        right: 12px;
+        display: flex;
+        gap: 8px;
+    }
+    .map-controls :global(.pill-btn) {
+        background: var(--paper);
+    }
+    .map-icon {
+        width: 44px;
+        padding: 0;
+        justify-content: center;
+        font-size: 18px;
+        line-height: 1;
+    }
+
+    .callout {
+        margin: 0;
+        padding: 20px 24px;
+        border: 0;
+        border-radius: var(--r-slight);
+        background: var(--pitch);
+        color: var(--paper);
+    }
+    .callout p { margin: 0; }
+    .callout strong {
+        font-weight: 500;
+        color: var(--paper);
+    }
+
+    .post-foot {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 24px;
+        margin-top: 64px;
+        padding-top: 32px;
+        border-top: 1px solid var(--rule);
+    }
+
+    @media (max-width: 900px) {
+        .post-head { padding-top: 120px; }
+        .back { margin-bottom: 32px; }
+        .canvas {
+            height: 68vh;
+            min-height: 420px;
+        }
+        .callout { padding: 16px 18px; }
+    }
+</style>
+
+<style is:global>
+    #argos-map .markmap-node > circle {
+        stroke: #000 !important;
+        stroke-width: 1px !important;
+        fill: #fff !important;
+    }
+    #argos-map .markmap-fold > circle {
+        fill: #000 !important;
+    }
+    #argos-map .markmap-link {
+        stroke: #000 !important;
+    }
+    #argos-map .markmap-foreign strong {
+        font-weight: 500;
+    }
+    #argos-map .markmap-foreign code {
+        font-family: Iosevka, ui-monospace, SFMono-Regular, monospace;
+    }
+    #argos-map .cross-link {
+        fill: none;
+        stroke: #000;
+        stroke-width: 1px;
+        stroke-dasharray: 4 3;
+        pointer-events: none;
+    }
+    #argos-map .cross-link-hit {
+        fill: none;
+        stroke: transparent;
+        stroke-width: 16px;
+        cursor: pointer;
+    }
+    #argos-map .markmap-foreign a.ladder-jump,
+    #argos-map .markmap-foreign a.node-jump {
+        color: #000;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 2px;
+    }
+</style>

@@ -64,6 +64,21 @@ function getPage() {
     return pagePromise;
 }
 
+/** Keep the diagram at its drawn size so small screens scroll it instead of shrinking the type. */
+function lockDiagramSize(svg) {
+    const viewBox = svg.match(/viewBox="([\d.\s\-]+)"/);
+    if (!viewBox) return svg;
+    const [, , width, height] = viewBox[1].trim().split(/\s+/);
+    if (!width || !height) return svg;
+    return svg.replace(/<svg\b([^>]*)>/, (_, attrs) => {
+        const rest = attrs
+            .replace(/\swidth="[^"]*"/, "")
+            .replace(/\sheight="[^"]*"/, "")
+            .replace(/\sstyle="[^"]*"/, "");
+        return `<svg width="${width}" height="${height}"${rest}>`;
+    });
+}
+
 function render(source) {
     const run = chain.then(async () => {
         const page = await getPage();
@@ -94,7 +109,7 @@ export function remarkMermaid() {
             if (node.type === "code" && node.lang === "mermaid") blocks.push(node);
         });
         for (const node of blocks) {
-            const svg = await render(node.value);
+            const svg = lockDiagramSize(await render(node.value));
             node.type = "html";
             node.value = `<figure class="diagram">${svg}</figure>`;
             delete node.lang;

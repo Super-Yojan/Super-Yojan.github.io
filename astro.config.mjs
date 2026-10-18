@@ -6,6 +6,7 @@ import sitemap from "@astrojs/sitemap";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.mjs";
+import pitchTheme from "./src/styles/shiki-pitch.json" with { type: "json" };
 import { remarkCallout } from "./src/plugins/remark-callout.mjs";
 
 export default defineConfig({
@@ -15,11 +16,12 @@ export default defineConfig({
   markdown: {
     remarkPlugins: [remarkMermaid, remarkCallout, remarkMath],
     rehypePlugins: [rehypeKatex],
-    // Shiki highlights at build time. github-dark-dimmed clears 4.5:1 on
-    // #0A0A0A for every text token; the stylesheet forces that panel over
-    // the theme's own #22272e. Lines stay on one row so a long command scrolls.
+    // Shiki highlights at build time. The pitch theme keeps github-dark-dimmed
+    // greys and moves every chromatic token onto the teal ramp, so a listing
+    // never sets Safelight beside teal. The panel is forced to ink in CSS.
+    // Lines stay on one row so a long command scrolls.
     shikiConfig: {
-      theme: "github-dark-dimmed",
+      theme: pitchTheme,
       wrap: false,
     },
   },

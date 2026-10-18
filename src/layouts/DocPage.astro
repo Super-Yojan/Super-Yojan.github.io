@@ -91,9 +91,9 @@ const {
     .post-title {
         margin-top: 24px;
         font-size: clamp(2.25rem, 5vw, 3.75rem);
-        font-weight: 300;
+        font-weight: 700;
         line-height: 1;
-        letter-spacing: -0.05em;
+        letter-spacing: -0.055em;
     }
 
     .post-head :global(.t-lede) { max-width: 52ch; }
@@ -103,7 +103,7 @@ const {
         max-width: 62ch;
         margin-top: 48px;
         padding-top: 24px;
-        border-top: 1px solid var(--ink);
+        border-top: 1px solid var(--teal-deep);
     }
     .release-note p:last-child {
         margin-top: 12px;
@@ -134,8 +134,8 @@ const {
 </style>
 
 <style is:global>
-    /* Subhead is the 32px step, set light. Title stays at 500. */
-    .doc .prose h2 { font-weight: 300; }
+    /* Subhead is the 32px step, set semibold. Title stays at 500. */
+    .doc .prose h2 { font-weight: 600; }
     .doc .prose h3 { font-weight: 500; }
     .doc .prose figure,
     .doc .prose .diagram {
@@ -162,8 +162,12 @@ const {
     .doc .prose figcaption {
         margin-top: 12px;
         color: var(--graphite);
-        font-size: 15px;
-        line-height: 1.5;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.45;
+        letter-spacing: 0.01em;
+        text-transform: lowercase;
     }
     .doc .prose img {
         filter: grayscale(1) contrast(1.08);

@@ -1,0 +1,1298 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { createHighlighter } from "shiki";
+import flow from "../../../data/argos-data-flow.json";
+
+const title = "Data flow";
+const description =
+    "Function-level calls in ARGOS: Zenoh subscribers, the server worker, the web client, and the Apple fallback, pinned to one commit.";
+
+const sha = flow.sha;
+const repo = `https://github.com/Super-Yojan/ARGOS/blob/${sha}`;
+const shortSha = sha.slice(0, 12);
+
+const COL_W = 268;
+const ROW_H = 100;
+const NW = 220;
+const NH = 78;
+const PAD_X = 16;
+const PAD_Y = 32;
+const COLS = 9;
+const MAX_ROW = 19;
+const boardW = PAD_X + (COLS - 1) * COL_W + NW + PAD_X;
+const boardH = PAD_Y + MAX_ROW * ROW_H + NH + 16;
+
+const columns = ["UI", "Adapters", "Process", "HTTP", "Worker", "Engine", "Fleet", "Zenoh", "Core"];
+
+const stepByNode = new Map(flow.path.map((step) => [step.node, step.step]));
+
+function langOf(file: string) {
+    if (file.endsWith(".rs")) return "rust";
+    if (file.endsWith(".swift")) return "swift";
+    return "typescript";
+}
+
+const highlighter = await createHighlighter({
+    themes: ["github-dark-dimmed"],
+    langs: ["rust", "typescript", "swift"],
+});
+
+type Span = { start: number; end: number; text: string; hot?: number[] };
+
+function highlight(file: string, span: Span) {
+    const hot = new Set(span.hot ?? []);
+    const html = highlighter.codeToHtml(span.text.replace(/\n$/, ""), {
+        lang: langOf(file),
+        theme: "github-dark-dimmed",
+        transformers: [
+            {
+                line(node, line) {
+                    this.addClassToHast(node, "line");
+                    const fileLine = span.start + line - 1;
+                    if (hot.has(fileLine)) this.addClassToHast(node, "is-hot");
+                    node.children.unshift({
+                        type: "element",
+                        tagName: "span",
+                        properties: { className: ["ln"], "aria-hidden": "true" },
+                        children: [{ type: "text", value: String(fileLine) }],
+                    });
+                },
+            },
+        ],
+    });
+    return html.replace('class="shiki', 'class="astro-code shiki').replaceAll(' tabindex="0"', "");
+}
+
+type Excerpt = {
+    key: string;
+    file: string;
+    plain: string;
+    spans: { href: string; label: string; html: string }[];
+};
+
+const excerpts: Excerpt[] = [
+    ...flow.nodes.map((node) => ({
+        key: `node:${node.id}`,
+        file: node.file,
+        plain: node.spans.map((span) => span.text.replace(/\n$/, "")).join("\n\n"),
+        spans: node.spans.map((span) => ({
+            href: `${repo}/${node.file}#L${span.start}-L${span.end}`,
+            label: `${node.file} L${span.start}–L${span.end}`,
+            html: highlight(node.file, span),
+        })),
+    })),
+    ...flow.edges.map((edge) => ({
+        key: `edge:${edge.id}`,
+        file: edge.file,
+        plain: edge.spans.map((span) => span.text.replace(/\n$/, "")).join("\n\n"),
+        spans: edge.spans.map((span) => ({
+            href: `${repo}/${edge.file}#L${span.start}-L${span.end}`,
+            label: `${edge.file} L${span.start}–L${span.end}`,
+            html: highlight(edge.file, span),
+        })),
+    })),
+];
+
+const files = [...new Set([...flow.nodes.map((node) => node.file), ...flow.edges.map((edge) => edge.file)])].sort();
+
+const nodeById = new Map(flow.nodes.map((node) => [node.id, node]));
+
+const model = {
+    layout: { nw: NW, nh: NH },
+    nodes: flow.nodes.map((node) => ({
+        id: node.id,
+        symbol: node.symbol,
+        file: node.file,
+        blurb: node.blurb,
+        step: stepByNode.get(node.id) ?? null,
+    })),
+    edges: flow.edges.map((edge) => ({
+        id: edge.id,
+        from: edge.from,
+        to: edge.to,
+        label: edge.label,
+        file: edge.file,
+        blurb: edge.blurb,
+    })),
+    path: flow.path,
+};
+
+const modelJson = JSON.stringify(model).replace(/</g, "\\u003c");
+---
+
+<BaseLayout title={title} description={description}>
+    <article class="flow-page">
+        <header class="post-head shell">
+            <a href="/docs" class="link-wipe back">← Documentation</a>
+            <p class="t-label rise" data-delay="80">ARGOS</p>
+            <h1 class="post-title">
+                <span class="reveal-line"><span>{title}</span></span>
+            </h1>
+            <p class="t-lede rise" data-delay="200">
+                Each node is a function. Each arrow is a call or a push, from the caller toward the callee.
+                Pinned to <a href={`https://github.com/Super-Yojan/ARGOS/commit/${sha}`}><code>main</code> {shortSha}</a>.
+                <code>codex/browser-dashboard</code> ({flow.ancestor.sha.slice(0, 7)}) is already in that history.
+                Unity under <code>spikes/unity-dashboard</code> is not on this map.
+            </p>
+        </header>
+
+        <div class="shell">
+            <section class="start" aria-labelledby="start-heading">
+                <p class="t-label">{flow.path.length} steps</p>
+                <h2 id="start-heading">Where do I start</h2>
+                <p class="start-note">
+                    Open these {flow.path.length} functions in order. The first is the process entry, the middle ones are the transformations, and the last is the waypoint leaving the process.
+                </p>
+                <ol class="path-list">
+                    {
+                        flow.path.map((step) => {
+                            const node = nodeById.get(step.node);
+                            return (
+                                <li>
+                                    <button
+                                        type="button"
+                                        class="step"
+                                        data-step={step.node}
+                                        data-select={step.node}
+                                        aria-pressed="false"
+                                        aria-controls="panel"
+                                    >
+                                        <span class="step-n">{String(step.step).padStart(2, "0")}</span>
+                                        <span>
+                                            <span class="step-sym">{node?.symbol}</span>
+                                            <span class="step-why">{step.why}</span>
+                                        </span>
+                                    </button>
+                                </li>
+                            );
+                        })
+                    }
+                </ol>
+            </section>
+
+            <div class="work">
+                <div class="map-column">
+                    <div class="toolbar">
+                        <label class="find">
+                            <span class="visually-hidden">Find a function, file, or call</span>
+                            <input id="flow-find" type="search" placeholder="Find a function, file, or call" autocomplete="off" />
+                        </label>
+                        <div class="map-controls">
+                            <button type="button" class="pill-btn pill-btn-ghost" id="flow-fit">Fit</button>
+                            <button type="button" class="pill-btn pill-btn-ghost map-icon" id="flow-out" aria-label="Zoom out">−</button>
+                            <button type="button" class="pill-btn pill-btn-ghost map-icon" id="flow-in" aria-label="Zoom in">+</button>
+                        </div>
+                    </div>
+                    <p class="map-hint" id="flow-hint">
+                        {flow.nodes.length} functions, {flow.edges.length} calls. Scroll the map. Ctrl-scroll or pinch to zoom.
+                        A Zenoh put ends at the publish in this repo.
+                    </p>
+                    <div class="viewport" id="viewport">
+                        <div class="scaler" id="scaler">
+                            <div class="board" id="board" style={`width:${boardW}px;height:${boardH}px`}>
+                                {
+                                    columns.map((label, col) => (
+                                        <div class="col-label" style={`left:${PAD_X + col * COL_W}px;width:${NW}px`}>
+                                            {label}
+                                        </div>
+                                    ))
+                                }
+                                {
+                                    flow.nodes.map((node) => (
+                                        <button
+                                            type="button"
+                                            class:list={["node", stepByNode.has(node.id) && "is-path"]}
+                                            id={`n-${node.id}`}
+                                            data-id={node.id}
+                                            data-kind="node"
+                                            data-select={node.id}
+                                            data-x={PAD_X + node.col * COL_W + NW / 2}
+                                            data-y={PAD_Y + node.row * ROW_H + NH / 2}
+                                            style={`left:${PAD_X + node.col * COL_W}px;top:${PAD_Y + node.row * ROW_H}px`}
+                                            tabindex={node.id === "main" ? 0 : -1}
+                                            aria-pressed="false"
+                                            aria-controls="panel"
+                                            aria-label={`${node.symbol}, ${node.file}`}
+                                        >
+                                            {stepByNode.has(node.id) && <span class="node-step">{stepByNode.get(node.id)}</span>}
+                                            <span class="node-sym">{node.symbol}</span>
+                                            <span class="node-file">{node.file.split("/").pop()}</span>
+                                        </button>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <aside class="panel" id="panel" aria-labelledby="panel-title">
+                    <div class="panel-bar">
+                        <p class="t-label" id="panel-kind">Source</p>
+                        <div class="panel-actions">
+                            <button type="button" class="pill-btn pill-btn-ghost" id="panel-copy" hidden>Copy</button>
+                            <button type="button" class="pill-btn pill-btn-ghost" id="panel-close" hidden>Close</button>
+                        </div>
+                    </div>
+                    <h2 id="panel-title" tabindex="-1">Select a function</h2>
+                    <p class="panel-blurb" id="panel-blurb">
+                        Choose a step above, or a function on the map. Enter moves focus here. Escape returns it.
+                    </p>
+                    <p class="panel-file" id="panel-file"></p>
+                    <p class="panel-step" id="panel-step" hidden></p>
+                    <div id="panel-code"></div>
+                    <div class="adj" id="panel-adj" hidden>
+                        <p class="t-label">Calls in</p>
+                        <div id="panel-in"></div>
+                        <p class="t-label">Calls out</p>
+                        <div id="panel-out"></div>
+                    </div>
+                </aside>
+            </div>
+
+            <section class="files" aria-labelledby="files-heading">
+                <h2 id="files-heading">Files at {shortSha}</h2>
+                <ul class="file-list">
+                    {
+                        files.map((file) => (
+                            <li>
+                                <a href={`${repo}/${file}`} target="_blank" rel="noopener">{file}</a>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </section>
+
+            <footer class="post-foot">
+                <a href="/docs" class="link-wipe">← Documentation</a>
+                <a class="link-wipe" href="/docs/argos/task-decomposition">Task decomposition</a>
+                <a class="link-wipe" href="https://super-yojan.dev/ARGOS/">ARGOS manual</a>
+                <a class="link-wipe" href={`https://github.com/Super-Yojan/ARGOS/tree/${sha}`}>This commit</a>
+            </footer>
+        </div>
+    </article>
+
+<div id="excerpts" hidden>
+    {
+        excerpts.map((excerpt) => (
+            <div data-excerpt={excerpt.key}>
+                {
+                    excerpt.spans.map((span) => (
+                        <div class="excerpt">
+                            <a href={span.href} target="_blank" rel="noopener">{span.label}</a>
+                            <div class="code-block" set:html={span.html} />
+                        </div>
+                    ))
+                }
+                <pre class="plain">{excerpt.plain}</pre>
+            </div>
+        ))
+    }
+</div>
+<script type="application/json" id="flow-model" set:html={modelJson}></script>
+
+<script>
+    type Item = {
+        id: string;
+        symbol?: string;
+        file: string;
+        blurb: string;
+        step?: number | null;
+        from?: string;
+        to?: string;
+        label?: string;
+    };
+
+    const modelEl = document.querySelector("#flow-model");
+    const board = document.querySelector("#board");
+    const scaler = document.querySelector("#scaler");
+    const viewport = document.querySelector("#viewport");
+    const panel = document.querySelector("#panel");
+    if (!(modelEl instanceof HTMLScriptElement) || !(board instanceof HTMLElement) || !(scaler instanceof HTMLElement) || !(viewport instanceof HTMLElement) || !(panel instanceof HTMLElement) || !modelEl.textContent) {
+        throw new Error("data-flow markup missing");
+    }
+
+    const model = JSON.parse(modelEl.textContent) as {
+        layout: { nw: number; nh: number };
+        nodes: Item[];
+        edges: Item[];
+        path: { step: number; node: string; why: string }[];
+    };
+
+    const nodes = new Map(model.nodes.map((node) => [node.id, node]));
+    const edges = new Map(model.edges.map((edge) => [edge.id, edge]));
+    const { nw, nh } = model.layout;
+
+    const nodeEl = new Map<string, HTMLButtonElement>();
+    for (const button of board.querySelectorAll<HTMLButtonElement>(".node")) {
+        if (button.dataset.id) nodeEl.set(button.dataset.id, button);
+    }
+
+    const svgNs = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNs, "svg");
+    svg.setAttribute("width", String(board.clientWidth || board.offsetWidth));
+    svg.setAttribute("height", String(board.clientHeight || board.offsetHeight));
+    svg.setAttribute("aria-label", "Calls between functions");
+    const defs = document.createElementNS(svgNs, "defs");
+    for (const [id, color] of [
+        ["flow-arrow", "var(--teal)"],
+        ["flow-arrow-hot", "var(--teal-deep)"],
+    ] as const) {
+        const marker = document.createElementNS(svgNs, "marker");
+        marker.setAttribute("id", id);
+        marker.setAttribute("viewBox", "0 0 8 8");
+        marker.setAttribute("refX", "7");
+        marker.setAttribute("refY", "4");
+        marker.setAttribute("markerWidth", "7");
+        marker.setAttribute("markerHeight", "7");
+        marker.setAttribute("orient", "auto");
+        const head = document.createElementNS(svgNs, "path");
+        head.setAttribute("d", "M0,0 L8,4 L0,8 Z");
+        head.setAttribute("fill", color);
+        marker.append(head);
+        defs.append(marker);
+    }
+    svg.append(defs);
+    board.append(svg);
+
+    const groups = new Map<string, Item[]>();
+    for (const edge of model.edges) {
+        const key = `${edge.from}>${edge.to}`;
+        const list = groups.get(key) ?? [];
+        list.push(edge);
+        groups.set(key, list);
+    }
+
+    const edgeHit = new Map<string, SVGPathElement>();
+    const edgeGroup = new Map<string, SVGGElement>();
+    const edgeLabel = new Map<string, HTMLElement>();
+
+    function center(id: string) {
+        const el = nodeEl.get(id);
+        return {
+            x: Number(el?.dataset.x ?? 0),
+            y: Number(el?.dataset.y ?? 0),
+            left: (el?.offsetLeft ?? 0),
+            top: (el?.offsetTop ?? 0),
+        };
+    }
+
+    function curve(from: string, to: string, spread: number) {
+        const a = center(from);
+        const b = center(to);
+        const ax = a.left;
+        const ay = a.top;
+        const bx = b.left;
+        const by = b.top;
+        let x1 = ax + nw;
+        let y1 = ay + nh / 2 + spread;
+        let x2 = bx;
+        let y2 = by + nh / 2 + spread;
+        let c1x = x1 + Math.max(36, (x2 - x1) * 0.45);
+        let c1y = y1;
+        let c2x = x2 - Math.max(36, (x2 - x1) * 0.45);
+        let c2y = y2;
+        if (bx + nw <= ax) {
+            x1 = ax;
+            x2 = bx + nw;
+            y1 = ay + nh / 2 + spread;
+            y2 = by + nh / 2 + spread;
+            c1x = x1 - Math.max(36, (x1 - x2) * 0.45);
+            c2x = x2 + Math.max(36, (x1 - x2) * 0.45);
+            c1y = y1;
+            c2y = y2;
+        } else if (Math.abs(ax - bx) < 4) {
+            const down = by > ay;
+            x1 = ax + nw / 2 + spread;
+            x2 = bx + nw / 2 + spread;
+            y1 = down ? ay + nh : ay;
+            y2 = down ? by : by + nh;
+            const dy = Math.max(28, Math.abs(y2 - y1) * 0.45);
+            c1x = x1;
+            c2x = x2;
+            c1y = y1 + (down ? dy : -dy);
+            c2y = y2 + (down ? -dy : dy);
+        }
+        const d = `M ${x1} ${y1} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${x2} ${y2}`;
+        const mx = 0.125 * x1 + 0.375 * c1x + 0.375 * c2x + 0.125 * x2;
+        const my = 0.125 * y1 + 0.375 * c1y + 0.375 * c2y + 0.125 * y2;
+        return { d, mx, my };
+    }
+
+    for (const list of groups.values()) {
+        list.forEach((edge, index) => {
+            const spread = (index - (list.length - 1) / 2) * 8;
+            const { d, mx, my } = curve(edge.from ?? "", edge.to ?? "", spread);
+            const group = document.createElementNS(svgNs, "g");
+            group.setAttribute("class", "edge");
+            const under = document.createElementNS(svgNs, "path");
+            under.setAttribute("class", "edge-under");
+            under.setAttribute("d", d);
+            const line = document.createElementNS(svgNs, "path");
+            line.setAttribute("class", "edge-line");
+            line.setAttribute("d", d);
+            line.setAttribute("marker-end", "url(#flow-arrow)");
+            const hit = document.createElementNS(svgNs, "path");
+            hit.setAttribute("class", "edge-hit");
+            hit.setAttribute("d", d);
+            hit.setAttribute("role", "button");
+            hit.setAttribute("tabindex", "-1");
+            hit.dataset.id = edge.id;
+            hit.dataset.kind = "edge";
+            hit.dataset.select = edge.id;
+            hit.dataset.x = String(mx);
+            hit.dataset.y = String(my);
+            const from = nodes.get(edge.from ?? "");
+            const to = nodes.get(edge.to ?? "");
+            hit.setAttribute("aria-label", `${from?.symbol ?? edge.from} to ${to?.symbol ?? edge.to}: ${edge.label}`);
+            hit.setAttribute("aria-controls", "panel");
+            hit.setAttribute("aria-pressed", "false");
+            group.append(under, line, hit);
+            svg.append(group);
+            edgeHit.set(edge.id, hit);
+            edgeGroup.set(edge.id, group);
+
+            const label = document.createElement("span");
+            label.className = "edge-label";
+            label.style.left = `${mx}px`;
+            label.style.top = `${my}px`;
+            label.textContent = edge.label ?? "";
+            board.append(label);
+            edgeLabel.set(edge.id, label);
+        });
+    }
+
+    let scale = 1;
+    let tabStop: HTMLElement | SVGPathElement | null = nodeEl.get("main") ?? null;
+    let selectedKey = "";
+    let returnFocus: HTMLElement | SVGPathElement | null = null;
+
+    function clamp(value: number) {
+        return Math.min(1.8, Math.max(0.8, value));
+    }
+
+    function setScale(next: number) {
+        scale = clamp(next);
+        board.style.transform = `scale(${scale})`;
+        scaler.style.width = `${board.offsetWidth * scale}px`;
+        scaler.style.height = `${board.offsetHeight * scale}px`;
+    }
+
+    function reveal(el: HTMLElement) {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const vr = viewport.getBoundingClientRect();
+        const er = el.getBoundingClientRect();
+        viewport.scrollBy({
+            left: er.left - vr.left - (vr.width - er.width) / 2,
+            top: er.top - vr.top - (vr.height - er.height) / 2,
+            behavior: reduce ? "auto" : "smooth",
+        });
+    }
+
+    function zoomAbout(next: number, clientX: number, clientY: number) {
+        const prev = scale;
+        const rect = viewport.getBoundingClientRect();
+        const ox = clientX - rect.left + viewport.scrollLeft;
+        const oy = clientY - rect.top + viewport.scrollTop;
+        setScale(next);
+        const applied = scale / prev;
+        viewport.scrollLeft = ox * applied - (clientX - rect.left);
+        viewport.scrollTop = oy * applied - (clientY - rect.top);
+    }
+
+    const hint = document.querySelector("#flow-hint");
+    const find = document.querySelector("#flow-find");
+
+    function visibleHits() {
+        return [
+            ...board.querySelectorAll<HTMLButtonElement>(".node:not(.is-dim)"),
+            ...svg.querySelectorAll<SVGPathElement>(".edge-hit:not(.is-dim)"),
+        ];
+    }
+
+    function setTabStop(el: HTMLElement | SVGPathElement | null) {
+        if (tabStop && tabStop !== el) tabStop.tabIndex = -1;
+        tabStop = el;
+        if (el) el.tabIndex = 0;
+    }
+
+    function applySearch() {
+        const query = find instanceof HTMLInputElement ? find.value.trim().toLowerCase() : "";
+        const nodeOn = new Set<string>();
+        const edgeOn = new Set<string>();
+        if (!query) {
+            for (const node of model.nodes) nodeOn.add(node.id);
+            for (const edge of model.edges) edgeOn.add(edge.id);
+        } else {
+            const seeds = new Set<string>();
+            for (const node of model.nodes) {
+                const hay = `${node.symbol} ${node.file} ${node.blurb} ${node.id}`.toLowerCase();
+                if (hay.includes(query)) seeds.add(node.id);
+            }
+            for (const edge of model.edges) {
+                const hay = `${edge.label} ${edge.file} ${edge.blurb}`.toLowerCase();
+                if (hay.includes(query)) {
+                    edgeOn.add(edge.id);
+                    if (edge.from) seeds.add(edge.from);
+                    if (edge.to) seeds.add(edge.to);
+                }
+            }
+            for (const id of seeds) nodeOn.add(id);
+            for (const edge of model.edges) {
+                if ((edge.from && seeds.has(edge.from)) || (edge.to && seeds.has(edge.to))) {
+                    edgeOn.add(edge.id);
+                    if (edge.from) nodeOn.add(edge.from);
+                    if (edge.to) nodeOn.add(edge.to);
+                }
+            }
+        }
+        for (const [id, el] of nodeEl) {
+            const on = nodeOn.has(id);
+            el.classList.toggle("is-dim", !on);
+            if (on) el.removeAttribute("aria-hidden");
+            else el.setAttribute("aria-hidden", "true");
+            if (!on) el.tabIndex = -1;
+        }
+        for (const [id, hit] of edgeHit) {
+            const on = edgeOn.has(id);
+            edgeGroup.get(id)?.classList.toggle("is-dim", !on);
+            hit.classList.toggle("is-dim", !on);
+            if (on) hit.removeAttribute("aria-hidden");
+            else hit.setAttribute("aria-hidden", "true");
+            if (!on) hit.tabIndex = -1;
+        }
+        if (tabStop?.tabIndex === -1) setTabStop(visibleHits()[0] ?? null);
+        if (hint) {
+            hint.textContent = query
+                ? `${nodeOn.size} of ${model.nodes.length} functions, ${edgeOn.size} of ${model.edges.length} calls.`
+                : `${model.nodes.length} functions, ${model.edges.length} calls. Scroll the map. Ctrl-scroll or pinch to zoom. A Zenoh put ends at the publish in this repo.`;
+        }
+    }
+
+    const titleEl = document.querySelector("#panel-title");
+    const kindEl = document.querySelector("#panel-kind");
+    const blurbEl = document.querySelector("#panel-blurb");
+    const fileEl = document.querySelector("#panel-file");
+    const stepEl = document.querySelector("#panel-step");
+    const codeEl = document.querySelector("#panel-code");
+    const adjEl = document.querySelector("#panel-adj");
+    const inEl = document.querySelector("#panel-in");
+    const outEl = document.querySelector("#panel-out");
+    const copyBtn = document.querySelector("#panel-copy");
+    const closeBtn = document.querySelector("#panel-close");
+
+    function clearPressed() {
+        for (const el of document.querySelectorAll("[data-select]")) el.setAttribute("aria-pressed", "false");
+    }
+
+    function adjButton(edge: Item, otherId: string) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "adj-btn";
+        button.dataset.select = edge.id;
+        const other = nodes.get(otherId);
+        button.textContent = `${edge.label} · ${other?.symbol ?? otherId}`;
+        button.addEventListener("click", (event) => {
+            open("edge", edge.id, event.detail === 0);
+        });
+        return button;
+    }
+
+    function fillAdj(container: Element, list: Item[], side: "from" | "to") {
+        container.replaceChildren();
+        if (!list.length) {
+            const empty = document.createElement("p");
+            empty.className = "adj-empty";
+            empty.textContent = "None";
+            container.append(empty);
+            return;
+        }
+        for (const edge of list) {
+            const other = side === "from" ? edge.from ?? "" : edge.to ?? "";
+            container.append(adjButton(edge, other));
+        }
+    }
+
+    function open(kind: "node" | "edge", id: string, focusPanel: boolean) {
+        const item = kind === "node" ? nodes.get(id) : edges.get(id);
+        const source = document.querySelector(`[data-excerpt="${kind}:${id}"]`);
+        if (!item || !(source instanceof HTMLElement) || !(codeEl instanceof HTMLElement)) return;
+        const active = document.activeElement;
+        if (active instanceof HTMLElement || active instanceof SVGElement) {
+            returnFocus = active as HTMLElement | SVGPathElement;
+        }
+        selectedKey = `${kind}:${id}`;
+        clearPressed();
+        for (const el of document.querySelectorAll(`[data-select="${id}"]`)) el.setAttribute("aria-pressed", "true");
+        panel.classList.add("is-open");
+        if (kindEl) kindEl.textContent = kind === "node" ? "Function" : "Call";
+        if (titleEl) titleEl.textContent = kind === "node" ? item.symbol ?? id : item.label ?? id;
+        if (blurbEl) blurbEl.textContent = item.blurb;
+        if (fileEl) fileEl.textContent = item.file;
+        if (stepEl) {
+            const step = model.path.find((entry) => entry.node === id);
+            if (kind === "node" && step) {
+                stepEl.hidden = false;
+                stepEl.textContent = `Step ${step.step} of ${model.path.length}. ${step.why}`;
+            } else {
+                stepEl.hidden = true;
+                stepEl.textContent = "";
+            }
+        }
+        codeEl.replaceChildren(source.cloneNode(true));
+        const plain = codeEl.querySelector(".plain");
+        if (plain) plain.hidden = true;
+        if (copyBtn instanceof HTMLButtonElement) copyBtn.hidden = false;
+        if (closeBtn instanceof HTMLButtonElement) closeBtn.hidden = false;
+
+        if (kind === "node" && adjEl && inEl && outEl) {
+            adjEl.hidden = false;
+            const incoming = model.edges.filter((edge) => edge.to === id);
+            const outgoing = model.edges.filter((edge) => edge.from === id);
+            fillAdj(inEl, incoming, "from");
+            fillAdj(outEl, outgoing, "to");
+        } else if (adjEl) {
+            adjEl.hidden = true;
+        }
+
+        for (const [edgeId, group] of edgeGroup) {
+            const on = kind === "edge" && edgeId === id;
+            group.classList.toggle("is-selected", on);
+            const line = group.querySelector(".edge-line");
+            line?.setAttribute("marker-end", on ? "url(#flow-arrow-hot)" : "url(#flow-arrow)");
+            edgeLabel.get(edgeId)?.classList.toggle("is-on", on);
+        }
+        for (const [nodeId, el] of nodeEl) el.classList.toggle("is-selected", kind === "node" && nodeId === id);
+
+        if (kind === "node") {
+            const el = nodeEl.get(id);
+            if (el) {
+                setTabStop(el);
+                reveal(el);
+            }
+        }
+        const lost = active instanceof Node && !document.contains(active);
+        if ((focusPanel || lost) && titleEl instanceof HTMLElement) titleEl.focus();
+    }
+
+    function closePanel() {
+        panel.classList.remove("is-open");
+        selectedKey = "";
+        clearPressed();
+        for (const el of nodeEl.values()) el.classList.remove("is-selected");
+        for (const [id, group] of edgeGroup) {
+            group.classList.remove("is-selected");
+            group.querySelector(".edge-line")?.setAttribute("marker-end", "url(#flow-arrow)");
+            edgeLabel.get(id)?.classList.remove("is-on");
+        }
+        if (titleEl) titleEl.textContent = "Select a function";
+        if (kindEl) kindEl.textContent = "Source";
+        if (blurbEl) blurbEl.textContent = "Choose a step above, or a function on the map. Enter moves focus here. Escape returns it.";
+        if (fileEl) fileEl.textContent = "";
+        if (stepEl) {
+            stepEl.hidden = true;
+            stepEl.textContent = "";
+        }
+        codeEl?.replaceChildren();
+        if (adjEl) adjEl.hidden = true;
+        if (copyBtn instanceof HTMLButtonElement) copyBtn.hidden = true;
+        if (closeBtn instanceof HTMLButtonElement) closeBtn.hidden = true;
+        returnFocus?.focus();
+    }
+
+    for (const button of nodeEl.values()) {
+        button.addEventListener("click", (event) => {
+            if (button.dataset.id) open("node", button.dataset.id, event.detail === 0);
+        });
+        button.addEventListener("focus", () => setTabStop(button));
+    }
+
+    for (const [id, hit] of edgeHit) {
+        hit.addEventListener("click", () => open("edge", id, false));
+        hit.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                open("edge", id, true);
+            }
+        });
+        hit.addEventListener("focus", () => {
+            setTabStop(hit);
+            edgeGroup.get(id)?.classList.add("is-focus");
+            if (!edgeGroup.get(id)?.classList.contains("is-selected")) edgeLabel.get(id)?.classList.add("is-on");
+        });
+        hit.addEventListener("blur", () => {
+            edgeGroup.get(id)?.classList.remove("is-focus");
+            if (!edgeGroup.get(id)?.classList.contains("is-selected")) edgeLabel.get(id)?.classList.remove("is-on");
+        });
+        hit.addEventListener("pointerenter", () => edgeLabel.get(id)?.classList.add("is-on"));
+        hit.addEventListener("pointerleave", () => {
+            if (!edgeGroup.get(id)?.classList.contains("is-selected") && document.activeElement !== hit) {
+                edgeLabel.get(id)?.classList.remove("is-on");
+            }
+        });
+    }
+
+    for (const step of document.querySelectorAll<HTMLButtonElement>("[data-step]")) {
+        step.addEventListener("click", (event) => {
+            const id = step.dataset.step;
+            if (id) open("node", id, event.detail === 0);
+        });
+    }
+
+    viewport.addEventListener("keydown", (event) => {
+        if (!(event.target instanceof Element) || !event.target.matches(".node, .edge-hit")) return;
+        if (!["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(event.key)) return;
+        const items = visibleHits();
+        const current = event.target as HTMLElement;
+        const fx = Number(current.dataset.x);
+        const fy = Number(current.dataset.y);
+        let best: HTMLElement | SVGPathElement | null = null;
+        let bestScore = Infinity;
+        for (const el of items) {
+            if (el === current) continue;
+            const dx = Number(el.dataset.x) - fx;
+            const dy = Number(el.dataset.y) - fy;
+            if (event.key === "ArrowRight" && dx < 12) continue;
+            if (event.key === "ArrowLeft" && dx > -12) continue;
+            if (event.key === "ArrowDown" && dy < 12) continue;
+            if (event.key === "ArrowUp" && dy > -12) continue;
+            const primary = event.key === "ArrowLeft" || event.key === "ArrowRight" ? Math.abs(dx) : Math.abs(dy);
+            const cross = event.key === "ArrowLeft" || event.key === "ArrowRight" ? Math.abs(dy) : Math.abs(dx);
+            if (cross > primary * 1.4 + 80) continue;
+            const score = primary + cross * 0.35;
+            if (score < bestScore) {
+                bestScore = score;
+                best = el;
+            }
+        }
+        if (!best) return;
+        event.preventDefault();
+        setTabStop(best);
+        best.focus();
+        if (best instanceof HTMLElement) reveal(best);
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        if (find instanceof HTMLInputElement && document.activeElement === find && find.value) {
+            find.value = "";
+            applySearch();
+            return;
+        }
+        if (!panel.classList.contains("is-open")) return;
+        event.preventDefault();
+        closePanel();
+    });
+
+    find?.addEventListener("input", applySearch);
+
+    document.querySelector("#flow-in")?.addEventListener("click", () => {
+        const rect = viewport.getBoundingClientRect();
+        zoomAbout(scale * 1.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+    document.querySelector("#flow-out")?.addEventListener("click", () => {
+        const rect = viewport.getBoundingClientRect();
+        zoomAbout(scale / 1.2, rect.left + rect.width / 2, rect.top + rect.height / 2);
+    });
+    document.querySelector("#flow-fit")?.addEventListener("click", () => {
+        setScale(viewport.clientWidth / board.offsetWidth);
+        const main = nodeEl.get("main");
+        if (main) reveal(main);
+    });
+
+    viewport.addEventListener(
+        "wheel",
+        (event) => {
+            if (!event.ctrlKey && !event.metaKey) return;
+            event.preventDefault();
+            zoomAbout(scale * (event.deltaY > 0 ? 0.92 : 1.08), event.clientX, event.clientY);
+        },
+        { passive: false },
+    );
+
+    let pinch: { dist: number; scale: number } | null = null;
+    const distance = (touches: TouchList) => {
+        const [a, b] = [touches[0], touches[1]];
+        return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+    };
+    viewport.addEventListener("touchstart", (event) => {
+        if (event.touches.length === 2) pinch = { dist: distance(event.touches), scale };
+    }, { passive: true });
+    viewport.addEventListener("touchmove", (event) => {
+        if (event.touches.length === 2 && pinch) {
+            event.preventDefault();
+            const midX = (event.touches[0].clientX + event.touches[1].clientX) / 2;
+            const midY = (event.touches[0].clientY + event.touches[1].clientY) / 2;
+            zoomAbout(pinch.scale * (distance(event.touches) / pinch.dist), midX, midY);
+        }
+    }, { passive: false });
+    viewport.addEventListener("touchend", () => {
+        pinch = null;
+    });
+
+    copyBtn?.addEventListener("click", async () => {
+        const plain = codeEl?.querySelector(".plain")?.textContent ?? "";
+        try {
+            await navigator.clipboard.writeText(plain);
+            if (copyBtn instanceof HTMLButtonElement) {
+                copyBtn.textContent = "Copied";
+                window.setTimeout(() => {
+                    copyBtn.textContent = "Copy";
+                }, 1500);
+            }
+        } catch {
+            if (copyBtn instanceof HTMLButtonElement) copyBtn.textContent = "Copy failed";
+        }
+    });
+    closeBtn?.addEventListener("click", closePanel);
+
+    setScale(1);
+    const mainNode = nodeEl.get("main");
+    if (mainNode) {
+        const vr = viewport.getBoundingClientRect();
+        const er = mainNode.getBoundingClientRect();
+        viewport.scrollLeft += er.left - vr.left - 24;
+        viewport.scrollTop += er.top - vr.top - 24;
+    }
+
+    void selectedKey;
+</script>
+</BaseLayout>
+
+<style>
+    .flow-page { font-family: var(--font); }
+
+    .post-head { padding-top: 160px; padding-bottom: 32px; }
+    .back { margin-bottom: 48px; }
+    .post-head .t-label { margin-bottom: 16px; }
+    .post-title {
+        margin-top: 24px;
+        font-size: clamp(2.25rem, 5vw, 3.75rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.055em;
+    }
+    .post-head :global(.t-lede) { max-width: 62ch; }
+    .post-head :global(.t-lede) a {
+        color: var(--safe-link);
+        text-decoration: underline;
+        text-decoration-color: var(--safe);
+        text-underline-offset: 3px;
+    }
+    .post-head :global(.t-lede) code {
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+    }
+
+    .start { margin-top: 16px; }
+    .start h2 {
+        margin-top: 12px;
+        font-size: clamp(1.75rem, 3vw, 2.25rem);
+        font-weight: 600;
+        letter-spacing: -0.04em;
+    }
+    .start-note {
+        max-width: 62ch;
+        margin-top: 12px;
+        color: var(--graphite);
+    }
+    .path-list {
+        list-style: none;
+        margin: 24px 0 0;
+        padding: 0;
+        display: grid;
+        gap: 8px;
+    }
+    .step {
+        display: grid;
+        grid-template-columns: 2.5rem 1fr;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-slight);
+        background: var(--paper);
+        color: var(--ink);
+        font: inherit;
+        text-align: left;
+        transition: border-color var(--dur-state) var(--ease);
+    }
+    .step:hover,
+    .step[aria-pressed="true"] { border-color: var(--ink); }
+    .step-n {
+        font-family: var(--font-mono);
+        font-size: 14px;
+        color: var(--safe-link);
+        font-variant-numeric: tabular-nums;
+    }
+    .step-sym {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .step-why {
+        display: block;
+        margin-top: 4px;
+        color: var(--graphite);
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .work {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(300px, 400px);
+        gap: 16px;
+        align-items: start;
+        margin-top: 48px;
+    }
+    .map-column { min-width: 0; }
+    .toolbar {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+    .find { flex: 1; min-width: 0; }
+    .find input {
+        width: 100%;
+        height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--edge-strong);
+        border-radius: var(--r-pill);
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--font);
+        font-size: 14px;
+    }
+    .find input:focus-visible { outline-offset: 3px; }
+    .map-controls { display: flex; gap: 8px; flex: none; }
+    .map-controls :global(.pill-btn) { background: var(--paper); }
+    .map-icon {
+        width: 44px;
+        padding: 0;
+        justify-content: center;
+        font-size: 18px;
+        line-height: 1;
+    }
+    .map-hint {
+        margin: 0 0 12px;
+        color: var(--graphite);
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    .viewport {
+        height: min(74vh, 820px);
+        min-height: 520px;
+        overflow: auto;
+        border: 1px solid var(--rule);
+        background: var(--paper);
+        overscroll-behavior: contain;
+        touch-action: pan-x pan-y;
+    }
+    .scaler { position: relative; }
+    .board {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform-origin: 0 0;
+    }
+    .board :global(svg) {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: visible;
+        pointer-events: none;
+    }
+    .col-label {
+        position: absolute;
+        top: 8px;
+        z-index: 1;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--graphite);
+    }
+    .node {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        width: 220px;
+        height: 78px;
+        padding: 8px 12px;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-slight);
+        background: var(--paper);
+        color: var(--ink);
+        font: inherit;
+        text-align: left;
+        transition: border-color var(--dur-state) var(--ease), background var(--dur-state) var(--ease), color var(--dur-state) var(--ease);
+    }
+    .node.is-path { border-color: var(--ink); }
+    .node:hover { border-color: var(--ink); }
+    .node.is-selected {
+        background: var(--ink);
+        color: var(--paper);
+        border-color: var(--ink);
+    }
+    .node.is-dim { opacity: 0.18; }
+    .node-step {
+        position: absolute;
+        top: 6px;
+        right: 8px;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--graphite);
+    }
+    .node.is-selected .node-step { color: var(--paper); }
+    .node-sym {
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        line-height: 1.25;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        padding-right: 16px;
+    }
+    .node-file {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        color: var(--graphite);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .node.is-selected .node-file { color: var(--graphite-inverse); }
+
+    .panel {
+        position: sticky;
+        top: 88px;
+        max-height: calc(100vh - 110px);
+        overflow: auto;
+        padding: 20px 20px 28px;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-slight);
+        background: var(--paper);
+    }
+    .panel-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+    }
+    .panel-actions { display: flex; gap: 8px; }
+    .panel-actions :global(.pill-btn) { height: 36px; padding: 0 14px; }
+    .panel h2 {
+        margin-top: 12px;
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: -0.03em;
+        overflow-wrap: anywhere;
+    }
+    .panel h2:focus { outline: none; }
+    .panel h2:focus-visible { outline: 2px solid var(--safe-link); outline-offset: 3px; }
+    .panel-blurb { margin-top: 12px; }
+    .panel-file {
+        margin-top: 8px;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--graphite);
+        overflow-wrap: anywhere;
+    }
+    .panel-step {
+        margin-top: 12px;
+        color: var(--graphite);
+        font-size: 15px;
+    }
+    .panel :global(.excerpt) { margin-top: 16px; }
+    .panel :global(.excerpt a) {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--safe-link);
+        text-decoration: underline;
+        text-decoration-color: var(--safe);
+        text-underline-offset: 3px;
+        overflow-wrap: anywhere;
+    }
+    .panel :global(.code-block) { margin-top: 8px; }
+    .panel :global(.plain) { display: none; }
+    .adj { margin-top: 20px; }
+    .adj .t-label { margin-top: 16px; }
+    .adj-btn {
+        display: block;
+        width: 100%;
+        padding: 8px 0;
+        border: 0;
+        border-bottom: 1px solid var(--rule);
+        background: transparent;
+        color: var(--ink);
+        font: inherit;
+        font-family: var(--font-mono);
+        font-size: 13px;
+        text-align: left;
+    }
+    .adj-btn:hover { color: var(--safe-link); }
+    .adj-btn[aria-pressed="true"] { color: var(--safe-pressed); }
+    .adj-empty { margin: 8px 0 0; color: var(--graphite); font-size: 14px; }
+
+    .files { margin-top: 64px; }
+    .files h2 {
+        font-size: 32px;
+        font-weight: 600;
+        letter-spacing: -0.04em;
+    }
+    .file-list {
+        list-style: none;
+        margin: 24px 0 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 8px 24px;
+    }
+    .file-list a {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        color: var(--safe-link);
+        text-decoration: underline;
+        text-decoration-color: var(--safe);
+        text-underline-offset: 3px;
+        overflow-wrap: anywhere;
+    }
+    .file-list a:hover { color: var(--safe-pressed); }
+
+    .post-foot {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 24px;
+        margin-top: 64px;
+        padding-top: 32px;
+        border-top: 1px solid var(--rule);
+    }
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    @media (min-width: 900px) {
+        .path-list { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 900px) {
+        .post-head { padding-top: 120px; }
+        .back { margin-bottom: 32px; }
+        .work { grid-template-columns: 1fr; }
+        .viewport {
+            height: 62vh;
+            min-height: 420px;
+        }
+        .panel { display: none; }
+        .panel.is-open {
+            display: block;
+            position: fixed;
+            z-index: 40;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: auto;
+            max-height: min(72vh, calc(100vh - 88px));
+            border-radius: 0;
+            border-left: 0;
+            border-right: 0;
+            border-bottom: 0;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .node, .step { transition: none; }
+    }
+</style>
+
+<style is:global>
+    .flow-page .edge-line {
+        fill: none;
+        stroke: var(--teal);
+        stroke-width: 1;
+    }
+    .flow-page .edge-under {
+        fill: none;
+        stroke: transparent;
+        stroke-width: 7;
+    }
+    .flow-page .edge-hit {
+        fill: none;
+        stroke: transparent;
+        stroke-width: 14;
+        pointer-events: stroke;
+    }
+    .flow-page .edge.is-selected .edge-line {
+        stroke: var(--teal-deep);
+        stroke-width: 1.5;
+    }
+    .flow-page .edge.is-selected .edge-under { stroke: var(--teal-wash); }
+    .flow-page .edge.is-focus .edge-line { stroke: var(--safe-link); }
+    .flow-page .edge.is-dim { opacity: 0.12; }
+    .flow-page .edge-label {
+        position: absolute;
+        z-index: 2;
+        transform: translate(-50%, -50%);
+        max-width: 220px;
+        padding: 2px 6px;
+        border: 1px solid var(--teal);
+        background: var(--paper);
+        color: var(--teal-deep);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        line-height: 1.3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+        opacity: 0;
+    }
+    .flow-page .edge-label.is-on { opacity: 1; }
+    .flow-page .panel pre {
+        margin: 0;
+        padding: 12px 0 12px 0;
+        overflow-x: auto;
+        background: var(--pitch) !important;
+        background-color: var(--pitch) !important;
+        color: var(--paper);
+        font-family: var(--font-mono);
+        font-size: 13px;
+        line-height: 1.55;
+        white-space: pre;
+        tab-size: 4;
+    }
+    .flow-page .line {
+        display: block;
+        position: relative;
+        min-width: max-content;
+        padding-left: 4.2em;
+        border-left: 1px solid transparent;
+    }
+    .flow-page .line.is-hot {
+        border-left-color: #fff;
+        background: rgba(255, 255, 255, 0.06);
+    }
+    .flow-page .ln {
+        position: absolute;
+        left: 0.4em;
+        width: 3.2em;
+        color: var(--mist);
+        text-align: right;
+        user-select: none;
+    }
+</style>

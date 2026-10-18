@@ -142,12 +142,21 @@ const {
         margin: 40px 0;
     }
     .doc .prose .diagram {
+        max-width: 100%;
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
-    .doc .prose .diagram svg,
     .doc .prose figure svg {
         display: block;
         max-width: 100%;
+        height: auto;
+    }
+    /* Flowcharts keep the size Mermaid drew. A narrow column scrolls
+       sideways so the labels stay at reading size. */
+    .doc .prose .diagram svg {
+        display: block;
+        width: auto;
+        max-width: none;
         height: auto;
     }
     .doc .prose figcaption {
@@ -172,6 +181,43 @@ const {
         height: auto;
     }
     .doc .prose table {
+        display: table;
+        width: 100%;
         font-size: 15px;
+        table-layout: auto;
+    }
+    .doc .prose thead th,
+    .doc .prose tbody td {
+        white-space: normal;
+        vertical-align: top;
+        overflow-wrap: break-word;
+    }
+    .doc .prose tbody td { line-height: 1.45; }
+
+    /* A warning is a pitch panel, the same tonal flip as a code block,
+       so it cannot be read as a pull quote. No accent color. */
+    .doc .prose blockquote.callout {
+        margin-block: 40px;
+        padding: 20px 24px;
+        border: 0;
+        border-left: 0;
+        border-radius: var(--r-slight);
+        background: var(--pitch);
+        color: var(--paper);
+    }
+    .doc .prose blockquote.callout p { margin: 0; }
+    .doc .prose blockquote.callout strong {
+        font-weight: 500;
+        color: var(--paper);
+    }
+
+    @media (max-width: 600px) {
+        .doc .prose thead th,
+        .doc .prose tbody td {
+            padding: 12px 12px 12px 0;
+        }
+        .doc .prose thead th:last-child,
+        .doc .prose tbody td:last-child { padding-right: 0; }
+        .doc .prose blockquote.callout { padding: 16px 18px; }
     }
 </style>

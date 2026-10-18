@@ -7,13 +7,14 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { remarkMermaid } from "./src/plugins/remark-mermaid.mjs";
 import pitchTheme from "./src/styles/shiki-pitch.json" with { type: "json" };
+import { remarkCallout } from "./src/plugins/remark-callout.mjs";
 
 export default defineConfig({
   site: "https://super-yojan.dev",
   integrations: [mdx(), sitemap()],
   // 2. Configure Markdown
   markdown: {
-    remarkPlugins: [remarkMermaid, remarkMath],
+    remarkPlugins: [remarkMermaid, remarkCallout, remarkMath],
     rehypePlugins: [rehypeKatex],
     // Shiki highlights at build time. The pitch theme keeps github-dark-dimmed
     // greys and moves every chromatic token onto the teal ramp, so a listing

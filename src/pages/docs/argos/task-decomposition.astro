@@ -8,7 +8,7 @@ import "@fontsource/geist/latin-500.css";
 
 const title = "Task decomposition";
 const description =
-    "ARGOS at the center: hardware, the autonomy ladder, the software, and the competition.";
+    "Oct 18. Three ground vehicles and one person: mechanical, the auto routines, one C3 station, and the experiment.";
 
 const { root } = new Transformer().transform(source);
 const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
@@ -26,6 +26,9 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
         </header>
 
         <div class="shell stage">
+            <blockquote class="callout" role="note">
+                <p>⚠️ <strong>Confirm Lucas S's three models.</strong> The week of 10/19 assigns a write-up of 3 different C3 models. The Oct 18 decision is one station, and the experiment varies autonomy level on that single C3. Open the owners panel and follow the dashed line to the C3 station.</p>
+            </blockquote>
             <div class="map-column">
                 <p class="t-label map-hint">Branches start folded. Drag to pan. Scroll or pinch to zoom. Tap a dot to open. Dashed lines jump to a related node.</p>
                 <div class="canvas">
@@ -37,10 +40,6 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
                     <svg id="argos-map" role="group" aria-label="ARGOS task decomposition mind map"></svg>
                 </div>
             </div>
-
-            <blockquote class="callout" role="note">
-                <p>⚠️ <strong>Integration point: phone-to-motor wiring.</strong> This is where hardware and software meet. If a student's wiring is off, the software can't compensate, so the wiring on all four chassis needs a check before the demo.</p>
-            </blockquote>
         </div>
 
         <div class="shell">
@@ -110,6 +109,11 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
                         text-decoration-thickness: 1px;
                         text-underline-offset: 2px;
                     }
+                    .markmap-foreign a.clash {
+                        font-weight: 500;
+                        text-decoration-style: dashed;
+                        background: rgba(0, 0, 0, 0.06);
+                    }
                     .markmap-node > circle { stroke-width: 1px; }
                 `,
             },
@@ -166,17 +170,30 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
             };
         };
         const parentOf = {
-            "L4 Search": "Autonomy ladder",
-            "L5 Decide": "Autonomy ladder",
-            "Power:": "Hardware",
-            "Team:": "Competition",
+            "3 dumpers": ["Mechanical"],
+            "Mechanical dumper": ["Mechanical", "3 dumpers"],
+            "No bucket vision": ["Mechanical", "3 dumpers"],
+            "Vibration mitigation": ["Mechanical"],
+            "Auto routines": ["Algorithm"],
+            "Dump (stretch)": ["Algorithm", "Auto routines"],
+            "ONE station": ["C3 station"],
+            "Recommendation system": ["C3 station"],
+            "Single C3": ["Experiment"],
+            "Hypothesis": ["Experiment"],
+            "James": ["Owners panel"],
+            "Kaichen": ["Owners panel"],
+            "Lucas L": ["Owners panel"],
+            "Lucas S": ["Owners panel"],
+            "Flap-opening physics": ["Owners panel", "Lucas L"],
         };
         const specs = [
-            { source: "Level picker", target: "Autonomy ladder", label: "Show the autonomy ladder" },
-            { source: "L4 search target", sourceDepth: "3", target: "L4 Search", label: "Show L4" },
-            { source: "L5 decision logic", sourceDepth: "3", target: "L5 Decide", label: "Show L5" },
-            { source: "Power-sharing", sourceDepth: "3", target: "Power:", label: "Show power" },
-            { source: "Software assignments", sourceDepth: "3", target: "Team:", label: "Show the team" },
+            { source: "Lucas S", target: "C3 station", label: "Lucas S's 3 models clash with one C3. Show the C3 station." },
+            { source: "Single C3", target: "C3 station", label: "Show the one station" },
+            { source: "James", target: "Mechanical", label: "Show vibration mitigation" },
+            { source: "Kaichen", target: "Mechanical", label: "Show the mechanical dumper" },
+            { source: "Flap-opening physics", target: "Mechanical", label: "Show the hinged flap" },
+            { source: "Recommendation system", target: "Experiment", label: "Show the hypothesis" },
+            { source: "Dump (stretch)", target: "Mechanical", label: "Show why the flap drops bucket vision" },
         ];
         const mapGroup = mm.g.node();
         for (const spec of specs) {
@@ -213,6 +230,10 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
                 const y1 = from.y + from.height / 2;
                 const x2 = to.x + to.width + 8;
                 const y2 = to.y + to.height / 2;
+                if (x2 > x1) {
+                    hideLink(spec);
+                    continue;
+                }
                 const bow = Math.max(72, Math.abs(y1 - y2) * 0.3);
                 const d = `M ${x1} ${y1} C ${x1 - bow} ${y1}, ${x2 + bow} ${y2}, ${x2} ${y2}`;
                 spec.path.setAttribute("d", d);
@@ -237,17 +258,25 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
                 attributeFilter: ["transform"],
             });
         }
-        const goToTarget = async (prefix) => {
-            let group = findGroup(prefix);
-            const parentPrefix = parentOf[prefix];
-            if (!group && parentPrefix) {
-                const parent = findGroup(parentPrefix);
-                const folded = parent?.classList.contains("markmap-fold");
-                const data = parent ? select(parent).datum() : null;
-                if (folded && data) await mm.toggleNode(data);
-                if (folded && !reduce) await new Promise((resolve) => window.setTimeout(resolve, 540));
-                group = findGroup(prefix);
+        const openFolded = async (group) => {
+            if (!group?.classList.contains("markmap-fold")) return group;
+            const data = select(group).datum();
+            if (data) await mm.toggleNode(data);
+            if (!reduce) await new Promise((resolve) => window.setTimeout(resolve, 540));
+            return group;
+        };
+        const reveal = async (prefix, seen = new Set()) => {
+            if (seen.has(prefix)) return findGroup(prefix);
+            seen.add(prefix);
+            const group = findGroup(prefix);
+            if (group) return group;
+            for (const ancestor of parentOf[prefix] ?? []) {
+                await openFolded(await reveal(ancestor, seen));
             }
+            return findGroup(prefix);
+        };
+        const goToTarget = async (prefix) => {
+            const group = await reveal(prefix);
             placeCrossLinks();
             const foreign = group?.querySelector(":scope > foreignObject");
             if (!foreign) return;
@@ -274,22 +303,16 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
             const jump = target.closest(".node-jump, .ladder-jump, .cross-link-hit");
             if (jump) {
                 event.preventDefault();
-                void goToTarget(jump.getAttribute("data-target") || "Autonomy ladder");
+                void goToTarget(jump.getAttribute("data-target") || "ONE station");
                 return;
             }
             if (target.closest("circle")) return;
             const group = target.closest("g.markmap-node");
             if (!group) return;
-            const label = groupLabel(group);
             const ownJump = group.querySelector(":scope > foreignObject .node-jump, :scope > foreignObject .ladder-jump");
             if (ownJump && !group.querySelector(":scope > circle")) {
                 event.preventDefault();
-                void goToTarget(ownJump.getAttribute("data-target") || "Autonomy ladder");
-                return;
-            }
-            if (label.startsWith("Level picker")) {
-                event.preventDefault();
-                void goToTarget("Autonomy ladder");
+                void goToTarget(ownJump.getAttribute("data-target") || "ONE station");
                 return;
             }
             const data = select(group).datum();
@@ -309,7 +332,10 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
         document.querySelector("#map-fit")?.addEventListener("click", fit);
         const zoomBy = (factor) => {
             const current = zoomTransform(svg);
-            mm.rescale(Math.min(2.6, Math.max(0.3, current.k * factor)));
+            const next = Math.min(2.6, Math.max(0.3, current.k * factor));
+            const applied = next / current.k;
+            if (Math.abs(applied - 1) < 0.01) return;
+            mm.rescale(applied);
         };
         document.querySelector("#map-in")?.addEventListener("click", () => zoomBy(1.25));
         document.querySelector("#map-out")?.addEventListener("click", () => zoomBy(0.8));
@@ -470,5 +496,10 @@ const mapJson = JSON.stringify(root).replace(/</g, "\\u003c");
         text-decoration: underline;
         text-decoration-thickness: 1px;
         text-underline-offset: 2px;
+    }
+    #argos-map .markmap-foreign a.clash {
+        font-weight: 500;
+        text-decoration-style: dashed;
+        background: rgba(0, 0, 0, 0.06);
     }
 </style>

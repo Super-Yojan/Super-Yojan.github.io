@@ -1,0 +1,84 @@
+---
+title: "Two Drafts, One Rover: Is a Phone Enough to Drive a Robot?"
+description: "Two thesis drafts on Terra: whether an iPhone can be a ground robot's only sensor head and computer, and a six-level autonomy ladder that keeps the language model off the motors."
+pubDate: 2026-10-27
+heroImage: ../../assets/terra-chassis-duo.jpg
+heroAlt: "Two Terra rover chassis on a carpet. Perforated metal frames, honeycomb wheels, a battery, an electronics box, and a phone mount."
+heroKicker: Chassis
+heroCaption: "Two physical Terra chassis. Perforated metal frames, honeycomb wheels, a battery, an electronics box, and the phone mount on the bridge."
+---
+
+import ThesisPlate from "../../components/blog/ThesisPlate.astro";
+
+I started writing two IEEE papers for my master's thesis. One asks if an iPhone can really be a robot's eyes and brain. The other explains the rover I built around that idea. Both are drafts. This note is the honest state of them: what is measured, what is only architecture, and what is still a TODO.
+
+The rover is [Terra](https://super-yojan.dev/Terra/). The sensor head and the perception computer are the same object. A consumer iPhone sits on the deck and does both jobs: camera, motion sensors, LiDAR, GPS, radios, and processor.
+
+People ask two things when they see it. Is a phone actually good enough for that? And how do you let it drive without doing something dumb? Those two questions became the two papers. This week I opened pull requests for both drafts in the thesis repo.
+
+<ThesisPlate plate="stack" />
+
+A thin Swift layer on the phone gathers the sensors and radios. The control loop, safety, mapping, and autonomy sit in a shared Rust core, about 41,000 lines across 17 crates. That core runs on the phone. The same crates run in the [Zorvane](https://super-yojan.dev/Zorvane/) simulator and under [ARGOS](https://super-yojan.dev/ARGOS/), the dashboard for one operator and many robots, so the code I test in simulation is the code that decides for the real rover. Actuator commands leave over Bluetooth. A Raspberry Pi and a Fusion HAT drive the motors. The Rust crates stay on the phone.
+
+## Is a phone enough?
+
+The sensor paper is titled *Is a Phone Enough? Measuring an iPhone as a Ground Robot's Only Sensor Head and Computer*.
+
+The claim is a checklist. I wrote down nine requirements, R1 through R9, for what a ground robot needs from its sensor head and its computer. The phone meets a requirement or it does not.
+
+Two measurements are already in the draft.
+
+I compared ARKit visual-inertial odometry with an OptiTrack motion-capture system: how the phone estimates where it is from the camera and the motion sensors, set against the mocap rig. I recorded 17 runs in the mocap room on October 26 and 27.
+
+I also built a small probe for sensor timing. iOS delivered IMU samples with a p99 interval of 2.3 ms or better. The trace did show stalls. Those stalls came from a Debug build.
+
+R1 through R5 have results. R6 through R9 are still open. Still to do:
+
+- position scale outside the mocap room
+- yaw arcs
+- a 10-minute run on a Release build
+- LiDAR obstacle detection
+- GNSS accuracy
+- a 90-minute endurance run
+
+## Terra and the autonomy ladder
+
+The systems paper is titled *Terra: A Phone-Brained Rover with a Six-Level Autonomy Ladder, from Teleoperation to On-Device Language-Model Tasking*.
+
+The part I care about most is the ladder. Six levels, from driving it yourself to a model on the phone suggesting where to go.
+
+<ThesisPlate plate="ladder" />
+
+- **L0, teleop.** You drive it.
+- **L1, assisted.** You drive, and it helps.
+- **L2, direct.** You point it at a target, and it goes there.
+- **L3, waypoint.** It follows a route.
+- **L4, explore.** It searches an area on its own.
+- **L5, language-model tasking.** A foundation model on the phone suggests waypoints.
+
+L2 through L5 can take a GPS destination. The rover keeps a geographic anchor for the big picture, and the local map handles obstacles close by.
+
+A phone brain also picks up a few tricks at low extra cost. ARKit labels parts of its 3D mesh as floor, so the rover can clear false floor hits from the depth map. YOLO object detection builds a map of what the rover has seen.
+
+### The model proposes, Rust disposes
+
+L5 has a firm rule. The language model may suggest a waypoint. The Rust core checks every suggestion before the rover moves. Rust is the only path to the motors.
+
+<ThesisPlate plate="dispose" />
+
+The architecture is written up, and I have proposed seven field evaluations, F1 through F7. Every field result is still open. I have not run those tests. The draft leaves every field number blank.
+
+## Why two papers
+
+They answer each other. The sensor paper asks whether the phone is a solid base. The systems paper is what that base can carry. The ladder is worth building if the measurements hold.
+
+## What's next
+
+- Finish R6 through R9: outdoor scale, yaw arcs, the Release-build run, LiDAR, GNSS, and endurance.
+- Take Terra outside and run F1 through F7.
+- Submit. I am aiming for IROS 2027 or CASE 2027. Both deadlines sit around March 1, 2027. RA-L is the backup, since it takes papers anytime.
+
+If you work on phone-based robots, cheap autonomy, or keeping a language model in the loop on real hardware, I would like to hear from you. The drafts are public:
+
+- Terra system paper: [PR #22](https://github.com/Super-Yojan/Masters-Thesis/pull/22)
+- Phone sensor paper: [PR #23](https://github.com/Super-Yojan/Masters-Thesis/pull/23)

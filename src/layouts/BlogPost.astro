@@ -1,10 +1,12 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
 import type { CollectionEntry } from "astro:content";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroAlt, heroKicker, heroCaption } =
+    Astro.props;
 
 const fmt = (d: Date) =>
     d.toLocaleDateString("en-us", {
@@ -35,6 +37,28 @@ const fmt = (d: Date) =>
             </div>
         </header>
 
+        {
+            heroImage && (
+                <figure class="post-hero shell">
+                    <Image
+                        src={heroImage}
+                        alt={heroAlt ?? title}
+                        widths={[720, 960, 1400]}
+                        sizes="(max-width: 900px) 100vw, 860px"
+                        class="post-hero-img"
+                    />
+                    {
+                        (heroKicker || heroCaption) && (
+                            <figcaption>
+                                {heroKicker && <span class="hero-kicker">{heroKicker}</span>}
+                                {heroCaption && <span class="hero-cap">{heroCaption}</span>}
+                            </figcaption>
+                        )
+                    }
+                </figure>
+            )
+        }
+
         <div class="shell">
             <div class="prose">
                 <slot />
@@ -59,7 +83,34 @@ const fmt = (d: Date) =>
 
     .post-head {
         padding-top: 160px;
-        padding-bottom: 64px;
+        padding-bottom: 48px;
+    }
+    .post-hero {
+        margin-bottom: 8px;
+    }
+    .post-hero :global(img) {
+        display: block;
+        width: 100%;
+        height: auto;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-slight);
+        filter: grayscale(1) contrast(1.06);
+    }
+    .post-hero figcaption {
+        margin-top: 12px;
+        color: var(--graphite);
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.45;
+        letter-spacing: 0.01em;
+    }
+    .hero-kicker {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--safe-link);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
     }
     .back { margin-bottom: 48px; }
 

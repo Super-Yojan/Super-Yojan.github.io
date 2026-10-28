@@ -1,0 +1,363 @@
+---
+interface Props {
+    plate: "stack" | "ladder" | "dispose";
+}
+
+const { plate } = Astro.props;
+
+const mono = "font-family: var(--font-mono); letter-spacing: 0.1em;";
+const name = "font-family: var(--font); font-weight: 500;";
+const gloss = "font-family: var(--font); font-weight: 400;";
+
+const levels = [
+    { id: "L5", title: "Language tasking", gloss: "suggests waypoints" },
+    { id: "L4", title: "Explore", gloss: "searches an area" },
+    { id: "L3", title: "Waypoint", gloss: "follows a route" },
+    { id: "L2", title: "Direct", gloss: "goes to a target" },
+    { id: "L1", title: "Assisted", gloss: "helps you drive" },
+    { id: "L0", title: "Teleop", gloss: "you drive" },
+];
+---
+
+{
+    plate === "stack" && (
+        <figure class="plate-fig">
+            <div class="plate-frame">
+                <svg viewBox="0 0 640 412" role="img" aria-labelledby="stack-title stack-desc">
+                    <title id="stack-title">TerraPhone stack</title>
+                    <desc id="stack-desc">
+                        The iPhone senses and computes. Swift gathers. The Rust core decides, and the same crates run in Zorvane and ARGOS. Bluetooth carries actuator commands to the Pi.
+                    </desc>
+                    <defs>
+                        <marker
+                            id="stack-arrow"
+                            viewBox="0 0 10 10"
+                            refX="8"
+                            refY="5"
+                            markerWidth="7"
+                            markerHeight="7"
+                            orient="auto-start-reverse"
+                        >
+                            <path
+                                d="M1 1.5 L8 5 L1 8.5"
+                                fill="none"
+                                stroke="#1B7F86"
+                                stroke-width="1.4"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </marker>
+                    </defs>
+
+                    <text x="16" y="16" fill="#6B6B6B" font-size="11" style={mono}>
+                        TERRAPHONE
+                    </text>
+                    <text x="624" y="16" fill="#6B6B6B" font-size="11" text-anchor="end" style={mono}>
+                        PHONE TO MOTORS
+                    </text>
+                    <path d="M16 28 H624" fill="none" stroke="#BDBDBD" stroke-width="1" />
+
+                    <g fill="#FAFAF8" stroke="#0B0B0B" stroke-width="1.25">
+                        <rect x="16" y="40" width="142" height="68" rx="8" />
+                        <rect x="176" y="40" width="124" height="68" rx="8" />
+                        <rect x="318" y="40" width="150" height="68" rx="8" />
+                        <rect x="486" y="40" width="138" height="68" rx="8" />
+                    </g>
+                    <g fill="#0B0B0B" font-size="16" text-anchor="middle" style={name}>
+                        <text x="87" y="68">iPhone</text>
+                        <text x="238" y="68">Swift</text>
+                        <text x="393" y="68">Rust core</text>
+                        <text x="555" y="68">Pi</text>
+                    </g>
+                    <g fill="#6B6B6B" font-size="13" text-anchor="middle" style={gloss}>
+                        <text x="87" y="90">sensors and cpu</text>
+                        <text x="238" y="90">thin layer</text>
+                        <text x="393" y="90">control and safety</text>
+                        <text x="555" y="90">via Bluetooth</text>
+                    </g>
+
+                    <g
+                        fill="none"
+                        stroke="#1B7F86"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        marker-end="url(#stack-arrow)"
+                    >
+                        <line x1="158" y1="74" x2="176" y2="74" />
+                        <line x1="300" y1="74" x2="318" y2="74" />
+                        <line x1="468" y1="74" x2="486" y2="74" />
+                    </g>
+
+                    <g
+                        fill="none"
+                        stroke="#1B7F86"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        stroke-dasharray="4 4"
+                    >
+                        <path d="M393 108 V132" />
+                        <path d="M329 132 H461" />
+                        <path d="M329 132 V140" />
+                        <path d="M461 132 V140" />
+                    </g>
+                    <text x="378" y="124" fill="#6B6B6B" font-size="11" text-anchor="end" style={mono}>
+                        SAME CRATES
+                    </text>
+                    <g fill="#FAFAF8" stroke="#0B0B0B" stroke-width="1.25">
+                        <rect x="272" y="140" width="114" height="48" rx="8" />
+                        <rect x="404" y="140" width="114" height="48" rx="8" />
+                    </g>
+                    <g fill="#0B0B0B" font-size="14" text-anchor="middle" style={name}>
+                        <text x="329" y="160">Zorvane</text>
+                        <text x="461" y="160">ARGOS</text>
+                    </g>
+                    <g fill="#6B6B6B" font-size="12" text-anchor="middle" style={gloss}>
+                        <text x="329" y="176">simulator</text>
+                        <text x="461" y="176">fleet operator</text>
+                    </g>
+
+                    <g fill="none" stroke="#0B0B0B" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M52 326 L112 286 L496 286 L568 326 L536 344 L80 344 Z" />
+                        <path d="M196 286 V250 H256 V286" />
+                        <rect x="268" y="234" width="84" height="52" rx="8" fill="#FAFAF8" />
+                        <path d="M284 254 H332 M284 268 H316" opacity="0.45" />
+                        <circle cx="108" cy="366" r="18" />
+                        <circle cx="108" cy="366" r="5" />
+                        <circle cx="180" cy="366" r="18" />
+                        <circle cx="180" cy="366" r="5" />
+                        <circle cx="262" cy="366" r="18" />
+                        <circle cx="262" cy="366" r="5" />
+                        <circle cx="352" cy="366" r="18" />
+                        <circle cx="352" cy="366" r="5" />
+                        <circle cx="442" cy="366" r="18" />
+                        <circle cx="442" cy="366" r="5" />
+                        <circle cx="522" cy="366" r="18" />
+                        <circle cx="522" cy="366" r="5" />
+                        <path d="M80 344 L108 348 M536 344 L522 348" opacity="0.4" />
+                        <path d="M28 384 H612" stroke="#BDBDBD" />
+                    </g>
+                    <g fill="#6B6B6B" font-size="11" style={mono}>
+                        <text x="268" y="226">PHONE</text>
+                        <text x="52" y="278">PI</text>
+                        <text x="392" y="322">FUSION HAT</text>
+                    </g>
+                </svg>
+            </div>
+            <figcaption>
+                <span class="fig-num">Fig. 01</span>
+                <span class="cap">
+                    The iPhone on the deck senses and computes. Swift gathers. Rust decides. The same crates run in Zorvane and ARGOS. Bluetooth carries commands to the Pi, and the Pi drives the motors.
+                </span>
+            </figcaption>
+        </figure>
+    )
+}
+
+{
+    plate === "ladder" && (
+        <figure class="plate-fig">
+            <div class="plate-frame">
+                <svg viewBox="0 0 640 328" role="img" aria-labelledby="ladder-title ladder-desc">
+                    <title id="ladder-title">Autonomy ladder from L0 to L5</title>
+                    <desc id="ladder-desc">
+                        Six levels. L0 is teleoperation. L5 is an on-device model suggesting waypoints. L2 through L5 can take a GPS destination. Field results are still open.
+                    </desc>
+                    <text x="16" y="22" fill="#6B6B6B" font-size="11" style={mono}>
+                        AUTONOMY
+                    </text>
+                    <text x="624" y="22" fill="#6B6B6B" font-size="11" text-anchor="end" style={mono}>
+                        FIELD OPEN
+                    </text>
+                    <path d="M16 34 H624" fill="none" stroke="#BDBDBD" stroke-width="1" />
+
+                    <path
+                        d="M28 70 V296"
+                        fill="none"
+                        stroke="#1B7F86"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                    />
+                    {
+                        levels.map((level, i) => {
+                            const y = 76 + i * 44;
+                            return (
+                                <g>
+                                    <path
+                                        d={`M28 ${y - 5} H48`}
+                                        fill="none"
+                                        stroke="#0B0B0B"
+                                        stroke-width="1.25"
+                                        stroke-linecap="round"
+                                    />
+                                    <circle cx="28" cy={y - 5} r="3.5" fill="#0B0B0B" />
+                                    <text x="60" y={y} fill="#0B0B0B" font-size="13" style={mono}>
+                                        {level.id}
+                                    </text>
+                                    <text x="118" y={y} fill="#0B0B0B" font-size="16" style={name}>
+                                        {level.title}
+                                    </text>
+                                    <text x="300" y={y} fill="#6B6B6B" font-size="14" style={gloss}>
+                                        {level.gloss}
+                                    </text>
+                                </g>
+                            );
+                        })
+                    }
+
+                    <path
+                        d="M456 71 H468 V203 H456"
+                        fill="none"
+                        stroke="#1B7F86"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <text x="480" y="132" fill="#6B6B6B" font-size="11" style={mono}>
+                        L2–L5
+                    </text>
+                    <text x="480" y="148" fill="#6B6B6B" font-size="11" style={mono}>
+                        GPS
+                    </text>
+                </svg>
+            </div>
+            <figcaption>
+                <span class="fig-num">Fig. 02</span>
+                <span class="cap">
+                    Six levels, from teleoperation to an on-device model that suggests waypoints. L2 through L5 can take a GPS destination. The ladder is written up. Field runs F1 through F7 are still open.
+                </span>
+            </figcaption>
+        </figure>
+    )
+}
+
+{
+    plate === "dispose" && (
+        <figure class="plate-fig">
+            <div class="plate-frame">
+                <svg viewBox="0 0 640 260" role="img" aria-labelledby="dispose-title dispose-desc">
+                    <title id="dispose-title">The model proposes, Rust disposes</title>
+                    <desc id="dispose-desc">
+                        A model on the phone suggests a waypoint. The Rust core checks it. Motors move only after that check. There is no direct path from the model to the motors.
+                    </desc>
+
+                    <defs>
+                        <marker
+                            id="dispose-arrow"
+                            viewBox="0 0 10 10"
+                            refX="8"
+                            refY="5"
+                            markerWidth="7"
+                            markerHeight="7"
+                            orient="auto-start-reverse"
+                        >
+                            <path
+                                d="M1 1.5 L8 5 L1 8.5"
+                                fill="none"
+                                stroke="#1B7F86"
+                                stroke-width="1.4"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </marker>
+                    </defs>
+
+                    <text x="320" y="16" fill="#6B6B6B" font-size="11" text-anchor="middle" style={mono}>
+                        NO DIRECT PATH
+                    </text>
+                    <path
+                        d="M104 108 C104 28, 536 28, 536 108"
+                        fill="none"
+                        stroke="#0B0B0B"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        stroke-dasharray="4 4"
+                    />
+                    <circle cx="320" cy="48" r="14" fill="#FAFAF8" stroke="#0B0B0B" stroke-width="1.25" />
+                    <path
+                        d="M311 39 L329 57 M329 39 L311 57"
+                        fill="none"
+                        stroke="#0B0B0B"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                    />
+
+                    <g fill="#FAFAF8" stroke="#0B0B0B" stroke-width="1.25">
+                        <rect x="16" y="108" width="176" height="120" rx="8" />
+                        <rect x="232" y="108" width="176" height="120" rx="8" />
+                        <rect x="448" y="108" width="176" height="120" rx="8" />
+                    </g>
+                    <g
+                        fill="none"
+                        stroke="#1B7F86"
+                        stroke-width="1.25"
+                        stroke-linecap="round"
+                        marker-end="url(#dispose-arrow)"
+                    >
+                        <line x1="192" y1="168" x2="232" y2="168" />
+                        <line x1="408" y1="168" x2="448" y2="168" />
+                    </g>
+                    <g fill="#6B6B6B" font-size="11" text-anchor="middle" style={mono}>
+                        <text x="104" y="132">PROPOSE</text>
+                        <text x="320" y="132">DISPOSE</text>
+                        <text x="536" y="132">ACT</text>
+                    </g>
+                    <g fill="#0B0B0B" font-size="16" text-anchor="middle" style={name}>
+                        <text x="104" y="160">Model</text>
+                        <text x="320" y="160">Rust core</text>
+                        <text x="536" y="160">Motors</text>
+                    </g>
+                    <g fill="#6B6B6B" font-size="13" text-anchor="middle" style={gloss}>
+                        <text x="104" y="182">Swift, on the phone</text>
+                        <text x="320" y="182">checks each suggestion</text>
+                        <text x="536" y="182">Pi and Fusion HAT</text>
+                        <text x="104" y="202">suggests a waypoint</text>
+                        <text x="320" y="202">map and safety</text>
+                        <text x="536" y="202">only after the check</text>
+                    </g>
+                </svg>
+            </div>
+            <figcaption>
+                <span class="fig-num">Fig. 03</span>
+                <span class="cap">
+                    The model proposes a waypoint. Rust checks it. The motors move only after that check. The crossed line stops short of the motors.
+                </span>
+            </figcaption>
+        </figure>
+    )
+}
+
+<style>
+    .plate-fig {
+        margin-block: 40px;
+    }
+    .plate-frame {
+        overflow-x: auto;
+        border: 1px solid var(--rule);
+        border-radius: var(--r-slight);
+        background: var(--paper);
+        -webkit-overflow-scrolling: touch;
+    }
+    .plate-frame svg {
+        display: block;
+        width: 100%;
+        min-width: 640px;
+        height: auto;
+    }
+    figcaption {
+        margin-top: 12px;
+        color: var(--graphite);
+        font-family: var(--font-mono);
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.45;
+        letter-spacing: 0.01em;
+    }
+    .fig-num {
+        display: block;
+        margin-bottom: 4px;
+        color: var(--safe-link);
+        font-size: 14px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+</style>
